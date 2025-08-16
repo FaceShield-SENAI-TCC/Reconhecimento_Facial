@@ -1,6 +1,0 @@
-#pip install opencv-python
-
-#pip install opencv-python numpy deepface tf-keras
-
-#Versão Ideal: Python 3.8 ou 3.9
-

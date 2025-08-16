@@ -1,0 +1,25 @@
+#pip install opencv-python
+
+#pip install opencv-python numpy deepface tf-keras
+
+#Versão Ideal: Python 3.8 ou 3.9
+
+flask==2.0.2
+flask-cors==3.0.10
+flask-socketio==5.1.1
+python-engineio==4.3.1
+python-socketio==5.5.0
+opencv-python-headless==4.5.5.62
+numpy==1.22.3
+mtcnn==0.1.1
+requests==2.27.1
+
+
+#cd backend
+#python -m venv venv
+#source venv/bin/activate  # Linux/macOS
+#venv\Scripts\activate    # Windows
+#pip install -r requirements.txt
+
+
+#pip install eventlet opencv-python numpy flask flask-socketio flask-cors
