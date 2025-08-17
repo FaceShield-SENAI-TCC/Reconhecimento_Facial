@@ -1,0 +1,258 @@
+:root {
+  --primary-color: #00e0ff; /* Neon azul claro */
+  --secondary-color: #0f172a; /* Azul escuro */
+  --background-gradient: linear-gradient(
+    135deg,
+    #00141f 0%,
+    #0f172a 40%,
+    #1e293b 100%
+  );
+  --neon-shadow: 0 0 15px var(--primary-color);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-gradient);
+  color: white;
+  overflow-x: hidden;
+  position: relative;
+  padding: 2rem;
+}
+h1 {
+  padding-bottom: 10%;
+}
+
+.decorative-border {
+  position: fixed;
+  pointer-events: none;
+  border: 2px solid var(--primary-color);
+  box-shadow: var(--neon-shadow);
+  opacity: 0.3;
+  top: 20px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.face-scan-widget video {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: scaleX(-1);
+}
+
+.upload-instruction {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-align: center;
+  animation: pulse-text 2s infinite;
+  user-select: none;
+}
+
+.botaoProf {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.buttonProfessor {
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.botaoVoltar {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+
+  margin-top: 20px;
+}
+
+.buttonVoltar {
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+@keyframes pulse-text {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .face-scan-widget {
+    width: 220px;
+    height: 220px;
+  }
+
+  .main-content {
+    max-width: 90%;
+    padding: 1rem;
+  }
+}
+
+/* Alteração do Davi */
+
+.glowing-button {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  background: rgba(0, 224, 255, 0.15);
+  border: 2px solid var(--primary-color);
+  color: white;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  margin: 20px 0;
+}
+
+.glowing-button:hover {
+  background: rgba(0, 224, 255, 0.3);
+  box-shadow: var(--neon-shadow);
+  transform: translateY(-2px);
+}
+
+.glowing-button:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.scan-animation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    transparent 0%,
+    rgba(0, 224, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: scan 3s infinite linear;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Animação de sucesso */
+.success-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
+  z-index: 10;
+}
+
+.success-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+}
+
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #00e0ff;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 40px #00e0ff;
+  }
+}
+
+/* Progresso do reconhecimento */
+.progress-container {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #00e0ff;
+  width: 0%;
+  transition: width 0.3s ease;
+}

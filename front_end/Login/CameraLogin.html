@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Entrar</title>
+    <link rel="stylesheet" href="CSS/LoginCamera.css" />
+  </head>
+  <body>
+    <div class="botaoVoltar">
+      <a href="../index.html" class="buttonVoltar">Voltar</a>
+    </div>
+    <h1>Login com Reconhecimento Facial</h1>
+
+    <div class="face-scan-widget">
+      <video id="video" autoplay playsinline muted></video>
+      <div class="scan-animation-overlay"></div>
+      <!-- Adicionado para a animação de sucesso -->
+      <div id="success-overlay" class="success-overlay">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+    </div>
+
+    <p id="mensagem">Aguardando reconhecimento...</p>
+
+    <div class="botaoProf">
+      <a href="LoginProfessor.html" class="buttonProfessor">Login Professor</a>
+    </div>
+
+    <script src="JS/Loginjs.js" defer></script>
+  </body>
+</html>

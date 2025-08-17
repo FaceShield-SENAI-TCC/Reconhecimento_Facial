@@ -1,0 +1,1321 @@
+2025-08-17 17:03:08,635 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 17:03:08,636 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-17 17:03:08,636 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 17:03:08,636 - INFO - Processando usuário: Davi Mazoti
+2025-08-17 17:03:13,590 - INFO - Tempo de processamento para Davi_Mazoti_000_154600651629_63.jpg: 4.95s
+2025-08-17 17:03:13,845 - INFO - Tempo de processamento para Davi_Mazoti_001_154600645989_76.jpg: 0.25s
+2025-08-17 17:03:14,097 - INFO - Tempo de processamento para Davi_Mazoti_002_154600663150_77.jpg: 0.25s
+2025-08-17 17:03:14,351 - INFO - Tempo de processamento para Davi_Mazoti_003_154600660421_78.jpg: 0.25s
+2025-08-17 17:03:14,610 - INFO - Tempo de processamento para Davi_Mazoti_004_154601164582_78.jpg: 0.26s
+2025-08-17 17:03:14,954 - INFO - Tempo de processamento para Davi_Mazoti_005_154601177483_78.jpg: 0.34s
+2025-08-17 17:03:15,240 - INFO - Tempo de processamento para Davi_Mazoti_006_154601197059_77.jpg: 0.29s
+2025-08-17 17:03:15,494 - INFO - Tempo de processamento para Davi_Mazoti_007_154601416987_78.jpg: 0.25s
+2025-08-17 17:03:15,744 - INFO - Tempo de processamento para Davi_Mazoti_008_154601730978_76.jpg: 0.25s
+2025-08-17 17:03:15,978 - INFO - Tempo de processamento para Davi_Mazoti_009_154601704906_75.jpg: 0.23s
+2025-08-17 17:03:16,215 - INFO - Tempo de processamento para Davi_Mazoti_010_154601870041_76.jpg: 0.24s
+2025-08-17 17:03:16,449 - INFO - Tempo de processamento para Davi_Mazoti_011_154601943907_76.jpg: 0.23s
+2025-08-17 17:03:16,682 - INFO - Tempo de processamento para Davi_Mazoti_012_154602301839_76.jpg: 0.23s
+2025-08-17 17:03:16,916 - INFO - Tempo de processamento para Davi_Mazoti_013_154602456728_76.jpg: 0.23s
+2025-08-17 17:03:17,151 - INFO - Tempo de processamento para Davi_Mazoti_014_154602581231_76.jpg: 0.23s
+2025-08-17 17:03:17,405 - INFO - Tempo de processamento para Davi_Mazoti_015_154602680214_76.jpg: 0.25s
+2025-08-17 17:03:17,659 - INFO - Tempo de processamento para Davi_Mazoti_016_154602839803_76.jpg: 0.25s
+2025-08-17 17:03:17,889 - INFO - Tempo de processamento para Davi_Mazoti_017_154602938684_76.jpg: 0.23s
+2025-08-17 17:03:18,118 - INFO - Tempo de processamento para Davi_Mazoti_018_154603058734_76.jpg: 0.23s
+2025-08-17 17:03:18,351 - INFO - Tempo de processamento para Davi_Mazoti_019_154603199167_76.jpg: 0.23s
+2025-08-17 17:03:18,587 - INFO - Tempo de processamento para Davi_Mazoti_020_154603394219_76.jpg: 0.24s
+2025-08-17 17:03:18,820 - INFO - Tempo de processamento para Davi_Mazoti_021_154603522846_76.jpg: 0.23s
+2025-08-17 17:03:19,052 - INFO - Tempo de processamento para Davi_Mazoti_022_154603686311_76.jpg: 0.23s
+2025-08-17 17:03:19,304 - INFO - Tempo de processamento para Davi_Mazoti_023_154603760208_76.jpg: 0.25s
+2025-08-17 17:03:19,569 - INFO - Tempo de processamento para Davi_Mazoti_024_154603992184_76.jpg: 0.24s
+2025-08-17 17:03:19,796 - INFO - Tempo de processamento para Davi_Mazoti_025_154604116518_76.jpg: 0.23s
+2025-08-17 17:03:20,052 - INFO - Tempo de processamento para Davi_Mazoti_026_154604230985_76.jpg: 0.26s
+2025-08-17 17:03:20,305 - INFO - Tempo de processamento para Davi_Mazoti_027_154604294439_76.jpg: 0.25s
+2025-08-17 17:03:20,552 - INFO - Tempo de processamento para Davi_Mazoti_028_154604495229_76.jpg: 0.25s
+2025-08-17 17:03:20,810 - INFO - Tempo de processamento para Davi_Mazoti_029_154604600775_76.jpg: 0.26s
+2025-08-17 17:03:21,052 - INFO - Tempo de processamento para Davi_Mazoti_030_154604700889_76.jpg: 0.24s
+2025-08-17 17:03:21,295 - INFO - Tempo de processamento para Davi_Mazoti_031_154604752671_77.jpg: 0.24s
+2025-08-17 17:03:21,577 - INFO - Tempo de processamento para Davi_Mazoti_032_154604990814_77.jpg: 0.28s
+2025-08-17 17:03:21,811 - INFO - Tempo de processamento para Davi_Mazoti_033_154605118674_77.jpg: 0.23s
+2025-08-17 17:03:22,089 - INFO - Tempo de processamento para Davi_Mazoti_034_154605231347_77.jpg: 0.28s
+2025-08-17 17:03:22,319 - INFO - Tempo de processamento para Davi_Mazoti_035_154605306332_77.jpg: 0.23s
+2025-08-17 17:03:22,581 - INFO - Tempo de processamento para Davi_Mazoti_036_154605593199_77.jpg: 0.26s
+2025-08-17 17:03:22,814 - INFO - Tempo de processamento para Davi_Mazoti_037_154605710063_77.jpg: 0.23s
+2025-08-17 17:03:23,043 - INFO - Tempo de processamento para Davi_Mazoti_038_154605845528_77.jpg: 0.23s
+2025-08-17 17:03:23,309 - INFO - Tempo de processamento para Davi_Mazoti_039_154605944480_77.jpg: 0.27s
+2025-08-17 17:03:23,536 - INFO - Tempo de processamento para Davi_Mazoti_040_154607955251_77.jpg: 0.23s
+2025-08-17 17:03:23,765 - INFO - Tempo de processamento para Davi_Mazoti_041_154608068843_77.jpg: 0.23s
+2025-08-17 17:03:23,996 - INFO - Tempo de processamento para Davi_Mazoti_042_154608135274_77.jpg: 0.23s
+2025-08-17 17:03:24,256 - INFO - Tempo de processamento para Davi_Mazoti_043_154608250470_76.jpg: 0.26s
+2025-08-17 17:03:24,257 - INFO - » Davi Mazoti: 44 amostras carregadas
+2025-08-17 17:03:24,353 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-17 17:03:24,353 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-17 17:03:24,356 - INFO -  * Restarting with stat
+2025-08-17 17:03:29,685 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 17:03:29,685 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-17 17:03:29,685 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 17:03:29,685 - INFO - Processando usuário: Davi Mazoti
+2025-08-17 17:03:32,874 - INFO - Tempo de processamento para Davi_Mazoti_000_154600651629_63.jpg: 3.19s
+2025-08-17 17:03:33,119 - INFO - Tempo de processamento para Davi_Mazoti_001_154600645989_76.jpg: 0.25s
+2025-08-17 17:03:33,367 - INFO - Tempo de processamento para Davi_Mazoti_002_154600663150_77.jpg: 0.25s
+2025-08-17 17:03:33,636 - INFO - Tempo de processamento para Davi_Mazoti_003_154600660421_78.jpg: 0.27s
+2025-08-17 17:03:33,889 - INFO - Tempo de processamento para Davi_Mazoti_004_154601164582_78.jpg: 0.25s
+2025-08-17 17:03:34,146 - INFO - Tempo de processamento para Davi_Mazoti_005_154601177483_78.jpg: 0.26s
+2025-08-17 17:03:34,398 - INFO - Tempo de processamento para Davi_Mazoti_006_154601197059_77.jpg: 0.25s
+2025-08-17 17:03:34,672 - INFO - Tempo de processamento para Davi_Mazoti_007_154601416987_78.jpg: 0.27s
+2025-08-17 17:03:34,935 - INFO - Tempo de processamento para Davi_Mazoti_008_154601730978_76.jpg: 0.26s
+2025-08-17 17:03:35,198 - INFO - Tempo de processamento para Davi_Mazoti_009_154601704906_75.jpg: 0.26s
+2025-08-17 17:03:35,469 - INFO - Tempo de processamento para Davi_Mazoti_010_154601870041_76.jpg: 0.27s
+2025-08-17 17:03:35,730 - INFO - Tempo de processamento para Davi_Mazoti_011_154601943907_76.jpg: 0.26s
+2025-08-17 17:03:35,970 - INFO - Tempo de processamento para Davi_Mazoti_012_154602301839_76.jpg: 0.24s
+2025-08-17 17:03:36,223 - INFO - Tempo de processamento para Davi_Mazoti_013_154602456728_76.jpg: 0.25s
+2025-08-17 17:03:36,465 - INFO - Tempo de processamento para Davi_Mazoti_014_154602581231_76.jpg: 0.24s
+2025-08-17 17:03:36,705 - INFO - Tempo de processamento para Davi_Mazoti_015_154602680214_76.jpg: 0.24s
+2025-08-17 17:03:36,944 - INFO - Tempo de processamento para Davi_Mazoti_016_154602839803_76.jpg: 0.24s
+2025-08-17 17:03:37,186 - INFO - Tempo de processamento para Davi_Mazoti_017_154602938684_76.jpg: 0.24s
+2025-08-17 17:03:37,507 - INFO - Tempo de processamento para Davi_Mazoti_018_154603058734_76.jpg: 0.32s
+2025-08-17 17:03:37,751 - INFO - Tempo de processamento para Davi_Mazoti_019_154603199167_76.jpg: 0.24s
+2025-08-17 17:03:38,048 - INFO - Tempo de processamento para Davi_Mazoti_020_154603394219_76.jpg: 0.30s
+2025-08-17 17:03:38,287 - INFO - Tempo de processamento para Davi_Mazoti_021_154603522846_76.jpg: 0.24s
+2025-08-17 17:03:38,525 - INFO - Tempo de processamento para Davi_Mazoti_022_154603686311_76.jpg: 0.24s
+2025-08-17 17:03:38,761 - INFO - Tempo de processamento para Davi_Mazoti_023_154603760208_76.jpg: 0.24s
+2025-08-17 17:03:39,017 - INFO - Tempo de processamento para Davi_Mazoti_024_154603992184_76.jpg: 0.26s
+2025-08-17 17:03:39,254 - INFO - Tempo de processamento para Davi_Mazoti_025_154604116518_76.jpg: 0.24s
+2025-08-17 17:03:39,512 - INFO - Tempo de processamento para Davi_Mazoti_026_154604230985_76.jpg: 0.26s
+2025-08-17 17:03:39,748 - INFO - Tempo de processamento para Davi_Mazoti_027_154604294439_76.jpg: 0.24s
+2025-08-17 17:03:39,987 - INFO - Tempo de processamento para Davi_Mazoti_028_154604495229_76.jpg: 0.24s
+2025-08-17 17:03:40,229 - INFO - Tempo de processamento para Davi_Mazoti_029_154604600775_76.jpg: 0.24s
+2025-08-17 17:03:40,471 - INFO - Tempo de processamento para Davi_Mazoti_030_154604700889_76.jpg: 0.24s
+2025-08-17 17:03:40,734 - INFO - Tempo de processamento para Davi_Mazoti_031_154604752671_77.jpg: 0.26s
+2025-08-17 17:03:40,997 - INFO - Tempo de processamento para Davi_Mazoti_032_154604990814_77.jpg: 0.26s
+2025-08-17 17:03:41,230 - INFO - Tempo de processamento para Davi_Mazoti_033_154605118674_77.jpg: 0.23s
+2025-08-17 17:03:41,463 - INFO - Tempo de processamento para Davi_Mazoti_034_154605231347_77.jpg: 0.23s
+2025-08-17 17:03:41,698 - INFO - Tempo de processamento para Davi_Mazoti_035_154605306332_77.jpg: 0.23s
+2025-08-17 17:03:41,927 - INFO - Tempo de processamento para Davi_Mazoti_036_154605593199_77.jpg: 0.23s
+2025-08-17 17:03:42,163 - INFO - Tempo de processamento para Davi_Mazoti_037_154605710063_77.jpg: 0.24s
+2025-08-17 17:03:42,410 - INFO - Tempo de processamento para Davi_Mazoti_038_154605845528_77.jpg: 0.25s
+2025-08-17 17:03:42,646 - INFO - Tempo de processamento para Davi_Mazoti_039_154605944480_77.jpg: 0.24s
+2025-08-17 17:03:42,888 - INFO - Tempo de processamento para Davi_Mazoti_040_154607955251_77.jpg: 0.24s
+2025-08-17 17:03:43,123 - INFO - Tempo de processamento para Davi_Mazoti_041_154608068843_77.jpg: 0.23s
+2025-08-17 17:03:43,365 - INFO - Tempo de processamento para Davi_Mazoti_042_154608135274_77.jpg: 0.24s
+2025-08-17 17:03:43,601 - INFO - Tempo de processamento para Davi_Mazoti_043_154608250470_76.jpg: 0.24s
+2025-08-17 17:03:43,601 - INFO - » Davi Mazoti: 44 amostras carregadas
+2025-08-17 17:03:43,619 - WARNING -  * Debugger is active!
+2025-08-17 17:03:43,676 - INFO -  * Debugger PIN: 108-979-877
+2025-08-17 18:33:14,432 - INFO - 127.0.0.1 - - [17/Aug/2025 18:33:14] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 18:33:14,437 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:33:14,446 - INFO - Tamanho dos bytes decodificados: 26985 bytes
+2025-08-17 18:33:14,453 - INFO - Detectando rostos...
+2025-08-17 18:33:14,454 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:33:14,454 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:33:14,530 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 256x256)
+2025-08-17 18:33:14,530 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:33:17,964 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:33:17,971 - INFO - Tempo de comparação: 0.01s
+2025-08-17 18:33:17,972 - INFO - Tempo total de reconhecimento: 3.44s
+2025-08-17 18:33:17,974 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3848
+2025-08-17 18:33:17,977 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.62
+2025-08-17 18:33:17,983 - INFO - 127.0.0.1 - - [17/Aug/2025 18:33:17] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:33:26,999 - INFO - 127.0.0.1 - - [17/Aug/2025 18:33:26] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 18:33:27,003 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:33:27,005 - INFO - Tamanho dos bytes decodificados: 26675 bytes
+2025-08-17 18:33:27,008 - INFO - Detectando rostos...
+2025-08-17 18:33:27,009 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:33:27,009 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:33:27,088 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 253x253)
+2025-08-17 18:33:27,089 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:33:27,484 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:33:27,486 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:33:27,486 - INFO - Tempo total de reconhecimento: 0.40s
+2025-08-17 18:33:27,486 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3668
+2025-08-17 18:33:27,488 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.63
+2025-08-17 18:33:27,490 - INFO - 127.0.0.1 - - [17/Aug/2025 18:33:27] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:33:52,242 - INFO - Servidor encerrado
+2025-08-17 18:33:53,581 - INFO - Servidor encerrado
+2025-08-17 18:34:01,555 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 18:34:01,555 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-17 18:34:01,556 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 18:34:01,556 - INFO - Processando usuário: Davi Mazoti
+2025-08-17 18:34:06,826 - INFO - Tempo de processamento para Davi_Mazoti_000_154600651629_63.jpg: 5.27s
+2025-08-17 18:34:07,070 - INFO - Tempo de processamento para Davi_Mazoti_001_154600645989_76.jpg: 0.24s
+2025-08-17 18:34:07,301 - INFO - Tempo de processamento para Davi_Mazoti_002_154600663150_77.jpg: 0.23s
+2025-08-17 18:34:07,551 - INFO - Tempo de processamento para Davi_Mazoti_003_154600660421_78.jpg: 0.25s
+2025-08-17 18:34:07,799 - INFO - Tempo de processamento para Davi_Mazoti_004_154601164582_78.jpg: 0.25s
+2025-08-17 18:34:08,049 - INFO - Tempo de processamento para Davi_Mazoti_005_154601177483_78.jpg: 0.25s
+2025-08-17 18:34:08,298 - INFO - Tempo de processamento para Davi_Mazoti_006_154601197059_77.jpg: 0.25s
+2025-08-17 18:34:08,551 - INFO - Tempo de processamento para Davi_Mazoti_007_154601416987_78.jpg: 0.25s
+2025-08-17 18:34:08,806 - INFO - Tempo de processamento para Davi_Mazoti_008_154601730978_76.jpg: 0.25s
+2025-08-17 18:34:09,074 - INFO - Tempo de processamento para Davi_Mazoti_009_154601704906_75.jpg: 0.25s
+2025-08-17 18:34:09,335 - INFO - Tempo de processamento para Davi_Mazoti_010_154601870041_76.jpg: 0.26s
+2025-08-17 18:34:09,588 - INFO - Tempo de processamento para Davi_Mazoti_011_154601943907_76.jpg: 0.25s
+2025-08-17 18:34:09,837 - INFO - Tempo de processamento para Davi_Mazoti_012_154602301839_76.jpg: 0.25s
+2025-08-17 18:34:10,092 - INFO - Tempo de processamento para Davi_Mazoti_013_154602456728_76.jpg: 0.25s
+2025-08-17 18:34:10,346 - INFO - Tempo de processamento para Davi_Mazoti_014_154602581231_76.jpg: 0.25s
+2025-08-17 18:34:10,608 - INFO - Tempo de processamento para Davi_Mazoti_015_154602680214_76.jpg: 0.26s
+2025-08-17 18:34:10,876 - INFO - Tempo de processamento para Davi_Mazoti_016_154602839803_76.jpg: 0.27s
+2025-08-17 18:34:11,148 - INFO - Tempo de processamento para Davi_Mazoti_017_154602938684_76.jpg: 0.27s
+2025-08-17 18:34:11,412 - INFO - Tempo de processamento para Davi_Mazoti_018_154603058734_76.jpg: 0.26s
+2025-08-17 18:34:11,667 - INFO - Tempo de processamento para Davi_Mazoti_019_154603199167_76.jpg: 0.25s
+2025-08-17 18:34:11,920 - INFO - Tempo de processamento para Davi_Mazoti_020_154603394219_76.jpg: 0.25s
+2025-08-17 18:34:12,173 - INFO - Tempo de processamento para Davi_Mazoti_021_154603522846_76.jpg: 0.25s
+2025-08-17 18:34:12,420 - INFO - Tempo de processamento para Davi_Mazoti_022_154603686311_76.jpg: 0.25s
+2025-08-17 18:34:12,673 - INFO - Tempo de processamento para Davi_Mazoti_023_154603760208_76.jpg: 0.25s
+2025-08-17 18:34:12,927 - INFO - Tempo de processamento para Davi_Mazoti_024_154603992184_76.jpg: 0.25s
+2025-08-17 18:34:13,186 - INFO - Tempo de processamento para Davi_Mazoti_025_154604116518_76.jpg: 0.26s
+2025-08-17 18:34:13,445 - INFO - Tempo de processamento para Davi_Mazoti_026_154604230985_76.jpg: 0.26s
+2025-08-17 18:34:13,701 - INFO - Tempo de processamento para Davi_Mazoti_027_154604294439_76.jpg: 0.25s
+2025-08-17 18:34:13,949 - INFO - Tempo de processamento para Davi_Mazoti_028_154604495229_76.jpg: 0.25s
+2025-08-17 18:34:14,193 - INFO - Tempo de processamento para Davi_Mazoti_029_154604600775_76.jpg: 0.24s
+2025-08-17 18:34:14,439 - INFO - Tempo de processamento para Davi_Mazoti_030_154604700889_76.jpg: 0.25s
+2025-08-17 18:34:14,678 - INFO - Tempo de processamento para Davi_Mazoti_031_154604752671_77.jpg: 0.24s
+2025-08-17 18:34:14,917 - INFO - Tempo de processamento para Davi_Mazoti_032_154604990814_77.jpg: 0.24s
+2025-08-17 18:34:15,153 - INFO - Tempo de processamento para Davi_Mazoti_033_154605118674_77.jpg: 0.24s
+2025-08-17 18:34:15,386 - INFO - Tempo de processamento para Davi_Mazoti_034_154605231347_77.jpg: 0.23s
+2025-08-17 18:34:15,623 - INFO - Tempo de processamento para Davi_Mazoti_035_154605306332_77.jpg: 0.24s
+2025-08-17 18:34:15,890 - INFO - Tempo de processamento para Davi_Mazoti_036_154605593199_77.jpg: 0.27s
+2025-08-17 18:34:16,150 - INFO - Tempo de processamento para Davi_Mazoti_037_154605710063_77.jpg: 0.26s
+2025-08-17 18:34:16,402 - INFO - Tempo de processamento para Davi_Mazoti_038_154605845528_77.jpg: 0.25s
+2025-08-17 18:34:16,649 - INFO - Tempo de processamento para Davi_Mazoti_039_154605944480_77.jpg: 0.25s
+2025-08-17 18:34:16,886 - INFO - Tempo de processamento para Davi_Mazoti_040_154607955251_77.jpg: 0.24s
+2025-08-17 18:34:17,118 - INFO - Tempo de processamento para Davi_Mazoti_041_154608068843_77.jpg: 0.23s
+2025-08-17 18:34:17,352 - INFO - Tempo de processamento para Davi_Mazoti_042_154608135274_77.jpg: 0.23s
+2025-08-17 18:34:17,583 - INFO - Tempo de processamento para Davi_Mazoti_043_154608250470_76.jpg: 0.23s
+2025-08-17 18:34:17,583 - INFO - » Davi Mazoti: 44 amostras carregadas
+2025-08-17 18:34:17,734 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-17 18:34:17,734 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-17 18:34:17,736 - INFO -  * Restarting with stat
+2025-08-17 18:34:23,535 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 18:34:23,535 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-17 18:34:23,535 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 18:34:23,535 - INFO - Processando usuário: Davi Mazoti
+2025-08-17 18:34:26,923 - INFO - Tempo de processamento para Davi_Mazoti_000_154600651629_63.jpg: 3.39s
+2025-08-17 18:34:27,168 - INFO - Tempo de processamento para Davi_Mazoti_001_154600645989_76.jpg: 0.25s
+2025-08-17 18:34:27,406 - INFO - Tempo de processamento para Davi_Mazoti_002_154600663150_77.jpg: 0.24s
+2025-08-17 18:34:27,647 - INFO - Tempo de processamento para Davi_Mazoti_003_154600660421_78.jpg: 0.24s
+2025-08-17 18:34:27,908 - INFO - Tempo de processamento para Davi_Mazoti_004_154601164582_78.jpg: 0.26s
+2025-08-17 18:34:28,160 - INFO - Tempo de processamento para Davi_Mazoti_005_154601177483_78.jpg: 0.25s
+2025-08-17 18:34:28,438 - INFO - Tempo de processamento para Davi_Mazoti_006_154601197059_77.jpg: 0.28s
+2025-08-17 18:34:28,700 - INFO - Tempo de processamento para Davi_Mazoti_007_154601416987_78.jpg: 0.26s
+2025-08-17 18:34:28,959 - INFO - Tempo de processamento para Davi_Mazoti_008_154601730978_76.jpg: 0.26s
+2025-08-17 18:34:29,227 - INFO - Tempo de processamento para Davi_Mazoti_009_154601704906_75.jpg: 0.27s
+2025-08-17 18:34:29,512 - INFO - Tempo de processamento para Davi_Mazoti_010_154601870041_76.jpg: 0.29s
+2025-08-17 18:34:30,846 - INFO - Tempo de processamento para Davi_Mazoti_011_154601943907_76.jpg: 1.33s
+2025-08-17 18:34:31,194 - INFO - Tempo de processamento para Davi_Mazoti_012_154602301839_76.jpg: 0.35s
+2025-08-17 18:34:31,545 - INFO - Tempo de processamento para Davi_Mazoti_013_154602456728_76.jpg: 0.35s
+2025-08-17 18:34:31,946 - INFO - Tempo de processamento para Davi_Mazoti_014_154602581231_76.jpg: 0.40s
+2025-08-17 18:34:32,294 - INFO - Tempo de processamento para Davi_Mazoti_015_154602680214_76.jpg: 0.35s
+2025-08-17 18:34:32,632 - INFO - Tempo de processamento para Davi_Mazoti_016_154602839803_76.jpg: 0.34s
+2025-08-17 18:34:33,031 - INFO - Tempo de processamento para Davi_Mazoti_017_154602938684_76.jpg: 0.40s
+2025-08-17 18:34:33,443 - INFO - Tempo de processamento para Davi_Mazoti_018_154603058734_76.jpg: 0.41s
+2025-08-17 18:34:33,857 - INFO - Tempo de processamento para Davi_Mazoti_019_154603199167_76.jpg: 0.41s
+2025-08-17 18:34:34,192 - INFO - Tempo de processamento para Davi_Mazoti_020_154603394219_76.jpg: 0.33s
+2025-08-17 18:34:34,537 - INFO - Tempo de processamento para Davi_Mazoti_021_154603522846_76.jpg: 0.34s
+2025-08-17 18:34:34,903 - INFO - Tempo de processamento para Davi_Mazoti_022_154603686311_76.jpg: 0.35s
+2025-08-17 18:34:35,186 - INFO - Tempo de processamento para Davi_Mazoti_023_154603760208_76.jpg: 0.28s
+2025-08-17 18:34:35,486 - INFO - Tempo de processamento para Davi_Mazoti_024_154603992184_76.jpg: 0.30s
+2025-08-17 18:34:35,900 - INFO - Tempo de processamento para Davi_Mazoti_025_154604116518_76.jpg: 0.41s
+2025-08-17 18:34:36,230 - INFO - Tempo de processamento para Davi_Mazoti_026_154604230985_76.jpg: 0.33s
+2025-08-17 18:34:36,607 - INFO - Tempo de processamento para Davi_Mazoti_027_154604294439_76.jpg: 0.38s
+2025-08-17 18:34:37,079 - INFO - Tempo de processamento para Davi_Mazoti_028_154604495229_76.jpg: 0.47s
+2025-08-17 18:34:37,428 - INFO - Tempo de processamento para Davi_Mazoti_029_154604600775_76.jpg: 0.35s
+2025-08-17 18:34:37,777 - INFO - Tempo de processamento para Davi_Mazoti_030_154604700889_76.jpg: 0.35s
+2025-08-17 18:34:38,155 - INFO - Tempo de processamento para Davi_Mazoti_031_154604752671_77.jpg: 0.38s
+2025-08-17 18:34:38,550 - INFO - Tempo de processamento para Davi_Mazoti_032_154604990814_77.jpg: 0.40s
+2025-08-17 18:34:38,899 - INFO - Tempo de processamento para Davi_Mazoti_033_154605118674_77.jpg: 0.35s
+2025-08-17 18:34:39,251 - INFO - Tempo de processamento para Davi_Mazoti_034_154605231347_77.jpg: 0.35s
+2025-08-17 18:34:39,509 - INFO - Tempo de processamento para Davi_Mazoti_035_154605306332_77.jpg: 0.26s
+2025-08-17 18:34:39,794 - INFO - Tempo de processamento para Davi_Mazoti_036_154605593199_77.jpg: 0.28s
+2025-08-17 18:34:40,108 - INFO - Tempo de processamento para Davi_Mazoti_037_154605710063_77.jpg: 0.31s
+2025-08-17 18:34:40,424 - INFO - Tempo de processamento para Davi_Mazoti_038_154605845528_77.jpg: 0.32s
+2025-08-17 18:34:40,720 - INFO - Tempo de processamento para Davi_Mazoti_039_154605944480_77.jpg: 0.30s
+2025-08-17 18:34:41,067 - INFO - Tempo de processamento para Davi_Mazoti_040_154607955251_77.jpg: 0.35s
+2025-08-17 18:34:41,409 - INFO - Tempo de processamento para Davi_Mazoti_041_154608068843_77.jpg: 0.34s
+2025-08-17 18:34:41,734 - INFO - Tempo de processamento para Davi_Mazoti_042_154608135274_77.jpg: 0.33s
+2025-08-17 18:34:42,048 - INFO - Tempo de processamento para Davi_Mazoti_043_154608250470_76.jpg: 0.31s
+2025-08-17 18:34:42,048 - INFO - » Davi Mazoti: 44 amostras carregadas
+2025-08-17 18:34:42,064 - WARNING -  * Debugger is active!
+2025-08-17 18:34:42,079 - INFO -  * Debugger PIN: 108-979-877
+2025-08-17 18:35:17,422 - INFO - 127.0.0.1 - - [17/Aug/2025 18:35:17] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 18:35:17,433 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:35:17,439 - INFO - Tamanho dos bytes decodificados: 26561 bytes
+2025-08-17 18:35:17,442 - INFO - Detectando rostos...
+2025-08-17 18:35:17,442 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:35:17,442 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:35:17,506 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 189x189)
+2025-08-17 18:35:17,508 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:35:17,924 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:35:17,926 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:35:17,926 - INFO - Tempo total de reconhecimento: 0.42s
+2025-08-17 18:35:17,926 - INFO - Nenhum usuário reconhecido
+2025-08-17 18:35:17,954 - INFO - Usuário não reconhecido
+2025-08-17 18:35:17,959 - INFO - 127.0.0.1 - - [17/Aug/2025 18:35:17] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:35:32,289 - INFO - 127.0.0.1 - - [17/Aug/2025 18:35:32] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 18:35:32,293 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:35:32,294 - INFO - Tamanho dos bytes decodificados: 27025 bytes
+2025-08-17 18:35:32,295 - INFO - Detectando rostos...
+2025-08-17 18:35:32,295 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:35:32,295 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:35:32,349 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 230x230)
+2025-08-17 18:35:32,350 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:35:32,713 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:35:32,714 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:35:32,714 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-17 18:35:32,714 - INFO - Nenhum usuário reconhecido
+2025-08-17 18:35:32,715 - INFO - Usuário não reconhecido
+2025-08-17 18:35:32,717 - INFO - 127.0.0.1 - - [17/Aug/2025 18:35:32] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:35:36,878 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:35:36,879 - INFO - Tamanho dos bytes decodificados: 26884 bytes
+2025-08-17 18:35:36,882 - INFO - Detectando rostos...
+2025-08-17 18:35:36,883 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:35:36,883 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:35:36,956 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 259x259)
+2025-08-17 18:35:36,956 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:35:37,297 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:35:37,298 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:35:37,298 - INFO - Tempo total de reconhecimento: 0.34s
+2025-08-17 18:35:37,298 - INFO - Nenhum usuário reconhecido
+2025-08-17 18:35:37,300 - INFO - Usuário não reconhecido
+2025-08-17 18:35:37,302 - INFO - 127.0.0.1 - - [17/Aug/2025 18:35:37] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:35:53,245 - INFO - Servidor encerrado
+2025-08-17 18:35:56,374 - INFO - Servidor encerrado
+2025-08-17 18:36:03,659 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 18:36:03,659 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-17 18:36:03,659 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 18:36:03,660 - INFO - Processando usuário: Davi Mazoti
+2025-08-17 18:36:07,373 - INFO - Tempo de processamento para Davi_Mazoti_000_154600651629_63.jpg: 3.71s
+2025-08-17 18:36:07,640 - INFO - Tempo de processamento para Davi_Mazoti_001_154600645989_76.jpg: 0.27s
+2025-08-17 18:36:07,933 - INFO - Tempo de processamento para Davi_Mazoti_002_154600663150_77.jpg: 0.29s
+2025-08-17 18:36:08,195 - INFO - Tempo de processamento para Davi_Mazoti_003_154600660421_78.jpg: 0.26s
+2025-08-17 18:36:08,459 - INFO - Tempo de processamento para Davi_Mazoti_004_154601164582_78.jpg: 0.26s
+2025-08-17 18:36:08,711 - INFO - Tempo de processamento para Davi_Mazoti_005_154601177483_78.jpg: 0.25s
+2025-08-17 18:36:08,957 - INFO - Tempo de processamento para Davi_Mazoti_006_154601197059_77.jpg: 0.25s
+2025-08-17 18:36:09,220 - INFO - Tempo de processamento para Davi_Mazoti_007_154601416987_78.jpg: 0.26s
+2025-08-17 18:36:09,477 - INFO - Tempo de processamento para Davi_Mazoti_008_154601730978_76.jpg: 0.26s
+2025-08-17 18:36:09,737 - INFO - Tempo de processamento para Davi_Mazoti_009_154601704906_75.jpg: 0.26s
+2025-08-17 18:36:10,001 - INFO - Tempo de processamento para Davi_Mazoti_010_154601870041_76.jpg: 0.26s
+2025-08-17 18:36:10,244 - INFO - Tempo de processamento para Davi_Mazoti_011_154601943907_76.jpg: 0.24s
+2025-08-17 18:36:10,484 - INFO - Tempo de processamento para Davi_Mazoti_012_154602301839_76.jpg: 0.24s
+2025-08-17 18:36:10,736 - INFO - Tempo de processamento para Davi_Mazoti_013_154602456728_76.jpg: 0.25s
+2025-08-17 18:36:10,992 - INFO - Tempo de processamento para Davi_Mazoti_014_154602581231_76.jpg: 0.26s
+2025-08-17 18:36:11,263 - INFO - Tempo de processamento para Davi_Mazoti_015_154602680214_76.jpg: 0.27s
+2025-08-17 18:36:11,512 - INFO - Tempo de processamento para Davi_Mazoti_016_154602839803_76.jpg: 0.25s
+2025-08-17 18:36:11,756 - INFO - Tempo de processamento para Davi_Mazoti_017_154602938684_76.jpg: 0.24s
+2025-08-17 18:36:11,996 - INFO - Tempo de processamento para Davi_Mazoti_018_154603058734_76.jpg: 0.24s
+2025-08-17 18:36:12,237 - INFO - Tempo de processamento para Davi_Mazoti_019_154603199167_76.jpg: 0.24s
+2025-08-17 18:36:12,479 - INFO - Tempo de processamento para Davi_Mazoti_020_154603394219_76.jpg: 0.24s
+2025-08-17 18:36:12,722 - INFO - Tempo de processamento para Davi_Mazoti_021_154603522846_76.jpg: 0.24s
+2025-08-17 18:36:12,967 - INFO - Tempo de processamento para Davi_Mazoti_022_154603686311_76.jpg: 0.24s
+2025-08-17 18:36:13,204 - INFO - Tempo de processamento para Davi_Mazoti_023_154603760208_76.jpg: 0.24s
+2025-08-17 18:36:13,513 - INFO - Tempo de processamento para Davi_Mazoti_024_154603992184_76.jpg: 0.31s
+2025-08-17 18:36:13,772 - INFO - Tempo de processamento para Davi_Mazoti_025_154604116518_76.jpg: 0.26s
+2025-08-17 18:36:14,023 - INFO - Tempo de processamento para Davi_Mazoti_026_154604230985_76.jpg: 0.25s
+2025-08-17 18:36:14,277 - INFO - Tempo de processamento para Davi_Mazoti_027_154604294439_76.jpg: 0.25s
+2025-08-17 18:36:14,541 - INFO - Tempo de processamento para Davi_Mazoti_028_154604495229_76.jpg: 0.26s
+2025-08-17 18:36:14,804 - INFO - Tempo de processamento para Davi_Mazoti_029_154604600775_76.jpg: 0.26s
+2025-08-17 18:36:15,059 - INFO - Tempo de processamento para Davi_Mazoti_030_154604700889_76.jpg: 0.26s
+2025-08-17 18:36:15,317 - INFO - Tempo de processamento para Davi_Mazoti_031_154604752671_77.jpg: 0.26s
+2025-08-17 18:36:15,571 - INFO - Tempo de processamento para Davi_Mazoti_032_154604990814_77.jpg: 0.25s
+2025-08-17 18:36:15,837 - INFO - Tempo de processamento para Davi_Mazoti_033_154605118674_77.jpg: 0.27s
+2025-08-17 18:36:16,090 - INFO - Tempo de processamento para Davi_Mazoti_034_154605231347_77.jpg: 0.25s
+2025-08-17 18:36:16,340 - INFO - Tempo de processamento para Davi_Mazoti_035_154605306332_77.jpg: 0.25s
+2025-08-17 18:36:16,597 - INFO - Tempo de processamento para Davi_Mazoti_036_154605593199_77.jpg: 0.26s
+2025-08-17 18:36:16,861 - INFO - Tempo de processamento para Davi_Mazoti_037_154605710063_77.jpg: 0.26s
+2025-08-17 18:36:17,117 - INFO - Tempo de processamento para Davi_Mazoti_038_154605845528_77.jpg: 0.26s
+2025-08-17 18:36:17,358 - INFO - Tempo de processamento para Davi_Mazoti_039_154605944480_77.jpg: 0.24s
+2025-08-17 18:36:17,603 - INFO - Tempo de processamento para Davi_Mazoti_040_154607955251_77.jpg: 0.24s
+2025-08-17 18:36:17,854 - INFO - Tempo de processamento para Davi_Mazoti_041_154608068843_77.jpg: 0.25s
+2025-08-17 18:36:18,098 - INFO - Tempo de processamento para Davi_Mazoti_042_154608135274_77.jpg: 0.24s
+2025-08-17 18:36:18,343 - INFO - Tempo de processamento para Davi_Mazoti_043_154608250470_76.jpg: 0.24s
+2025-08-17 18:36:18,344 - INFO - » Davi Mazoti: 44 amostras carregadas
+2025-08-17 18:36:18,383 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-17 18:36:18,383 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-17 18:36:18,385 - INFO -  * Restarting with stat
+2025-08-17 18:36:23,854 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 18:36:23,854 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-17 18:36:23,854 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 18:36:23,854 - INFO - Processando usuário: Davi Mazoti
+2025-08-17 18:36:28,558 - INFO - Tempo de processamento para Davi_Mazoti_000_154600651629_63.jpg: 4.70s
+2025-08-17 18:36:28,814 - INFO - Tempo de processamento para Davi_Mazoti_001_154600645989_76.jpg: 0.25s
+2025-08-17 18:36:29,063 - INFO - Tempo de processamento para Davi_Mazoti_002_154600663150_77.jpg: 0.25s
+2025-08-17 18:36:29,317 - INFO - Tempo de processamento para Davi_Mazoti_003_154600660421_78.jpg: 0.25s
+2025-08-17 18:36:29,554 - INFO - Tempo de processamento para Davi_Mazoti_004_154601164582_78.jpg: 0.24s
+2025-08-17 18:36:29,791 - INFO - Tempo de processamento para Davi_Mazoti_005_154601177483_78.jpg: 0.24s
+2025-08-17 18:36:30,035 - INFO - Tempo de processamento para Davi_Mazoti_006_154601197059_77.jpg: 0.24s
+2025-08-17 18:36:30,309 - INFO - Tempo de processamento para Davi_Mazoti_007_154601416987_78.jpg: 0.27s
+2025-08-17 18:36:30,579 - INFO - Tempo de processamento para Davi_Mazoti_008_154601730978_76.jpg: 0.27s
+2025-08-17 18:36:30,835 - INFO - Tempo de processamento para Davi_Mazoti_009_154601704906_75.jpg: 0.26s
+2025-08-17 18:36:31,077 - INFO - Tempo de processamento para Davi_Mazoti_010_154601870041_76.jpg: 0.24s
+2025-08-17 18:36:31,340 - INFO - Tempo de processamento para Davi_Mazoti_011_154601943907_76.jpg: 0.26s
+2025-08-17 18:36:31,593 - INFO - Tempo de processamento para Davi_Mazoti_012_154602301839_76.jpg: 0.25s
+2025-08-17 18:36:31,848 - INFO - Tempo de processamento para Davi_Mazoti_013_154602456728_76.jpg: 0.25s
+2025-08-17 18:36:32,101 - INFO - Tempo de processamento para Davi_Mazoti_014_154602581231_76.jpg: 0.25s
+2025-08-17 18:36:32,428 - INFO - Tempo de processamento para Davi_Mazoti_015_154602680214_76.jpg: 0.33s
+2025-08-17 18:36:32,677 - INFO - Tempo de processamento para Davi_Mazoti_016_154602839803_76.jpg: 0.25s
+2025-08-17 18:36:32,929 - INFO - Tempo de processamento para Davi_Mazoti_017_154602938684_76.jpg: 0.25s
+2025-08-17 18:36:33,191 - INFO - Tempo de processamento para Davi_Mazoti_018_154603058734_76.jpg: 0.26s
+2025-08-17 18:36:34,106 - INFO - Tempo de processamento para Davi_Mazoti_019_154603199167_76.jpg: 0.91s
+2025-08-17 18:36:34,591 - INFO - Tempo de processamento para Davi_Mazoti_020_154603394219_76.jpg: 0.49s
+2025-08-17 18:36:35,100 - INFO - Tempo de processamento para Davi_Mazoti_021_154603522846_76.jpg: 0.51s
+2025-08-17 18:36:35,665 - INFO - Tempo de processamento para Davi_Mazoti_022_154603686311_76.jpg: 0.56s
+2025-08-17 18:36:36,095 - INFO - Tempo de processamento para Davi_Mazoti_023_154603760208_76.jpg: 0.43s
+2025-08-17 18:36:36,574 - INFO - Tempo de processamento para Davi_Mazoti_024_154603992184_76.jpg: 0.48s
+2025-08-17 18:36:36,998 - INFO - Tempo de processamento para Davi_Mazoti_025_154604116518_76.jpg: 0.42s
+2025-08-17 18:36:37,410 - INFO - Tempo de processamento para Davi_Mazoti_026_154604230985_76.jpg: 0.41s
+2025-08-17 18:36:37,792 - INFO - Tempo de processamento para Davi_Mazoti_027_154604294439_76.jpg: 0.38s
+2025-08-17 18:36:38,217 - INFO - Tempo de processamento para Davi_Mazoti_028_154604495229_76.jpg: 0.42s
+2025-08-17 18:36:38,642 - INFO - Tempo de processamento para Davi_Mazoti_029_154604600775_76.jpg: 0.42s
+2025-08-17 18:36:39,069 - INFO - Tempo de processamento para Davi_Mazoti_030_154604700889_76.jpg: 0.43s
+2025-08-17 18:36:39,491 - INFO - Tempo de processamento para Davi_Mazoti_031_154604752671_77.jpg: 0.42s
+2025-08-17 18:36:39,937 - INFO - Tempo de processamento para Davi_Mazoti_032_154604990814_77.jpg: 0.45s
+2025-08-17 18:36:40,348 - INFO - Tempo de processamento para Davi_Mazoti_033_154605118674_77.jpg: 0.41s
+2025-08-17 18:36:40,765 - INFO - Tempo de processamento para Davi_Mazoti_034_154605231347_77.jpg: 0.42s
+2025-08-17 18:36:41,142 - INFO - Tempo de processamento para Davi_Mazoti_035_154605306332_77.jpg: 0.38s
+2025-08-17 18:36:41,522 - INFO - Tempo de processamento para Davi_Mazoti_036_154605593199_77.jpg: 0.38s
+2025-08-17 18:36:41,843 - INFO - Tempo de processamento para Davi_Mazoti_037_154605710063_77.jpg: 0.32s
+2025-08-17 18:36:42,220 - INFO - Tempo de processamento para Davi_Mazoti_038_154605845528_77.jpg: 0.38s
+2025-08-17 18:36:42,588 - INFO - Tempo de processamento para Davi_Mazoti_039_154605944480_77.jpg: 0.37s
+2025-08-17 18:36:42,931 - INFO - Tempo de processamento para Davi_Mazoti_040_154607955251_77.jpg: 0.34s
+2025-08-17 18:36:43,326 - INFO - Tempo de processamento para Davi_Mazoti_041_154608068843_77.jpg: 0.39s
+2025-08-17 18:36:43,744 - INFO - Tempo de processamento para Davi_Mazoti_042_154608135274_77.jpg: 0.42s
+2025-08-17 18:36:44,128 - INFO - Tempo de processamento para Davi_Mazoti_043_154608250470_76.jpg: 0.38s
+2025-08-17 18:36:44,128 - INFO - » Davi Mazoti: 44 amostras carregadas
+2025-08-17 18:36:44,189 - WARNING -  * Debugger is active!
+2025-08-17 18:36:44,215 - INFO -  * Debugger PIN: 108-979-877
+2025-08-17 18:36:44,360 - INFO - 127.0.0.1 - - [17/Aug/2025 18:36:44] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 18:36:44,366 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:36:44,367 - ERROR - String base64 muito curta: 0 caracteres
+2025-08-17 18:36:44,368 - INFO - 127.0.0.1 - - [17/Aug/2025 18:36:44] "[31m[1mPOST /face-login HTTP/1.1[0m" 400 -
+2025-08-17 18:36:45,917 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:36:45,921 - INFO - Tamanho dos bytes decodificados: 26752 bytes
+2025-08-17 18:36:45,923 - INFO - Detectando rostos...
+2025-08-17 18:36:45,924 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:36:45,924 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:36:45,998 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 252x252)
+2025-08-17 18:36:45,998 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:36:46,356 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:36:46,357 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:36:46,357 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-17 18:36:46,358 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3054
+2025-08-17 18:36:46,359 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.69
+2025-08-17 18:36:46,362 - INFO - 127.0.0.1 - - [17/Aug/2025 18:36:46] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:36:58,823 - INFO - 127.0.0.1 - - [17/Aug/2025 18:36:58] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 18:36:58,831 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:36:58,832 - INFO - Tamanho dos bytes decodificados: 27080 bytes
+2025-08-17 18:36:58,835 - INFO - Detectando rostos...
+2025-08-17 18:36:58,835 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:36:58,836 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:36:58,872 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 139x139)
+2025-08-17 18:36:58,872 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:36:59,220 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:36:59,221 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:36:59,222 - INFO - Tempo total de reconhecimento: 0.35s
+2025-08-17 18:36:59,222 - INFO - Nenhum usuário reconhecido
+2025-08-17 18:36:59,223 - INFO - Usuário não reconhecido
+2025-08-17 18:36:59,226 - INFO - 127.0.0.1 - - [17/Aug/2025 18:36:59] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:37:27,664 - INFO - 127.0.0.1 - - [17/Aug/2025 18:37:27] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 18:37:27,667 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:37:27,671 - INFO - Tamanho dos bytes decodificados: 27132 bytes
+2025-08-17 18:37:27,674 - INFO - Detectando rostos...
+2025-08-17 18:37:27,674 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:37:27,675 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:37:27,726 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 288x288)
+2025-08-17 18:37:27,726 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:37:28,096 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:37:28,097 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:37:28,098 - INFO - Tempo total de reconhecimento: 0.37s
+2025-08-17 18:37:28,098 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3468
+2025-08-17 18:37:28,099 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.65
+2025-08-17 18:37:28,101 - INFO - 127.0.0.1 - - [17/Aug/2025 18:37:28] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:37:43,175 - INFO - 127.0.0.1 - - [17/Aug/2025 18:37:43] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 18:37:43,178 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:37:43,180 - INFO - Tamanho dos bytes decodificados: 28019 bytes
+2025-08-17 18:37:43,182 - INFO - Detectando rostos...
+2025-08-17 18:37:43,183 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:37:43,184 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:37:43,250 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 229x229)
+2025-08-17 18:37:43,251 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:37:43,640 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:37:43,641 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:37:43,641 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 18:37:43,642 - INFO - Nenhum usuário reconhecido
+2025-08-17 18:37:43,643 - INFO - Usuário não reconhecido
+2025-08-17 18:37:43,644 - INFO - 127.0.0.1 - - [17/Aug/2025 18:37:43] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 18:37:47,483 - INFO - Recebendo solicitação de login facial
+2025-08-17 18:37:47,484 - INFO - Tamanho dos bytes decodificados: 29148 bytes
+2025-08-17 18:37:47,486 - INFO - Detectando rostos...
+2025-08-17 18:37:47,487 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 18:37:47,487 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 18:37:47,563 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 351x351)
+2025-08-17 18:37:47,563 - INFO - Iniciando reconhecimento facial...
+2025-08-17 18:37:48,000 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 18:37:48,001 - INFO - Tempo de comparação: 0.00s
+2025-08-17 18:37:48,001 - INFO - Tempo total de reconhecimento: 0.44s
+2025-08-17 18:37:48,002 - INFO - Nenhum usuário reconhecido
+2025-08-17 18:37:48,003 - INFO - Usuário não reconhecido
+2025-08-17 18:37:48,004 - INFO - 127.0.0.1 - - [17/Aug/2025 18:37:48] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:03:27,932 - INFO - 127.0.0.1 - - [17/Aug/2025 19:03:27] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 19:03:27,952 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:03:27,957 - ERROR - String base64 muito curta: 0 caracteres
+2025-08-17 19:03:27,959 - INFO - 127.0.0.1 - - [17/Aug/2025 19:03:27] "[31m[1mPOST /face-login HTTP/1.1[0m" 400 -
+2025-08-17 19:03:34,852 - INFO - 127.0.0.1 - - [17/Aug/2025 19:03:34] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 19:03:34,860 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:03:34,866 - INFO - Tamanho dos bytes decodificados: 26721 bytes
+2025-08-17 19:03:34,912 - INFO - Detectando rostos...
+2025-08-17 19:03:34,917 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:03:34,917 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:03:35,050 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 256x256)
+2025-08-17 19:03:35,050 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:03:39,077 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:03:39,088 - INFO - Tempo de comparação: 0.01s
+2025-08-17 19:03:39,089 - INFO - Tempo total de reconhecimento: 4.04s
+2025-08-17 19:03:39,089 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3754
+2025-08-17 19:03:39,091 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.62
+2025-08-17 19:03:39,096 - INFO - 127.0.0.1 - - [17/Aug/2025 19:03:39] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:47,356 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:47] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:47,367 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:47,383 - INFO - Tamanho dos bytes decodificados: 17685 bytes
+2025-08-17 19:12:47,423 - INFO - Detectando rostos...
+2025-08-17 19:12:47,431 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:47,431 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:47,581 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 277x277)
+2025-08-17 19:12:47,581 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:47,839 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:47,841 - INFO - Tamanho dos bytes decodificados: 25164 bytes
+2025-08-17 19:12:47,842 - INFO - Detectando rostos...
+2025-08-17 19:12:47,842 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:47,843 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:47,919 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 210x210)
+2025-08-17 19:12:47,919 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:48,344 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:48,346 - INFO - Tamanho dos bytes decodificados: 26804 bytes
+2025-08-17 19:12:48,350 - INFO - Detectando rostos...
+2025-08-17 19:12:48,351 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:48,351 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:48,449 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 236x236)
+2025-08-17 19:12:48,449 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:48,880 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:48,880 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:48,884 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:48,886 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:48,887 - INFO - Tamanho dos bytes decodificados: 26181 bytes
+2025-08-17 19:12:48,887 - INFO - Tempo de comparação: 0.01s
+2025-08-17 19:12:48,887 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:48,887 - INFO - Tempo de comparação: 0.01s
+2025-08-17 19:12:48,889 - INFO - Tempo total de reconhecimento: 0.97s
+2025-08-17 19:12:48,889 - INFO - Tempo total de reconhecimento: 0.44s
+2025-08-17 19:12:48,889 - INFO - Tempo total de reconhecimento: 1.31s
+2025-08-17 19:12:48,889 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:48,889 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:48,889 - INFO - Detectando rostos...
+2025-08-17 19:12:48,889 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:48,890 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:48,890 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:48,890 - INFO - Usuário não reconhecido
+2025-08-17 19:12:48,893 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:48] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:48,943 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 267x267)
+2025-08-17 19:12:48,960 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\appFaceId.py", line 343, in face_login
+    os.remove(temp_path)  # Limpar arquivo temporário
+FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especificado: 'temp_face.jpg'
+
+2025-08-17 19:12:48,972 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:48,972 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\appFaceId.py", line 343, in face_login
+    os.remove(temp_path)  # Limpar arquivo temporário
+FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especificado: 'temp_face.jpg'
+
+2025-08-17 19:12:48,973 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:48] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-17 19:12:48,974 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:48] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-17 19:12:49,317 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:49,319 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:49,319 - INFO - Tempo total de reconhecimento: 0.35s
+2025-08-17 19:12:49,320 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3616
+2025-08-17 19:12:49,321 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.64
+2025-08-17 19:12:49,325 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:49] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:49,388 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:49,388 - INFO - Tamanho dos bytes decodificados: 26636 bytes
+2025-08-17 19:12:49,392 - INFO - Detectando rostos...
+2025-08-17 19:12:49,393 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:49,393 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:49,472 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 250x250)
+2025-08-17 19:12:49,473 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:49,905 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:49,906 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:49,907 - INFO - Tamanho dos bytes decodificados: 26731 bytes
+2025-08-17 19:12:49,908 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:49,908 - INFO - Tempo total de reconhecimento: 0.44s
+2025-08-17 19:12:49,908 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:49,910 - INFO - Detectando rostos...
+2025-08-17 19:12:49,910 - INFO - Usuário não reconhecido
+2025-08-17 19:12:49,912 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:49] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:49,912 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:49,913 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:49,964 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 244x244)
+2025-08-17 19:12:49,965 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:50,271 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:50,271 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:50,271 - INFO - Tempo total de reconhecimento: 0.31s
+2025-08-17 19:12:50,271 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3363
+2025-08-17 19:12:50,272 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.66
+2025-08-17 19:12:50,273 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:50] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:50,417 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:50,419 - INFO - Tamanho dos bytes decodificados: 26936 bytes
+2025-08-17 19:12:50,423 - INFO - Detectando rostos...
+2025-08-17 19:12:50,423 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:50,424 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:50,499 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 259x259)
+2025-08-17 19:12:50,500 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:50,860 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:50,860 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:50,860 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-17 19:12:50,861 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3198
+2025-08-17 19:12:50,861 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.68
+2025-08-17 19:12:50,862 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:50] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:50,977 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:50,979 - INFO - Tamanho dos bytes decodificados: 27470 bytes
+2025-08-17 19:12:50,983 - INFO - Detectando rostos...
+2025-08-17 19:12:50,983 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:50,984 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:51,032 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 254x254)
+2025-08-17 19:12:51,033 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:51,384 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:51,385 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:51,385 - INFO - Tempo total de reconhecimento: 0.35s
+2025-08-17 19:12:51,386 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3373
+2025-08-17 19:12:51,387 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.66
+2025-08-17 19:12:51,390 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:51] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:51,487 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:51,489 - INFO - Tamanho dos bytes decodificados: 27352 bytes
+2025-08-17 19:12:51,491 - INFO - Detectando rostos...
+2025-08-17 19:12:51,492 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:51,492 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:51,569 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 258x258)
+2025-08-17 19:12:51,570 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:51,909 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:51,910 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:51,910 - INFO - Tempo total de reconhecimento: 0.34s
+2025-08-17 19:12:51,910 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3578
+2025-08-17 19:12:51,911 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.64
+2025-08-17 19:12:51,913 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:51] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:51,986 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:51,987 - INFO - Tamanho dos bytes decodificados: 27263 bytes
+2025-08-17 19:12:51,990 - INFO - Detectando rostos...
+2025-08-17 19:12:51,991 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:51,991 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:52,046 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 255x255)
+2025-08-17 19:12:52,046 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:52,384 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:52,386 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:52,386 - INFO - Tempo total de reconhecimento: 0.34s
+2025-08-17 19:12:52,387 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3920
+2025-08-17 19:12:52,388 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.61
+2025-08-17 19:12:52,390 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:52] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:52,515 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:52] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:52,520 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:52,521 - INFO - Tamanho dos bytes decodificados: 27703 bytes
+2025-08-17 19:12:52,523 - INFO - Detectando rostos...
+2025-08-17 19:12:52,524 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:52,524 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:52,591 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 251x251)
+2025-08-17 19:12:52,591 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:52,982 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:52,983 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:52,984 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 19:12:52,984 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:52,986 - INFO - Usuário não reconhecido
+2025-08-17 19:12:52,987 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:52] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:53,014 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:53,015 - INFO - Tamanho dos bytes decodificados: 27626 bytes
+2025-08-17 19:12:53,017 - INFO - Detectando rostos...
+2025-08-17 19:12:53,018 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:53,018 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:53,096 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 254x254)
+2025-08-17 19:12:53,096 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:53,440 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:53,441 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:53,441 - INFO - Tempo total de reconhecimento: 0.35s
+2025-08-17 19:12:53,441 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:53,442 - INFO - Usuário não reconhecido
+2025-08-17 19:12:53,442 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:53] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:53,516 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:53,516 - INFO - Tamanho dos bytes decodificados: 27783 bytes
+2025-08-17 19:12:53,520 - INFO - Detectando rostos...
+2025-08-17 19:12:53,520 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:53,521 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:53,612 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 251x251)
+2025-08-17 19:12:53,612 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:54,005 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:54,006 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:54,006 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 19:12:54,006 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3883
+2025-08-17 19:12:54,020 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.61
+2025-08-17 19:12:54,021 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:54] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:54,041 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:54,042 - INFO - Tamanho dos bytes decodificados: 27485 bytes
+2025-08-17 19:12:54,045 - INFO - Detectando rostos...
+2025-08-17 19:12:54,046 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:54,046 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:54,143 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 251x251)
+2025-08-17 19:12:54,143 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:54,534 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:54,536 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:54,536 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 19:12:54,536 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3795
+2025-08-17 19:12:54,538 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.62
+2025-08-17 19:12:54,540 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:54] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:54,592 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:54,593 - INFO - Tamanho dos bytes decodificados: 27006 bytes
+2025-08-17 19:12:54,596 - INFO - Detectando rostos...
+2025-08-17 19:12:54,597 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:54,597 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:54,686 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 250x250)
+2025-08-17 19:12:54,687 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:55,050 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:55,051 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:55,051 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-17 19:12:55,051 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3951
+2025-08-17 19:12:55,053 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.60
+2025-08-17 19:12:55,054 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:55] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:55,149 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:55,150 - INFO - Tamanho dos bytes decodificados: 27124 bytes
+2025-08-17 19:12:55,151 - INFO - Detectando rostos...
+2025-08-17 19:12:55,152 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:55,152 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:55,215 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 234x234)
+2025-08-17 19:12:55,216 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:55,558 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:55,559 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:55,560 - INFO - Tempo total de reconhecimento: 0.34s
+2025-08-17 19:12:55,560 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:55,563 - INFO - Usuário não reconhecido
+2025-08-17 19:12:55,565 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:55] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:55,666 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:55,667 - INFO - Tamanho dos bytes decodificados: 27401 bytes
+2025-08-17 19:12:55,670 - INFO - Detectando rostos...
+2025-08-17 19:12:55,671 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:55,671 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:55,720 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 238x238)
+2025-08-17 19:12:55,720 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:56,177 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:56,178 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:12:56,179 - INFO - Tempo total de reconhecimento: 0.46s
+2025-08-17 19:12:56,179 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:56,180 - INFO - Usuário não reconhecido
+2025-08-17 19:12:56,182 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:56] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:56,184 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:56,186 - INFO - Tamanho dos bytes decodificados: 27431 bytes
+2025-08-17 19:12:56,188 - INFO - Detectando rostos...
+2025-08-17 19:12:56,190 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:56,191 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:56,253 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 232x232)
+2025-08-17 19:12:56,254 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:56,965 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:56,966 - INFO - Tamanho dos bytes decodificados: 27319 bytes
+2025-08-17 19:12:57,133 - INFO - Detectando rostos...
+2025-08-17 19:12:57,134 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:57,142 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:57,264 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:57,266 - INFO - Tamanho dos bytes decodificados: 27468 bytes
+2025-08-17 19:12:57,277 - INFO - Detectando rostos...
+2025-08-17 19:12:57,277 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:57,277 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:57,761 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:57] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:57,770 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:57,771 - INFO - Tamanho dos bytes decodificados: 27475 bytes
+2025-08-17 19:12:57,773 - INFO - Detectando rostos...
+2025-08-17 19:12:57,774 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:57,775 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:57,943 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 237x237)
+2025-08-17 19:12:57,943 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:58,273 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:58,276 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 239x239)
+2025-08-17 19:12:58,282 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:58,280 - INFO - Tamanho dos bytes decodificados: 27495 bytes
+2025-08-17 19:12:58,291 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 237x237)
+2025-08-17 19:12:58,292 - INFO - Detectando rostos...
+2025-08-17 19:12:58,345 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:58,345 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\appFaceId.py", line 143, in recognize_face_from_image
+    embedding_obj = DeepFace.represent(
+  File "C:\Users\WBS\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\WBS\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\WBS\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 108, in extract_faces
+    raise ValueError(f"Exception while loading {img_name}")
+ValueError: Exception while loading temp_face.jpg
+
+2025-08-17 19:12:58,346 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:58,388 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:58,392 - INFO - Usuário não reconhecido
+2025-08-17 19:12:58,393 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:58] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:58,517 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 253x253)
+2025-08-17 19:12:58,521 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:58,602 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:58,797 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:58,798 - INFO - Tamanho dos bytes decodificados: 27292 bytes
+2025-08-17 19:12:58,815 - INFO - Detectando rostos...
+2025-08-17 19:12:58,825 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:58,826 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:58,910 - INFO - Tempo de comparação: 0.31s
+2025-08-17 19:12:58,910 - INFO - Tempo total de reconhecimento: 2.66s
+2025-08-17 19:12:58,911 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:58,912 - INFO - Usuário não reconhecido
+2025-08-17 19:12:58,920 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:58] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:59,046 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 256x256)
+2025-08-17 19:12:59,047 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:59,324 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:59,329 - INFO - Tamanho dos bytes decodificados: 27402 bytes
+2025-08-17 19:12:59,338 - INFO - Detectando rostos...
+2025-08-17 19:12:59,339 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:59,341 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:59,377 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:59,418 - INFO - Tempo de comparação: 0.04s
+2025-08-17 19:12:59,420 - INFO - Tempo total de reconhecimento: 1.48s
+2025-08-17 19:12:59,420 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:59,422 - INFO - Usuário não reconhecido
+2025-08-17 19:12:59,427 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:59] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:59,513 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 263x263)
+2025-08-17 19:12:59,514 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:12:59,523 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:59,530 - INFO - Tempo de comparação: 0.01s
+2025-08-17 19:12:59,530 - INFO - Tempo total de reconhecimento: 1.18s
+2025-08-17 19:12:59,531 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:59,533 - INFO - Usuário não reconhecido
+2025-08-17 19:12:59,541 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:59] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:12:59,793 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:12:59,818 - INFO - Tempo de comparação: 0.02s
+2025-08-17 19:12:59,819 - INFO - Tempo total de reconhecimento: 1.29s
+2025-08-17 19:12:59,819 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:12:59,836 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:12:59,839 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\appFaceId.py", line 343, in face_login
+    os.remove(temp_path)  # Limpar arquivo temporário
+FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especificado: 'temp_face.jpg'
+
+2025-08-17 19:12:59,843 - INFO - 127.0.0.1 - - [17/Aug/2025 19:12:59] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-17 19:12:59,843 - INFO - Tamanho dos bytes decodificados: 27213 bytes
+2025-08-17 19:12:59,858 - INFO - Detectando rostos...
+2025-08-17 19:12:59,860 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:12:59,865 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:12:59,996 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 256x256)
+2025-08-17 19:12:59,997 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:00,050 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:00,075 - INFO - Tempo de comparação: 0.02s
+2025-08-17 19:13:00,075 - INFO - Tempo total de reconhecimento: 1.03s
+2025-08-17 19:13:00,076 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:00,079 - INFO - Usuário não reconhecido
+2025-08-17 19:13:00,080 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:00] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:00,309 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:00,329 - INFO - Tempo de comparação: 0.02s
+2025-08-17 19:13:00,331 - INFO - Tempo total de reconhecimento: 0.82s
+2025-08-17 19:13:00,332 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:00,342 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:00,344 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\appFaceId.py", line 343, in face_login
+    os.remove(temp_path)  # Limpar arquivo temporário
+FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especificado: 'temp_face.jpg'
+
+2025-08-17 19:13:00,347 - INFO - Tamanho dos bytes decodificados: 24395 bytes
+2025-08-17 19:13:00,350 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:00] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-17 19:13:00,367 - INFO - Detectando rostos...
+2025-08-17 19:13:00,368 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:00,368 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:00,467 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 256x256)
+2025-08-17 19:13:00,467 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:00,538 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:00,540 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:00,540 - INFO - Tempo total de reconhecimento: 0.54s
+2025-08-17 19:13:00,541 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:00,542 - INFO - Usuário não reconhecido
+2025-08-17 19:13:00,543 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:00] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:00,851 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:00,852 - INFO - Tamanho dos bytes decodificados: 25056 bytes
+2025-08-17 19:13:00,854 - INFO - Detectando rostos...
+2025-08-17 19:13:00,855 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:00,855 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:00,876 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:00,877 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:00,877 - INFO - Tempo total de reconhecimento: 0.41s
+2025-08-17 19:13:00,877 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:00,881 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\appFaceId.py", line 343, in face_login
+    os.remove(temp_path)  # Limpar arquivo temporário
+FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especificado: 'temp_face.jpg'
+
+2025-08-17 19:13:00,886 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:00] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-17 19:13:00,918 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 259x259)
+2025-08-17 19:13:00,918 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:01,282 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:01,283 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:01,283 - INFO - Tempo total de reconhecimento: 0.37s
+2025-08-17 19:13:01,283 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:01,285 - INFO - Usuário não reconhecido
+2025-08-17 19:13:01,287 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:01] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:01,349 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:01,350 - INFO - Tamanho dos bytes decodificados: 25219 bytes
+2025-08-17 19:13:01,352 - INFO - Detectando rostos...
+2025-08-17 19:13:01,353 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:01,353 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:01,422 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 246x246)
+2025-08-17 19:13:01,422 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:01,808 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:01,809 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:01,809 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 19:13:01,809 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:01,810 - INFO - Usuário não reconhecido
+2025-08-17 19:13:01,810 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:01] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:01,874 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:01,875 - INFO - Tamanho dos bytes decodificados: 23029 bytes
+2025-08-17 19:13:01,876 - INFO - Detectando rostos...
+2025-08-17 19:13:01,877 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:01,877 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:01,933 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 249x249)
+2025-08-17 19:13:01,933 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:02,274 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:02,274 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:02,275 - INFO - Tempo total de reconhecimento: 0.34s
+2025-08-17 19:13:02,275 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:02,275 - INFO - Usuário não reconhecido
+2025-08-17 19:13:02,276 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:02,377 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:02,379 - INFO - Tamanho dos bytes decodificados: 26746 bytes
+2025-08-17 19:13:02,382 - INFO - Detectando rostos...
+2025-08-17 19:13:02,382 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:02,383 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:02,482 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 247x247)
+2025-08-17 19:13:02,483 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:02,881 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:02,881 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:02,881 - INFO - Tempo total de reconhecimento: 0.40s
+2025-08-17 19:13:02,881 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:02,883 - INFO - Usuário não reconhecido
+2025-08-17 19:13:02,884 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:02,911 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:02] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:02,914 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:02,915 - INFO - Tamanho dos bytes decodificados: 26014 bytes
+2025-08-17 19:13:02,918 - INFO - Detectando rostos...
+2025-08-17 19:13:02,919 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:02,919 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:02,977 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 223x223)
+2025-08-17 19:13:02,977 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:03,399 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:03,400 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:03,400 - INFO - Tempo total de reconhecimento: 0.42s
+2025-08-17 19:13:03,401 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:03,401 - INFO - Usuário não reconhecido
+2025-08-17 19:13:03,402 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:03] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:03,468 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:03,469 - INFO - Tamanho dos bytes decodificados: 26388 bytes
+2025-08-17 19:13:03,471 - INFO - Detectando rostos...
+2025-08-17 19:13:03,471 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:03,471 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:03,539 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 224x224)
+2025-08-17 19:13:03,539 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:03,904 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:03,913 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:03,913 - INFO - Tempo total de reconhecimento: 0.37s
+2025-08-17 19:13:03,914 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:03,915 - INFO - Usuário não reconhecido
+2025-08-17 19:13:03,919 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:03] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:03,984 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:03,987 - INFO - Tamanho dos bytes decodificados: 26275 bytes
+2025-08-17 19:13:03,990 - INFO - Detectando rostos...
+2025-08-17 19:13:03,991 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:03,991 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:04,078 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 239x239)
+2025-08-17 19:13:04,078 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:04,462 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:04,462 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:04,462 - INFO - Tempo total de reconhecimento: 0.38s
+2025-08-17 19:13:04,462 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:04,463 - INFO - Usuário não reconhecido
+2025-08-17 19:13:04,464 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:04] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:04,495 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:04,496 - INFO - Tamanho dos bytes decodificados: 26650 bytes
+2025-08-17 19:13:04,498 - INFO - Detectando rostos...
+2025-08-17 19:13:04,499 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:04,499 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:04,557 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 285x285)
+2025-08-17 19:13:04,557 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:04,961 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:04,962 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:04,962 - INFO - Tempo total de reconhecimento: 0.40s
+2025-08-17 19:13:04,962 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:04,963 - INFO - Usuário não reconhecido
+2025-08-17 19:13:04,964 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:04] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:05,009 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:05,010 - INFO - Tamanho dos bytes decodificados: 27623 bytes
+2025-08-17 19:13:05,014 - INFO - Detectando rostos...
+2025-08-17 19:13:05,015 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:05,015 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:05,120 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 283x283)
+2025-08-17 19:13:05,120 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:05,574 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:05,575 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:05,576 - INFO - Tamanho dos bytes decodificados: 27542 bytes
+2025-08-17 19:13:05,577 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:05,577 - INFO - Tempo total de reconhecimento: 0.46s
+2025-08-17 19:13:05,578 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:05,579 - INFO - Usuário não reconhecido
+2025-08-17 19:13:05,581 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:05] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:05,581 - INFO - Detectando rostos...
+2025-08-17 19:13:05,582 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:05,582 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:05,647 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 298x298)
+2025-08-17 19:13:05,647 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:06,088 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:06,089 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:06,089 - INFO - Tempo total de reconhecimento: 0.44s
+2025-08-17 19:13:06,089 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:06,090 - INFO - Usuário não reconhecido
+2025-08-17 19:13:06,091 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:06] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:06,128 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:06,129 - INFO - Tamanho dos bytes decodificados: 27629 bytes
+2025-08-17 19:13:06,131 - INFO - Detectando rostos...
+2025-08-17 19:13:06,131 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:06,132 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:06,211 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 289x289)
+2025-08-17 19:13:06,211 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:06,601 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:06,601 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:06,601 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 19:13:06,601 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:06,602 - INFO - Usuário não reconhecido
+2025-08-17 19:13:06,603 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:06] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:06,660 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:06,661 - INFO - Tamanho dos bytes decodificados: 27167 bytes
+2025-08-17 19:13:06,662 - INFO - Detectando rostos...
+2025-08-17 19:13:06,664 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:06,664 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:06,741 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 272x272)
+2025-08-17 19:13:06,742 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:07,134 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:07,135 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:07,135 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 19:13:07,136 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:07,137 - INFO - Usuário não reconhecido
+2025-08-17 19:13:07,139 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:07] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:07,173 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:07,174 - INFO - Tamanho dos bytes decodificados: 27592 bytes
+2025-08-17 19:13:07,176 - INFO - Detectando rostos...
+2025-08-17 19:13:07,177 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:07,177 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:07,262 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 249x249)
+2025-08-17 19:13:07,263 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:07,641 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:07,641 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:07,642 - INFO - Tempo total de reconhecimento: 0.38s
+2025-08-17 19:13:07,642 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:07,642 - INFO - Usuário não reconhecido
+2025-08-17 19:13:07,644 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:07] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:07,686 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:07,687 - INFO - Tamanho dos bytes decodificados: 27484 bytes
+2025-08-17 19:13:07,690 - INFO - Detectando rostos...
+2025-08-17 19:13:07,691 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:07,691 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:07,781 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 239x239)
+2025-08-17 19:13:07,781 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:08,168 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:08,169 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:08,171 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 19:13:08,171 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:08,172 - INFO - Usuário não reconhecido
+2025-08-17 19:13:08,173 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:08] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:08,205 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:08] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:08,208 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:08,208 - INFO - Tamanho dos bytes decodificados: 27610 bytes
+2025-08-17 19:13:08,215 - INFO - Detectando rostos...
+2025-08-17 19:13:08,215 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:08,216 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:08,288 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 222x222)
+2025-08-17 19:13:08,289 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:08,695 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:08,696 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:08,696 - INFO - Tempo total de reconhecimento: 0.41s
+2025-08-17 19:13:08,697 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:08,698 - INFO - Usuário não reconhecido
+2025-08-17 19:13:08,703 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:08] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:08,757 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:08,758 - INFO - Tamanho dos bytes decodificados: 27376 bytes
+2025-08-17 19:13:08,760 - INFO - Detectando rostos...
+2025-08-17 19:13:08,760 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:08,760 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:08,841 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 214x214)
+2025-08-17 19:13:08,841 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:09,225 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:09,226 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:09,226 - INFO - Tempo total de reconhecimento: 0.39s
+2025-08-17 19:13:09,226 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3957
+2025-08-17 19:13:09,228 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.60
+2025-08-17 19:13:09,231 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:09] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:09,270 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:09,271 - INFO - Tamanho dos bytes decodificados: 27563 bytes
+2025-08-17 19:13:09,274 - INFO - Detectando rostos...
+2025-08-17 19:13:09,275 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:09,275 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:09,349 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 209x209)
+2025-08-17 19:13:09,349 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:09,712 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:09,713 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:09,713 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-17 19:13:09,714 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3628
+2025-08-17 19:13:09,715 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.64
+2025-08-17 19:13:09,718 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:09] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:09,802 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:09,803 - INFO - Tamanho dos bytes decodificados: 27571 bytes
+2025-08-17 19:13:09,806 - INFO - Detectando rostos...
+2025-08-17 19:13:09,806 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:09,806 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:09,866 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 216x216)
+2025-08-17 19:13:09,866 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:10,198 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:10,200 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:10,200 - INFO - Tempo total de reconhecimento: 0.33s
+2025-08-17 19:13:10,201 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3748
+2025-08-17 19:13:10,202 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.63
+2025-08-17 19:13:10,207 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:10] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:10,309 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:10,309 - INFO - Tamanho dos bytes decodificados: 27554 bytes
+2025-08-17 19:13:10,312 - INFO - Detectando rostos...
+2025-08-17 19:13:10,313 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:10,313 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:10,387 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 216x216)
+2025-08-17 19:13:10,387 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:10,751 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:10,752 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:10,753 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-17 19:13:10,753 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3535
+2025-08-17 19:13:10,755 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.65
+2025-08-17 19:13:10,759 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:10] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:10,830 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:10,831 - INFO - Tamanho dos bytes decodificados: 27599 bytes
+2025-08-17 19:13:10,834 - INFO - Detectando rostos...
+2025-08-17 19:13:10,834 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:10,835 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:10,900 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 220x220)
+2025-08-17 19:13:10,900 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:11,215 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:11,216 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:11,217 - INFO - Tempo total de reconhecimento: 0.32s
+2025-08-17 19:13:11,217 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3607
+2025-08-17 19:13:11,218 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.64
+2025-08-17 19:13:11,220 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:11] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:11,353 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:11,353 - INFO - Tamanho dos bytes decodificados: 27566 bytes
+2025-08-17 19:13:11,355 - INFO - Detectando rostos...
+2025-08-17 19:13:11,355 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:11,355 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:12,020 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 217x217)
+2025-08-17 19:13:12,030 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:12,037 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:12,042 - INFO - Tamanho dos bytes decodificados: 27639 bytes
+2025-08-17 19:13:12,044 - INFO - Detectando rostos...
+2025-08-17 19:13:12,045 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:12,046 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:12,232 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 218x218)
+2025-08-17 19:13:12,234 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:12,502 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:12,504 - INFO - Tamanho dos bytes decodificados: 27624 bytes
+2025-08-17 19:13:12,509 - INFO - Detectando rostos...
+2025-08-17 19:13:12,511 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:12,512 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:12,692 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 221x221)
+2025-08-17 19:13:12,700 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:13,024 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:13,028 - INFO - Tamanho dos bytes decodificados: 27682 bytes
+2025-08-17 19:13:13,038 - INFO - Detectando rostos...
+2025-08-17 19:13:13,047 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:13,047 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:13,065 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:13,108 - INFO - Tempo de comparação: 0.04s
+2025-08-17 19:13:13,109 - INFO - Tempo total de reconhecimento: 1.07s
+2025-08-17 19:13:13,109 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3111
+2025-08-17 19:13:13,110 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.69
+2025-08-17 19:13:13,112 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:13] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:13,130 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:13,131 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:13,131 - INFO - Tempo total de reconhecimento: 0.89s
+2025-08-17 19:13:13,131 - INFO - Nenhum usuário reconhecido
+2025-08-17 19:13:13,138 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\appFaceId.py", line 343, in face_login
+    os.remove(temp_path)  # Limpar arquivo temporário
+FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especificado: 'temp_face.jpg'
+
+2025-08-17 19:13:13,166 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:13] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-17 19:13:13,180 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 219x219)
+2025-08-17 19:13:13,180 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:13,462 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:13,463 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:13,463 - INFO - Tempo total de reconhecimento: 0.76s
+2025-08-17 19:13:13,463 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3207
+2025-08-17 19:13:13,464 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.68
+2025-08-17 19:13:13,466 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:13] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:13,513 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:13] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:13,516 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:13,517 - INFO - Tamanho dos bytes decodificados: 27606 bytes
+2025-08-17 19:13:13,521 - INFO - Detectando rostos...
+2025-08-17 19:13:13,523 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:13,523 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:13,636 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 221x221)
+2025-08-17 19:13:13,637 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:13,865 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:13,868 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:13,868 - INFO - Tempo total de reconhecimento: 0.69s
+2025-08-17 19:13:13,868 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3841
+2025-08-17 19:13:13,870 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.62
+2025-08-17 19:13:13,872 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:13] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:14,026 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:14,027 - INFO - Tamanho dos bytes decodificados: 27474 bytes
+2025-08-17 19:13:14,030 - INFO - Detectando rostos...
+2025-08-17 19:13:14,031 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:14,031 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:14,108 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:14,108 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 218x218)
+2025-08-17 19:13:14,109 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:14,109 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:14,109 - INFO - Tempo total de reconhecimento: 0.47s
+2025-08-17 19:13:14,109 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3613
+2025-08-17 19:13:14,110 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.64
+2025-08-17 19:13:14,111 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:14] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:14,466 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:14,469 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:14,469 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-17 19:13:14,469 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3521
+2025-08-17 19:13:14,472 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\appFaceId.py", line 343, in face_login
+    os.remove(temp_path)  # Limpar arquivo temporário
+FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especificado: 'temp_face.jpg'
+
+2025-08-17 19:13:14,475 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:14] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-17 19:13:14,533 - INFO - Recebendo solicitação de login facial
+2025-08-17 19:13:14,534 - INFO - Tamanho dos bytes decodificados: 27677 bytes
+2025-08-17 19:13:14,537 - INFO - Detectando rostos...
+2025-08-17 19:13:14,538 - WARNING - Detector do DeepFace falhou: No module named 'deepface.detectors'
+2025-08-17 19:13:14,538 - WARNING - Usando fallback para Haar Cascade
+2025-08-17 19:13:14,605 - INFO - Rosto detectado salvo temporariamente em temp_face.jpg (tamanho: 219x219)
+2025-08-17 19:13:14,605 - INFO - Iniciando reconhecimento facial...
+2025-08-17 19:13:14,979 - INFO - Comparando com 1 usuários no banco...
+2025-08-17 19:13:14,981 - INFO - Tempo de comparação: 0.00s
+2025-08-17 19:13:14,981 - INFO - Tempo total de reconhecimento: 0.38s
+2025-08-17 19:13:14,981 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3675
+2025-08-17 19:13:14,982 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.63
+2025-08-17 19:13:14,985 - INFO - 127.0.0.1 - - [17/Aug/2025 19:13:14] "POST /face-login HTTP/1.1" 200 -
+2025-08-17 19:13:46,920 - INFO - Servidor encerrado
+2025-08-17 19:13:48,119 - INFO - Servidor encerrado
+2025-08-17 19:24:24,989 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 19:24:24,990 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-17 19:24:24,990 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 19:24:24,990 - INFO - Processando usuário: Davi Mazoti
+2025-08-17 19:24:29,615 - INFO - Tempo de processamento para Davi_Mazoti_000_154600651629_63.jpg: 4.62s
+2025-08-17 19:24:29,984 - INFO - Tempo de processamento para Davi_Mazoti_001_154600645989_76.jpg: 0.37s
+2025-08-17 19:24:30,381 - INFO - Tempo de processamento para Davi_Mazoti_002_154600663150_77.jpg: 0.40s
+2025-08-17 19:24:30,884 - INFO - Tempo de processamento para Davi_Mazoti_003_154600660421_78.jpg: 0.50s
+2025-08-17 19:24:32,407 - INFO - Tempo de processamento para Davi_Mazoti_004_154601164582_78.jpg: 1.52s
+2025-08-17 19:24:32,922 - INFO - Tempo de processamento para Davi_Mazoti_005_154601177483_78.jpg: 0.51s
+2025-08-17 19:24:33,983 - INFO - Tempo de processamento para Davi_Mazoti_006_154601197059_77.jpg: 1.06s
+2025-08-17 19:24:34,462 - INFO - Tempo de processamento para Davi_Mazoti_007_154601416987_78.jpg: 0.48s
+2025-08-17 19:24:34,895 - INFO - Tempo de processamento para Davi_Mazoti_008_154601730978_76.jpg: 0.43s
+2025-08-17 19:24:35,289 - INFO - Tempo de processamento para Davi_Mazoti_009_154601704906_75.jpg: 0.39s
+2025-08-17 19:24:35,824 - INFO - Tempo de processamento para Davi_Mazoti_010_154601870041_76.jpg: 0.53s
+2025-08-17 19:24:36,291 - INFO - Tempo de processamento para Davi_Mazoti_011_154601943907_76.jpg: 0.47s
+2025-08-17 19:24:36,765 - INFO - Tempo de processamento para Davi_Mazoti_012_154602301839_76.jpg: 0.47s
+2025-08-17 19:24:37,227 - INFO - Tempo de processamento para Davi_Mazoti_013_154602456728_76.jpg: 0.46s
+2025-08-17 19:24:37,674 - INFO - Tempo de processamento para Davi_Mazoti_014_154602581231_76.jpg: 0.45s
+2025-08-17 19:24:38,037 - INFO - Tempo de processamento para Davi_Mazoti_015_154602680214_76.jpg: 0.36s
+2025-08-17 19:24:38,417 - INFO - Tempo de processamento para Davi_Mazoti_016_154602839803_76.jpg: 0.38s
+2025-08-17 19:24:38,776 - INFO - Tempo de processamento para Davi_Mazoti_017_154602938684_76.jpg: 0.36s
+2025-08-17 19:24:39,117 - INFO - Tempo de processamento para Davi_Mazoti_018_154603058734_76.jpg: 0.34s
+2025-08-17 19:24:39,464 - INFO - Tempo de processamento para Davi_Mazoti_019_154603199167_76.jpg: 0.35s
+2025-08-17 19:24:39,807 - INFO - Tempo de processamento para Davi_Mazoti_020_154603394219_76.jpg: 0.34s
+2025-08-17 19:24:40,153 - INFO - Tempo de processamento para Davi_Mazoti_021_154603522846_76.jpg: 0.35s
+2025-08-17 19:24:40,513 - INFO - Tempo de processamento para Davi_Mazoti_022_154603686311_76.jpg: 0.36s
+2025-08-17 19:24:40,861 - INFO - Tempo de processamento para Davi_Mazoti_023_154603760208_76.jpg: 0.35s
+2025-08-17 19:24:41,201 - INFO - Tempo de processamento para Davi_Mazoti_024_154603992184_76.jpg: 0.34s
+2025-08-17 19:24:41,555 - INFO - Tempo de processamento para Davi_Mazoti_025_154604116518_76.jpg: 0.35s
+2025-08-17 19:24:41,904 - INFO - Tempo de processamento para Davi_Mazoti_026_154604230985_76.jpg: 0.35s
+2025-08-17 19:24:42,256 - INFO - Tempo de processamento para Davi_Mazoti_027_154604294439_76.jpg: 0.35s
+2025-08-17 19:24:42,610 - INFO - Tempo de processamento para Davi_Mazoti_028_154604495229_76.jpg: 0.35s
+2025-08-17 19:24:42,956 - INFO - Tempo de processamento para Davi_Mazoti_029_154604600775_76.jpg: 0.35s
+2025-08-17 19:24:43,312 - INFO - Tempo de processamento para Davi_Mazoti_030_154604700889_76.jpg: 0.35s
+2025-08-17 19:24:43,675 - INFO - Tempo de processamento para Davi_Mazoti_031_154604752671_77.jpg: 0.36s
+2025-08-17 19:24:44,010 - INFO - Tempo de processamento para Davi_Mazoti_032_154604990814_77.jpg: 0.33s
+2025-08-17 19:24:44,370 - INFO - Tempo de processamento para Davi_Mazoti_033_154605118674_77.jpg: 0.36s
+2025-08-17 19:24:44,728 - INFO - Tempo de processamento para Davi_Mazoti_034_154605231347_77.jpg: 0.36s
+2025-08-17 19:24:45,077 - INFO - Tempo de processamento para Davi_Mazoti_035_154605306332_77.jpg: 0.35s
+2025-08-17 19:24:45,423 - INFO - Tempo de processamento para Davi_Mazoti_036_154605593199_77.jpg: 0.35s
+2025-08-17 19:24:45,765 - INFO - Tempo de processamento para Davi_Mazoti_037_154605710063_77.jpg: 0.34s
+2025-08-17 19:24:46,111 - INFO - Tempo de processamento para Davi_Mazoti_038_154605845528_77.jpg: 0.34s
+2025-08-17 19:24:46,509 - INFO - Tempo de processamento para Davi_Mazoti_039_154605944480_77.jpg: 0.40s
+2025-08-17 19:24:46,868 - INFO - Tempo de processamento para Davi_Mazoti_040_154607955251_77.jpg: 0.36s
+2025-08-17 19:24:47,299 - INFO - Tempo de processamento para Davi_Mazoti_041_154608068843_77.jpg: 0.43s
+2025-08-17 19:24:47,663 - INFO - Tempo de processamento para Davi_Mazoti_042_154608135274_77.jpg: 0.36s
+2025-08-17 19:24:48,017 - INFO - Tempo de processamento para Davi_Mazoti_043_154608250470_76.jpg: 0.35s
+2025-08-17 19:24:48,017 - INFO - » Davi Mazoti: 44 amostras carregadas
+2025-08-17 19:24:48,088 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-17 19:24:48,088 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-17 19:24:48,094 - INFO -  * Restarting with stat
+2025-08-17 19:24:54,612 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 19:24:54,615 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-17 19:24:54,616 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-17 19:24:54,616 - INFO - Processando usuário: Davi Mazoti
+2025-08-17 19:25:00,995 - INFO - Tempo de processamento para Davi_Mazoti_000_154600651629_63.jpg: 6.37s
+2025-08-17 19:25:01,416 - INFO - Tempo de processamento para Davi_Mazoti_001_154600645989_76.jpg: 0.42s
+2025-08-17 19:25:01,829 - INFO - Tempo de processamento para Davi_Mazoti_002_154600663150_77.jpg: 0.41s
+2025-08-17 19:25:02,243 - INFO - Tempo de processamento para Davi_Mazoti_003_154600660421_78.jpg: 0.41s
+2025-08-17 19:25:02,632 - INFO - Tempo de processamento para Davi_Mazoti_004_154601164582_78.jpg: 0.39s
+2025-08-17 19:25:03,046 - INFO - Tempo de processamento para Davi_Mazoti_005_154601177483_78.jpg: 0.41s
+2025-08-17 19:25:03,452 - INFO - Tempo de processamento para Davi_Mazoti_006_154601197059_77.jpg: 0.41s
+2025-08-17 19:25:03,883 - INFO - Tempo de processamento para Davi_Mazoti_007_154601416987_78.jpg: 0.43s
+2025-08-17 19:25:04,296 - INFO - Tempo de processamento para Davi_Mazoti_008_154601730978_76.jpg: 0.41s
+2025-08-17 19:25:04,736 - INFO - Tempo de processamento para Davi_Mazoti_009_154601704906_75.jpg: 0.44s
+2025-08-17 19:25:05,150 - INFO - Tempo de processamento para Davi_Mazoti_010_154601870041_76.jpg: 0.41s
+2025-08-17 19:25:05,576 - INFO - Tempo de processamento para Davi_Mazoti_011_154601943907_76.jpg: 0.43s
+2025-08-17 19:25:06,008 - INFO - Tempo de processamento para Davi_Mazoti_012_154602301839_76.jpg: 0.43s
+2025-08-17 19:25:06,424 - INFO - Tempo de processamento para Davi_Mazoti_013_154602456728_76.jpg: 0.42s
+2025-08-17 19:25:06,837 - INFO - Tempo de processamento para Davi_Mazoti_014_154602581231_76.jpg: 0.41s
+2025-08-17 19:25:07,235 - INFO - Tempo de processamento para Davi_Mazoti_015_154602680214_76.jpg: 0.40s
+2025-08-17 19:25:07,649 - INFO - Tempo de processamento para Davi_Mazoti_016_154602839803_76.jpg: 0.41s
+2025-08-17 19:25:08,057 - INFO - Tempo de processamento para Davi_Mazoti_017_154602938684_76.jpg: 0.41s
+2025-08-17 19:25:08,494 - INFO - Tempo de processamento para Davi_Mazoti_018_154603058734_76.jpg: 0.44s
+2025-08-17 19:25:08,934 - INFO - Tempo de processamento para Davi_Mazoti_019_154603199167_76.jpg: 0.44s
+2025-08-17 19:25:09,402 - INFO - Tempo de processamento para Davi_Mazoti_020_154603394219_76.jpg: 0.47s
+2025-08-17 19:25:09,856 - INFO - Tempo de processamento para Davi_Mazoti_021_154603522846_76.jpg: 0.45s
+2025-08-17 19:25:10,249 - INFO - Tempo de processamento para Davi_Mazoti_022_154603686311_76.jpg: 0.39s
+2025-08-17 19:25:10,666 - INFO - Tempo de processamento para Davi_Mazoti_023_154603760208_76.jpg: 0.41s
+2025-08-17 19:25:11,081 - INFO - Tempo de processamento para Davi_Mazoti_024_154603992184_76.jpg: 0.41s
+2025-08-17 19:25:11,525 - INFO - Tempo de processamento para Davi_Mazoti_025_154604116518_76.jpg: 0.44s
+2025-08-17 19:25:11,952 - INFO - Tempo de processamento para Davi_Mazoti_026_154604230985_76.jpg: 0.43s
+2025-08-17 19:25:12,435 - INFO - Tempo de processamento para Davi_Mazoti_027_154604294439_76.jpg: 0.48s
+2025-08-17 19:25:12,890 - INFO - Tempo de processamento para Davi_Mazoti_028_154604495229_76.jpg: 0.45s
+2025-08-17 19:25:13,339 - INFO - Tempo de processamento para Davi_Mazoti_029_154604600775_76.jpg: 0.45s
+2025-08-17 19:25:13,841 - INFO - Tempo de processamento para Davi_Mazoti_030_154604700889_76.jpg: 0.50s
+2025-08-17 19:25:14,291 - INFO - Tempo de processamento para Davi_Mazoti_031_154604752671_77.jpg: 0.45s
+2025-08-17 19:25:14,765 - INFO - Tempo de processamento para Davi_Mazoti_032_154604990814_77.jpg: 0.47s
+2025-08-17 19:25:15,266 - INFO - Tempo de processamento para Davi_Mazoti_033_154605118674_77.jpg: 0.50s
+2025-08-17 19:25:15,793 - INFO - Tempo de processamento para Davi_Mazoti_034_154605231347_77.jpg: 0.53s
+2025-08-17 19:25:16,295 - INFO - Tempo de processamento para Davi_Mazoti_035_154605306332_77.jpg: 0.50s
+2025-08-17 19:25:16,816 - INFO - Tempo de processamento para Davi_Mazoti_036_154605593199_77.jpg: 0.52s
+2025-08-17 19:25:17,230 - INFO - Tempo de processamento para Davi_Mazoti_037_154605710063_77.jpg: 0.41s
+2025-08-17 19:25:17,686 - INFO - Tempo de processamento para Davi_Mazoti_038_154605845528_77.jpg: 0.46s
+2025-08-17 19:25:18,089 - INFO - Tempo de processamento para Davi_Mazoti_039_154605944480_77.jpg: 0.40s
+2025-08-17 19:25:18,500 - INFO - Tempo de processamento para Davi_Mazoti_040_154607955251_77.jpg: 0.41s
+2025-08-17 19:25:18,901 - INFO - Tempo de processamento para Davi_Mazoti_041_154608068843_77.jpg: 0.40s
+2025-08-17 19:25:19,351 - INFO - Tempo de processamento para Davi_Mazoti_042_154608135274_77.jpg: 0.45s
+2025-08-17 19:25:19,784 - INFO - Tempo de processamento para Davi_Mazoti_043_154608250470_76.jpg: 0.43s
+2025-08-17 19:25:19,786 - INFO - » Davi Mazoti: 44 amostras carregadas
+2025-08-17 19:25:19,811 - WARNING -  * Debugger is active!
+2025-08-17 19:25:19,829 - INFO -  * Debugger PIN: 848-559-839
+2025-08-17 19:26:15,061 - INFO - Servidor encerrado
+2025-08-17 19:26:15,844 - INFO - Servidor encerrado

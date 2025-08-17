@@ -5,7 +5,7 @@ import cv2
 from deepface import DeepFace
 
 # ====================== CONFIGURAÇÕES ======================
-DATABASE_DIR = "../facial_database"
+DATABASE_DIR = "../Cadastro/facial_database"
 MODEL_NAME = "VGG-Face"
 DISTANCE_THRESHOLD = 0.40
 MIN_FACE_SIZE = (100, 100)
