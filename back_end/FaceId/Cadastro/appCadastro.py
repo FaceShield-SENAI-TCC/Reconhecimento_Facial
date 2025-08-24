@@ -182,7 +182,7 @@ def run_server():
         socketio.run(
             app,
             host='0.0.0.0',
-            port=5000,
+            port=7001,
             debug=False,
             allow_unsafe_werkzeug=True,
             use_reloader=False
@@ -193,10 +193,10 @@ def run_server():
         try:
             from waitress import serve
             logging.info("Tentando iniciar com Waitress...")
-            serve(app, host="0.0.0.0", port=5000)
+            serve(app, host="0.0.0.0", port=7001)
         except ImportError:
             logging.info("Waitress não disponível, usando servidor Flask simples")
-            app.run(host='0.0.0.0', port=5000, debug=False)
+            app.run(host='0.0.0.0', port=7001, debug=False)
 
 
 if __name__ == '__main__':

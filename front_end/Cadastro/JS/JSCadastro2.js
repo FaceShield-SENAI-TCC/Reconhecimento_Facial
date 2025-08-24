@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "http://localhost:8080/usuarios/novoUsuario";
 
   // Conectar ao WebSocket do servidor de captura
-  const socket = io("http://localhost:5000", {
+  const socket = io("http://localhost:7001", {
     reconnection: true,
     reconnectionAttempts: 5,
     reconnectionDelay: 3000
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
       socket.emit("join", { session_id: captureSessionId });
 
       // Iniciar o processo de captura no back-end
-      const response = await fetch("http://localhost:5000/start_capture", {
+      const response = await fetch("http://localhost:7001/start_capture", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

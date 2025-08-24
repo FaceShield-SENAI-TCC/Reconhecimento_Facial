@@ -4833,3 +4833,1069 @@ FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especific
 2025-08-23 16:48:36,147 - INFO -  * Debugger PIN: 848-559-839
 2025-08-23 16:49:31,876 - INFO - Servidor encerrado
 2025-08-23 16:49:32,303 - INFO - Servidor encerrado
+2025-08-24 11:11:37,613 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 11:11:37,620 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 11:11:38,972 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-24 11:11:38,972 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 11:11:38,982 - INFO -  * Restarting with stat
+2025-08-24 11:11:44,859 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 11:11:44,861 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 11:11:44,867 - WARNING -  * Debugger is active!
+2025-08-24 11:11:44,879 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 11:12:36,747 - INFO - Servidor encerrado
+2025-08-24 11:12:37,253 - INFO - Servidor encerrado
+2025-08-24 12:16:51,402 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 12:16:51,409 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 12:16:52,734 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-24 12:16:52,734 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 12:16:52,736 - INFO -  * Restarting with stat
+2025-08-24 12:16:57,417 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 12:16:57,419 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 12:16:57,426 - WARNING -  * Debugger is active!
+2025-08-24 12:16:57,431 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 12:23:53,037 - INFO - Servidor encerrado
+2025-08-24 12:23:53,686 - INFO - Servidor encerrado
+2025-08-24 12:24:08,410 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 12:24:08,416 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 12:24:09,741 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-24 12:24:09,742 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 12:24:09,745 - INFO -  * Restarting with stat
+2025-08-24 12:24:14,779 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 12:24:14,780 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 12:24:14,787 - WARNING -  * Debugger is active!
+2025-08-24 12:24:14,793 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:15:10,838 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 13:15:10,841 - INFO - Servidor encerrado
+2025-08-24 13:15:11,589 - INFO -  * Restarting with stat
+2025-08-24 13:15:17,059 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:15:17,066 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:15:17,073 - WARNING -  * Debugger is active!
+2025-08-24 13:15:17,078 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:17:43,840 - INFO - Servidor encerrado
+2025-08-24 13:17:44,263 - INFO - Servidor encerrado
+2025-08-24 13:17:51,827 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:17:51,829 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:17:53,125 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-24 13:17:53,125 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 13:17:53,126 - INFO -  * Restarting with stat
+2025-08-24 13:17:57,260 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:17:57,263 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:17:57,270 - WARNING -  * Debugger is active!
+2025-08-24 13:17:57,295 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:25:42,565 - INFO - Servidor encerrado
+2025-08-24 13:25:43,116 - INFO - Servidor encerrado
+2025-08-24 13:41:24,572 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:41:24,578 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:41:25,928 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-24 13:41:25,928 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 13:41:25,939 - INFO -  * Restarting with stat
+2025-08-24 13:41:29,988 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:41:29,990 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:41:29,997 - WARNING -  * Debugger is active!
+2025-08-24 13:41:30,013 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:42:26,019 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 13:42:26,019 - INFO - Servidor encerrado
+2025-08-24 13:42:26,450 - INFO -  * Restarting with stat
+2025-08-24 13:42:35,800 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:42:35,806 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:42:35,818 - WARNING -  * Debugger is active!
+2025-08-24 13:42:35,826 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:43:09,328 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 13:43:09,328 - INFO - Servidor encerrado
+2025-08-24 13:43:09,764 - INFO -  * Restarting with stat
+2025-08-24 13:43:14,531 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:43:14,534 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:43:14,543 - WARNING -  * Debugger is active!
+2025-08-24 13:43:14,547 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:43:57,167 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 13:43:57,167 - INFO - Servidor encerrado
+2025-08-24 13:43:57,580 - INFO -  * Restarting with stat
+2025-08-24 13:44:01,775 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:44:01,777 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:44:01,784 - WARNING -  * Debugger is active!
+2025-08-24 13:44:01,789 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:44:08,892 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 13:44:08,893 - INFO - Servidor encerrado
+2025-08-24 13:44:09,373 - INFO -  * Restarting with stat
+2025-08-24 13:44:15,343 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:44:15,345 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:44:15,352 - WARNING -  * Debugger is active!
+2025-08-24 13:44:15,357 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:44:20,459 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 13:44:20,461 - INFO - Servidor encerrado
+2025-08-24 13:44:20,896 - INFO -  * Restarting with stat
+2025-08-24 13:44:25,246 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:44:25,248 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:44:25,255 - WARNING -  * Debugger is active!
+2025-08-24 13:44:25,261 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:46:03,775 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 13:46:03,776 - INFO - Servidor encerrado
+2025-08-24 13:46:04,238 - INFO -  * Restarting with stat
+2025-08-24 13:46:07,367 - INFO - Servidor encerrado
+2025-08-24 13:46:16,222 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:46:16,224 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:46:17,535 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.8:5000
+2025-08-24 13:46:17,535 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 13:46:17,536 - INFO -  * Restarting with stat
+2025-08-24 13:46:21,975 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:46:21,977 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:46:21,983 - WARNING -  * Debugger is active!
+2025-08-24 13:46:21,988 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:51:08,159 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 13:51:08,161 - INFO - Servidor encerrado
+2025-08-24 13:51:08,794 - INFO -  * Restarting with stat
+2025-08-24 13:51:14,709 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:51:14,716 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:51:14,724 - WARNING -  * Debugger is active!
+2025-08-24 13:51:14,729 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:51:38,546 - INFO - Servidor encerrado
+2025-08-24 13:51:38,959 - INFO - Servidor encerrado
+2025-08-24 13:51:45,359 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:51:45,360 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:51:45,366 - INFO - Servidor encerrado
+2025-08-24 13:52:09,456 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:52:09,458 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:52:10,789 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.0.8:5005
+2025-08-24 13:52:10,789 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-24 13:52:10,792 - INFO -  * Restarting with stat
+2025-08-24 13:52:15,999 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 13:52:16,001 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 13:52:16,010 - WARNING -  * Debugger is active!
+2025-08-24 13:52:16,015 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 13:52:16,030 - INFO - Recebendo solicitação de login facial
+2025-08-24 13:52:16,032 - INFO - Tamanho dos bytes decodificados: 34047 bytes
+2025-08-24 13:52:16,034 - INFO - Recebendo solicitação de login facial
+2025-08-24 13:52:16,035 - INFO - Tamanho dos bytes decodificados: 34298 bytes
+2025-08-24 13:52:16,036 - INFO - Recebendo solicitação de login facial
+2025-08-24 13:52:16,037 - INFO - Tamanho dos bytes decodificados: 34195 bytes
+2025-08-24 13:52:16,047 - INFO - Detectando rostos com DeepFace...
+2025-08-24 13:52:16,047 - INFO - Detectando rostos com DeepFace...
+2025-08-24 13:52:16,047 - INFO - Detectando rostos com DeepFace...
+2025-08-24 13:52:16,481 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_0e1dcb93902c46af8b03aeda184429c8.jpg (tamanho: 279x279)
+2025-08-24 13:52:16,481 - INFO - Iniciando reconhecimento facial...
+2025-08-24 13:52:16,697 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_65ef9b0d12db4426afa12883fd2eb1c5.jpg (tamanho: 274x274)
+2025-08-24 13:52:16,705 - INFO - Iniciando reconhecimento facial...
+2025-08-24 13:52:16,706 - WARNING - Rosto muito pequeno: 54x54
+2025-08-24 13:52:16,709 - INFO - 127.0.0.1 - - [24/Aug/2025 13:52:16] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 13:52:18,028 - INFO - Recebendo solicitação de login facial
+2025-08-24 13:52:18,029 - INFO - Tamanho dos bytes decodificados: 35542 bytes
+2025-08-24 13:52:18,033 - INFO - Detectando rostos com DeepFace...
+2025-08-24 13:52:18,600 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_0350aebbc038465297068ca0a036db79.jpg (tamanho: 251x251)
+2025-08-24 13:52:18,602 - INFO - Iniciando reconhecimento facial...
+2025-08-24 13:52:19,870 - INFO - Recebendo solicitação de login facial
+2025-08-24 13:52:19,873 - INFO - Tamanho dos bytes decodificados: 33195 bytes
+2025-08-24 13:52:19,884 - INFO - Detectando rostos com DeepFace...
+2025-08-24 13:52:20,113 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_1d9720f1dcde462682c75b26b9acc08a.jpg (tamanho: 257x257)
+2025-08-24 13:52:20,114 - INFO - Iniciando reconhecimento facial...
+2025-08-24 13:52:21,783 - INFO - Recebendo solicitação de login facial
+2025-08-24 13:52:21,784 - INFO - Tamanho dos bytes decodificados: 33087 bytes
+2025-08-24 13:52:21,815 - INFO - Detectando rostos com DeepFace...
+2025-08-24 13:52:22,198 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_8baae14b4c8a4c61812403a5c305912d.jpg (tamanho: 271x271)
+2025-08-24 13:52:22,209 - INFO - Iniciando reconhecimento facial...
+2025-08-24 13:52:23,999 - INFO - Recebendo solicitação de login facial
+2025-08-24 13:52:24,000 - INFO - Tamanho dos bytes decodificados: 34011 bytes
+2025-08-24 13:52:24,006 - INFO - Detectando rostos com DeepFace...
+2025-08-24 13:52:24,735 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_9ea65377858747c8bbbee78260adf4e0.jpg (tamanho: 256x256)
+2025-08-24 13:52:24,735 - INFO - Iniciando reconhecimento facial...
+2025-08-24 13:54:07,346 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 13:54:07,667 - INFO - Tempo de comparação: 0.14s
+2025-08-24 13:54:07,667 - INFO - Tempo total de reconhecimento: 110.96s
+2025-08-24 13:54:07,667 - INFO - Nenhum usuário reconhecido
+2025-08-24 13:54:07,709 - INFO - Usuário não reconhecido
+2025-08-24 13:54:08,082 - INFO - 127.0.0.1 - - [24/Aug/2025 13:54:07] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 13:54:14,889 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 13:54:14,943 - INFO - Tempo de comparação: 0.01s
+2025-08-24 13:54:14,943 - INFO - Tempo total de reconhecimento: 118.46s
+2025-08-24 13:54:14,945 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3213
+2025-08-24 13:54:14,955 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.68
+2025-08-24 13:54:15,025 - INFO - 127.0.0.1 - - [24/Aug/2025 13:54:15] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 13:54:21,871 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 13:54:21,947 - INFO - Tempo de comparação: 0.00s
+2025-08-24 13:54:21,947 - INFO - Tempo total de reconhecimento: 121.82s
+2025-08-24 13:54:21,948 - INFO - Nenhum usuário reconhecido
+2025-08-24 13:54:21,951 - INFO - Usuário não reconhecido
+2025-08-24 13:54:22,009 - INFO - 127.0.0.1 - - [24/Aug/2025 13:54:22] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 13:54:51,948 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 13:54:51,935 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 13:54:51,977 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 13:54:52,054 - INFO - Tempo de comparação: 0.06s
+2025-08-24 13:54:52,054 - INFO - Tempo de comparação: 0.06s
+2025-08-24 13:54:52,054 - INFO - Tempo de comparação: 0.07s
+2025-08-24 13:54:52,054 - INFO - Tempo total de reconhecimento: 153.45s
+2025-08-24 13:54:52,054 - INFO - Tempo total de reconhecimento: 147.32s
+2025-08-24 13:54:52,054 - INFO - Tempo total de reconhecimento: 149.84s
+2025-08-24 13:54:52,056 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3622
+2025-08-24 13:54:52,058 - INFO - Nenhum usuário reconhecido
+2025-08-24 13:54:52,060 - INFO - Nenhum usuário reconhecido
+2025-08-24 13:54:52,074 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.64
+2025-08-24 13:54:52,074 - INFO - Usuário não reconhecido
+2025-08-24 13:54:52,101 - INFO - Usuário não reconhecido
+2025-08-24 13:54:52,323 - INFO - 127.0.0.1 - - [24/Aug/2025 13:54:52] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 13:54:52,325 - INFO - 127.0.0.1 - - [24/Aug/2025 13:54:52] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 13:54:52,329 - INFO - 127.0.0.1 - - [24/Aug/2025 13:54:52] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:08:04,230 - INFO -  * Detected change in 'C:\\Users\\WBS\\Desktop\\Arduino\\back_end\\FaceId\\Reconhecimento_facial\\server_faceId.py', reloading
+2025-08-24 15:08:04,257 - INFO - Servidor encerrado
+2025-08-24 15:08:06,375 - INFO -  * Restarting with stat
+2025-08-24 15:08:14,077 - INFO - Caminho absoluto do banco: C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-24 15:08:14,084 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-24 15:08:14,095 - WARNING -  * Debugger is active!
+2025-08-24 15:08:14,102 - INFO -  * Debugger PIN: 848-559-839
+2025-08-24 15:08:40,600 - INFO - 127.0.0.1 - - [24/Aug/2025 15:08:40] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 15:08:40,606 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:08:40,607 - INFO - Tamanho dos bytes decodificados: 32654 bytes
+2025-08-24 15:08:40,627 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:08:40,928 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_d17ac4f0a12e4a29a2f099e30843e7a3.jpg (tamanho: 639x479)
+2025-08-24 15:08:40,929 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:08:42,604 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:08:42,605 - INFO - Tamanho dos bytes decodificados: 33278 bytes
+2025-08-24 15:08:42,608 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:08:42,742 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_97b00b9ff4da46dfb66584df0895ad54.jpg (tamanho: 205x205)
+2025-08-24 15:08:42,742 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:08:44,898 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:08:44,902 - INFO - Tamanho dos bytes decodificados: 33367 bytes
+2025-08-24 15:08:44,955 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:08:45,354 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_c9486a80a29749adad7a4bcfa6b485c7.jpg (tamanho: 195x195)
+2025-08-24 15:08:45,355 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:08:46,623 - INFO - 127.0.0.1 - - [24/Aug/2025 15:08:46] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 15:08:46,806 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:08:46,809 - INFO - Tamanho dos bytes decodificados: 34233 bytes
+2025-08-24 15:08:46,815 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:08:47,233 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_86a29c0b12f44842a7e781b7501a11e5.jpg (tamanho: 169x169)
+2025-08-24 15:08:47,234 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:08:51,240 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:08:51,257 - INFO - Tamanho dos bytes decodificados: 30816 bytes
+2025-08-24 15:08:51,272 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:08:52,225 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_6429581020eb4cdca405a308a2b7adfb.jpg (tamanho: 639x479)
+2025-08-24 15:08:52,225 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:08:58,139 - INFO - 127.0.0.1 - - [24/Aug/2025 15:08:58] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 15:08:58,182 - INFO - 127.0.0.1 - - [24/Aug/2025 15:08:58] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 15:08:58,187 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:08:58,218 - INFO - Tamanho dos bytes decodificados: 33052 bytes
+2025-08-24 15:08:58,233 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:08:58,489 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_7dca9600ecdd409593144c0098e901ea.jpg (tamanho: 639x479)
+2025-08-24 15:08:58,491 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:09:00,311 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:00,405 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:00,488 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:00,577 - INFO - Tempo de comparação: 0.09s
+2025-08-24 15:09:00,578 - INFO - Tempo de comparação: 0.27s
+2025-08-24 15:09:00,584 - INFO - Tempo total de reconhecimento: 15.23s
+2025-08-24 15:09:00,584 - INFO - Nenhum usuário reconhecido
+2025-08-24 15:09:00,581 - INFO - Tempo de comparação: 0.09s
+2025-08-24 15:09:00,587 - INFO - Tempo total de reconhecimento: 17.85s
+2025-08-24 15:09:00,587 - INFO - Nenhum usuário reconhecido
+2025-08-24 15:09:00,583 - INFO - Tempo total de reconhecimento: 2.09s
+2025-08-24 15:09:00,589 - INFO - Usuário não reconhecido
+2025-08-24 15:09:00,599 - INFO - Usuário não reconhecido
+2025-08-24 15:09:00,605 - INFO - Nenhum usuário reconhecido
+2025-08-24 15:09:00,609 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:00] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:00,616 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:00] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:00,625 - INFO - Usuário não reconhecido
+2025-08-24 15:09:00,635 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:00] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:00,646 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:09:00,648 - INFO - Tamanho dos bytes decodificados: 34140 bytes
+2025-08-24 15:09:00,654 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:09:00,837 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_8afc1d8056994ad3b96e58b85dceec6b.jpg (tamanho: 639x479)
+2025-08-24 15:09:00,837 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:09:00,840 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:09:00,844 - INFO - Tamanho dos bytes decodificados: 35112 bytes
+2025-08-24 15:09:00,901 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:09:01,720 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:01,722 - INFO - Tempo de comparação: 0.00s
+2025-08-24 15:09:01,722 - INFO - Tempo total de reconhecimento: 0.88s
+2025-08-24 15:09:01,722 - INFO - Nenhum usuário reconhecido
+2025-08-24 15:09:01,722 - INFO - Usuário não reconhecido
+2025-08-24 15:09:01,724 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_bc315f69375c461dbb12b314e7c7b191.jpg (tamanho: 639x479)
+2025-08-24 15:09:01,725 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:01] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:01,725 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:09:02,190 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:09:02,193 - INFO - Tamanho dos bytes decodificados: 34333 bytes
+2025-08-24 15:09:02,195 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:09:02,533 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:02,537 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:02,543 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:02,549 - INFO - Tempo de comparação: 0.01s
+2025-08-24 15:09:02,549 - INFO - Tempo total de reconhecimento: 21.62s
+2025-08-24 15:09:02,549 - INFO - Nenhum usuário reconhecido
+2025-08-24 15:09:02,551 - INFO - Tempo de comparação: 0.01s
+2025-08-24 15:09:02,553 - INFO - Usuário não reconhecido
+2025-08-24 15:09:02,554 - INFO - Tempo de comparação: 0.01s
+2025-08-24 15:09:02,565 - INFO - Tempo total de reconhecimento: 0.84s
+2025-08-24 15:09:02,566 - INFO - Nenhum usuário reconhecido
+2025-08-24 15:09:02,555 - INFO - Tempo total de reconhecimento: 10.33s
+2025-08-24 15:09:02,561 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:02,569 - INFO - Usuário não reconhecido
+2025-08-24 15:09:02,573 - INFO - Nenhum usuário reconhecido
+2025-08-24 15:09:02,580 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:02,587 - INFO - Usuário não reconhecido
+2025-08-24 15:09:02,589 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:02,600 - WARNING - Rosto muito pequeno: 50x50
+2025-08-24 15:09:02,623 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:02,914 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:02,915 - INFO - Tempo de comparação: 0.00s
+2025-08-24 15:09:02,916 - INFO - Tempo total de reconhecimento: 15.68s
+2025-08-24 15:09:02,916 - INFO - Nenhum usuário reconhecido
+2025-08-24 15:09:02,920 - INFO - Usuário não reconhecido
+2025-08-24 15:09:02,921 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:04,144 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:04] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 15:09:04,150 - INFO - Recebendo solicitação de login facial
+2025-08-24 15:09:04,150 - INFO - Tamanho dos bytes decodificados: 33277 bytes
+2025-08-24 15:09:04,154 - INFO - Detectando rostos com DeepFace...
+2025-08-24 15:09:04,264 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_0dc25f98b3924d6fb0d42e957eef06a2.jpg (tamanho: 273x273)
+2025-08-24 15:09:04,266 - INFO - Iniciando reconhecimento facial...
+2025-08-24 15:09:04,560 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 15:09:04,562 - INFO - Tempo de comparação: 0.00s
+2025-08-24 15:09:04,562 - INFO - Tempo total de reconhecimento: 0.30s
+2025-08-24 15:09:04,567 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3590
+2025-08-24 15:09:04,569 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.64
+2025-08-24 15:09:04,570 - INFO - 127.0.0.1 - - [24/Aug/2025 15:09:04] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:14:43,688 - INFO - 127.0.0.1 - - [24/Aug/2025 17:14:43] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:14:43,701 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:14:43,707 - INFO - Tamanho dos bytes decodificados: 31396 bytes
+2025-08-24 17:14:43,750 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:14:44,020 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_96a5367d5d594bd8a492ab84b04717ce.jpg (tamanho: 383x383)
+2025-08-24 17:14:44,020 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:14:44,180 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:14:44,184 - INFO - Tamanho dos bytes decodificados: 34454 bytes
+2025-08-24 17:14:44,186 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:14:44,352 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_637737fcf607489eaa7949a1e8c9352e.jpg (tamanho: 287x287)
+2025-08-24 17:14:44,352 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:14:46,179 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:14:46,180 - INFO - Tamanho dos bytes decodificados: 35159 bytes
+2025-08-24 17:14:46,182 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:14:46,286 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_16ce12904a9c4d9ea4cfb0badf90c550.jpg (tamanho: 287x287)
+2025-08-24 17:14:46,286 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:14:47,678 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:14:47,679 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:14:47,681 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:14:47,685 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:14:47,685 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:14:47,685 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:14:47,685 - INFO - Tempo total de reconhecimento: 3.33s
+2025-08-24 17:14:47,685 - INFO - Tempo total de reconhecimento: 3.66s
+2025-08-24 17:14:47,685 - INFO - Tempo total de reconhecimento: 1.40s
+2025-08-24 17:14:47,685 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:14:47,685 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:14:47,686 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3708
+2025-08-24 17:14:47,688 - INFO - Usuário não reconhecido
+2025-08-24 17:14:47,688 - INFO - Usuário não reconhecido
+2025-08-24 17:14:47,688 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.63
+2025-08-24 17:14:47,689 - INFO - 127.0.0.1 - - [24/Aug/2025 17:14:47] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:14:47,690 - INFO - 127.0.0.1 - - [24/Aug/2025 17:14:47] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:14:47,692 - INFO - 127.0.0.1 - - [24/Aug/2025 17:14:47] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:27,218 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:27] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:27,470 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:27,487 - INFO - Tamanho dos bytes decodificados: 31071 bytes
+2025-08-24 17:15:27,488 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:27,556 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_a0660e3a2b4246da874ceb837759f0d5.jpg (tamanho: 639x479)
+2025-08-24 17:15:27,556 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:27,863 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:27,864 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:27,864 - INFO - Tempo total de reconhecimento: 0.31s
+2025-08-24 17:15:27,864 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:27,865 - INFO - Usuário não reconhecido
+2025-08-24 17:15:27,865 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:27] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:28,899 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:28,900 - INFO - Tamanho dos bytes decodificados: 29795 bytes
+2025-08-24 17:15:28,902 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:28,961 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_0d55e2b4758c494e9873b4990675e743.jpg (tamanho: 639x479)
+2025-08-24 17:15:28,961 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:29,246 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:29,246 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:29,246 - INFO - Tempo total de reconhecimento: 0.29s
+2025-08-24 17:15:29,246 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:29,247 - INFO - Usuário não reconhecido
+2025-08-24 17:15:29,249 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:29] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:31,195 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:31,196 - INFO - Tamanho dos bytes decodificados: 32039 bytes
+2025-08-24 17:15:31,197 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:31,257 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_69c020020d54478390fe046cb9d584a0.jpg (tamanho: 639x479)
+2025-08-24 17:15:31,257 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:31,534 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:31,534 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:31,534 - INFO - Tempo total de reconhecimento: 0.28s
+2025-08-24 17:15:31,534 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:31,535 - INFO - Usuário não reconhecido
+2025-08-24 17:15:31,536 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:31] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:32,880 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:32] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:33,197 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:33,199 - INFO - Tamanho dos bytes decodificados: 30344 bytes
+2025-08-24 17:15:33,200 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:33,260 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_dbc79b4c53d8426a8a8423bf5c38b9da.jpg (tamanho: 639x479)
+2025-08-24 17:15:33,260 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:33,543 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:33,544 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:33,544 - INFO - Tempo total de reconhecimento: 0.28s
+2025-08-24 17:15:33,544 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:33,545 - INFO - Usuário não reconhecido
+2025-08-24 17:15:33,546 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:33] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:35,192 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:35,192 - INFO - Tamanho dos bytes decodificados: 31593 bytes
+2025-08-24 17:15:35,195 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:35,284 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_d4019b0009884fb49aa4cfa7eeb42c7d.jpg (tamanho: 178x178)
+2025-08-24 17:15:35,284 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:35,542 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:35,543 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:35,543 - INFO - Tempo total de reconhecimento: 0.26s
+2025-08-24 17:15:35,543 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:35,544 - INFO - Usuário não reconhecido
+2025-08-24 17:15:35,544 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:35] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:36,886 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:36,886 - INFO - Tamanho dos bytes decodificados: 33494 bytes
+2025-08-24 17:15:36,887 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:36,963 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_31c6cfa0facb473cae80fd330dddba63.jpg (tamanho: 213x213)
+2025-08-24 17:15:36,963 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:37,207 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:37,207 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:37,207 - INFO - Tempo total de reconhecimento: 0.24s
+2025-08-24 17:15:37,208 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:37,208 - INFO - Usuário não reconhecido
+2025-08-24 17:15:37,209 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:37] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:39,203 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:39] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:39,453 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:39,453 - INFO - Tamanho dos bytes decodificados: 32836 bytes
+2025-08-24 17:15:39,455 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:39,522 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_b3d354e8d488436ba1f2069add95372e.jpg (tamanho: 639x479)
+2025-08-24 17:15:39,523 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:39,809 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:39,809 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:39,809 - INFO - Tempo total de reconhecimento: 0.29s
+2025-08-24 17:15:39,809 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:39,810 - INFO - Usuário não reconhecido
+2025-08-24 17:15:39,811 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:39] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:40,889 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:40,890 - INFO - Tamanho dos bytes decodificados: 34390 bytes
+2025-08-24 17:15:40,893 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:40,964 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_395b7f106fe1437a85e92dca7909647b.jpg (tamanho: 211x211)
+2025-08-24 17:15:40,964 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:41,219 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:41,220 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:41,220 - INFO - Tempo total de reconhecimento: 0.26s
+2025-08-24 17:15:41,220 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:41,220 - INFO - Usuário não reconhecido
+2025-08-24 17:15:41,221 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:41] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:43,206 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:43,207 - INFO - Tamanho dos bytes decodificados: 34415 bytes
+2025-08-24 17:15:43,209 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:43,279 - WARNING - Rosto muito pequeno: 68x68
+2025-08-24 17:15:43,296 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:43] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:44,887 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:44] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:45,202 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:45,203 - INFO - Tamanho dos bytes decodificados: 33996 bytes
+2025-08-24 17:15:45,205 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:45,297 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_0244ca168d454568b68a83d372a159d9.jpg (tamanho: 326x326)
+2025-08-24 17:15:45,297 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:45,576 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:45,577 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:45,577 - INFO - Tempo total de reconhecimento: 0.28s
+2025-08-24 17:15:45,577 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:45,577 - INFO - Usuário não reconhecido
+2025-08-24 17:15:45,578 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:45] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:47,213 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:47,214 - INFO - Tamanho dos bytes decodificados: 35891 bytes
+2025-08-24 17:15:47,216 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:47,306 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_77bbc9c8002e45c586761dc59269d550.jpg (tamanho: 335x335)
+2025-08-24 17:15:47,306 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:47,594 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:47,595 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:47,595 - INFO - Tempo total de reconhecimento: 0.29s
+2025-08-24 17:15:47,595 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:47,595 - INFO - Usuário não reconhecido
+2025-08-24 17:15:47,596 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:47] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:48,894 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:48,895 - INFO - Tamanho dos bytes decodificados: 35912 bytes
+2025-08-24 17:15:48,896 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:48,986 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_fc907285914e4eedbf78d30def231a6d.jpg (tamanho: 332x332)
+2025-08-24 17:15:48,986 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:49,284 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:49,284 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:49,284 - INFO - Tempo total de reconhecimento: 0.30s
+2025-08-24 17:15:49,284 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:49,285 - INFO - Usuário não reconhecido
+2025-08-24 17:15:49,286 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:49] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:51,205 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:51] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:51,453 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:51,454 - INFO - Tamanho dos bytes decodificados: 35307 bytes
+2025-08-24 17:15:51,457 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:51,561 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_4977c1d9f74a44e397b164debebf995b.jpg (tamanho: 340x340)
+2025-08-24 17:15:51,561 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:51,838 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:51,839 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:51,839 - INFO - Tempo total de reconhecimento: 0.28s
+2025-08-24 17:15:51,839 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:51,840 - INFO - Usuário não reconhecido
+2025-08-24 17:15:51,842 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:51] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:52,885 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:52,885 - INFO - Tamanho dos bytes decodificados: 34069 bytes
+2025-08-24 17:15:52,887 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:52,999 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_9746487a9aa9411086540b640f4bba01.jpg (tamanho: 338x338)
+2025-08-24 17:15:52,999 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:53,295 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:53,296 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:53,296 - INFO - Tempo total de reconhecimento: 0.30s
+2025-08-24 17:15:53,296 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:53,297 - INFO - Usuário não reconhecido
+2025-08-24 17:15:53,297 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:53] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:55,184 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:55,185 - INFO - Tamanho dos bytes decodificados: 34372 bytes
+2025-08-24 17:15:55,186 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:55,297 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_4c5ad8f77b0648f0874da0b88f6f2bd7.jpg (tamanho: 408x408)
+2025-08-24 17:15:55,297 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:55,584 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:55,585 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:55,585 - INFO - Tempo total de reconhecimento: 0.29s
+2025-08-24 17:15:55,585 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:55,585 - INFO - Usuário não reconhecido
+2025-08-24 17:15:55,587 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:55] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:56,881 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:56] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:57,198 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:57,198 - INFO - Tamanho dos bytes decodificados: 33998 bytes
+2025-08-24 17:15:57,199 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:57,296 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_7018b95ba4824f3d882f3e2bb80773b2.jpg (tamanho: 387x387)
+2025-08-24 17:15:57,297 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:57,572 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:57,572 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:57,572 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:15:57,572 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:57,574 - INFO - Usuário não reconhecido
+2025-08-24 17:15:57,575 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:57] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:15:59,193 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:15:59,194 - INFO - Tamanho dos bytes decodificados: 32937 bytes
+2025-08-24 17:15:59,196 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:15:59,304 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_754edcb72b6b4d639e7ffad524224f0b.jpg (tamanho: 346x346)
+2025-08-24 17:15:59,304 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:15:59,569 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:15:59,569 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:15:59,569 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:15:59,569 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:15:59,570 - INFO - Usuário não reconhecido
+2025-08-24 17:15:59,570 - INFO - 127.0.0.1 - - [24/Aug/2025 17:15:59] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:00,888 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:00,889 - INFO - Tamanho dos bytes decodificados: 33453 bytes
+2025-08-24 17:16:00,892 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:00,973 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_f478da8709e849f2a4e05069b11f9150.jpg (tamanho: 300x300)
+2025-08-24 17:16:00,974 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:01,247 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:01,248 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:01,248 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:16:01,248 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:01,249 - INFO - Usuário não reconhecido
+2025-08-24 17:16:01,249 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:01] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:03,206 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:03] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:03,468 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:03,469 - INFO - Tamanho dos bytes decodificados: 34598 bytes
+2025-08-24 17:16:03,471 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:03,556 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_1e11e52a1c3447af812190c7bf9027c5.jpg (tamanho: 305x305)
+2025-08-24 17:16:03,556 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:03,811 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:03,813 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:03,813 - INFO - Tempo total de reconhecimento: 0.26s
+2025-08-24 17:16:03,813 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:03,814 - INFO - Usuário não reconhecido
+2025-08-24 17:16:03,814 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:03] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:04,888 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:04,889 - INFO - Tamanho dos bytes decodificados: 34871 bytes
+2025-08-24 17:16:04,892 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:04,982 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_e7a32627b81b4ac6b0481ed71e0ca151.jpg (tamanho: 322x322)
+2025-08-24 17:16:04,982 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:05,264 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:05,265 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:05,265 - INFO - Tempo total de reconhecimento: 0.28s
+2025-08-24 17:16:05,265 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:05,265 - INFO - Usuário não reconhecido
+2025-08-24 17:16:05,265 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:05] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:07,202 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:07,203 - INFO - Tamanho dos bytes decodificados: 34797 bytes
+2025-08-24 17:16:07,206 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:07,303 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_95bda1c59dd144439b8d73303ed26574.jpg (tamanho: 318x318)
+2025-08-24 17:16:07,303 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:07,577 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:07,578 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:07,578 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:16:07,578 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:07,579 - INFO - Usuário não reconhecido
+2025-08-24 17:16:07,580 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:07] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:08,886 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:08] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:09,197 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:09,198 - INFO - Tamanho dos bytes decodificados: 34673 bytes
+2025-08-24 17:16:09,199 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:09,294 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_c387e1ad529d4957b22ed0f33f8b3505.jpg (tamanho: 325x325)
+2025-08-24 17:16:09,294 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:09,558 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:09,558 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:09,558 - INFO - Tempo total de reconhecimento: 0.26s
+2025-08-24 17:16:09,558 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:09,559 - INFO - Usuário não reconhecido
+2025-08-24 17:16:09,559 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:09] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:11,203 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:11,204 - INFO - Tamanho dos bytes decodificados: 35363 bytes
+2025-08-24 17:16:11,207 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:11,300 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_32f7a7f1cf774797baabdfbcd60217b7.jpg (tamanho: 327x327)
+2025-08-24 17:16:11,300 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:11,573 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:11,573 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:11,573 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:16:11,573 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:11,574 - INFO - Usuário não reconhecido
+2025-08-24 17:16:11,575 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:11] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:12,885 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:12,886 - INFO - Tamanho dos bytes decodificados: 35359 bytes
+2025-08-24 17:16:12,887 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:12,980 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_16b962f279604f69abb0ea82afeb7e40.jpg (tamanho: 327x327)
+2025-08-24 17:16:12,980 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:13,250 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:13,250 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:13,250 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:16:13,251 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:13,251 - INFO - Usuário não reconhecido
+2025-08-24 17:16:13,252 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:13] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:15,210 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:15] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:15,473 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:15,474 - INFO - Tamanho dos bytes decodificados: 35392 bytes
+2025-08-24 17:16:15,475 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:15,572 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_96cfbe57f7c3426cb8d18f36e5f0e62b.jpg (tamanho: 331x331)
+2025-08-24 17:16:15,572 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:15,835 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:15,835 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:15,835 - INFO - Tempo total de reconhecimento: 0.26s
+2025-08-24 17:16:15,835 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:15,836 - INFO - Usuário não reconhecido
+2025-08-24 17:16:15,836 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:15] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:16,890 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:16,891 - INFO - Tamanho dos bytes decodificados: 35171 bytes
+2025-08-24 17:16:16,894 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:16,984 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_fda88e84ff3d4b158fec2ec468274286.jpg (tamanho: 354x354)
+2025-08-24 17:16:16,984 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:17,299 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:17,300 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:17,300 - INFO - Tempo total de reconhecimento: 0.32s
+2025-08-24 17:16:17,300 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:17,301 - INFO - Usuário não reconhecido
+2025-08-24 17:16:17,301 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:17] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:19,200 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:19,201 - INFO - Tamanho dos bytes decodificados: 33339 bytes
+2025-08-24 17:16:19,203 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:19,267 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_9a651727deb441c6949cd84e033872d3.jpg (tamanho: 639x479)
+2025-08-24 17:16:19,268 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:19,772 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:19,774 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:19,775 - INFO - Tempo total de reconhecimento: 0.51s
+2025-08-24 17:16:19,775 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:19,777 - INFO - Usuário não reconhecido
+2025-08-24 17:16:19,778 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:19] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:20,891 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:20] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:21,210 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:21,211 - INFO - Tamanho dos bytes decodificados: 33777 bytes
+2025-08-24 17:16:21,213 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:21,291 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_e8eea5078166435a9da51ce797883fdf.jpg (tamanho: 264x264)
+2025-08-24 17:16:21,291 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:21,624 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:21,625 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:21,625 - INFO - Tempo total de reconhecimento: 0.33s
+2025-08-24 17:16:21,625 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:21,626 - INFO - Usuário não reconhecido
+2025-08-24 17:16:21,626 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:21] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:23,190 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:23,192 - INFO - Tamanho dos bytes decodificados: 31032 bytes
+2025-08-24 17:16:23,194 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:23,268 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_f70d7eb482da4301a8b9a2b3e1f6f554.jpg (tamanho: 639x479)
+2025-08-24 17:16:23,268 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:23,630 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:23,631 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:23,631 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-24 17:16:23,631 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:23,632 - INFO - Usuário não reconhecido
+2025-08-24 17:16:23,633 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:23] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:24,879 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:24,880 - INFO - Tamanho dos bytes decodificados: 29023 bytes
+2025-08-24 17:16:24,882 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:24,955 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_9a8115f7b0064e94a3ad19004e342177.jpg (tamanho: 639x479)
+2025-08-24 17:16:24,955 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:25,277 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:25,277 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:25,278 - INFO - Tempo total de reconhecimento: 0.32s
+2025-08-24 17:16:25,278 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:25,278 - INFO - Usuário não reconhecido
+2025-08-24 17:16:25,279 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:25] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:27,193 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:27] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:27,459 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:27,460 - INFO - Tamanho dos bytes decodificados: 29578 bytes
+2025-08-24 17:16:27,461 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:27,521 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_30b2c42cd538457fb04ac1e2e94d6377.jpg (tamanho: 639x479)
+2025-08-24 17:16:27,521 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:27,866 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:27,866 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:27,867 - INFO - Tempo total de reconhecimento: 0.35s
+2025-08-24 17:16:27,867 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:27,868 - INFO - Usuário não reconhecido
+2025-08-24 17:16:27,869 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:27] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:28,892 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:28,894 - INFO - Tamanho dos bytes decodificados: 29478 bytes
+2025-08-24 17:16:28,896 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:28,959 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_92fdfc29ff2d42eba3d523dad08eb885.jpg (tamanho: 639x479)
+2025-08-24 17:16:28,959 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:29,252 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:29,253 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:29,253 - INFO - Tempo total de reconhecimento: 0.29s
+2025-08-24 17:16:29,254 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:29,254 - INFO - Usuário não reconhecido
+2025-08-24 17:16:29,256 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:29] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:31,194 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:31,195 - INFO - Tamanho dos bytes decodificados: 29602 bytes
+2025-08-24 17:16:31,196 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:31,259 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_68b319976b564e33b6dff549b75989d2.jpg (tamanho: 639x479)
+2025-08-24 17:16:31,259 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:31,547 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:31,548 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:31,548 - INFO - Tempo total de reconhecimento: 0.29s
+2025-08-24 17:16:31,548 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:31,549 - INFO - Usuário não reconhecido
+2025-08-24 17:16:31,549 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:31] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:32,882 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:32] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:33,194 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:33,195 - INFO - Tamanho dos bytes decodificados: 29844 bytes
+2025-08-24 17:16:33,196 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:33,268 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_16e1aa0edfcb48c7a992c7fedd9f65ae.jpg (tamanho: 639x479)
+2025-08-24 17:16:33,268 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:33,609 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:33,610 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:33,610 - INFO - Tempo total de reconhecimento: 0.34s
+2025-08-24 17:16:33,610 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:33,610 - INFO - Usuário não reconhecido
+2025-08-24 17:16:33,611 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:33] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:35,194 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:35,195 - INFO - Tamanho dos bytes decodificados: 30267 bytes
+2025-08-24 17:16:35,198 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:35,259 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_c68b5a02541a4e76bc9961fc5e70a53b.jpg (tamanho: 639x479)
+2025-08-24 17:16:35,259 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:35,591 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:35,592 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:35,592 - INFO - Tempo total de reconhecimento: 0.33s
+2025-08-24 17:16:35,593 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:35,593 - INFO - Usuário não reconhecido
+2025-08-24 17:16:35,594 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:35] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:36,891 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:36,892 - INFO - Tamanho dos bytes decodificados: 32096 bytes
+2025-08-24 17:16:36,893 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:36,968 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_2079eaca8d984329ae9c289a0b43de23.jpg (tamanho: 258x258)
+2025-08-24 17:16:36,968 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:37,229 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:37,229 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:37,229 - INFO - Tempo total de reconhecimento: 0.26s
+2025-08-24 17:16:37,229 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:37,230 - INFO - Usuário não reconhecido
+2025-08-24 17:16:37,230 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:37] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:39,196 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:39] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:39,461 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:39,462 - INFO - Tamanho dos bytes decodificados: 33029 bytes
+2025-08-24 17:16:39,464 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:39,544 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_90c54ed0a7d9470eaa35a5e681e5abbc.jpg (tamanho: 280x280)
+2025-08-24 17:16:39,544 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:39,803 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:39,804 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:39,804 - INFO - Tempo total de reconhecimento: 0.26s
+2025-08-24 17:16:39,804 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:16:39,805 - INFO - Usuário não reconhecido
+2025-08-24 17:16:39,807 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:39] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:16:40,895 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:16:40,895 - INFO - Tamanho dos bytes decodificados: 34902 bytes
+2025-08-24 17:16:40,897 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:16:40,984 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_edecb81ece684370b4f5132be60d5f39.jpg (tamanho: 270x270)
+2025-08-24 17:16:40,985 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:16:41,257 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:16:41,257 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:16:41,259 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:16:41,259 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3971
+2025-08-24 17:16:41,259 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.60
+2025-08-24 17:16:41,260 - INFO - 127.0.0.1 - - [24/Aug/2025 17:16:41] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:16,524 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:16] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:16,546 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:16,553 - INFO - Tamanho dos bytes decodificados: 35242 bytes
+2025-08-24 17:33:16,590 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:16,925 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_dfd5af0fdb644f19adb2c3eb89814ab6.jpg (tamanho: 187x187)
+2025-08-24 17:33:16,925 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:18,434 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:18,438 - INFO - Tamanho dos bytes decodificados: 35687 bytes
+2025-08-24 17:33:18,440 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:18,562 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_8227e60570804fd2b242008278b432b5.jpg (tamanho: 194x194)
+2025-08-24 17:33:18,562 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:20,659 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:20,661 - INFO - Tamanho dos bytes decodificados: 35585 bytes
+2025-08-24 17:33:20,665 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:20,797 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_1ed4ef1c5d364faa8403bd0944d4d231.jpg (tamanho: 215x215)
+2025-08-24 17:33:20,797 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:22,594 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:22,596 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:22,596 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:22,602 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:33:22,602 - INFO - Tempo de comparação: 0.01s
+2025-08-24 17:33:22,602 - INFO - Tempo de comparação: 0.01s
+2025-08-24 17:33:22,602 - INFO - Tempo total de reconhecimento: 5.68s
+2025-08-24 17:33:22,602 - INFO - Tempo total de reconhecimento: 1.81s
+2025-08-24 17:33:22,602 - INFO - Tempo total de reconhecimento: 4.04s
+2025-08-24 17:33:22,602 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:22,603 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:22,603 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:22,604 - INFO - Usuário não reconhecido
+2025-08-24 17:33:22,605 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:22] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:22,606 - INFO - Usuário não reconhecido
+2025-08-24 17:33:22,606 - INFO - Usuário não reconhecido
+2025-08-24 17:33:22,607 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:22] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:22,608 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:22] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:22,665 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:22] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:22,676 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:22,677 - INFO - Tamanho dos bytes decodificados: 35326 bytes
+2025-08-24 17:33:22,680 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:22,790 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_4864bbeeb8854565b605505e53320b9d.jpg (tamanho: 208x208)
+2025-08-24 17:33:22,790 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:23,146 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:23,148 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:33:23,148 - INFO - Tempo total de reconhecimento: 0.36s
+2025-08-24 17:33:23,148 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:23,148 - INFO - Usuário não reconhecido
+2025-08-24 17:33:23,149 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:23] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:24,828 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:24,828 - INFO - Tamanho dos bytes decodificados: 35419 bytes
+2025-08-24 17:33:24,831 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:25,034 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_5827802cc2224389b5e53c3864a53e88.jpg (tamanho: 179x179)
+2025-08-24 17:33:25,036 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:25,340 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:25,340 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:33:25,340 - INFO - Tempo total de reconhecimento: 0.30s
+2025-08-24 17:33:25,340 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:25,341 - INFO - Usuário não reconhecido
+2025-08-24 17:33:25,342 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:25] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:26,706 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:26,707 - INFO - Tamanho dos bytes decodificados: 36103 bytes
+2025-08-24 17:33:26,709 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:26,797 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_0120913e48d849aa934a3857968f99a7.jpg (tamanho: 195x195)
+2025-08-24 17:33:26,797 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:27,079 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:27,079 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:33:27,079 - INFO - Tempo total de reconhecimento: 0.28s
+2025-08-24 17:33:27,079 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:27,080 - INFO - Usuário não reconhecido
+2025-08-24 17:33:27,081 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:27] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:28,741 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:28] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:28,749 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:28,750 - INFO - Tamanho dos bytes decodificados: 35836 bytes
+2025-08-24 17:33:28,752 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:28,843 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_fe4a7111a568494a8ca525063bd3336f.jpg (tamanho: 189x189)
+2025-08-24 17:33:28,843 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:29,100 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:29,101 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:33:29,101 - INFO - Tempo total de reconhecimento: 0.26s
+2025-08-24 17:33:29,101 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:29,101 - INFO - Usuário não reconhecido
+2025-08-24 17:33:29,103 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:29] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:30,748 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:30,750 - INFO - Tamanho dos bytes decodificados: 33673 bytes
+2025-08-24 17:33:30,753 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:30,857 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_888ccf3dad3042c1b281043934589a93.jpg (tamanho: 269x269)
+2025-08-24 17:33:30,857 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:31,128 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:31,129 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:33:31,129 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:33:31,129 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:31,130 - INFO - Usuário não reconhecido
+2025-08-24 17:33:31,130 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:31] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:32,946 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:32,946 - INFO - Tamanho dos bytes decodificados: 34104 bytes
+2025-08-24 17:33:32,948 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:33,113 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_b071e95f51ad4d9fad1a994934bef69c.jpg (tamanho: 318x318)
+2025-08-24 17:33:33,113 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:33,556 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:33,557 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:33:33,558 - INFO - Tempo total de reconhecimento: 0.45s
+2025-08-24 17:33:33,558 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:33:33,558 - INFO - Usuário não reconhecido
+2025-08-24 17:33:33,559 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:33] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:34,812 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:34] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:33:34,828 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:33:34,828 - INFO - Tamanho dos bytes decodificados: 34058 bytes
+2025-08-24 17:33:34,831 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:33:34,980 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_f4938a9a55854ed69bec681e4c529a58.jpg (tamanho: 332x332)
+2025-08-24 17:33:34,980 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:33:35,405 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:33:35,406 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:33:35,407 - INFO - Tempo total de reconhecimento: 0.43s
+2025-08-24 17:33:35,407 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.2900
+2025-08-24 17:33:35,408 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.71
+2025-08-24 17:33:35,409 - INFO - 127.0.0.1 - - [24/Aug/2025 17:33:35] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:34:02,873 - INFO - 127.0.0.1 - - [24/Aug/2025 17:34:02] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:34:02,878 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:34:02,878 - INFO - Tamanho dos bytes decodificados: 36344 bytes
+2025-08-24 17:34:02,879 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:34:02,998 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_f3a5dda824d2479583400edd5ed8c542.jpg (tamanho: 254x254)
+2025-08-24 17:34:02,999 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:34:03,443 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:34:03,444 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:34:03,444 - INFO - Tempo total de reconhecimento: 0.44s
+2025-08-24 17:34:03,444 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3908
+2025-08-24 17:34:03,446 - INFO - Autenticação bem-sucedida para Davi Mazoti com confiança 0.61
+2025-08-24 17:34:03,447 - INFO - 127.0.0.1 - - [24/Aug/2025 17:34:03] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:26,501 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:26] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:26,524 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:26,530 - INFO - Tamanho dos bytes decodificados: 35285 bytes
+2025-08-24 17:42:26,549 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:26,962 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_4a98d9ab492c47448483b56d84058179.jpg (tamanho: 353x353)
+2025-08-24 17:42:26,963 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:28,344 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:28,349 - INFO - Tamanho dos bytes decodificados: 39661 bytes
+2025-08-24 17:42:28,360 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:28,532 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_df3b3e7cad8a451a8bee3e00860e3aa5.jpg (tamanho: 639x479)
+2025-08-24 17:42:28,533 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:30,365 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:30,366 - INFO - Tamanho dos bytes decodificados: 40154 bytes
+2025-08-24 17:42:30,369 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:30,511 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_d4f1b1f00dfa46ae940dde2bc413213a.jpg (tamanho: 224x224)
+2025-08-24 17:42:30,511 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:32,383 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:32] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:32,391 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:32,392 - INFO - Tamanho dos bytes decodificados: 39921 bytes
+2025-08-24 17:42:32,396 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:32,627 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_a2375c63067a4684981e77ea5658ffed.jpg (tamanho: 214x214)
+2025-08-24 17:42:32,627 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:32,908 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:32,909 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:32,911 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:32,938 - INFO - Tempo de comparação: 0.02s
+2025-08-24 17:42:32,939 - INFO - Tempo total de reconhecimento: 4.41s
+2025-08-24 17:42:32,939 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:32,939 - INFO - Tempo de comparação: 0.02s
+2025-08-24 17:42:32,939 - INFO - Tempo de comparação: 0.02s
+2025-08-24 17:42:32,942 - INFO - Tempo total de reconhecimento: 2.43s
+2025-08-24 17:42:32,942 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:32,945 - INFO - Usuário não reconhecido
+2025-08-24 17:42:32,941 - INFO - Tempo total de reconhecimento: 5.98s
+2025-08-24 17:42:32,942 - INFO - Usuário não reconhecido
+2025-08-24 17:42:32,950 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:32] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:32,951 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:32,966 - INFO - Usuário não reconhecido
+2025-08-24 17:42:32,954 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:32] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:32,968 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:32] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:33,435 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:33,436 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:33,436 - INFO - Tempo total de reconhecimento: 0.81s
+2025-08-24 17:42:33,436 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:33,437 - INFO - Usuário não reconhecido
+2025-08-24 17:42:33,438 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:33] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:34,394 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:34,400 - INFO - Tamanho dos bytes decodificados: 41607 bytes
+2025-08-24 17:42:34,404 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:34,577 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_f1cce083835241b994c97d09ceda27a7.jpg (tamanho: 639x479)
+2025-08-24 17:42:34,577 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:35,358 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:35,359 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:35,360 - INFO - Tempo total de reconhecimento: 0.78s
+2025-08-24 17:42:35,360 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:35,361 - INFO - Usuário não reconhecido
+2025-08-24 17:42:35,366 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:35] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:36,374 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:36,375 - INFO - Tamanho dos bytes decodificados: 41463 bytes
+2025-08-24 17:42:36,377 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:36,522 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_a01392b22e2143cebb664e3a5c64e389.jpg (tamanho: 228x228)
+2025-08-24 17:42:36,522 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:36,999 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:37,000 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:37,000 - INFO - Tempo total de reconhecimento: 0.48s
+2025-08-24 17:42:37,000 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:37,001 - INFO - Usuário não reconhecido
+2025-08-24 17:42:37,002 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:37] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:38,388 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:38] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:38,390 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:38,391 - INFO - Tamanho dos bytes decodificados: 40138 bytes
+2025-08-24 17:42:38,392 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:38,505 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_774fb0cb2bcd4aa991fdcf86edd391ca.jpg (tamanho: 225x225)
+2025-08-24 17:42:38,505 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:38,928 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:38,929 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:38,929 - INFO - Tempo total de reconhecimento: 0.42s
+2025-08-24 17:42:38,930 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:38,932 - INFO - Usuário não reconhecido
+2025-08-24 17:42:38,933 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:38] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:40,471 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:40,471 - INFO - Tamanho dos bytes decodificados: 39174 bytes
+2025-08-24 17:42:40,472 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:40,557 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_1eb3390375b64651b15d220f96c50c23.jpg (tamanho: 219x219)
+2025-08-24 17:42:40,557 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:40,882 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:40,882 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:40,884 - INFO - Tempo total de reconhecimento: 0.33s
+2025-08-24 17:42:40,884 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:40,884 - INFO - Usuário não reconhecido
+2025-08-24 17:42:40,885 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:40] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:42,503 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:42,503 - INFO - Tamanho dos bytes decodificados: 40664 bytes
+2025-08-24 17:42:42,505 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:42,602 - WARNING - Rosto muito pequeno: 44x58
+2025-08-24 17:42:42,607 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:42] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:44,530 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:44] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:44,535 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:44,537 - INFO - Tamanho dos bytes decodificados: 41380 bytes
+2025-08-24 17:42:44,539 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:44,639 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_34d0f8fadf424eee95d41e3f32d62ea1.jpg (tamanho: 218x218)
+2025-08-24 17:42:44,639 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:44,951 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:44,952 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:44,952 - INFO - Tempo total de reconhecimento: 0.31s
+2025-08-24 17:42:44,952 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:44,952 - INFO - Usuário não reconhecido
+2025-08-24 17:42:44,953 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:44] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:46,551 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:46,552 - INFO - Tamanho dos bytes decodificados: 41575 bytes
+2025-08-24 17:42:46,554 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:46,650 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_8d8743741c7d45af87e66c024369868f.jpg (tamanho: 212x212)
+2025-08-24 17:42:46,650 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:47,001 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:47,001 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:47,001 - INFO - Tempo total de reconhecimento: 0.35s
+2025-08-24 17:42:47,002 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:47,002 - INFO - Usuário não reconhecido
+2025-08-24 17:42:47,003 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:47] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:48,605 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:48,606 - INFO - Tamanho dos bytes decodificados: 41081 bytes
+2025-08-24 17:42:48,607 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:48,699 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_092e0592f4ec423b8cd0fb510ab92dd5.jpg (tamanho: 236x236)
+2025-08-24 17:42:48,700 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:48,966 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:48,967 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:48,967 - INFO - Tempo total de reconhecimento: 0.27s
+2025-08-24 17:42:48,967 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:48,967 - INFO - Usuário não reconhecido
+2025-08-24 17:42:48,968 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:48] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:50,638 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:50] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-24 17:42:50,643 - INFO - Recebendo solicitação de login facial
+2025-08-24 17:42:50,643 - INFO - Tamanho dos bytes decodificados: 37832 bytes
+2025-08-24 17:42:50,645 - INFO - Detectando rostos com DeepFace...
+2025-08-24 17:42:50,739 - INFO - Rosto detectado salvo temporariamente em C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\temp_face_0f51d42f1e854b0697f934585fc0ad73.jpg (tamanho: 326x326)
+2025-08-24 17:42:50,739 - INFO - Iniciando reconhecimento facial...
+2025-08-24 17:42:51,058 - INFO - Comparando com 1 usuários no banco...
+2025-08-24 17:42:51,059 - INFO - Tempo de comparação: 0.00s
+2025-08-24 17:42:51,059 - INFO - Tempo total de reconhecimento: 0.32s
+2025-08-24 17:42:51,059 - INFO - Nenhum usuário reconhecido
+2025-08-24 17:42:51,060 - INFO - Usuário não reconhecido
+2025-08-24 17:42:51,060 - INFO - 127.0.0.1 - - [24/Aug/2025 17:42:51] "POST /face-login HTTP/1.1" 200 -
+2025-08-24 17:45:31,921 - INFO - Servidor encerrado
+2025-08-24 17:45:33,502 - INFO - Servidor encerrado

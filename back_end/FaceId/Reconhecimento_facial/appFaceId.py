@@ -10,6 +10,8 @@ import time
 import traceback
 from flask_cors import CORS
 import pickle
+import uuid
+import psutil
 
 # ====================== CONFIGURAÇÕES ======================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -21,8 +23,8 @@ MAX_IMAGE_SIZE = (1280, 720)
 EMBEDDINGS_CACHE = os.path.join(BASE_DIR, "embeddings_cache.pkl")
 
 app = Flask(__name__)
-# Configuração CORS para permitir origens null e localhost
-CORS(app, origins=['null', 'http://localhost:8000', 'http://localhost:3000', 'http://localhost:5000'])
+# Configuração CORS para permitir todas as origens (apenas para desenvolvimento)
+CORS(app, origins="*")  # Permite todas as origens
 
 # Configurar logging
 logging.basicConfig(
@@ -38,16 +40,20 @@ logger = logging.getLogger(__name__)
 # Variável global para armazenar o banco de dados facial
 facial_db = None
 
+# Criar diretório de banco de dados se não existir
+os.makedirs(DATABASE_DIR, exist_ok=True)
+
 
 # ====================== FUNÇÕES AUXILIARES ======================
 def log_memory_usage():
     try:
-        import psutil
         process = psutil.Process(os.getpid())
         mem = process.memory_info().rss / 1024 ** 2  # Em MB
         logger.info(f"Uso de memória: {mem:.2f} MB")
     except ImportError:
-        pass
+        logger.warning("psutil não instalado, não é possível monitorar memória")
+    except Exception as e:
+        logger.error(f"Erro ao monitorar memória: {str(e)}")
 
 
 def resize_image(image, max_size):
@@ -180,13 +186,13 @@ def load_or_create_cache():
 
 
 # ====================== FUNÇÃO DE RECONHECIMENTO ======================
-def recognize_face_from_image(face_img):
+def recognize_face_from_image(face_img_path):
     global facial_db
     try:
         logger.info("Iniciando reconhecimento facial...")
         start_time = time.time()
 
-        embedding = get_embedding(face_img)
+        embedding = get_embedding(face_img_path)
         if embedding is None:
             logger.warning("Nenhum embedding retornado pelo DeepFace")
             return None, None
@@ -235,6 +241,7 @@ def recognize_face_from_image(face_img):
 @app.route('/face-login', methods=['POST', 'OPTIONS'])
 def face_login():
     if request.method == 'OPTIONS':
+        # Resposta para pré-voo CORS
         response = jsonify()
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
@@ -296,30 +303,22 @@ def face_login():
             logger.error("Imagem decodificada está vazia")
             return jsonify({"error": "Empty image after decoding"}), 400
 
-        # Detectar rosto na imagem (abordagem compatível com versões do DeepFace)
-        logger.info("Detectando rostos...")
+        # Detectar rosto usando DeepFace diretamente
+        logger.info("Detectando rostos com DeepFace...")
         faces = []
 
         try:
-            # Tentativa 1: Usar o detector do DeepFace
-            from deepface.detectors import DetectorWrapper
-            logger.info("Usando detector do DeepFace (OpenCV backend)...")
-            detected_faces = DetectorWrapper.detect_faces('opencv', frame)
+            detected_faces = DeepFace.extract_faces(
+                img_path=frame,
+                detector_backend="opencv",
+                enforce_detection=False
+            )
 
-            # Converter para formato padronizado
             for face in detected_faces:
-                x, y, w, h = face
-                faces.append({
-                    'facial_area': {
-                        'x': int(x),
-                        'y': int(y),
-                        'w': int(w),
-                        'h': int(h)
-                    }
-                })
-
+                if 'facial_area' in face:
+                    faces.append(face)
         except Exception as e:
-            logger.warning(f"Detector do DeepFace falhou: {str(e)}")
+            logger.warning(f"DeepFace detection failed: {str(e)}")
             logger.warning("Usando fallback para Haar Cascade")
 
             # Fallback: Haar Cascade tradicional
@@ -358,12 +357,14 @@ def face_login():
             })
 
         # Usar o rosto com maior área
-        faces = sorted(faces, key=lambda f: f['facial_area']['w'] * f['facial_area']['h'], reverse=True)
-        face = faces[0]
-        x = face['facial_area']['x']
-        y = face['facial_area']['y']
-        w = face['facial_area']['w']
-        h = face['facial_area']['h']
+        if 'facial_area' in faces[0]:
+            # Formato do DeepFace
+            face_area = faces[0]['facial_area']
+            x, y, w, h = face_area['x'], face_area['y'], face_area['w'], face_area['h']
+        else:
+            # Formato do Haar Cascade
+            face_area = faces[0]
+            x, y, w, h = face_area['x'], face_area['y'], face_area['w'], face_area['h']
 
         # Verificar tamanho mínimo do rosto
         if w < MIN_FACE_SIZE[0] or h < MIN_FACE_SIZE[1]:
@@ -376,49 +377,65 @@ def face_login():
 
         face_img = frame[y:y + h, x:x + w]
 
-        # Salvar temporariamente para processamento
-        temp_path = "temp_face.jpg"
+        # Salvar temporariamente com nome único
+        temp_filename = f"temp_face_{uuid.uuid4().hex}.jpg"
+        temp_path = os.path.join(BASE_DIR, temp_filename)
         cv2.imwrite(temp_path, face_img)
         logger.info(f"Rosto detectado salvo temporariamente em {temp_path} (tamanho: {w}x{h})")
 
         # Reconhecer rosto
         user, distance = recognize_face_from_image(temp_path)
-        os.remove(temp_path)  # Limpar arquivo temporário
+
+        # Limpar arquivo temporário
+        try:
+            os.remove(temp_path)
+        except Exception as e:
+            logger.warning(f"Erro ao remover arquivo temporário: {str(e)}")
 
         if user:
             confidence = 1 - distance
             logger.info(f"Autenticação bem-sucedida para {user} com confiança {confidence:.2f}")
-            return jsonify({
+            response = jsonify({
                 "authenticated": True,
                 "user": user,
                 "confidence": float(confidence)
             })
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         else:
             logger.info("Usuário não reconhecido")
-            return jsonify({
+            response = jsonify({
                 "authenticated": False,
                 "user": None,
                 "message": "Usuário não reconhecido. Tente novamente ou faça cadastro."
             })
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
 
     except Exception as e:
         logger.error(f"🚨 Erro no endpoint /face-login: {str(e)}")
         logger.error(traceback.format_exc())
-        return jsonify({"error": "Internal server error"}), 500
+        response = jsonify({"error": "Internal server error"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 500
 
 
 @app.route('/test-db', methods=['GET'])
 def test_db():
     global facial_db
     if facial_db is None:
-        return jsonify({"status": "Database not loaded"})
+        response = jsonify({"status": "Database not loaded"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
-    return jsonify({
+    response = jsonify({
         "status": "Database loaded",
         "users": list(facial_db.keys()),
         "user_count": len(facial_db),
         "total_embeddings": sum(len(emb) for emb in facial_db.values())
     })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route('/reload-db', methods=['POST'])
@@ -434,15 +451,21 @@ def reload_db():
         facial_db = load_facial_database()
 
         if facial_db is None:
-            return jsonify({"success": False, "error": "Failed to load database"}), 500
+            response = jsonify({"success": False, "error": "Failed to load database"})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response, 500
 
-        return jsonify({
+        response = jsonify({
             "success": True,
             "message": f"Database reloaded with {len(facial_db)} users"
         })
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
     except Exception as e:
         logger.error(f"Erro ao recarregar banco de dados: {str(e)}")
-        return jsonify({"success": False, "error": str(e)}), 500
+        response = jsonify({"success": False, "error": str(e)})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 500
 
 
 @app.route('/')
@@ -453,13 +476,14 @@ def home():
 # ====================== LIMPEZA E INICIALIZAÇÃO ======================
 @atexit.register
 def cleanup():
-    temp_path = "temp_face.jpg"
-    if os.path.exists(temp_path):
-        try:
-            os.remove(temp_path)
-            logger.info(f"Arquivo temporário {temp_path} removido")
-        except Exception as e:
-            logger.error(f"Erro ao remover {temp_path}: {str(e)}")
+    # Remover todos os arquivos temporários
+    for filename in os.listdir(BASE_DIR):
+        if filename.startswith("temp_face_") and filename.endswith(".jpg"):
+            try:
+                os.remove(os.path.join(BASE_DIR, filename))
+                logger.info(f"Arquivo temporário {filename} removido")
+            except Exception as e:
+                logger.error(f"Erro ao remover {filename}: {str(e)}")
 
     logger.info("Servidor encerrado")
 
@@ -472,4 +496,4 @@ if __name__ == '__main__':
     load_or_create_cache()
 
     # Iniciar servidor
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5005, debug=True)
