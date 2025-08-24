@@ -9,16 +9,20 @@ import atexit
 import time
 import traceback
 from flask_cors import CORS
+import pickle
 
 # ====================== CONFIGURAÇÕES ======================
-DATABASE_DIR = "../Cadastro/facial_database"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE_DIR = os.path.join(BASE_DIR, "../Cadastro/facial_database")
 MODEL_NAME = "VGG-Face"
 DISTANCE_THRESHOLD = 0.40
 MIN_FACE_SIZE = (100, 100)
-MAX_IMAGE_SIZE = (1280, 720)  # Tamanho máximo para redimensionamento
+MAX_IMAGE_SIZE = (1280, 720)
+EMBEDDINGS_CACHE = os.path.join(BASE_DIR, "embeddings_cache.pkl")
 
 app = Flask(__name__)
-CORS(app)  # Habilitar CORS para todas as rotas
+# Configuração CORS para permitir origens null e localhost
+CORS(app, origins=['null', 'http://localhost:8000', 'http://localhost:3000', 'http://localhost:5000'])
 
 # Configurar logging
 logging.basicConfig(
@@ -58,6 +62,30 @@ def resize_image(image, max_size):
     return image
 
 
+def get_embedding(image_path):
+    """Obtém o embedding de uma imagem de rosto de forma robusta"""
+    try:
+        result = DeepFace.represent(
+            img_path=image_path,
+            model_name=MODEL_NAME,
+            detector_backend="opencv",
+            enforce_detection=False
+        )
+
+        # Handle different return formats
+        if isinstance(result, list) and len(result) > 0:
+            embedding_data = result[0]
+            if "embedding" in embedding_data:
+                return embedding_data["embedding"]
+        elif isinstance(result, dict) and "embedding" in result:
+            return result["embedding"]
+        logger.warning(f"Embedding não encontrado para {image_path}")
+        return None
+    except Exception as e:
+        logger.error(f"Erro ao obter embedding: {str(e)}")
+        return None
+
+
 # ====================== CARREGAR BANCO DE DADOS FACIAL ======================
 def load_facial_database():
     global facial_db
@@ -67,6 +95,11 @@ def load_facial_database():
     database = {}
     user_count = 0
     embedding_count = 0
+
+    # Verificar se o diretório existe
+    if not os.path.exists(DATABASE_DIR):
+        logger.error(f"Diretório do banco de dados não existe: {DATABASE_DIR}")
+        return None
 
     for user_folder in os.listdir(DATABASE_DIR):
         user_path = os.path.join(DATABASE_DIR, user_folder)
@@ -83,30 +116,19 @@ def load_facial_database():
 
                     try:
                         start_time = time.time()
-                        embedding_obj = DeepFace.represent(
-                            img_path=face_path,
-                            model_name=MODEL_NAME,
-                            detector_backend="opencv",
-                            enforce_detection=False
-                        )
+                        embedding = get_embedding(face_path)
+                        if embedding is not None:
+                            embedding = np.array(embedding)
+                            norm = np.linalg.norm(embedding)
 
-                        # Verificação robusta da estrutura de retorno
-                        if isinstance(embedding_obj, list) and len(embedding_obj) > 0:
-                            embedding_data = embedding_obj[0]
-                            if "embedding" in embedding_data:
-                                embedding = np.array(embedding_data["embedding"])
-                                norm = np.linalg.norm(embedding)
-
-                                if norm > 1e-8:  # Evita divisão por zero
-                                    normalized_embedding = embedding / norm
-                                    embeddings.append(normalized_embedding)
-                                    embedding_count += 1
-                                else:
-                                    logger.warning(f"⚠️ Vetor de embedding inválido (norma zero) em: {face_path}")
+                            if norm > 1e-8:  # Evita divisão por zero
+                                normalized_embedding = embedding / norm
+                                embeddings.append(normalized_embedding)
+                                embedding_count += 1
                             else:
-                                logger.warning(f"⚠️ Chave 'embedding' ausente em: {face_path}")
+                                logger.warning(f"⚠️ Vetor de embedding inválido (norma zero) em: {face_path}")
                         else:
-                            logger.warning(f"⚠️ Nenhum rosto detectado em: {face_path}")
+                            logger.warning(f"⚠️ Nenhum embedding retornado para: {face_path}")
 
                         logger.info(f"Tempo de processamento para {face_file}: {time.time() - start_time:.2f}s")
 
@@ -129,8 +151,32 @@ def load_facial_database():
 
     logger.info(f"✅ Banco de dados carregado com {user_count} usuários e {embedding_count} embeddings")
     log_memory_usage()
-    facial_db = database
     return database
+
+
+def load_or_create_cache():
+    """Carrega o cache de embeddings se existir, senão cria"""
+    global facial_db
+    if os.path.exists(EMBEDDINGS_CACHE):
+        try:
+            with open(EMBEDDINGS_CACHE, 'rb') as f:
+                facial_db = pickle.load(f)
+            logger.info("Cache de embeddings carregado com sucesso.")
+            return facial_db
+        except Exception as e:
+            logger.error(f"Erro ao carregar cache: {str(e)}")
+            # Recriar cache
+            facial_db = load_facial_database()
+            if facial_db is not None:
+                with open(EMBEDDINGS_CACHE, 'wb') as f:
+                    pickle.dump(facial_db, f)
+            return facial_db
+    else:
+        facial_db = load_facial_database()
+        if facial_db is not None:
+            with open(EMBEDDINGS_CACHE, 'wb') as f:
+                pickle.dump(facial_db, f)
+        return facial_db
 
 
 # ====================== FUNÇÃO DE RECONHECIMENTO ======================
@@ -140,23 +186,12 @@ def recognize_face_from_image(face_img):
         logger.info("Iniciando reconhecimento facial...")
         start_time = time.time()
 
-        embedding_obj = DeepFace.represent(
-            img_path=face_img,
-            model_name=MODEL_NAME,
-            detector_backend="opencv",
-            enforce_detection=False
-        )
-
-        if not isinstance(embedding_obj, list) or len(embedding_obj) == 0:
+        embedding = get_embedding(face_img)
+        if embedding is None:
             logger.warning("Nenhum embedding retornado pelo DeepFace")
             return None, None
 
-        embedding_data = embedding_obj[0]
-        if "embedding" not in embedding_data:
-            logger.warning("Chave 'embedding' não encontrada no objeto retornado")
-            return None, None
-
-        captured_embedding = np.array(embedding_data["embedding"])
+        captured_embedding = np.array(embedding)
         norm = np.linalg.norm(captured_embedding)
 
         if norm < 1e-8:
@@ -197,15 +232,23 @@ def recognize_face_from_image(face_img):
 
 
 # ====================== ROTAS DA API ======================
-@app.route('/face-login', methods=['POST'])
+@app.route('/face-login', methods=['POST', 'OPTIONS'])
 def face_login():
+    if request.method == 'OPTIONS':
+        response = jsonify()
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        return response
+
     global facial_db
     logger.info("Recebendo solicitação de login facial")
 
     # Carregar banco de dados se necessário
     if facial_db is None:
         logger.info("Carregando banco de dados facial...")
-        if load_facial_database() is None:
+        facial_db = load_or_create_cache()
+        if facial_db is None:
             return jsonify({"error": "Facial database not loaded"}), 500
 
     # Obter imagem do request
@@ -378,6 +421,30 @@ def test_db():
     })
 
 
+@app.route('/reload-db', methods=['POST'])
+def reload_db():
+    """Rota para recarregar o banco de dados manualmente"""
+    global facial_db
+    try:
+        # Remover cache existente
+        if os.path.exists(EMBEDDINGS_CACHE):
+            os.remove(EMBEDDINGS_CACHE)
+
+        # Recarregar banco de dados
+        facial_db = load_facial_database()
+
+        if facial_db is None:
+            return jsonify({"success": False, "error": "Failed to load database"}), 500
+
+        return jsonify({
+            "success": True,
+            "message": f"Database reloaded with {len(facial_db)} users"
+        })
+    except Exception as e:
+        logger.error(f"Erro ao recarregar banco de dados: {str(e)}")
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
 @app.route('/')
 def home():
     return send_from_directory('templates', 'login.html')
@@ -402,7 +469,7 @@ if __name__ == '__main__':
     logger.info(f"Caminho absoluto do banco: {os.path.abspath(DATABASE_DIR)}")
 
     # Carregar banco de dados ao iniciar
-    load_facial_database()
+    load_or_create_cache()
 
     # Iniciar servidor
     app.run(host='0.0.0.0', port=5000, debug=True)

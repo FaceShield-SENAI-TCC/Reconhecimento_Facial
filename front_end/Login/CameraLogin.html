@@ -5,26 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Entrar</title>
     <link rel="stylesheet" href="CSS/LoginCamera.css" />
+    <style>
+      /* Adicionar estilos para a animação de escaneamento */
+      .scan-animation {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(0, 224, 255, 0.3) 50%,
+          transparent 100%
+        );
+        animation: scan 2s infinite;
+        border-radius: 50%;
+        display: none;
+      }
+      
+      @keyframes scan {
+        0% { top: -100%; }
+        100% { top: 100%; }
+      }
+      
+      .status-indicator {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #ff4d7d;
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: pulse 1.5s infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(0.8); }
+        50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+      }
+    </style>
   </head>
   <body>
     <div class="botaoVoltar">
       <a href="../index.html" class="buttonVoltar">Voltar</a>
     </div>
+    
     <h1>Login com Reconhecimento Facial</h1>
 
     <div class="face-scan-widget">
       <video id="video" autoplay playsinline muted></video>
-      <div class="scan-animation-overlay"></div>
-      <!-- Adicionado para a animação de sucesso -->
-      <div id="success-overlay" class="success-overlay">
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-          <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-        </svg>
-      </div>
+      <div class="scan-animation" id="scanAnimation"></div>
+      <div class="status-indicator" id="statusIndicator"></div>
     </div>
 
-    <p id="mensagem">Aguardando reconhecimento...</p>
+    <p id="mensagem">Iniciando câmera...</p>
 
     <div class="botaoProf">
       <a href="LoginProfessor.html" class="buttonProfessor">Login Professor</a>

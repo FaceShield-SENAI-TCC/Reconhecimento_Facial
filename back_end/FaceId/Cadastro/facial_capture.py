@@ -8,12 +8,12 @@ from concurrent.futures import ThreadPoolExecutor
 import logging
 import urllib.request
 import shutil
-import base64  # Adicionado para codificar imagens
+import base64
 
 # ====================== CONFIGURAÇÕES AVANÇADAS ======================
 DATABASE_DIR = "facial_database"
-CAPTURE_DURATION = 12
-TARGET_FACES = 60
+CAPTURE_DURATION = 15
+TARGET_FACES = 50
 MIN_FACE_SIZE = (120, 120)
 FACE_DETECTOR = "dnn"
 MODELS_DIR = "models"
@@ -26,6 +26,14 @@ MIN_FACE_CONFIDENCE = 0.9
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Verificar disponibilidade do MTCNN
+try:
+    from mtcnn import MTCNN
+
+    MTCNN_AVAILABLE = True
+except ImportError:
+    MTCNN_AVAILABLE = False
 
 
 # ====================== FUNÇÕES AUXILIARES CORRIGIDAS ======================
@@ -134,8 +142,10 @@ def detect_faces(frame, detector):
             logging.error(f"Erro na detecção DNN: {str(e)}")
 
     elif detector["type"] == "mtcnn":
+        if not MTCNN_AVAILABLE:
+            logging.error("MTCNN não está disponível. Use outro detector.")
+            return faces
         try:
-            from mtcnn import MTCNN
             results = detector["detector"].detect_faces(frame)
             for res in results:
                 if res['confidence'] > MIN_FACE_CONFIDENCE:
@@ -179,8 +189,8 @@ def download_dnn_model():
     # Criar diretório de modelos se não existir
     os.makedirs(MODELS_DIR, exist_ok=True)
 
-    model_file = os.path.join(MODELS_DIR, "../Recursos/res10_300x300_ssd_iter_140000.caffemodel")
-    config_file = os.path.join(MODELS_DIR, "../Reursos/deploy.prototxt")
+    model_file = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
+    config_file = os.path.join(MODELS_DIR, "deploy.prototxt")
 
     files = {
         config_file: "https://raw.githubusercontent.com/opencv/opencv/master/samples/dnn/face_detector/deploy.prototxt",
@@ -197,6 +207,7 @@ def download_dnn_model():
             except Exception as e:
                 logging.error(f"Erro ao baixar modelo: {str(e)}")
                 # Tentar fallback para modelo Haar se DNN falhar
+                global FACE_DETECTOR
                 FACE_DETECTOR = "haar"
 
 
@@ -220,12 +231,11 @@ def initialize_detector(detector_type):
                 detector_type = "haar"
 
     if detector_type == "mtcnn":
-        try:
-            from mtcnn import MTCNN
-            return {"type": "mtcnn", "detector": MTCNN()}
-        except ImportError:
+        if not MTCNN_AVAILABLE:
             logging.warning("MTCNN não disponível. Usando DNN como fallback.")
             return initialize_detector("dnn")
+        try:
+            return {"type": "mtcnn", "detector": MTCNN()}
         except Exception as e:
             logging.error(f"Erro ao inicializar MTCNN: {str(e)}")
             return initialize_detector("dnn")
@@ -252,7 +262,6 @@ def initialize_detector(detector_type):
         raise RuntimeError("Nenhum detector facial disponível")
 
 
-# ====================== CLASSE DE CAPTURA FACIAL (PARA INTEGRAÇÃO COM FLASK) ======================
 # ====================== CLASSE DE CAPTURA FACIAL ATUALIZADA ======================
 class FaceCapture:
     def __init__(self, user_name, progress_callback=None, frame_callback=None):
@@ -260,7 +269,7 @@ class FaceCapture:
         self.safe_name = sanitize_name(user_name)
         self.user_dir = os.path.join(DATABASE_DIR, self.safe_name)
         self.progress_callback = progress_callback
-        self.frame_callback = frame_callback  # Novo callback para enviar frames
+        self.frame_callback = frame_callback
         self.captured_count = 0
         self.running = False
         self.start_time = None
@@ -283,8 +292,8 @@ class FaceCapture:
 
             detector = initialize_detector(FACE_DETECTOR)
             cap = cv2.VideoCapture(0)
-            cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+            cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)  # Reduzido para melhor performance
+            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)  # Reduzido para melhor performance
 
             if not cap.isOpened():
                 self.update_progress("Erro: Câmera não disponível")
@@ -302,77 +311,86 @@ class FaceCapture:
 
             while self.running and (
                     time.time() - self.start_time) < CAPTURE_DURATION and self.captured_count < TARGET_FACES:
-                ret, frame = cap.read()
-                if not ret:
-                    continue
-
-                frame_count += 1
-                frame = cv2.flip(frame, 1)
-
-                # Criar uma cópia do frame para exibição
-                display_frame = frame.copy()
-
-                # Detectar rostos periodicamente
-                if frame_count % 3 == 0 or not faces:
-                    try:
-                        faces = detect_faces(frame, detector)
-                    except Exception as e:
-                        logging.error(f"Erro na detecção facial: {str(e)}")
-                        faces = []
-
-                # Processar cada rosto detectado
-                for (x1, y1, x2, y2) in faces:
-                    # Calcular margem de segurança ao redor do rosto
-                    margin = int((x2 - x1) * 0.15)
-                    x1 = max(0, x1 - margin)
-                    y1 = max(0, y1 - margin)
-                    x2 = min(frame.shape[1], x2 + margin)
-                    y2 = min(frame.shape[0], y2 + margin)
-
-                    # Verificar se a região é válida
-                    if x2 <= x1 or y2 <= y1:
+                try:
+                    ret, frame = cap.read()
+                    if not ret:
                         continue
 
-                    face_img = frame[y1:y2, x1:x2]
+                    frame_count += 1
+                    frame = cv2.flip(frame, 1)
 
-                    if face_img.size > 0:
-                        # Desenhar retângulo no frame de exibição
-                        cv2.rectangle(display_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    # Criar uma cópia do frame para exibição
+                    display_frame = frame.copy()
 
-                        quality = face_quality_score(face_img)
+                    # Detectar rostos periodicamente (frequência reduzida)
+                    if frame_count % 5 == 0 or not faces:
+                        try:
+                            faces = detect_faces(frame, detector)
+                            logging.info(f"Faces detectadas: {len(faces)}")
+                        except Exception as e:
+                            logging.error(f"Erro na detecção facial: {str(e)}")
+                            faces = []
 
-                        if quality > 60 and self.captured_count < TARGET_FACES:
-                            future = executor.submit(
-                                self.save_face_image,
-                                face_img,
-                                self.captured_count,
-                                quality
-                            )
-                            futures.append(future)
-                            self.captured_count += 1
-                            self.update_progress(f"Face {self.captured_count} capturada (Qualidade: {int(quality)}%)")
+                    # Processar cada rosto detectado
+                    for (x1, y1, x2, y2) in faces:
+                        # Calcular margem de segurança ao redor do rosto
+                        margin = int((x2 - x1) * 0.15)
+                        x1 = max(0, x1 - margin)
+                        y1 = max(0, y1 - margin)
+                        x2 = min(frame.shape[1], x2 + margin)
+                        y2 = min(frame.shape[0], y2 + margin)
 
-                # Adicionar contador ao frame de exibição
-                cv2.putText(
-                    display_frame,
-                    f"Capturadas: {self.captured_count}/{TARGET_FACES}",
-                    (10, 30),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.7,
-                    (0, 255, 0),
-                    2
-                )
+                        # Verificar se a região é válida
+                        if x2 <= x1 or y2 <= y1:
+                            continue
 
-                # Enviar frame para o front-end, se houver callback
-                if self.frame_callback:
-                    # Reduzir a resolução para melhor desempenho
-                    small_frame = cv2.resize(display_frame, (640, 360))
-                    _, buffer = cv2.imencode('.jpg', small_frame)
-                    jpg_as_text = base64.b64encode(buffer).decode('utf-8')
-                    self.frame_callback(jpg_as_text)
+                        face_img = frame[y1:y2, x1:x2]
 
-                # Controle de taxa de envio de frames
-                time.sleep(0.05)  # ~20 FPS
+                        if face_img.size > 0:
+                            # Desenhar retângulo no frame de exibição
+                            cv2.rectangle(display_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+                            quality = face_quality_score(face_img)
+                            logging.info(f"Qualidade calculada: {quality}")
+
+                            if quality > 40 and self.captured_count < TARGET_FACES:  # Limite reduzido
+                                future = executor.submit(
+                                    self.save_face_image,
+                                    face_img,
+                                    self.captured_count,
+                                    quality
+                                )
+                                futures.append(future)
+                                self.captured_count += 1
+                                self.update_progress(
+                                    f"Face {self.captured_count} capturada (Qualidade: {int(quality)}%)")
+                                logging.info(f"Faces capturadas: {self.captured_count}/{TARGET_FACES}")
+
+                    # Adicionar contador ao frame de exibição
+                    cv2.putText(
+                        display_frame,
+                        f"Capturadas: {self.captured_count}/{TARGET_FACES}",
+                        (10, 30),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.7,
+                        (0, 255, 0),
+                        2
+                    )
+
+                    # Enviar frame para o front-end, se houver callback
+                    if self.frame_callback:
+                        # Reduzir a resolução para melhor desempenho
+                        small_frame = cv2.resize(display_frame, (640, 360))
+                        _, buffer = cv2.imencode('.jpg', small_frame)
+                        jpg_as_text = base64.b64encode(buffer).decode('utf-8')
+                        self.frame_callback(jpg_as_text)
+
+                    # Controle de taxa de envio de frames (reduzido)
+                    time.sleep(0.1)  # ~10 FPS
+
+                except Exception as e:
+                    logging.error(f"Erro no loop de captura: {str(e)}")
+                    continue
 
             cap.release()
             executor.shutdown(wait=True)
@@ -391,17 +409,32 @@ class FaceCapture:
     def save_face_image(self, face_img, index, quality):
         """Salva a imagem facial aprimorada no diretório do usuário"""
         try:
+            # Verifique se a imagem é válida
+            if face_img is None or face_img.size == 0:
+                logging.warning("Tentativa de salvar imagem facial vazia")
+                return
+
             enhanced = enhance_face_image(face_img)
             timestamp = datetime.now().strftime("%H%M%S%f")
             filename = f"{self.safe_name}_{index:03d}_{timestamp}_{int(quality)}.jpg"
             filepath = os.path.join(self.user_dir, filename)
-            cv2.imwrite(filepath, enhanced)
-            logging.info(f"Face salva: {filename}")
+
+            # Tente salvar a imagem com múltiplas tentativas
+            for attempt in range(3):
+                try:
+                    cv2.imwrite(filepath, enhanced)
+                    logging.info(f"Face salva: {filename}")
+                    break
+                except Exception as e:
+                    logging.warning(f"Tentativa {attempt + 1} falhou ao salvar face: {str(e)}")
+                    time.sleep(0.1)
+
         except Exception as e:
             logging.error(f"Erro ao salvar face: {str(e)}")
 
     def stop(self):
         self.running = False
+
 
 # ====================== FUNÇÃO PRINCIPAL (PARA EXECUÇÃO DIRETA) ======================
 def main():

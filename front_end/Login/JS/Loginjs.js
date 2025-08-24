@@ -1,141 +1,148 @@
 const video = document.getElementById("video");
 const mensagem = document.getElementById("mensagem");
-const successOverlay = document.getElementById("success-overlay");
-
-// Estados do sistema
 let stream = null;
 let recognitionInterval = null;
-let currentUser = null;
-let recognitionStartTime = 0;
-let recognitionProgress = 0;
-const REQUIRED_RECOGNITION_TIME = 5000; // 5 segundos em milissegundos
 
-// Adicionar barra de progresso
-const progressContainer = document.createElement("div");
-progressContainer.className = "progress-container";
-const progressBar = document.createElement("div");
-progressBar.className = "progress-bar";
-progressContainer.appendChild(progressBar);
-mensagem.parentNode.insertBefore(progressContainer, mensagem.nextSibling);
+// Elementos de UI para feedback visual
+const scanOverlay = document.querySelector('.scan-animation-overlay');
+const faceScanWidget = document.querySelector('.face-scan-widget');
 
 async function iniciarCamera() {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ 
       video: { 
-        facingMode: 'user',
-        width: { ideal: 640 },
-        height: { ideal: 480 }
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+        facingMode: "user" 
       } 
     });
-    video.srcObject = stream;
-    mensagem.textContent = "Câmera ativada. Posicione seu rosto.";
     
-    // Iniciar o reconhecimento contínuo
-    startContinuousRecognition();
+    video.srcObject = stream;
+    mensagem.textContent = "Posicione seu rosto na câmera";
+    
+    // Iniciar reconhecimento facial após 1 segundo
+    setTimeout(iniciarReconhecimentoFacial, 1000);
+    
   } catch (error) {
-    mensagem.textContent = "Não foi possível ativar a câmera.";
     console.error("Erro ao acessar câmera:", error);
+    mensagem.textContent = "Erro ao acessar a câmera. Verifique as permissões.";
+    mensagem.style.color = "#ff4d7d";
   }
 }
 
-function startContinuousRecognition() {
-  // Limpar intervalo anterior se existir
-  if (recognitionInterval) clearInterval(recognitionInterval);
+function iniciarReconhecimentoFacial() {
+  // Verificar se a câmera está funcionando
+  if (!video.srcObject) {
+    mensagem.textContent = "Câmera não disponível";
+    return;
+  }
   
-  // Verificar a cada 500ms
+  // Configurar intervalo para reconhecimento (a cada 2 segundos)
   recognitionInterval = setInterval(async () => {
     try {
+      // Adicionar efeito visual de escaneamento
+      faceScanWidget.style.boxShadow = "0 0 20px #00e0ff";
+      scanOverlay.style.display = "block";
+      
       // Capturar frame
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-      
-      // Espelhar a imagem para corresponder ao preview
-      ctx.translate(canvas.width, 0);
-      ctx.scale(-1, 1);
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      
-      // Converter para base64 (70% de qualidade)
-      const imagemBase64 = canvas.toDataURL('image/jpeg', 0.7);
+      const imageData = await capturarFrame();
       
       // Enviar para o backend
-      const response = await fetch('http://localhost:5000/face-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imagem: imagemBase64 })
-      });
+      const resultado = await enviarParaReconhecimento(imageData);
       
-      if (!response.ok) {
-        throw new Error(`Erro no servidor: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      if (data.authenticated) {
-        const user = data.user;
-        const confidencePercent = Math.round(data.confidence * 100);
+      // Processar resultado
+      if (resultado && resultado.authenticated) {
+        clearInterval(recognitionInterval);
+        mensagem.textContent = `Bem-vindo, ${resultado.user}!`;
+        mensagem.style.color = "#00e0ff";
         
-        // Se for o mesmo usuário
-        if (currentUser === user) {
-          const elapsedTime = Date.now() - recognitionStartTime;
-          recognitionProgress = Math.min(100, (elapsedTime / REQUIRED_RECOGNITION_TIME) * 100);
-          
-          mensagem.textContent = `Reconhecido: ${user} (${confidencePercent}%) - ${Math.round(recognitionProgress)}%`;
-          progressBar.style.width = `${recognitionProgress}%`;
-          
-          // Se passou 5 segundos
-          if (elapsedTime >= REQUIRED_RECOGNITION_TIME) {
-            clearInterval(recognitionInterval);
-            showSuccessAnimation();
-            // Redirecionar após 2 segundos
-            setTimeout(() => {
-              window.location.href = '../MenuProf/Menu.html';
-            }, 2000);
-          }
-        } else {
-          // Novo usuário detectado
-          currentUser = user;
-          recognitionStartTime = Date.now();
-          recognitionProgress = 0;
-          progressBar.style.width = "0%";
-          mensagem.textContent = `Reconhecido: ${user} (${confidencePercent}%)`;
-        }
-      } else {
-        // Resetar se não reconheceu
-        currentUser = null;
-        recognitionStartTime = 0;
-        recognitionProgress = 0;
-        progressBar.style.width = "0%";
-        mensagem.textContent = data.message || "Posicione seu rosto na câmera.";
+        // Efeito visual de sucesso
+        faceScanWidget.style.boxShadow = "0 0 30px #00ff7f";
+        
+        // Redirecionar após 2 segundos
+        setTimeout(() => {
+          window.location.href = "../MenuAluno/Menu.html";
+        }, 2000);
+      } else if (resultado && !resultado.authenticated) {
+        mensagem.textContent = resultado.message || "Usuário não reconhecido";
+        mensagem.style.color = "#ff4d7d";
+        
+        // Efeito visual de falha
+        faceScanWidget.style.boxShadow = "0 0 20px #ff4d7d";
+        setTimeout(() => {
+          faceScanWidget.style.boxShadow = "0 0 20px #00e0ff";
+          mensagem.textContent = "Posicione seu rosto na câmera";
+          mensagem.style.color = "white";
+        }, 2000);
       }
     } catch (error) {
-      console.error('Erro:', error);
-      mensagem.textContent = "Erro temporário. Continuando...";
+      console.error("Erro no reconhecimento:", error);
+      mensagem.textContent = "Erro no reconhecimento. Tente novamente.";
+      mensagem.style.color = "#ff4d7d";
+    } finally {
+      // Remover efeito visual após um tempo
+      setTimeout(() => {
+        scanOverlay.style.display = "none";
+      }, 500);
     }
-  }, 500); // Verificar a cada 500ms
+  }, 2000); // Verificar a cada 2 segundos
 }
 
-function showSuccessAnimation() {
-  // Mostrar overlay de sucesso
-  successOverlay.classList.add('active');
-  mensagem.textContent = "Autenticação bem-sucedida! Redirecionando...";
-  progressBar.style.width = "100%";
+async function capturarFrame() {
+  const canvas = document.createElement('canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const ctx = canvas.getContext('2d');
   
-  // Adicionar animação ao checkmark
-  setTimeout(() => {
-    successOverlay.querySelector('.checkmark__circle').style.animation = 'stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards';
-    successOverlay.querySelector('.checkmark__check').style.animation = 'stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards';
-  }, 100);
+  // Espelhar a imagem para ficar mais natural
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+  // Converter para base64 (sem o prefixo data:image/jpeg;base64,)
+  return canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
 }
 
-// Iniciar câmera quando a página carregar
-window.addEventListener('DOMContentLoaded', iniciarCamera);
+async function enviarParaReconhecimento(imageData) {
+  try {
+    const response = await fetch('http://localhost:5000/face-login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ imagem: imageData })
+    });
 
-// Parar a câmera ao sair da página
-window.addEventListener('beforeunload', () => {
+    if (!response.ok) {
+      throw new Error(`Erro HTTP: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro na requisição:", error);
+    
+    // Verificar se é erro de CORS
+    if (error.message.includes("Failed to fetch") || error.message.includes("CORS")) {
+      mensagem.textContent = "Erro de conexão com o servidor";
+      mensagem.style.color = "#ff4d7d";
+    }
+    
+    return null;
+  }
+}
+
+function pararCamera() {
+  if (recognitionInterval) {
+    clearInterval(recognitionInterval);
+  }
+  
   if (stream) {
     stream.getTracks().forEach(track => track.stop());
   }
-  if (recognitionInterval) clearInterval(recognitionInterval);
-});
+}
+
+// Iniciar quando a página carregar
+document.addEventListener('DOMContentLoaded', iniciarCamera);
+
+// Parar a câmera quando a página for fechada
+window.addEventListener('beforeunload', pararCamera);
