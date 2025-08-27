@@ -15,7 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const senhaGroup = document.getElementById("senha-group");
   const senhaInput = document.getElementById("senha");
   const turmaInput = document.getElementById("turma");
-  
+
+  // URLs dos back-ends
+  const API_URL = "http://localhost:8080/usuarios/novoUsuario";
+  const CAPTURE_API_URL = "http://localhost:7001";
+
   // Estados da captura
   let isScanning = false;
   let captureSessionId = null;
@@ -46,10 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
   checkmark.style.zIndex = '10';
   scanWidget.appendChild(checkmark);
 
-  const API_URL = "http://localhost:8080/usuarios/novoUsuario";
-
   // Conectar ao WebSocket do servidor de captura
-  const socket = io("http://localhost:7001", {
+  const socket = io(CAPTURE_API_URL, {
     reconnection: true,
     reconnectionAttempts: 5,
     reconnectionDelay: 3000
@@ -60,70 +62,69 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Conectado ao servidor de captura facial");
   });
 
+  socket.on("connect_error", (err) => {
+    console.error(`Erro de conexão com Socket.IO: ${err.message}`);
+    showFeedback("error", "Não foi possível conectar ao servidor de captura. Verifique se o back-end está rodando.");
+  });
+
   socket.on("capture_progress", (data) => {
-    if (data.session_id === captureSessionId) {
-      const progress = data.progress;
-      scanInstruction.textContent = `Capturando... ${progress}%`;
-      
-      scanWidget.style.background = `linear-gradient(
-        to right, 
-        rgba(0, 224, 255, 0.5) ${progress}%, 
+    const progress = Math.min(100, Math.round((data.captured / data.total) * 100));
+    scanInstruction.textContent = `Capturando... ${progress}%`;
+
+    scanWidget.style.background = `linear-gradient(
+        to right,
+        rgba(0, 224, 255, 0.5) ${progress}%,
         rgba(30, 41, 59, 0.3) ${progress}%
-      )`;
-    }
+    )`;
   });
 
   socket.on('capture_frame', (data) => {
-    if (data.session_id === captureSessionId) {
-      cameraFeed.src = `data:image/jpeg;base64,${data.frame}`;
-      cameraFeed.style.display = 'block';
-      scanInstruction.style.display = 'none';
-    }
+    cameraFeed.src = `data:image/jpeg;base64,${data.frame}`;
+    cameraFeed.style.display = 'block';
+    scanInstruction.style.display = 'none';
   });
 
   socket.on("capture_complete", (data) => {
-    if (data.session_id === captureSessionId) {
-      isScanning = false;
-      faceCaptureComplete = true;
-      
-      if (data.success) {
-        faceCaptureSuccess = true;
-        cameraFeed.style.display = 'none';
-        checkmark.style.display = 'block';
-        scanInstruction.style.display = 'none';
-        
-        // Animação de confirmação
-        setTimeout(() => {
-          checkmark.style.transition = 'all 1s ease';
-          checkmark.style.transform = 'translate(-50%, -50%) scale(1.5)';
-          checkmark.style.opacity = '0';
-        }, 2000);
-        
-        setTimeout(() => {
-          checkmark.style.display = 'none';
-          scanInstruction.style.display = 'block';
-          scanInstruction.textContent = "Biometria capturada!";
-          scanWidget.style.background = "rgba(0, 255, 170, 0.1)";
-          scanWidget.classList.add('capture-success');
-        }, 3000);
-      } else {
-        faceCaptureSuccess = false;
-        cameraFeed.style.display = 'none';
+    isScanning = false;
+    faceCaptureComplete = true;
+
+    if (data.success) {
+      faceCaptureSuccess = true;
+      cameraFeed.style.display = 'none';
+      checkmark.style.display = 'block';
+      scanInstruction.style.display = 'none';
+
+      // Animação de confirmação
+      setTimeout(() => {
+        checkmark.style.transition = 'all 1s ease';
+        checkmark.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        checkmark.style.opacity = '0';
+      }, 2000);
+
+      setTimeout(() => {
+        checkmark.style.display = 'none';
         scanInstruction.style.display = 'block';
-        scanInstruction.textContent = "Falha na captura. Clique para tentar novamente";
-        scanWidget.style.background = "rgba(255, 77, 125, 0.2)";
-        showFeedback("error", `Erro na captura biométrica: ${data.message}`);
-      }
+        scanInstruction.textContent = "Biometria capturada!";
+        scanWidget.style.background = "rgba(0, 255, 170, 0.1)";
+        scanWidget.classList.add('capture-success');
+      }, 3000);
+    } else {
+      faceCaptureSuccess = false;
+      cameraFeed.style.display = 'none';
+      scanInstruction.style.display = 'block';
+      scanInstruction.textContent = "Falha na captura. Clique para tentar novamente";
+      scanWidget.style.background = "rgba(255, 77, 125, 0.2)";
+      showFeedback("error", `Erro na captura biométrica: ${data.message}`);
     }
   });
 
   // ====================== EVENTO DE CLIQUE NO WIDGET ======================
   scanWidget.addEventListener("click", async () => {
     if (isScanning) return;
-    
+
     const nome = document.getElementById("nome").value.trim();
     const sobrenome = document.getElementById("sobrenome").value.trim();
-    
+
     if (!nome || !sobrenome) {
       showFeedback("error", "Preencha nome e sobrenome antes da captura biométrica");
       return;
@@ -133,6 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
     faceCaptureComplete = false;
     faceCaptureSuccess = false;
     captureSessionId = Date.now().toString();
+
+    // Conectar ao WebSocket com o session_id
+    socket.io.opts.query = { session_id: captureSessionId };
+    socket.connect();
     
     // Resetar elementos visuais
     cameraFeed.style.display = 'none';
@@ -143,11 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
     scanWidget.classList.remove('capture-success');
 
     try {
-      // Conectar ao WebSocket com o session_id
-      socket.emit("join", { session_id: captureSessionId });
-
       // Iniciar o processo de captura no back-end
-      const response = await fetch("http://localhost:7001/start_capture", {
+      const response = await fetch(`${CAPTURE_API_URL}/start_capture`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -157,24 +159,23 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const result = await response.json();
-      
+
       if (!result.success) {
         throw new Error(result.error || "Erro ao iniciar captura");
       }
-      
+
       scanInstruction.textContent = "Siga as instruções...";
     } catch (error) {
       isScanning = false;
       scanInstruction.textContent = "Erro na conexão. Clique para tentar";
       console.error("Erro na captura biométrica:", error);
-      showFeedback("error", "Falha ao iniciar captura biométrica");
+      showFeedback("error", "Falha ao iniciar captura biométrica. Verifique o console.");
     }
   });
 
   // ====================== FUNÇÕES AUXILIARES ======================
   function toggleUsernameField() {
     if (!tipoUsuarioSelect) return;
-
     const isProfessor = tipoUsuarioSelect.value === "2";
 
     setTimeout(() => {
@@ -230,13 +231,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // ====================== SUBMIT DO FORMULÁRIO ======================
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
-    
+
     // Validar se a captura biométrica foi realizada com sucesso
     if (!faceCaptureComplete) {
       showFeedback("error", "Realize a captura biométrica antes de cadastrar");
       return;
     }
-    
+
     if (!faceCaptureSuccess) {
       showFeedback("error", "Captura biométrica não concluída com sucesso");
       return;
@@ -257,24 +258,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const campo = document.getElementById(id);
       if (!campo) return;
 
-      const erroMensagem = campo.parentElement.querySelector(".error-message");
-
       if (!campo.value.trim()) {
         invalidos.push(id);
-        campo.classList.add("input-error");
         isValid = false;
-
-        if (!erroMensagem) {
-          const errorElement = document.createElement("div");
-          errorElement.classList.add("error-message");
-          errorElement.textContent = "Este campo é obrigatório.";
-          campo.parentElement.appendChild(errorElement);
-        }
-      } else {
-        campo.classList.remove("input-error");
-        if (erroMensagem) {
-          erroMensagem.remove();
-        }
       }
     });
 
@@ -285,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!isValid) {
       const firstInvalid = document.getElementById(invalidos[0]);
-      if (firstInvalid) firstInvalid.focus();
+      if (firstInvalid) firstInput.focus();
       showFeedback(
         "error",
         "Por favor, preencha todos os campos obrigatórios."
@@ -307,8 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      console.log("Enviando dados para o backend:", formData);
-
+      showFeedback("info", "Enviando dados de cadastro...");
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
@@ -329,10 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const responseData = await response.json();
-      console.log("Resposta completa:", {
-        status: response.status,
-        data: responseData,
-      });
 
       if (response.status === 201 && responseData.id) {
         showFeedback("success", "Cadastro realizado com sucesso!");
@@ -358,7 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (error) {
       console.error("Erro completo na requisição:", error);
-
       let errorMessage;
       if (
         error.message.includes("Failed to fetch") ||
@@ -376,12 +356,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       showFeedback("error", errorMessage);
-
-      console.error("Detalhes do erro:", {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      });
     }
   });
 });

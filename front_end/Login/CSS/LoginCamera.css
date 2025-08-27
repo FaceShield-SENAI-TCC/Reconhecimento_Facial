@@ -256,3 +256,47 @@ h1 {
   width: 0%;
   transition: width 0.3s ease;
 }
+
+/* Novos estilos para o indicador de status e botão de tentar */
+.status-conexao {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+.status-online {
+    background: #4caf50;
+    color: white;
+}
+
+.status-offline {
+    background: #f44336;
+    color: white;
+}
+
+.botaoTentar {
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+}
+
+.buttonTentar {
+    padding: 12px 25px;
+    background: #00e0ff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.buttonTentar:hover {
+    background: #00b8d4;
+    transform: scale(1.05);
+}

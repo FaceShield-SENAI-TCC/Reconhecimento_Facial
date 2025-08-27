@@ -1,223 +1,175 @@
 import os
-import sys
-import threading
-import logging
+import cv2
+from deepface import DeepFace
+import numpy as np
+import base64
 import time
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
+from flask_socketio import SocketIO, emit
 from flask_cors import CORS
-from flask_socketio import SocketIO, emit, join_room
-from facial_capture import FaceCapture
+import threading
 
-# Configurar para evitar o erro do recarregamento
-os.environ['WERKZEUG_RUN_MAIN'] = 'false'
+# Configuração da captura facial
+CAPTURE_DIR = "C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
+os.makedirs(CAPTURE_DIR, exist_ok=True)
+TOTAL_FRAMES = 100
+MAX_FACES = 25
+last_frame_time = 0
+FRAME_DELAY = 0.1  # 100ms
+face_capture_state = {}
 
 app = Flask(__name__)
-
-# Configuração robusta de CORS para a app Flask
-CORS(app, origins=["http://localhost:8001", "http://127.0.0.1:8001", "null"])
+# Permitir CORS para o Live Server e outras origens de desenvolvimento
+# Configuração CORS para permitir o Live Server
+CORS(app, resources={r"/*": {"origins": ["http://localhost:7001", "http://127.0.0.1:7001", "http://127.0.0.1:5500"]}})
 
 # Configuração do Socket.IO com CORS
 socketio = SocketIO(
     app,
-    cors_allowed_origins=["http://localhost:8001", "http://127.0.0.1:8001", "null"],
-    async_mode='threading',
-    logger=True,
-    engineio_logger=True
+    cors_allowed_origins=["http://localhost:7001", "http://127.0.0.1:7001", "http://127.0.0.1:5500"],
 )
 
-# Configurar logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    stream=sys.stdout
-)
 
-# Dicionário para armazenar processos ativos
-active_captures = {}
-
-
-def check_camera():
-    """Verifica se a câmera está acessível com múltiplas tentativas e backends"""
-    import cv2
-    logging.info("Verificando disponibilidade da câmera...")
-
-    # Tentar diferentes backends e índices
-    backends = [cv2.CAP_DSHOW, cv2.CAP_ANY]
-
+def get_camera_backend():
+    # Detecta o backend da câmera disponível (prioriza DSHOW para Windows)
+    backends = [cv2.CAP_DSHOW, cv2.CAP_MSMF]
     for backend in backends:
-        for camera_index in [0, 1, 2]:
-            try:
-                cap = cv2.VideoCapture(camera_index, backend)
-                if cap.isOpened():
-                    ret, frame = cap.read()
-                    cap.release()
-                    if ret and frame is not None:
-                        logging.info(f"Câmera encontrada no índice {camera_index} com backend {backend}")
-                        return True
-            except Exception as e:
-                logging.warning(f"Erro ao acessar câmera {camera_index} com backend {backend}: {str(e)}")
-
-    logging.error("Nenhuma câmera detectada após todas as tentativas")
-    return False
+        cap = cv2.VideoCapture(0, backend)
+        if cap.isOpened():
+            print(f"INFO: Câmera encontrada no índice 0 com backend {backend}")
+            cap.release()
+            return backend
+    print("WARNING: Câmera não encontrada com backends específicos. Tentando padrão.")
+    return cv2.CAP_ANY
 
 
-@app.route('/start_capture', methods=['POST', 'OPTIONS'])
-def handle_start_capture():
-    if request.method == 'OPTIONS':
-        response = jsonify()
-        return response
+def capture_frames(name, session_id):
+    global face_capture_state
 
-    data = request.json
-    name = data.get('name')
-    session_id = data.get('session_id')
+    face_capture_state[session_id] = {
+        "thread_running": True,
+        "captured_frames": [],
+        "captured_count": 0,
+        "total_to_capture": TOTAL_FRAMES,
+        "success": False,
+        "message": ""
+    }
 
-    if not name:
-        return jsonify({"success": False, "error": "Nome é obrigatório"}), 400
+    camera_backend = get_camera_backend()
+    cap = cv2.VideoCapture(0, camera_backend)
 
-    if session_id in active_captures:
-        return jsonify({"success": False, "error": "Sessão já em andamento"}), 400
+    if not cap.isOpened():
+        face_capture_state[session_id]["success"] = False
+        face_capture_state[session_id]["message"] = "Não foi possível acessar a câmera."
+        emit("capture_complete", face_capture_state[session_id], room=session_id)
+        return
 
-    # Pequeno delay para estabilização
-    time.sleep(0.5)
+    face_count = 0
+    start_time = time.time()
 
-    # Função de callback para enviar progresso
-    def progress_callback(progress):
-        captured = progress.get('captured', 0)
-        total = progress.get('total', 60)
-        progress_percent = int((captured / total) * 100)
-        socketio.emit('capture_progress', {
-            'session_id': session_id,
-            'progress': progress_percent,
-            'message': progress.get('message', '')
-        }, room=session_id)
+    while face_count < TOTAL_FRAMES and (time.time() - start_time) < 30:
+        if not face_capture_state[session_id]["thread_running"]:
+            break
 
-    # Função de callback para enviar frames
-    def frame_callback(frame_base64):
-        socketio.emit('capture_frame', {
-            'session_id': session_id,
-            'frame': frame_base64
-        }, room=session_id)
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-    # Criar instância de captura
-    capture = FaceCapture(name, progress_callback, frame_callback)
-    active_captures[session_id] = capture
-
-    # Iniciar captura em thread separada
-    def capture_thread():
+        faces_found = []
         try:
-            success, message = capture.capture()
-            socketio.emit('capture_complete', {
-                'session_id': session_id,
-                'success': success,
-                'message': message,
-                'captured_count': capture.captured_count
-            }, room=session_id)
+            detected_faces = DeepFace.extract_faces(
+                img_path=frame,
+                detector_backend="opencv",
+                enforce_detection=False
+            )
+            for face in detected_faces:
+                if 'facial_area' in face:
+                    faces_found.append(face['facial_area'])
         except Exception as e:
-            logging.error(f"Erro na thread de captura: {str(e)}")
-            socketio.emit('capture_complete', {
-                'session_id': session_id,
-                'success': False,
-                'message': f"Erro: {str(e)}",
-                'captured_count': 0
+            print(f"Erro na detecção de rosto com DeepFace: {e}")
+            faces_found = []
+
+        frame_copy = frame.copy()
+        for face_area in faces_found:
+            x, y, w, h = face_area['x'], face_area['y'], face_area['w'], face_area['h']
+            cv2.rectangle(frame_copy, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+        _, buffer = cv2.imencode('.jpg', frame_copy, [int(cv2.IMWRITE_JPEG_QUALITY), 60])
+        jpg_as_text = base64.b64encode(buffer).decode('utf-8')
+        socketio.emit('capture_frame', {'frame': jpg_as_text, 'session_id': session_id}, room=session_id)
+
+        if len(faces_found) == 1:
+            face_count += 1
+            face_capture_state[session_id]["captured_frames"].append(frame)
+            face_capture_state[session_id]["captured_count"] = face_count
+            socketio.emit('capture_progress', {
+                'captured': face_count,
+                'total': TOTAL_FRAMES,
+                'session_id': session_id
             }, room=session_id)
-        finally:
-            # Limpar após conclusão
-            if session_id in active_captures:
-                del active_captures[session_id]
+        else:
+            face_count = max(0, face_count - 1)
+            face_capture_state[session_id]["captured_count"] = face_count
+            face_capture_state[session_id]["captured_frames"] = []  # Reinicia a contagem
+            socketio.emit('capture_progress', {
+                'captured': face_count,
+                'total': TOTAL_FRAMES,
+                'session_id': session_id
+            }, room=session_id)
 
-    thread = threading.Thread(target=capture_thread)
-    thread.daemon = True
-    thread.start()
+        time.sleep(FRAME_DELAY)
 
-    return jsonify({
-        "success": True,
-        "message": "Captura iniciada",
-        "session_id": session_id
-    })
+    cap.release()
+    cv2.destroyAllWindows()
 
-
-@app.route('/stop_capture', methods=['POST', 'OPTIONS'])
-def handle_stop_capture():
-    if request.method == 'OPTIONS':
-        response = jsonify()
-        return response
-
-    data = request.json
-    session_id = data.get('session_id')
-
-    if session_id in active_captures:
-        active_captures[session_id].stop()
-        del active_captures[session_id]
-        return jsonify({"success": True, "message": "Captura interrompida"})
-
-    return jsonify({"success": False, "error": "Sessão não encontrada"}), 404
-
-
-@socketio.on('connect')
-def handle_connect(auth):
-    session_id = request.args.get('session_id')
-    if session_id:
-        join_room(session_id)
-        emit('connection_ack', {'status': 'connected', 'session_id': session_id})
+    if len(face_capture_state[session_id]["captured_frames"]) >= TOTAL_FRAMES:
+        user_dir = os.path.join(CAPTURE_DIR, name)
+        os.makedirs(user_dir, exist_ok=True)
+        for i, frame in enumerate(face_capture_state[session_id]["captured_frames"]):
+            file_path = os.path.join(user_dir, f"frame_{i}.jpg")
+            cv2.imwrite(file_path, frame)
+        face_capture_state[session_id]["success"] = True
+        face_capture_state[session_id]["message"] = "Captura completa e salva com sucesso."
     else:
-        emit('connection_ack', {'status': 'error', 'message': 'session_id missing'})
+        face_capture_state[session_id]["success"] = False
+        face_capture_state[session_id][
+            "message"] = "Captura falhou. Não foi possível detectar um rosto único e consistente."
+
+    emit("capture_complete", face_capture_state[session_id], room=session_id)
+    face_capture_state[session_id]["thread_running"] = False
 
 
-@socketio.on('join')
-def handle_join(data):
-    session_id = data.get('session_id')
+@app.route("/start_capture", methods=["POST"])
+def start_capture():
+    data = request.json
+    name = data.get("name")
+    session_id = data.get("session_id")
+
+    if not name or not session_id:
+        return jsonify({"success": False, "error": "Nome e session_id são obrigatórios"}), 400
+
+    thread = threading.Thread(target=capture_frames, args=(name, session_id))
+    thread.start()
+    return jsonify({"success": True}), 200
+
+
+@socketio.on("connect")
+def on_connect():
+    session_id = request.args.get("session_id")
     if session_id:
-        join_room(session_id)
-        emit('connection_ack', {'status': 'connected', 'session_id': session_id})
+        print(f"Cliente conectado com session_id: {session_id}")
+        # O cliente se junta a uma "sala" com seu session_id
+        socketio.join_room(session_id)
 
 
-def run_server():
-    """Executa o servidor de forma compatível com Windows"""
-    try:
-        # Remover variáveis de ambiente que podem causar conflito
-        if 'WERKZEUG_SERVER_FD' in os.environ:
-            del os.environ['WERKZEUG_SERVER_FD']
-
-        logging.info("Iniciando servidor com Socket.IO (compatível com CORS)")
-        socketio.run(
-            app,
-            host='0.0.0.0',
-            port=7001,
-            debug=False,
-            allow_unsafe_werkzeug=True,
-            use_reloader=False
-        )
-    except Exception as e:
-        logging.error(f"Erro ao iniciar servidor: {str(e)}")
-        # Tentar método alternativo se o primeiro falhar
-        try:
-            from waitress import serve
-            logging.info("Tentando iniciar com Waitress...")
-            serve(app, host="0.0.0.0", port=7001)
-        except ImportError:
-            logging.info("Waitress não disponível, usando servidor Flask simples")
-            app.run(host='0.0.0.0', port=7001, debug=False)
+@socketio.on("disconnect")
+def on_disconnect():
+    session_id = request.args.get("session_id")
+    if session_id in face_capture_state:
+        face_capture_state[session_id]["thread_running"] = False
+    print(f"Cliente desconectado: {request.sid}")
 
 
-if __name__ == '__main__':
-    # Remover variáveis de ambiente problemáticas
-    if 'WERKZEUG_SERVER_FD' in os.environ:
-        del os.environ['WERKZEUG_SERVER_FD']
-
-    camera_ok = check_camera()
-
-    if not camera_ok:
-        logging.error("Servidor não iniciado devido a problemas com a câmera")
-
-        # Tentativa adicional como último recurso
-        import platform
-
-        if platform.system() == 'Windows':
-            logging.info("Tentando solução alternativa para Windows...")
-            os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
-            camera_ok = check_camera()
-
-        if not camera_ok:
-            sys.exit(1)
-
-    run_server()
+if __name__ == "__main__":
+    print("INFO: Verificando disponibilidade da câmera...")
+    socketio.run(app, host='0.0.0.0', port=7001, allow_unsafe_werkzeug=True)

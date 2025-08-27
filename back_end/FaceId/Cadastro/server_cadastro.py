@@ -3,9 +3,10 @@ import socketserver
 import os
 
 # Altere este caminho para o diretório do seu frontend
-FRONTEND_DIR = "../../../front_end/Cadastro"  # Exemplo: "../frontend-cadastro"
+FRONTEND_DIR = "../../../front_end/Cadastro"
 
 PORT = 8001
+
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=FRONTEND_DIR, **kwargs)
