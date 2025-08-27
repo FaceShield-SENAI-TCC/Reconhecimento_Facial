@@ -10,8 +10,10 @@ from flask_cors import CORS
 import threading
 
 # Configuração da captura facial
-CAPTURE_DIR = "C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
+# AJUSTE O CAMINHO PARA O SEU USUÁRIO
+CAPTURE_DIR = "C:/Users/Aluno/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
 os.makedirs(CAPTURE_DIR, exist_ok=True)
+
 TOTAL_FRAMES = 100
 MAX_FACES = 25
 last_frame_time = 0
@@ -19,31 +21,33 @@ FRAME_DELAY = 0.1  # 100ms
 face_capture_state = {}
 
 app = Flask(__name__)
-# Permitir CORS para o Live Server e outras origens de desenvolvimento
-# Configuração CORS para permitir o Live Server
-CORS(app, resources={r"/*": {"origins": ["http://localhost:7001", "http://127.0.0.1:7001", "http://127.0.0.1:5500"]}})
+
+# Configuração CORS para permitir o Live Server e o seu servidor local
+CORS(app, resources={r"/*": {"origins": [
+    "http://localhost:7001",
+    "http://127.0.0.1:7001",
+    "http://127.0.0.1:5500",
+    "http://localhost:8001",
+    "http://127.0.0.1:8001"
+]}})
 
 # Configuração do Socket.IO com CORS
 socketio = SocketIO(
     app,
-    cors_allowed_origins=["http://localhost:7001", "http://127.0.0.1:7001", "http://127.0.0.1:5500"],
+    cors_allowed_origins=[
+        "http://localhost:7001",
+        "http://127.0.0.1:7001",
+        "http://127.0.0.1:5500",
+        "http://localhost:8001",
+        "http://127.0.0.1:8001"
+    ],
 )
 
 
-def get_camera_backend():
-    # Detecta o backend da câmera disponível (prioriza DSHOW para Windows)
-    backends = [cv2.CAP_DSHOW, cv2.CAP_MSMF]
-    for backend in backends:
-        cap = cv2.VideoCapture(0, backend)
-        if cap.isOpened():
-            print(f"INFO: Câmera encontrada no índice 0 com backend {backend}")
-            cap.release()
-            return backend
-    print("WARNING: Câmera não encontrada com backends específicos. Tentando padrão.")
-    return cv2.CAP_ANY
-
-
 def capture_frames(name, session_id):
+    """
+    Captura frames da câmera, detecta rostos e envia o progresso via Socket.IO.
+    """
     global face_capture_state
 
     face_capture_state[session_id] = {
@@ -55,13 +59,14 @@ def capture_frames(name, session_id):
         "message": ""
     }
 
-    camera_backend = get_camera_backend()
-    cap = cv2.VideoCapture(0, camera_backend)
+    # Simplifica a inicialização da câmera para o método padrão
+    cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
         face_capture_state[session_id]["success"] = False
         face_capture_state[session_id]["message"] = "Não foi possível acessar a câmera."
-        emit("capture_complete", face_capture_state[session_id], room=session_id)
+        socketio.emit("capture_complete", {"success": False, "message": "Não foi possível acessar a câmera."},
+                      room=session_id)
         return
 
     face_count = 0
@@ -135,7 +140,15 @@ def capture_frames(name, session_id):
         face_capture_state[session_id][
             "message"] = "Captura falhou. Não foi possível detectar um rosto único e consistente."
 
-    emit("capture_complete", face_capture_state[session_id], room=session_id)
+    # Crie um dicionário para enviar, sem o ndarray
+    response_data = {
+        "success": face_capture_state[session_id]["success"],
+        "message": face_capture_state[session_id]["message"],
+        "captured_count": face_capture_state[session_id]["captured_count"],
+        "total_to_capture": face_capture_state[session_id]["total_to_capture"]
+    }
+
+    socketio.emit("capture_complete", response_data, room=session_id)
     face_capture_state[session_id]["thread_running"] = False
 
 
@@ -158,7 +171,6 @@ def on_connect():
     session_id = request.args.get("session_id")
     if session_id:
         print(f"Cliente conectado com session_id: {session_id}")
-        # O cliente se junta a uma "sala" com seu session_id
         socketio.join_room(session_id)
 
 
@@ -171,5 +183,4 @@ def on_disconnect():
 
 
 if __name__ == "__main__":
-    print("INFO: Verificando disponibilidade da câmera...")
     socketio.run(app, host='0.0.0.0', port=7001, allow_unsafe_werkzeug=True)

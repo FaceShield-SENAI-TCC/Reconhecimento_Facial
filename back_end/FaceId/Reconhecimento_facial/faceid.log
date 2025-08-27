@@ -18294,3 +18294,18 @@ FileNotFoundError: [WinError 2] O sistema não pode encontrar o arquivo especific
 2025-08-26 20:20:56,865 - INFO - Monitoramento do banco de dados parado
 2025-08-26 20:20:56,870 - INFO - Sistema de reconhecimento facial finalizado
 2025-08-26 20:20:56,882 - INFO - Sistema de reconhecimento facial finalizado
+2025-08-27 15:25:31,874 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-27 15:25:31,875 - INFO - Caminho absoluto do banco: C:\Users\Aluno\Desktop\Arduino\back_end\FaceId\Cadastro\facial_database
+2025-08-27 15:25:31,875 - ERROR - Diretorio do banco de dados esta vazio!
+2025-08-27 15:25:31,876 - INFO - Monitoramento do banco de dados iniciado em: C:\Users\Aluno\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\../Cadastro/facial_database
+2025-08-27 15:25:31,876 - INFO - Sistema de reconhecimento facial inicializado com sucesso
+2025-08-27 15:25:31,876 - INFO - Iniciando servidor Flask...
+2025-08-27 15:25:31,886 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://10.110.12.60:5005
+2025-08-27 15:25:31,886 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-27 15:25:39,578 - INFO - 127.0.0.1 - - [27/Aug/2025 15:25:39] "GET /health HTTP/1.1" 200 -
+2025-08-27 15:25:47,181 - INFO - Monitoramento do banco de dados parado
+2025-08-27 15:25:47,182 - INFO - Sistema de reconhecimento facial finalizado
+2025-08-27 15:25:47,182 - INFO - Sistema de reconhecimento facial finalizado
