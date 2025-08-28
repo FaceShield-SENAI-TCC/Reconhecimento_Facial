@@ -1,154 +1,99 @@
-from flask import Flask, request, jsonify
+import os
+import threading
+from flask import Flask, jsonify, request
 from flask_cors import CORS
+from face_recognition_logic import initialize, process_face_login, get_database_status, reload_database, cleanup
 import atexit
+import logging
 import sys
 import io
-import logging
-import traceback
 
 # Configurar stdout e stderr para UTF-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
-# Importar funções do módulo de lógica
-from face_recognition_logic import (
-    initialize,
-    cleanup,
-    process_face_login,
-    get_database_status,
-    reload_database,
-    is_cache_valid,
-    last_db_update,
-    logger
+# Configurar logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
 )
+logger = logging.getLogger(__name__)
 
-# ====================== CONFIGURAÇÕES ======================
+# Configurar o Flask
 app = Flask(__name__)
-# Configuração CORS para permitir todas as origens (apenas para desenvolvimento)
-CORS(app, origins="*")  # Permite todas as origens
+CORS(app)  # Permite requisições de diferentes origens (CORS)
 
 
 # ====================== ROTAS DA API ======================
-def _build_cors_preflight_response():
-    response = jsonify()
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
-    response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
-    return response
-
-
-@app.route('/face-login', methods=['POST', 'OPTIONS'])
-def face_login():
-    if request.method == 'OPTIONS':
-        return _build_cors_preflight_response()
-
-    logger.info("Recebendo solicitacao de login facial")
-
-    # Obter imagem do request
-    data = request.json
-    if not data or 'imagem' not in data:
-        logger.warning("Nenhuma imagem fornecida na solicitacao")
-        return jsonify({"error": "No image provided"}), 400
-
-    try:
-        # Processar a imagem usando a lógica de reconhecimento facial
-        result, status_code = process_face_login(data['imagem'])
-
-        # Adicionar headers CORS à resposta
-        response = jsonify(result)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response, status_code
-
-    except Exception as e:
-        logger.error(f"Erro no endpoint face-login: {str(e)}")
-        logger.error(traceback.format_exc())
-        response = jsonify({"error": "Internal server error"})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response, 500
-
-
-@app.route('/test-db', methods=['GET'])
-def test_db():
-    status = get_database_status()
-    if not status["loaded"]:
-        response = jsonify({"status": "Database not loaded"})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
-    response = jsonify({
-        "status": "Database loaded",
-        "users": status["users"],
-        "user_count": status["user_count"],
-        "total_embeddings": status["total_embeddings"]
-    })
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
-
-
-@app.route('/reload-db', methods=['POST'])
-def reload_db():
-    """Rota para recarregar manualmente o banco de dados"""
-    success, message = reload_database()
-
-    if success:
-        response = jsonify({
-            "success": True,
-            "message": message
-        })
-    else:
-        response = jsonify({
-            "success": False,
-            "error": message
-        }), 500
-
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
-
 
 @app.route('/health', methods=['GET'])
 def health_check():
-    status = get_database_status()
-    response_data = {
-        "status": "healthy",
-        "database_loaded": status["loaded"],
-        "user_count": status["user_count"],
-        "cache_valid": is_cache_valid(),
-        "last_update": last_db_update
-    }
-    response = jsonify(response_data)
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    """Verifica se o servidor está rodando."""
+    return jsonify({"status": "healthy"}), 200
 
 
-# ====================== INICIALIZAÇÃO E LIMPEZA ======================
-@atexit.register
-def cleanup_app():
-    cleanup()
-
-
-if __name__ == '__main__':
+@app.route('/face-login', methods=['POST'])
+def face_login():
+    """Endpoint para login com reconhecimento facial."""
+    logger.info("Recebida requisicao para /face-login")
     try:
-        # Inicializar o sistema de reconhecimento facial
-        if initialize():
-            logger.info("Sistema de reconhecimento facial inicializado com sucesso")
+        data = request.json
+        if not data or 'imagem' not in data:
+            return jsonify({"error": "No image data provided"}), 400
+
+        image_data = data.get('imagem')
+
+        # Correção: garantir que o prefixo seja removido de forma segura
+        if ',' in image_data:
+            image_data = image_data.split(',')[1]
+
+        result, status_code = process_face_login(image_data)
+
+        if status_code == 200:
+            logger.info(f"Login processado com sucesso. Resultado: {result['message']}")
         else:
-            logger.error("Falha ao inicializar o sistema de reconhecimento facial")
+            logger.error(
+                f"Erro ao processar login. Codigo: {status_code}, Mensagem: {result.get('error') or result.get('message')}")
 
-        # Configurar opções do servidor
-        options = {
-            'host': '0.0.0.0',
-            'port': 5005,
-            'debug': True,
-            'use_reloader': False,  # Desativar reloader para evitar problemas de threading
-            'threaded': True,  # Permitir múltiplas conexões
-        }
-
-        logger.info("Iniciando servidor Flask...")
-        app.run(**options)
+        return jsonify(result), status_code
 
     except Exception as e:
-        logger.error(f"Erro ao iniciar servidor: {str(e)}")
-        logger.error(traceback.format_exc())
-    finally:
-        # Garantir que a limpeza seja feita
-        cleanup()
+        logger.error(f"Erro inesperado na rota /face-login: {str(e)}")
+        return jsonify({"error": "Internal server error", "details": str(e)}), 500
+
+
+@app.route('/database-status', methods=['GET'])
+def database_status():
+    """Retorna o status do banco de dados facial."""
+    status = get_database_status()
+    return jsonify(status), 200
+
+
+@app.route('/reload-database', methods=['POST'])
+def reload_database_route():
+    """Recarrega o banco de dados facial manualmente."""
+    success, message = reload_database()
+    if success:
+        return jsonify({"message": message}), 200
+    else:
+        return jsonify({"error": message}), 500
+
+
+# ====================== INICIALIZAÇÃO ======================
+
+def start_app():
+    """Inicializa o sistema e o servidor Flask."""
+    if initialize():
+        logger.info("Servidor de reconhecimento facial pronto para aceitar conexoes.")
+    else:
+        logger.error("Falha na inicializacao. Nao foi possivel iniciar o servidor.")
+        sys.exit(1)
+
+
+# Registrar a função de limpeza
+atexit.register(cleanup)
+
+if __name__ == "__main__":
+    start_app()
+    app.run(host='0.0.0.0', port=5005, debug=False)

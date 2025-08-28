@@ -5,24 +5,20 @@ import numpy as np
 import base64
 import time
 from flask import Flask, jsonify, request
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room
 from flask_cors import CORS
 import threading
+import re
 
-# Configuração da captura facial
-# AJUSTE O CAMINHO PARA O SEU USUÁRIO
-CAPTURE_DIR = "C:/Users/Aluno/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
-os.makedirs(CAPTURE_DIR, exist_ok=True)
+# AJUSTE O CAMINHO PARA SEU USUÁRIO
+CAPTURE_BASE_DIR = "C:/Users/Aluno/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
+os.makedirs(CAPTURE_BASE_DIR, exist_ok=True)
 
-TOTAL_FRAMES = 100
-MAX_FACES = 25
-last_frame_time = 0
-FRAME_DELAY = 0.1  # 100ms
+MIN_PHOTOS_REQUIRED = 10
 face_capture_state = {}
 
 app = Flask(__name__)
 
-# Configuração CORS para permitir o Live Server e o seu servidor local
 CORS(app, resources={r"/*": {"origins": [
     "http://localhost:7001",
     "http://127.0.0.1:7001",
@@ -31,7 +27,6 @@ CORS(app, resources={r"/*": {"origins": [
     "http://127.0.0.1:8001"
 ]}})
 
-# Configuração do Socket.IO com CORS
 socketio = SocketIO(
     app,
     cors_allowed_origins=[
@@ -44,134 +39,189 @@ socketio = SocketIO(
 )
 
 
-def capture_frames(name, session_id):
-    """
-    Captura frames da câmera, detecta rostos e envia o progresso via Socket.IO.
-    """
+def sanitize_name(name):
+    name = str(name).lower().strip()
+    return re.sub(r'[^a-z0-9_]', '', name.replace(' ', '_'))
+
+
+def capture_frames(nome, sobrenome, turma, session_id):
     global face_capture_state
 
     face_capture_state[session_id] = {
         "thread_running": True,
-        "captured_frames": [],
+        "captured_faces": [],
         "captured_count": 0,
-        "total_to_capture": TOTAL_FRAMES,
         "success": False,
         "message": ""
     }
 
-    # Simplifica a inicialização da câmera para o método padrão
-    cap = cv2.VideoCapture(0)
-
-    if not cap.isOpened():
-        face_capture_state[session_id]["success"] = False
-        face_capture_state[session_id]["message"] = "Não foi possível acessar a câmera."
-        socketio.emit("capture_complete", {"success": False, "message": "Não foi possível acessar a câmera."},
-                      room=session_id)
-        return
-
-    face_count = 0
-    start_time = time.time()
-
-    while face_count < TOTAL_FRAMES and (time.time() - start_time) < 30:
-        if not face_capture_state[session_id]["thread_running"]:
+    cap = None
+    for i in range(3):
+        print(f"[{session_id}] Tentando abrir a câmera com índice: {i}")
+        cap = cv2.VideoCapture(i)
+        if cap.isOpened():
+            print(f"[{session_id}] Câmera aberta com sucesso no índice: {i}")
             break
-
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        faces_found = []
-        try:
-            detected_faces = DeepFace.extract_faces(
-                img_path=frame,
-                detector_backend="opencv",
-                enforce_detection=False
-            )
-            for face in detected_faces:
-                if 'facial_area' in face:
-                    faces_found.append(face['facial_area'])
-        except Exception as e:
-            print(f"Erro na detecção de rosto com DeepFace: {e}")
-            faces_found = []
-
-        frame_copy = frame.copy()
-        for face_area in faces_found:
-            x, y, w, h = face_area['x'], face_area['y'], face_area['w'], face_area['h']
-            cv2.rectangle(frame_copy, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-        _, buffer = cv2.imencode('.jpg', frame_copy, [int(cv2.IMWRITE_JPEG_QUALITY), 60])
-        jpg_as_text = base64.b64encode(buffer).decode('utf-8')
-        socketio.emit('capture_frame', {'frame': jpg_as_text, 'session_id': session_id}, room=session_id)
-
-        if len(faces_found) == 1:
-            face_count += 1
-            face_capture_state[session_id]["captured_frames"].append(frame)
-            face_capture_state[session_id]["captured_count"] = face_count
-            socketio.emit('capture_progress', {
-                'captured': face_count,
-                'total': TOTAL_FRAMES,
-                'session_id': session_id
-            }, room=session_id)
         else:
-            face_count = max(0, face_count - 1)
-            face_capture_state[session_id]["captured_count"] = face_count
-            face_capture_state[session_id]["captured_frames"] = []  # Reinicia a contagem
+            print(f"[{session_id}] Falha ao abrir a câmera no índice: {i}")
+            if i == 2:
+                face_capture_state[session_id][
+                    "message"] = "Não foi possível acessar a câmera em nenhum índice (0, 1, 2). Verifique se ela está conectada e disponível."
+                print(f"[{session_id}] ERRO CRÍTICO: {face_capture_state[session_id]['message']}")
+                socketio.emit("capture_complete", {
+                    "success": False,
+                    "message": face_capture_state[session_id]["message"],
+                    "captured_count": 0,
+                    "total_to_capture": MIN_PHOTOS_REQUIRED
+                }, room=session_id)
+                return
+
+    try:
+        if not cap or not cap.isOpened():
+            face_capture_state[session_id]["message"] = "Não foi possível acessar a câmera após várias tentativas."
+            print(f"[{session_id}] ERRO: {face_capture_state[session_id]['message']}")
+            return
+
+        sanitized_nome = sanitize_name(nome)
+        sanitized_sobrenome = sanitize_name(sobrenome)
+        sanitized_turma = sanitize_name(turma)
+
+        turma_dir = os.path.join(CAPTURE_BASE_DIR, sanitized_turma)
+        user_dir = os.path.join(turma_dir, f"{sanitized_nome}_{sanitized_sobrenome}")
+        os.makedirs(user_dir, exist_ok=True)
+        print(f"[{session_id}] Diretório de usuário para fotos: {user_dir}")
+
+        start_time = time.time()
+        last_face_time = 0
+        face_capture_interval = 0.5
+        QUALITY_THRESHOLD = 100.0
+
+        while face_capture_state[session_id]["captured_count"] < MIN_PHOTOS_REQUIRED and (
+                time.time() - start_time) < 60:
+            if not face_capture_state[session_id]["thread_running"]:
+                print(f"[{session_id}] Thread de captura interrompida por solicitação externa.")
+                break
+
+            ret, frame = cap.read()
+            if not ret:
+                face_capture_state[session_id]["message"] = "Câmera parou de enviar frames inesperadamente."
+                print(f"[{session_id}] ERRO: {face_capture_state[session_id]['message']}")
+                break
+
+            frame_display = frame.copy()
+
+            try:
+                detected_faces = DeepFace.extract_faces(
+                    img_path=frame,
+                    detector_backend="opencv",
+                    enforce_detection=False
+                )
+
+                if len(detected_faces) == 1:
+                    face = detected_faces[0]
+                    if 'facial_area' in face:
+                        x, y, w, h = face['facial_area']['x'], face['facial_area']['y'], face['facial_area']['w'], \
+                        face['facial_area']['h']
+                        cropped_face = frame[y:y + h, x:x + w]
+
+                        if cropped_face.size > 0:
+                            gray = cv2.cvtColor(cropped_face, cv2.COLOR_BGR2GRAY)
+                            quality_score = cv2.Laplacian(gray, cv2.CV_64F).var()
+
+                            if quality_score > QUALITY_THRESHOLD and (
+                                    time.time() - last_face_time) > face_capture_interval:
+                                face_capture_state[session_id]["captured_faces"].append(cropped_face)
+                                face_capture_state[session_id]["captured_count"] += 1
+                                last_face_time = time.time()
+                                cv2.rectangle(frame_display, (x, y), (x + w, y + h), (0, 255, 0), 3)
+                                print(
+                                    f"[{session_id}] Rosto e qualidade OK! Foto capturada: {face_capture_state[session_id]['captured_count']} de {MIN_PHOTOS_REQUIRED}")
+                            else:
+                                cv2.rectangle(frame_display, (x, y), (x + w, y + h), (0, 0, 255), 3)
+
+            except Exception as e:
+                pass
+
+            _, buffer = cv2.imencode('.jpg', frame_display)
+            jpg_as_text = base64.b64encode(buffer).decode('utf-8')
+            socketio.emit('capture_frame', {'frame': jpg_as_text}, room=session_id)
+
             socketio.emit('capture_progress', {
-                'captured': face_count,
-                'total': TOTAL_FRAMES,
+                'captured': face_capture_state[session_id]["captured_count"],
+                'total': MIN_PHOTOS_REQUIRED,
                 'session_id': session_id
             }, room=session_id)
 
-        time.sleep(FRAME_DELAY)
+            time.sleep(0.05)
 
-    cap.release()
-    cv2.destroyAllWindows()
+        if face_capture_state[session_id]["captured_count"] >= MIN_PHOTOS_REQUIRED:
+            for i, face_img in enumerate(face_capture_state[session_id]["captured_faces"]):
+                filename = f"{sanitized_nome}_{sanitized_sobrenome}_{i + 1}.jpg"
+                filepath = os.path.join(user_dir, filename)
+                cv2.imwrite(filepath, face_img)
 
-    if len(face_capture_state[session_id]["captured_frames"]) >= TOTAL_FRAMES:
-        user_dir = os.path.join(CAPTURE_DIR, name)
-        os.makedirs(user_dir, exist_ok=True)
-        for i, frame in enumerate(face_capture_state[session_id]["captured_frames"]):
-            file_path = os.path.join(user_dir, f"frame_{i}.jpg")
-            cv2.imwrite(file_path, frame)
-        face_capture_state[session_id]["success"] = True
-        face_capture_state[session_id]["message"] = "Captura completa e salva com sucesso."
-    else:
+            face_capture_state[session_id]["success"] = True
+            face_capture_state[session_id][
+                "message"] = f"Captura completa e salva com sucesso. {MIN_PHOTOS_REQUIRED} fotos salvas."
+            print(f"[{session_id}] {face_capture_state[session_id]['message']}")
+        else:
+            face_capture_state[session_id]["success"] = False
+            if not face_capture_state[session_id]["message"]:
+                face_capture_state[session_id][
+                    "message"] = "Captura falhou. Não foi possível capturar o número necessário de fotos ou tempo esgotado."
+            print(f"[{session_id}] ERRO: {face_capture_state[session_id]['message']}")
+
+    except Exception as e:
         face_capture_state[session_id]["success"] = False
-        face_capture_state[session_id][
-            "message"] = "Captura falhou. Não foi possível detectar um rosto único e consistente."
+        face_capture_state[session_id]["message"] = f"Erro inesperado durante a captura: {e}"
+        print(f"[{session_id}] ERRO CRÍTICO INESPERADO: {face_capture_state[session_id]['message']}")
 
-    # Crie um dicionário para enviar, sem o ndarray
-    response_data = {
-        "success": face_capture_state[session_id]["success"],
-        "message": face_capture_state[session_id]["message"],
-        "captured_count": face_capture_state[session_id]["captured_count"],
-        "total_to_capture": face_capture_state[session_id]["total_to_capture"]
-    }
+    finally:
+        if cap and cap.isOpened():
+            print(f"[{session_id}] Liberando recursos da câmera.")
+            cap.release()
+            cv2.destroyAllWindows()
 
-    socketio.emit("capture_complete", response_data, room=session_id)
-    face_capture_state[session_id]["thread_running"] = False
+        response_data = {
+            "success": face_capture_state[session_id]["success"],
+            "message": face_capture_state[session_id]["message"],
+            "captured_count": face_capture_state[session_id]["captured_count"],
+            "total_to_capture": MIN_PHOTOS_REQUIRED
+        }
+        socketio.emit("capture_complete", response_data, room=session_id)
+        face_capture_state[session_id]["thread_running"] = False
+        print(f"[{session_id}] Fim da thread de captura. Resultado: {response_data['success']}")
 
 
-@app.route("/start_capture", methods=["POST"])
-def start_capture():
-    data = request.json
-    name = data.get("name")
+@socketio.on('start_camera')
+def on_start_camera(data):
+    nome = data.get("nome")
+    sobrenome = data.get("sobrenome")
+    turma = data.get("turma")
     session_id = data.get("session_id")
 
-    if not name or not session_id:
-        return jsonify({"success": False, "error": "Nome e session_id são obrigatórios"}), 400
+    if not all([nome, sobrenome, turma, session_id]):
+        print("Erro: Dados de início de captura ausentes.")
+        socketio.emit("capture_complete",
+                      {"success": False, "message": "Dados do formulário incompletos para iniciar a captura."},
+                      room=request.sid)
+        return
 
-    thread = threading.Thread(target=capture_frames, args=(name, session_id))
+    join_room(request.sid)
+
+    print(f"Recebido pedido para iniciar a câmera. Session_ID da Captura: {session_id}, SID da Conexão: {request.sid}")
+
+    thread = threading.Thread(target=capture_frames, args=(nome, sobrenome, turma, request.sid))
     thread.start()
-    return jsonify({"success": True}), 200
 
 
 @socketio.on("connect")
-def on_connect():
+def on_connect(auth):
     session_id = request.args.get("session_id")
     if session_id:
-        print(f"Cliente conectado com session_id: {session_id}")
-        socketio.join_room(session_id)
+        print(f"Cliente conectado com session_id: {session_id}, SID da Conexão: {request.sid}")
+    else:
+        print(f"Cliente conectado sem session_id. SID da Conexão: {request.sid}")
 
 
 @socketio.on("disconnect")
@@ -179,7 +229,9 @@ def on_disconnect():
     session_id = request.args.get("session_id")
     if session_id in face_capture_state:
         face_capture_state[session_id]["thread_running"] = False
-    print(f"Cliente desconectado: {request.sid}")
+        print(f"Cliente com session_id {session_id} desconectado. SID da Conexão: {request.sid}")
+    else:
+        print(f"Cliente desconectado: {request.sid}")
 
 
 if __name__ == "__main__":

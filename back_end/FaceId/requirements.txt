@@ -22,4 +22,4 @@ requests==2.27.1
 #pip install -r requirements.txt
 
 
-#pip install eventlet opencv-python numpy flask flask-socketio flask-cors
+#pip install eventlet opencv-python numpy flask flask-socketio flask-cors deepface tf-keras
