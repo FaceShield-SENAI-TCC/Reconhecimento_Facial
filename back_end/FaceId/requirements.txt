@@ -1,25 +1,51 @@
-#pip install opencv-python
+# Requirements para Sistema de Reconhecimento Facial
+# Versões testadas e compatíveis
 
-#pip install opencv-python numpy deepface tf-keras
+# Framework principal
+deepface==0.0.79
 
-#Versão Ideal: Python 3.8 ou 3.9
+# Processamento de imagem e visão computacional
+opencv-python==4.8.1.78
+numpy==1.24.3
+pillow==10.0.0
 
-flask==2.0.2
-flask-cors==3.0.10
-flask-socketio==5.1.1
-python-engineio==4.3.1
-python-socketio==5.5.0
-opencv-python-headless==4.5.5.62
-numpy==1.22.3
+# Servidor web e API
+flask==2.3.3
+flask-socketio==5.3.6
+flask-cors==4.0.0
+
+# Autenticação
+pyjwt==2.8.0
+werkzeug==2.3.7
+
+# Monitoramento do sistema
+watchdog==3.0.0
+psutil==5.9.5
+
+# Utilidades
+python-dotenv==1.0.0
+requests==2.31.0
+charset-normalizer==3.2.0
+
+# Framework de ML (backend do DeepFace)
+tensorflow==2.13.0
+keras==2.13.1
+
+# Outras dependências
+scikit-learn==1.3.0
 mtcnn==0.1.1
-requests==2.27.1
+gunicorn==21.2.0
 
 
-#cd backend
-#python -m venv venv
-#source venv/bin/activate  # Linux/macOS
-#venv\Scripts\activate    # Windows
-#pip install -r requirements.txt
+
+# Criar ambiente virtual
+python -m venv reconhecimento_facial_env
+
+# Ativar no Windows
+reconhecimento_facial_env\Scripts\activate
+
+# Ativar no Linux/Mac
+source reconhecimento_facial_env/bin/activate
 
 
-#pip install eventlet opencv-python numpy flask flask-socketio flask-cors deepface tf-keras
+pip install -r requirements.txt

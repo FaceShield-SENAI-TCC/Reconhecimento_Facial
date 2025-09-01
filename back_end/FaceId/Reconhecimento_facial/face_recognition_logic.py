@@ -14,6 +14,8 @@ import threading
 import sys
 import io
 import base64
+import json
+from pathlib import Path
 
 # Configurar stdout e stderr para UTF-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -21,15 +23,15 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # ====================== CONFIGURAÇÕES ======================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# AJUSTE O CAMINHO PARA A PASTA DE FOTOS DO SISTEMA DE CADASTRO.
-DATABASE_DIR = "C:/Users/Aluno/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
+DATABASE_DIR = "C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
 
-MODEL_NAME = "VGG-Face"
-DISTANCE_THRESHOLD = 0.40
+# Usar Facenet em ambos os sistemas para compatibilidade total
+MODEL_NAME = "Facenet"
+DISTANCE_THRESHOLD = 0.40  # Threshold otimizado para Facenet
 MIN_FACE_SIZE = (100, 100)
 EMBEDDINGS_CACHE = os.path.join(BASE_DIR, "embeddings_cache.pkl")
 CACHE_VALIDITY_HOURS = 24  # Cache válido por 24 horas
-RELOAD_COOLDOWN = 60  # Tempo mínimo entre recarregamentos (segundos)
+RELOAD_COOLDOWN = 5  # Tempo mínimo entre recarregamentos (segundos)
 
 # Configurar logging
 logging.basicConfig(
@@ -43,22 +45,42 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Variável global para armazenar o banco de dados facial
-facial_db = None
+facial_db = {}
 last_db_update = None
 db_observer = None
 last_db_reload_time = 0
+db_lock = threading.Lock()
 
 
 # ====================== MONITORAMENTO DO BANCO DE DADOS ======================
 class DatabaseChangeHandler(FileSystemEventHandler):
     """Monitora mudanças no diretório do banco de dados"""
 
+    def __init__(self):
+        self.debounce_timer = None
+
     def on_any_event(self, event):
+        # Ignorar eventos de diretórios temporários e arquivos de sistema
+        if (event.is_directory or
+                event.src_path.endswith('~') or
+                '.tmp' in event.src_path or
+                event.src_path.endswith('.log')):
+            return
+
+        # Usar debounce para evitar múltiplos recarregamentos
+        if self.debounce_timer:
+            self.debounce_timer.cancel()
+
+        self.debounce_timer = threading.Timer(2.0, self.reload_database_debounced)
+        self.debounce_timer.start()
+
+    def reload_database_debounced(self):
         global last_db_reload_time
         current_time = time.time()
+
         # Verificar se já se passou tempo suficiente desde o último recarregamento
         if current_time - last_db_reload_time >= RELOAD_COOLDOWN:
-            logger.info("Mudanca detectada no banco de dados. Recarregando...")
+            logger.info("Mudança detectada no banco de dados. Recarregando...")
             reload_thread = threading.Thread(target=reload_database)
             reload_thread.daemon = True
             reload_thread.start()
@@ -70,14 +92,20 @@ def start_database_monitor():
     global db_observer
     try:
         if not os.path.exists(DATABASE_DIR):
-            logger.error(f"Diretorio de monitoramento nao existe: {DATABASE_DIR}")
-            return False
+            logger.error(f"Diretório de monitoramento não existe: {DATABASE_DIR}")
+            # Criar diretório se não existir
+            os.makedirs(DATABASE_DIR, exist_ok=True)
+            logger.info(f"Diretório criado: {DATABASE_DIR}")
 
         event_handler = DatabaseChangeHandler()
         db_observer = Observer()
         db_observer.schedule(event_handler, DATABASE_DIR, recursive=True)
         db_observer.start()
         logger.info(f"Monitoramento do banco de dados iniciado em: {DATABASE_DIR}")
+
+        # Inicializar o banco de dados
+        reload_database()
+
         return True
     except Exception as e:
         logger.error(f"Falha ao iniciar monitoramento do banco de dados: {str(e)}")
@@ -98,24 +126,58 @@ def log_memory_usage():
     try:
         process = psutil.Process(os.getpid())
         mem = process.memory_info().rss / 1024 ** 2  # Em MB
-        logger.info(f"Uso de memoria: {mem:.2f} MB")
+        logger.info(f"Uso de memória: {mem:.2f} MB")
     except ImportError:
-        logger.warning("psutil nao instalado, nao e possivel monitorar memoria")
+        logger.warning("psutil não instalado, não é possível monitorar memória")
     except Exception as e:
-        logger.error(f"Erro ao monitorar memoria: {str(e)}")
+        logger.error(f"Erro ao monitorar memória: {str(e)}")
+
+
+def load_embeddings_from_npy(user_path):
+    """Carrega embeddings a partir de arquivos .npy"""
+    embeddings = []
+    npy_files = [f for f in os.listdir(user_path) if f.endswith('.npy')]
+
+    for npy_file in npy_files:
+        npy_path = os.path.join(user_path, npy_file)
+        try:
+            embedding = np.load(npy_path)
+
+            # Verificar se a dimensão está correta para Facenet (128)
+            if embedding.shape[0] != 128:
+                logger.warning(f"Embedding com dimensão incorreta: {npy_file} - {embedding.shape}. Recriando...")
+                # Recriar embedding a partir da imagem correspondente
+                img_file = npy_file.replace('_embedding_', '_').replace('.npy', '.jpg')
+                img_path = os.path.join(user_path, img_file)
+                if os.path.exists(img_path):
+                    new_embedding = get_embedding_from_file(img_path)
+                    if new_embedding is not None:
+                        embedding = new_embedding
+                        # Salvar o embedding correto
+                        np.save(npy_path, embedding)
+                        logger.info(f"Embedding recriado e salvo: {npy_file}")
+
+            normalized_embedding = embedding / np.linalg.norm(embedding)
+            embeddings.append(normalized_embedding)
+            logger.debug(f"Embedding de {npy_file} carregado com sucesso.")
+        except Exception as e:
+            logger.error(f"ERRO: Erro ao carregar {npy_path}: {str(e)}")
+            continue
+
+    return embeddings
 
 
 def get_embedding_from_file(image_path):
-    """Obtém o embedding de uma imagem de rosto a partir de um arquivo"""
+    """Obtém o embedding de uma imagem de rosto a partir de um arquivo usando Facenet"""
     try:
         result = DeepFace.represent(
             img_path=image_path,
-            model_name=MODEL_NAME,
+            model_name=MODEL_NAME,  # Usar Facenet
             detector_backend="opencv",
             enforce_detection=True
         )
         if isinstance(result, list) and len(result) > 0 and "embedding" in result[0]:
-            return result[0]["embedding"]
+            return np.array(result[0]["embedding"])
 
         logger.warning(f"Nenhum rosto detectado para gerar embedding em {image_path}")
         return None
@@ -123,12 +185,12 @@ def get_embedding_from_file(image_path):
         try:
             result = DeepFace.represent(
                 img_path=image_path,
-                model_name=MODEL_NAME,
+                model_name=MODEL_NAME,  # Usar Facenet
                 detector_backend="opencv",
                 enforce_detection=False
             )
             if isinstance(result, list) and len(result) > 0 and "embedding" in result[0]:
-                return result[0]["embedding"]
+                return np.array(result[0]["embedding"])
         except Exception as e_fallback:
             logger.error(f"Erro ao obter embedding para {image_path}: {str(e_fallback)}")
             return None
@@ -148,7 +210,8 @@ def is_cache_valid():
 def clear_embeddings_cache():
     """Limpa o cache de embeddings"""
     global facial_db
-    facial_db = None
+    with db_lock:
+        facial_db = {}
     if os.path.exists(EMBEDDINGS_CACHE):
         os.remove(EMBEDDINGS_CACHE)
     logger.info("Cache de embeddings limpo")
@@ -166,12 +229,12 @@ def load_facial_database():
 
     # Verificar se o diretório existe e se não está vazio
     if not os.path.exists(DATABASE_DIR):
-        logger.error(f"Diretorio do banco de dados nao existe: {DATABASE_DIR}")
+        logger.error(f"Diretório do banco de dados não existe: {DATABASE_DIR}")
         return None
 
     turma_folders = [f for f in os.listdir(DATABASE_DIR) if os.path.isdir(os.path.join(DATABASE_DIR, f))]
     if not turma_folders:
-        logger.warning(f"Diretorio do banco de dados vazio: {DATABASE_DIR}")
+        logger.warning(f"Diretório do banco de dados vazio: {DATABASE_DIR}")
         return {}
 
     # Iterar por cada turma
@@ -187,36 +250,46 @@ def load_facial_database():
                 user_name = user_folder.replace('_', ' ').title()
                 embeddings = []
 
-                logger.info(f"Processando usuario: {user_name} em {turma_folder}")
+                logger.info(f"Processando usuário: {user_name} em {turma_folder}")
 
-                for face_file in os.listdir(user_path):
-                    if face_file.lower().endswith((".jpg", ".png", ".jpeg")):
-                        face_path = os.path.join(user_path, face_file)
-                        try:
-                            embedding = get_embedding_from_file(face_path)
-                            if embedding is not None:
-                                normalized_embedding = np.array(embedding) / np.linalg.norm(embedding)
-                                embeddings.append(normalized_embedding)
-                                embedding_count += 1
-                                logger.debug(f"Embedding de {face_file} gerado com sucesso.")
-                        except Exception as e:
-                            logger.error(f"ERRO: Erro ao processar {face_path}: {str(e)}")
-                            logger.error(traceback.format_exc())
-                            continue
+                # Primeiro tentar carregar embeddings dos arquivos .npy
+                npy_embeddings = load_embeddings_from_npy(user_path)
+                logger.info(f"Encontrados {len(npy_embeddings)} embeddings em arquivos .npy para {user_name}")
+
+                # Se encontrou arquivos .npy, use-os
+                if npy_embeddings:
+                    embeddings = npy_embeddings
+                    embedding_count += len(embeddings)
+                else:
+                    # Se não encontrou arquivos .npy, gerar embeddings das imagens
+                    logger.info(f"Nenhum arquivo .npy encontrado para {user_name}. Gerando embeddings das imagens...")
+                    for face_file in os.listdir(user_path):
+                        if face_file.lower().endswith((".jpg", ".png", ".jpeg")):
+                            face_path = os.path.join(user_path, face_file)
+                            try:
+                                embedding = get_embedding_from_file(face_path)
+                                if embedding is not None:
+                                    normalized_embedding = np.array(embedding) / np.linalg.norm(embedding)
+                                    embeddings.append(normalized_embedding)
+                                    embedding_count += 1
+                                    logger.debug(f"Embedding de {face_file} gerado com sucesso.")
+                            except Exception as e:
+                                logger.error(f"ERRO: Erro ao processar {face_path}: {str(e)}")
+                                logger.error(traceback.format_exc())
+                                continue
 
                 if embeddings:
                     database[user_name] = embeddings
                     user_count += 1
-                    logger.info(f"Usuario {user_name}: {len(embeddings)} amostras carregadas")
+                    logger.info(f"Usuário {user_name}: {len(embeddings)} amostras carregadas")
                 else:
-                    logger.warning(f"AVISO: Nenhum embedding valido para: {user_name}")
+                    logger.warning(f"AVISO: Nenhum embedding válido para: {user_name}")
 
     if not database:
-        logger.error("Banco de dados vazio ou nenhum rosto valido encontrado!")
-        facial_db = None
+        logger.error("Banco de dados vazio ou nenhum rosto válido encontrado!")
         return None
 
-    logger.info(f"SUCESSO: Banco de dados carregado com {user_count} usuarios e {embedding_count} embeddings")
+    logger.info(f"SUCESSO: Banco de dados carregado com {user_count} usuários e {embedding_count} embeddings")
     logger.info(f"Tempo total para carregar banco: {time.time() - start_time:.2f}s")
     last_db_update = time.time()
     log_memory_usage()
@@ -252,11 +325,12 @@ def recognize_face_from_array(face_img_array):
     global facial_db
     start_time = time.time()
     try:
-        logger.info("Iniciando reconhecimento facial...")
+        logger.info("Iniciando reconhecimento facial com Facenet...")
 
+        # Gerar embedding usando Facenet
         result = DeepFace.represent(
             img_path=face_img_array,
-            model_name=MODEL_NAME,
+            model_name=MODEL_NAME,  # Usar Facenet
             detector_backend="opencv",
             enforce_detection=True
         )
@@ -271,25 +345,33 @@ def recognize_face_from_array(face_img_array):
         best_match = None
         min_distance = float('inf')
 
-        if not facial_db:
-            logger.warning("Banco de dados facial esta vazio. Nenhum reconhecimento sera feito.")
-            return None, None
+        # Usar lock para acesso thread-safe ao banco de dados
+        with db_lock:
+            if not facial_db:
+                logger.warning("Banco de dados facial está vazio. Nenhum reconhecimento será feito.")
+                return None, None
 
-        logger.info(f"Comparando com {len(facial_db)} usuarios no banco...")
-        compare_start = time.time()
+            logger.info(f"Comparando com {len(facial_db)} usuários no banco...")
+            compare_start = time.time()
 
-        for user_name, embeddings in facial_db.items():
-            for db_embedding in embeddings:
-                cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
-                if cosine_distance < min_distance and cosine_distance < DISTANCE_THRESHOLD:
-                    min_distance = cosine_distance
-                    best_match = user_name
+            for user_name, embeddings in facial_db.items():
+                for db_embedding in embeddings:
+                    # Verificar compatibilidade de dimensões (Facenet = 128)
+                    if captured_embedding_normalized.shape[0] != db_embedding.shape[0]:
+                        logger.error(
+                            f"Incompatibilidade de dimensões: capturado {captured_embedding_normalized.shape[0]} vs banco {db_embedding.shape[0]}")
+                        continue
 
-        logger.info(f"Tempo de comparacao: {time.time() - compare_start:.2f}s")
+                    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+                    if cosine_distance < min_distance and cosine_distance < DISTANCE_THRESHOLD:
+                        min_distance = cosine_distance
+                        best_match = user_name
+
+        logger.info(f"Tempo de comparação: {time.time() - compare_start:.2f}s")
         if best_match:
-            logger.info(f"Usuario reconhecido: {best_match} com distancia {min_distance:.4f}")
+            logger.info(f"Usuário reconhecido: {best_match} com distância {min_distance:.4f}")
         else:
-            logger.info("Nenhum usuario reconhecido")
+            logger.info("Nenhum usuário reconhecido")
 
         logger.info(f"Tempo total de reconhecimento: {time.time() - start_time:.2f}s")
         return best_match, min_distance
@@ -303,6 +385,7 @@ def recognize_face_from_array(face_img_array):
 def process_face_login(image_data):
     global facial_db
 
+    # Verificar se o banco de dados precisa ser atualizado
     if facial_db is None or (last_db_update and (time.time() - last_db_update) > CACHE_VALIDITY_HOURS * 3600):
         logger.info("Recarregando banco de dados facial...")
         facial_db = load_or_create_cache()
@@ -310,8 +393,10 @@ def process_face_login(image_data):
             return {"error": "Facial database not loaded"}, 500
 
     try:
-        # A nova lógica no appFaceId.py garante que image_data não tenha o prefixo,
-        # mas vamos manter a verificação aqui para segurança.
+        # Remover prefixo da imagem base64 se existir
+        if ',' in image_data:
+            image_data = image_data.split(',')[1]
+
         img_bytes = base64.b64decode(image_data)
         nparr = np.frombuffer(img_bytes, np.uint8)
         frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -319,37 +404,42 @@ def process_face_login(image_data):
         if frame is None or frame.size == 0:
             return {"authenticated": False, "message": "Falha ao decodificar a imagem. Imagem vazia ou inválida."}, 400
 
-        try:
-            detected_face = DeepFace.extract_faces(
-                img_path=frame,
-                detector_backend="opencv",
-                enforce_detection=True
-            )
-            if not detected_face or "facial_area" not in detected_face[0]:
-                return {
-                    "authenticated": False,
-                    "user": None,
-                    "message": "Nenhum rosto detectado na imagem."
-                }, 200
+        # Tenta diferentes backends de detecção para melhor robustez
+        backends = ["opencv", "ssd", "mtcnn"]
+        detected_face = None
 
-            face_area = detected_face[0]["facial_area"]
-            x, y, w, h = face_area['x'], face_area['y'], face_area['w'], face_area['h']
-            face_img_array = frame[y:y + h, x:x + w]
+        for backend in backends:
+            try:
+                detected_face = DeepFace.extract_faces(
+                    img_path=frame,
+                    detector_backend=backend,
+                    enforce_detection=False  # Permitir que continue mesmo se não detectar rosto
+                )
+                if detected_face and len(detected_face) > 0 and "facial_area" in detected_face[0]:
+                    break
+            except Exception as e:
+                logger.warning(f"Detector {backend} falhou: {str(e)}")
+                continue
 
-            if w < MIN_FACE_SIZE[0] or h < MIN_FACE_SIZE[1]:
-                return {
-                    "authenticated": False,
-                    "user": None,
-                    "message": "Rosto muito pequeno. Aproxime-se."
-                }, 200
-
-        except Exception as e:
-            logger.error(f"Erro na deteccao de rosto: {str(e)}")
+        if not detected_face or len(detected_face) == 0 or "facial_area" not in detected_face[0]:
             return {
                 "authenticated": False,
                 "user": None,
-                "message": "Erro ao processar imagem."
-            }, 500
+                "message": "Nenhum rosto detectado na imagem. Posicione-se melhor."
+            }, 200
+
+        face_area = detected_face[0]["facial_area"]
+        x, y, w, h = face_area['x'], face_area['y'], face_area['w'], face_area['h']
+
+        # Verificar se o rosto é muito pequeno
+        if w < MIN_FACE_SIZE[0] or h < MIN_FACE_SIZE[1]:
+            return {
+                "authenticated": False,
+                "user": None,
+                "message": "Rosto muito pequeno. Aproxime-se da câmera."
+            }, 200
+
+        face_img_array = frame[y:y + h, x:x + w]
 
         user, distance = recognize_face_from_array(face_img_array)
 
@@ -365,23 +455,25 @@ def process_face_login(image_data):
             return {
                 "authenticated": False,
                 "user": None,
-                "message": "Usuario nao reconhecido. Faca o cadastro."
+                "message": "Usuário não reconhecido. Faça o cadastro."
             }, 200
 
     except Exception as e:
         logger.error(f"ERRO: Erro no processamento facial: {str(e)}")
         logger.error(traceback.format_exc())
-        return {"error": "Internal server error"}, 500
+        return {"error": "Erro interno do servidor"}, 500
 
 
 def get_database_status():
     global facial_db
-    return {
-        "loaded": facial_db is not None,
-        "user_count": len(facial_db) if facial_db else 0,
-        "total_embeddings": sum(len(emb) for emb in facial_db.values()) if facial_db else 0,
-        "users": list(facial_db.keys()) if facial_db else []
-    }
+    with db_lock:
+        return {
+            "loaded": facial_db is not None,
+            "user_count": len(facial_db) if facial_db else 0,
+            "total_embeddings": sum(len(emb) for emb in facial_db.values()) if facial_db else 0,
+            "users": list(facial_db.keys()) if facial_db else [],
+            "last_update": last_db_update
+        }
 
 
 def reload_database():

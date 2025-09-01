@@ -21072,3 +21072,1189 @@ ValueError: Face could not be detected in numpy array.Please confirm that the pi
 2025-08-28 17:32:44,024 - INFO - 127.0.0.1 - - [28/Aug/2025 17:32:44] "OPTIONS /health HTTP/1.1" 200 -
 2025-08-28 17:32:49,948 - INFO - Monitoramento do banco de dados parado
 2025-08-28 17:32:49,948 - INFO - Sistema de reconhecimento facial finalizado
+2025-08-31 19:55:24,358 - INFO - Cache de embeddings carregado com sucesso.
+2025-08-31 19:55:24,360 - INFO - Monitoramento do banco de dados iniciado em: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-08-31 19:55:24,361 - INFO - Cache de embeddings limpo
+2025-08-31 19:55:24,361 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-31 19:55:24,361 - INFO - Processando turma: 3tds
+2025-08-31 19:55:24,361 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-08-31 19:55:24,366 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-08-31 19:55:24,366 - INFO - SUCESSO: Banco de dados carregado com 1 usuários e 0 embeddings
+2025-08-31 19:55:24,367 - INFO - Tempo total para carregar banco: 0.01s
+2025-08-31 19:55:24,367 - INFO - Uso de memória: 260.02 MB
+2025-08-31 19:55:24,367 - INFO - Servidor de reconhecimento facial pronto para aceitar conexões.
+2025-08-31 19:55:24,367 - INFO - Monitoramento do banco de dados ativado - o sistema atualizará automaticamente.
+2025-08-31 19:55:25,665 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.0.8:5005
+2025-08-31 19:55:25,665 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 19:55:50,737 - INFO - 127.0.0.1 - - [31/Aug/2025 19:55:50] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:10,321 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:10] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:10,569 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:10] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:16,706 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:16] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:17,021 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:17] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:17,279 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:17] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:17,376 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:17,713 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:17] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:17,736 - ERROR - Erro na detecção de rosto: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-08-31 19:56:17,736 - ERROR - Erro ao processar login. Código: 500, Mensagem: Erro ao processar imagem.
+2025-08-31 19:56:17,736 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:17] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-31 19:56:18,025 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:18] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:18,343 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:18] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:18,605 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:18,706 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:18] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:18,708 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:19,036 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:19] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:19,368 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:19] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:19,681 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:19,906 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:20,016 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:20] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:20,340 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:20] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:20,702 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:20] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:21,008 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:21] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:21,012 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:21,243 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:21,331 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:21] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:21,674 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:21] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:22,011 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:22,031 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:22] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:22,370 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:22] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:22,486 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:22,720 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:22] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:23,267 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:23] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:23,285 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:23,561 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:23,600 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:23] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:23,948 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:23] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:24,033 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:24] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:24,267 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:24,356 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:24] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:24,504 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:24,912 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:24] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:25,078 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:25] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:25,246 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:25,492 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:25] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:26,707 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:26] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:27,397 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:27] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:27,623 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:29,862 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:29] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:30,492 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:31,567 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:31] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:32,020 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:32] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:32,023 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:32] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:32,023 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:32] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:56:32,033 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:32] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:32,424 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:32] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:32,526 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:32,745 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:32] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:32,775 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:32] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:32,819 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:32] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:33,094 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:33,159 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:33] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:56:33,196 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:33] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:33,248 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:33,358 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:33,408 - ERROR - Erro na detecção de rosto: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-08-31 19:56:33,411 - ERROR - Erro ao processar login. Código: 500, Mensagem: Erro ao processar imagem.
+2025-08-31 19:56:33,413 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:33] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-31 19:56:33,506 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:33] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:33,548 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:35,220 - INFO - Recebida requisição para /face-login
+2025-08-31 19:56:35,252 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:56:35,302 - ERROR - Erro na detecção de rosto: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-08-31 19:56:35,308 - ERROR - Erro ao processar login. Código: 500, Mensagem: Erro ao processar imagem.
+2025-08-31 19:56:35,330 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:35] "[35m[1mPOST /face-login HTTP/1.1[0m" 500 -
+2025-08-31 19:56:35,332 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-08-31 19:56:35,630 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 309, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\WBS\miniconda3\envs\Reconhecimento_facial\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\WBS\miniconda3\envs\Reconhecimento_facial\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\WBS\miniconda3\envs\Reconhecimento_facial\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-08-31 19:56:35,634 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:56:35,642 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:35] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:56:58,907 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:56:58,984 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:56:58,996 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:56:58,999 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:56:59,031 - INFO - 127.0.0.1 - - [31/Aug/2025 19:56:59] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:07,443 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:08,022 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:08,109 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:08,408 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:08,988 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:08] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:09,828 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:09,830 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:09,832 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:09,836 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:09,838 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:09] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:11,665 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:11,681 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:11,681 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:11,692 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:11,948 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:11] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:16,069 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:16,082 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:16,084 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:16,087 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:16,217 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:16] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:17,499 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:17,501 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:17,504 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:17,505 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:17,505 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:17,506 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:17,508 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:17] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:17,508 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:17,513 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:17,517 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:17] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:18,316 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:18,317 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:18,319 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:18,323 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:18,323 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:18] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:19,116 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:19,117 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:19,119 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:19,120 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:19,120 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:19] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:42,832 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:42] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:43,054 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:43] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:48,485 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:48] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:48,805 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:48] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:49,057 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:49] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:49,157 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:49,456 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:49,475 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:49] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:49,789 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:49] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:49,839 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:49,839 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:49,839 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:49,839 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:49,839 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:49] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:50,111 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:50] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:50,425 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:50,530 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:50,689 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:50] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:50,801 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:50] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:50,958 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:50,958 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:50,958 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:50,958 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:50,958 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:50] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:51,010 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:51] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:51,123 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:51,241 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:51,476 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:51] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:51,543 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:51,544 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:51,545 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:51,546 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:51,547 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:51] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:51,791 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:51] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:52,106 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:52] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:52,363 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:52,478 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:52,486 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:52] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:52,810 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:52] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:52,924 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:52,924 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:52,925 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:52,926 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:52,928 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:52] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:53,140 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:53] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:53,457 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:53,578 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:53,717 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:53] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:53,785 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:53] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:54,007 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:54,007 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:54,007 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:54,007 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:54,007 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:54] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:54,024 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:54] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:54,107 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:54,206 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:54,477 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:54] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:54,573 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:54,574 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:54,575 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:54,575 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:54,577 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:54] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:54,793 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:54] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:55,108 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:55] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:55,372 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:55,471 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:55,488 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:55] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:55,803 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:55] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:55,884 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:55,884 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:55,885 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:55,885 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:55,886 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:55] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:56,125 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:56] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:56,440 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:56,563 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:56,713 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:56] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:56,805 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:56] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:56,991 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:56,994 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:56,994 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:56,994 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:56,994 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:56] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:57,023 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:57] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:57,139 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:57,250 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:57,475 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:57] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:57,585 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:57,586 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:57,586 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:57,586 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:57,587 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:57] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:57,787 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:57] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:58,107 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:58] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:58,373 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:58,464 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:58,488 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:58] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:58,807 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:58] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:58,865 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:58,865 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:58,865 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:58,866 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:58,867 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:58] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:59,126 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:59] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:57:59,439 - INFO - Recebida requisição para /face-login
+2025-08-31 19:57:59,533 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:57:59,708 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:59] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:57:59,806 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:59] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:57:59,926 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:57:59,926 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:57:59,926 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:57:59,927 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:57:59,927 - INFO - 127.0.0.1 - - [31/Aug/2025 19:57:59] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:00,023 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:00] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:00,123 - INFO - Recebida requisição para /face-login
+2025-08-31 19:58:00,242 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:58:00,475 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:00] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:58:00,674 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:58:00,674 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:58:00,674 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:58:00,674 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:58:00,674 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:00] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:00,789 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:00] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:58:01,108 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:01] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:01,372 - INFO - Recebida requisição para /face-login
+2025-08-31 19:58:01,472 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:01] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:58:01,488 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:58:01,790 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:01] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:58:01,833 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:58:01,833 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:58:01,834 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:58:01,834 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:58:01,835 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:01] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:02,123 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:02] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:02,442 - INFO - Recebida requisição para /face-login
+2025-08-31 19:58:02,539 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:58:02,689 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:02] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:58:02,790 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:02] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:58:02,932 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:58:02,932 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:58:02,933 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:58:02,934 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:58:02,935 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:03,007 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:03] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:03,123 - INFO - Recebida requisição para /face-login
+2025-08-31 19:58:03,216 - INFO - Iniciando reconhecimento facial...
+2025-08-31 19:58:03,477 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:03] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 19:58:03,571 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 19:58:03,571 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 19:58:03,587 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 19:58:03,587 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 19:58:03,588 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:03] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 19:58:03,788 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:03] "GET /health HTTP/1.1" 200 -
+2025-08-31 19:58:04,102 - INFO - 127.0.0.1 - - [31/Aug/2025 19:58:04] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:01:56,501 - INFO - Monitoramento do banco de dados parado
+2025-08-31 20:01:56,502 - INFO - Sistema de reconhecimento facial finalizado
+2025-08-31 20:12:06,245 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-31 20:12:06,245 - WARNING - Diretório do banco de dados vazio: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-08-31 20:12:06,246 - INFO - Cache de embeddings atualizado.
+2025-08-31 20:12:06,247 - INFO - Monitoramento do banco de dados iniciado em: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-08-31 20:12:06,247 - INFO - Cache de embeddings limpo
+2025-08-31 20:12:06,248 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-31 20:12:06,248 - WARNING - Diretório do banco de dados vazio: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-08-31 20:12:06,248 - INFO - Servidor de reconhecimento facial pronto para aceitar conexões.
+2025-08-31 20:12:06,248 - INFO - Monitoramento do banco de dados ativado - o sistema atualizará automaticamente.
+2025-08-31 20:12:07,579 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://192.168.0.8:5005
+2025-08-31 20:12:07,580 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-31 20:12:23,135 - INFO - 127.0.0.1 - - [31/Aug/2025 20:12:23] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:24:58,334 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-08-31 20:24:58,335 - INFO - Cache de embeddings limpo
+2025-08-31 20:24:58,335 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-31 20:24:58,336 - WARNING - Diretório do banco de dados vazio: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-08-31 20:31:03,871 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-08-31 20:31:03,871 - INFO - Cache de embeddings limpo
+2025-08-31 20:31:03,871 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-31 20:31:03,871 - INFO - Processando turma: 3tds
+2025-08-31 20:31:03,871 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-08-31 20:31:03,876 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-08-31 20:31:18,777 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-08-31 20:31:18,779 - INFO - SUCESSO: Banco de dados carregado com 1 usuários e 10 embeddings
+2025-08-31 20:31:18,779 - INFO - Tempo total para carregar banco: 14.91s
+2025-08-31 20:31:18,782 - INFO - Uso de memória: 635.59 MB
+2025-08-31 20:31:35,789 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:35] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:36,041 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:36] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:41,230 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:41] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:41,548 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:41] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:41,798 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:41] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:41,881 - INFO - Recebida requisição para /face-login
+2025-08-31 20:31:42,067 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:31:42,219 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:42] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:42,532 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:42] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:42,580 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 20:31:42,580 - INFO - Tempo de comparação: 0.00s
+2025-08-31 20:31:42,580 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.1644
+2025-08-31 20:31:42,581 - INFO - Tempo total de reconhecimento: 0.51s
+2025-08-31 20:31:42,581 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-08-31 20:31:42,581 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:42] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:42,852 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:42] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:43,163 - INFO - Recebida requisição para /face-login
+2025-08-31 20:31:43,340 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:31:43,429 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:43] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:43,543 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:43] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:43,748 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:43] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:43,854 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 20:31:43,855 - INFO - Tempo de comparação: 0.00s
+2025-08-31 20:31:43,855 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.1570
+2025-08-31 20:31:43,856 - INFO - Tempo total de reconhecimento: 0.52s
+2025-08-31 20:31:43,856 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-08-31 20:31:43,857 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:43] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:43,865 - INFO - Recebida requisição para /face-login
+2025-08-31 20:31:44,065 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:31:44,219 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:44] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:44,527 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:44] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:44,533 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 20:31:44,533 - INFO - Tempo de comparação: 0.00s
+2025-08-31 20:31:44,533 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.1350
+2025-08-31 20:31:44,533 - INFO - Tempo total de reconhecimento: 0.47s
+2025-08-31 20:31:44,533 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-08-31 20:31:44,543 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:44] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:44,864 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:44] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:45,128 - INFO - Recebida requisição para /face-login
+2025-08-31 20:31:45,229 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:45] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:45,318 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:31:45,546 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:45] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:45,782 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 20:31:45,782 - INFO - Tempo de comparação: 0.00s
+2025-08-31 20:31:45,782 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.1490
+2025-08-31 20:31:45,782 - INFO - Tempo total de reconhecimento: 0.46s
+2025-08-31 20:31:45,782 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-08-31 20:31:45,782 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:45] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:45,881 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:45] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:46,198 - INFO - Recebida requisição para /face-login
+2025-08-31 20:31:46,342 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:31:46,466 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:46] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:46,533 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:46] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:46,785 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:46] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:46,831 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 20:31:46,831 - INFO - Tempo de comparação: 0.00s
+2025-08-31 20:31:46,831 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.1577
+2025-08-31 20:31:46,831 - INFO - Tempo total de reconhecimento: 0.49s
+2025-08-31 20:31:46,831 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-08-31 20:31:46,831 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:46] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:46,848 - INFO - Recebida requisição para /face-login
+2025-08-31 20:31:47,050 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:31:47,219 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:47] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:47,527 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:47] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:47,574 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 20:31:47,576 - INFO - Tempo de comparação: 0.00s
+2025-08-31 20:31:47,576 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.1344
+2025-08-31 20:31:47,576 - INFO - Tempo total de reconhecimento: 0.53s
+2025-08-31 20:31:47,578 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-08-31 20:31:47,580 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:47] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:47,880 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:47] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:48,197 - INFO - Recebida requisição para /face-login
+2025-08-31 20:31:48,363 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:31:48,463 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:48] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:31:48,546 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:48] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:31:48,784 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:48] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:48,831 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 20:31:48,831 - INFO - Tempo de comparação: 0.00s
+2025-08-31 20:31:48,831 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.1627
+2025-08-31 20:31:48,831 - INFO - Tempo total de reconhecimento: 0.47s
+2025-08-31 20:31:48,831 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-08-31 20:31:48,831 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:48] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:48,881 - INFO - Recebida requisição para /face-login
+2025-08-31 20:31:49,074 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:31:49,595 - INFO - Comparando com 1 usuários no banco...
+2025-08-31 20:31:49,596 - INFO - Tempo de comparação: 0.00s
+2025-08-31 20:31:49,596 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.1867
+2025-08-31 20:31:49,597 - INFO - Tempo total de reconhecimento: 0.52s
+2025-08-31 20:31:49,597 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-08-31 20:31:49,599 - INFO - 127.0.0.1 - - [31/Aug/2025 20:31:49] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:31:53,626 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-08-31 20:31:53,626 - INFO - Cache de embeddings limpo
+2025-08-31 20:31:53,626 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-31 20:31:53,626 - INFO - Processando turma: 3tds
+2025-08-31 20:31:53,626 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-08-31 20:31:53,658 - INFO - Usuário Davi Mazoti: 1 amostras carregadas
+2025-08-31 20:31:53,658 - INFO - SUCESSO: Banco de dados carregado com 1 usuários e 0 embeddings
+2025-08-31 20:31:53,658 - INFO - Tempo total para carregar banco: 0.03s
+2025-08-31 20:31:53,658 - INFO - Uso de memória: 708.89 MB
+2025-08-31 20:32:06,413 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-08-31 20:32:06,414 - INFO - Cache de embeddings limpo
+2025-08-31 20:32:06,415 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-31 20:32:06,415 - INFO - Processando turma: 3tds
+2025-08-31 20:32:06,416 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-08-31 20:32:06,423 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-08-31 20:32:06,423 - INFO - SUCESSO: Banco de dados carregado com 1 usuários e 0 embeddings
+2025-08-31 20:32:06,424 - INFO - Tempo total para carregar banco: 0.01s
+2025-08-31 20:32:06,424 - INFO - Uso de memória: 708.83 MB
+2025-08-31 20:33:52,771 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-08-31 20:33:52,771 - INFO - Cache de embeddings limpo
+2025-08-31 20:33:52,771 - INFO - Iniciando carregamento do banco de dados facial...
+2025-08-31 20:33:52,771 - INFO - Processando turma: 3tds
+2025-08-31 20:33:52,771 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-08-31 20:33:52,776 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-08-31 20:33:52,776 - INFO - Processando turma: pai
+2025-08-31 20:33:52,776 - INFO - Processando usuário: Alexandre Mazoti em pai
+2025-08-31 20:33:52,776 - INFO - Usuário Alexandre Mazoti: 10 amostras carregadas
+2025-08-31 20:33:52,776 - INFO - SUCESSO: Banco de dados carregado com 2 usuários e 0 embeddings
+2025-08-31 20:33:52,776 - INFO - Tempo total para carregar banco: 0.00s
+2025-08-31 20:33:52,776 - INFO - Uso de memória: 660.06 MB
+2025-08-31 20:34:47,097 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:47] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:34:47,365 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:47] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:34:57,557 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:57] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:34:57,869 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:57] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:34:58,124 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:58] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:34:58,191 - INFO - Recebida requisição para /face-login
+2025-08-31 20:34:58,301 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:34:58,546 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:58] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:34:58,693 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:34:58,694 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:34:58,706 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:34:58,706 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:34:58,707 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:58] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:34:58,859 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:58] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:34:59,174 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:59] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:34:59,438 - INFO - Recebida requisição para /face-login
+2025-08-31 20:34:59,526 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:34:59,555 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:59] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:34:59,853 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:34:59,853 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:34:59,859 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:34:59,859 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:34:59,859 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:59] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:34:59,859 - INFO - 127.0.0.1 - - [31/Aug/2025 20:34:59] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:00,191 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:00] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:00,455 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:00,553 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:00] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:00,569 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:00,872 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:00] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:00,907 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:00,907 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:00,907 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:00,907 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:00,907 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:00] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:01,190 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:01] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:01,505 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:01,608 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:01,756 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:01] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:01,862 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:01] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:02,011 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:02,011 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:02,011 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:02,011 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:02,017 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:02,076 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:02] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:02,191 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:02,307 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:02,547 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:02] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:02,690 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:02,691 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:02,692 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:02,692 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:02,693 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:02,858 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:02] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:03,172 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:03] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:03,440 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:03,550 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:03,554 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:03] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:03,840 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:03,840 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:03,841 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:03,841 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:03,842 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:03] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:03,875 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:03] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:04,193 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:04] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:04,455 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:04,555 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:04] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:04,555 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:04,873 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:04] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:04,940 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:04,940 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:04,940 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:04,940 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:04,940 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:04] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:05,190 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:05] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:05,505 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:05,603 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:05,766 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:05] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:05,856 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:05] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:05,923 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:05,923 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:05,923 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:05,923 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:05,938 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:05] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:06,074 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:06] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:06,174 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:06,271 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:06,555 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:06] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:06,598 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:06,598 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:06,600 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:06,600 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:06,600 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:06] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:06,871 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:06] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:07,187 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:07] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:07,440 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:07,521 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:07,556 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:07] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:07,872 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:07] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:07,922 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:07,922 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:07,923 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:07,923 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:07,924 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:07] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:08,193 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:08] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:08,505 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:08,602 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:08,773 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:08] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:08,872 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:08] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:08,956 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:08,956 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:08,956 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:08,956 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:08,970 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:08] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:09,092 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:09] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:09,206 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:09,306 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:09,556 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:09] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:09,670 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:09,670 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:09,670 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:09,671 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:09,671 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:09] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:09,872 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:09] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:10,190 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:10] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:10,456 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:10,555 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:10] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:10,556 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:10,872 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:10] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:10,906 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:10,906 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:10,906 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:10,906 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:10,906 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:10] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:11,190 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:11] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:11,503 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:11,586 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:11,778 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:11] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:11,873 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:11] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:11,921 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:11,922 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:11,922 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:11,922 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:11,922 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:11] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:12,090 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:12] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:12,190 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:12,283 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:12,555 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:12] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:12,586 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:12,586 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:12,586 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:12,586 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:12,586 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:12] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:12,875 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:12] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:13,188 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:13] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:13,450 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:13,542 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:13] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:13,543 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:13,850 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:13] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:13,906 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:13,906 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:13,906 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:13,906 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:13,906 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:13] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:14,174 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:14] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:14,488 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:14,587 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:14,742 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:14] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:14,857 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:14] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:14,955 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:14,955 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:14,955 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:14,955 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:14,955 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:14] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:15,056 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:15] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:15,177 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:15,286 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:15,543 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:15] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:15,577 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:15,577 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:15,577 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:15,577 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:15,577 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:15] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:15,859 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:15] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:16,174 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:16] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:16,435 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:16,519 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:16,547 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:16] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:16,857 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:16] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:16,879 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:16,879 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:16,879 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:16,879 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:16,889 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:16] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:17,174 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:17] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:17,488 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:17,587 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:17,760 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:17] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:17,859 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:17] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:17,922 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:17,922 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:17,922 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:17,922 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:17,938 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:17] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:18,076 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:18] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:18,190 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:18,281 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:18,545 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:18] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:18,676 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:18,686 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:18,686 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:18,688 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:18,689 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:18] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:18,856 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:18] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:19,173 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:19] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:19,435 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:19,530 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:19,554 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:19] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:19,873 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:19] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:19,956 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:19,956 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:19,956 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:19,956 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:19,956 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:19] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:20,190 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:20] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:20,506 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:20,644 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:20,776 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:20] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:20,877 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:20] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:21,073 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:21,073 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:21,073 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:21,073 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:21,073 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:21] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:21,085 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:21] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:21,206 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:21,330 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:21,542 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:21] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:21,654 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:21,654 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:21,654 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:21,654 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:21,654 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:21] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:21,853 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:21] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:22,173 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:22] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:22,423 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:22,537 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:22,538 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:22] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:22,855 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:22] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:22,906 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:22,906 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:22,906 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:22,906 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:22,906 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:22] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:23,173 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:23] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:23,487 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:23,603 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:23,760 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:23] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:23,871 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:23] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:24,022 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:24,022 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:24,022 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:24,022 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:24,022 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:24] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:24,073 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:24] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:24,189 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:24,326 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:24,544 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:24] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:35:24,695 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:24,696 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:24,697 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:24,698 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:24,699 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:24] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:24,855 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:24] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:35:25,185 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:25] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:35:25,439 - INFO - Recebida requisição para /face-login
+2025-08-31 20:35:25,558 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:35:25,925 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:35:25,925 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:35:25,925 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:35:25,925 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:35:25,925 - INFO - 127.0.0.1 - - [31/Aug/2025 20:35:25] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:36:35,111 - INFO - 127.0.0.1 - - [31/Aug/2025 20:36:35] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:36:35,393 - INFO - 127.0.0.1 - - [31/Aug/2025 20:36:35] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:38:54,241 - INFO - 127.0.0.1 - - [31/Aug/2025 20:38:54] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:38:54,506 - INFO - 127.0.0.1 - - [31/Aug/2025 20:38:54] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:38:58,747 - INFO - 127.0.0.1 - - [31/Aug/2025 20:38:58] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:38:59,054 - INFO - 127.0.0.1 - - [31/Aug/2025 20:38:59] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:38:59,315 - INFO - 127.0.0.1 - - [31/Aug/2025 20:38:59] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:38:59,380 - INFO - Recebida requisição para /face-login
+2025-08-31 20:38:59,498 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:38:59,731 - INFO - 127.0.0.1 - - [31/Aug/2025 20:38:59] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:38:59,931 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:38:59,931 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:38:59,931 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:38:59,931 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:38:59,931 - INFO - 127.0.0.1 - - [31/Aug/2025 20:38:59] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:00,048 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:00] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:00,368 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:00] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:00,627 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:00,728 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:00,745 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:00] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:01,062 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:01] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:01,115 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:01,115 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:01,115 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:01,115 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:01,120 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:01] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:01,385 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:01] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:01,697 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:01,826 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:01,965 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:01] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:02,068 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:02] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:02,199 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:02,200 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:02,200 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:02,203 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:02,204 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:02,284 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:02] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:02,398 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:02,497 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:02,733 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:02] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:02,830 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:02,830 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:02,830 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:02,830 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:02,830 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:02] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:03,046 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:03] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:03,366 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:03] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:03,629 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:03,732 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:03] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:03,746 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:04,046 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:04] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:04,046 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:04,046 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:04,046 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:04,046 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:04,046 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:04] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:04,381 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:04] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:04,631 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:04,730 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:04] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:04,730 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:05,045 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:05] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:05,045 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:05,045 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:05,052 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:05,052 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:05,052 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:05] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:05,365 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:05] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:05,629 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:05,729 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:05] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:05,729 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:06,043 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:06] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:06,132 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:06,132 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:06,132 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:06,132 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:06,132 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:06] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:06,367 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:06] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:06,681 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:06,810 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:06,946 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:06] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:07,048 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:07] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:07,198 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:07,198 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:07,212 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:07,212 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:07,214 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:07] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:07,264 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:07] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:07,366 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:07,488 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:07,733 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:07] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:07,881 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:07,883 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:07,884 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:07,885 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:07,886 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:07] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:08,046 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:08] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:08,366 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:08] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:08,630 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:08,746 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:08] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:08,746 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:09,064 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:09] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:09,163 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:09,163 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:09,163 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:09,163 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:09,163 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:09] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:09,397 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:09] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:09,714 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:09,815 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:09,982 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:09] "OPTIONS /health HTTP/1.1" 200 -
+2025-08-31 20:39:10,046 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:10] "GET /health HTTP/1.1" 200 -
+2025-08-31 20:39:10,265 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:10,265 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:10,265 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:10,265 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:10,265 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:10] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:10,298 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:10] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-08-31 20:39:10,414 - INFO - Recebida requisição para /face-login
+2025-08-31 20:39:10,555 - INFO - Iniciando reconhecimento facial...
+2025-08-31 20:39:10,907 - INFO - Comparando com 2 usuários no banco...
+2025-08-31 20:39:10,909 - ERROR - ERRO: Erro no reconhecimento: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+2025-08-31 20:39:10,909 - ERROR - Traceback (most recent call last):
+  File "C:\Users\WBS\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 337, in recognize_face_from_array
+    cosine_distance = 1 - np.dot(captured_embedding_normalized, db_embedding)
+  File "<__array_function__ internals>", line 200, in dot
+ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
+
+2025-08-31 20:39:10,909 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-08-31 20:39:10,911 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:10] "POST /face-login HTTP/1.1" 200 -
+2025-08-31 20:58:34,493 - INFO - Monitoramento do banco de dados parado
+2025-08-31 20:58:34,493 - INFO - Sistema de reconhecimento facial finalizado

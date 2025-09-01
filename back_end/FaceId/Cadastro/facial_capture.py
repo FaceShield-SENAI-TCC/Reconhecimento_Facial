@@ -9,6 +9,8 @@ import logging
 import urllib.request
 import shutil
 import base64
+from deepface import DeepFace
+from pathlib import Path
 
 # ====================== CONFIGURAÇÕES AVANÇADAS ======================
 DATABASE_DIR = "facial_database"
@@ -67,16 +69,23 @@ def calculate_brightness(image):
 
 
 def enhance_face_image(face_img):
-    """Melhora a qualidade da imagem facial usando CLAHE e denoising"""
+    """Melhora la calidad de la imagen facial usando CLAHE y denoising"""
     if face_img is None or face_img.size == 0:
         return np.zeros((100, 100, 3), np.uint8)
     try:
+        # Convertir a LAB para mejorar la iluminación
         lab = cv2.cvtColor(face_img, cv2.COLOR_BGR2LAB)
         l, a, b = cv2.split(lab)
+
+        # Aplicar CLAHE al canal L (luminancia)
         clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
         cl = clahe.apply(l)
+
+        # Fusionar los canales y convertir de vuelta a BGR
         limg = cv2.merge((cl, a, b))
         enhanced = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
+
+        # Aplicar denoising
         enhanced = cv2.fastNlMeansDenoisingColored(enhanced, None, 10, 10, 7, 21)
         return enhanced
     except Exception as e:
@@ -85,16 +94,18 @@ def enhance_face_image(face_img):
 
 
 def face_quality_score(face_img):
-    """Calcula uma pontuação de qualidade para a imagem facial"""
+    """Calcula una puntuación de calidad para la imagen facial"""
     if face_img is None or face_img.size == 0:
         return 0
     try:
         sharpness = calculate_sharpness(face_img)
         sharp_score = min(1, sharpness / 200) * 50
+
         brightness = calculate_brightness(face_img)
         bright_score = 0
         if MIN_BRIGHTNESS < brightness < MAX_BRIGHTNESS:
             bright_score = (1 - abs(brightness - 120) / 80) * 30
+
         return sharp_score + bright_score
     except Exception:
         return 0
@@ -119,8 +130,26 @@ def detect_faces(frame, detector):
                     faces.append([max(0, startX), max(0, startY), min(w, endX), min(h, endY)])
         except Exception as e:
             logging.error(f"Erro na detecção DNN: {str(e)}")
-    # Outros detectores (mtcnn e haar) permanecem os mesmos
-    # ...
+    elif detector["type"] == "haar":
+        try:
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            detected_faces = detector["detector"].detectMultiScale(
+                gray, scaleFactor=1.1, minNeighbors=5, minSize=MIN_FACE_SIZE)
+            for (x, y, w, h) in detected_faces:
+                faces.append([x, y, x + w, y + h])
+        except Exception as e:
+            logging.error(f"Erro na detecção Haar: {str(e)}")
+    elif detector["type"] == "mtcnn" and MTCNN_AVAILABLE:
+        try:
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = detector["detector"].detect_faces(rgb_frame)
+            for result in results:
+                if result['confidence'] > MIN_FACE_CONFIDENCE:
+                    x, y, w, h = result['box']
+                    faces.append([x, y, x + w, y + h])
+        except Exception as e:
+            logging.error(f"Erro na detecção MTCNN: {str(e)}")
+
     return faces
 
 
@@ -224,8 +253,10 @@ class FaceCapture:
                 self.update_progress("Erro: Câmera não disponível")
                 return False, "Câmera não disponível"
 
+            # Configurar câmera para melhor performance
             cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
             cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+            cap.set(cv2.CAP_PROP_FPS, 15)
 
             self.update_progress("Preparando câmera...")
             time.sleep(2)
@@ -240,6 +271,7 @@ class FaceCapture:
                 if not ret:
                     continue
 
+                # Corrigir orientação da câmera
                 frame = cv2.flip(frame, 1)
                 display_frame = frame.copy()
 
@@ -258,7 +290,33 @@ class FaceCapture:
                         quality = face_quality_score(face_img)
 
                         if quality > 40:
-                            executor.submit(self.save_face_image, face_img, self.captured_count, quality)
+                            # Salvar a imagem e gerar embedding
+                            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S%f")
+                            filename = f"{self.safe_name}_{self.captured_count:03d}_{int(quality)}.jpg"
+                            filepath = os.path.join(self.user_dir, filename)
+
+                            # Salvar imagem
+                            enhanced = enhance_face_image(face_img)
+                            cv2.imwrite(filepath, enhanced)
+
+                            # Gerar embedding usando DeepFace
+                            try:
+                                embedding_obj = DeepFace.represent(
+                                    img_path=enhanced,
+                                    model_name="Facenet",
+                                    enforce_detection=False,
+                                    detector_backend="skip"
+                                )
+
+                                if embedding_obj and len(embedding_obj) > 0:
+                                    embedding = np.array(embedding_obj[0]["embedding"])
+                                    embedding_filename = f"{self.safe_name}_{self.captured_count:03d}_{int(quality)}.npy"
+                                    embedding_path = os.path.join(self.user_dir, embedding_filename)
+                                    np.save(embedding_path, embedding)
+                                    logging.info(f"Embedding salvo: {embedding_filename}")
+                            except Exception as e:
+                                logging.error(f"Erro ao gerar embedding: {str(e)}")
+
                             self.captured_count += 1
                             self.update_progress(f"Face {self.captured_count} capturada", self.captured_count)
 
@@ -308,3 +366,60 @@ class FaceCapture:
             logging.info(f"Face salva: {filename}")
         except Exception as e:
             logging.error(f"Erro ao salvar face: {str(e)}")
+
+
+# Função auxiliar para verificar se um usuário já está cadastrado
+def check_user_registration(user_name):
+    """Verifica se um usuário já está cadastrado e retorna o número de fotos existentes"""
+    safe_name = sanitize_name(user_name)
+    user_dir = os.path.join(DATABASE_DIR, safe_name)
+
+    if not os.path.exists(user_dir):
+        return 0
+
+    # Contar arquivos de imagem
+    image_files = [f for f in os.listdir(user_dir) if f.endswith('.jpg')]
+    return len(image_files)
+
+
+# Função para continuar captura de usuário existente
+def continue_user_capture(user_name, progress_callback=None, frame_callback=None):
+    """Continua a captura para um usuário já existente"""
+    safe_name = sanitize_name(user_name)
+    user_dir = os.path.join(DATABASE_DIR, safe_name)
+
+    if not os.path.exists(user_dir):
+        return False, "Usuário não encontrado"
+
+    # Contar fotos existentes
+    existing_photos = len([f for f in os.listdir(user_dir) if f.endswith('.jpg')])
+    remaining_photos = TARGET_FACES - existing_photos
+
+    if remaining_photos <= 0:
+        return False, "Usuário já possui fotos suficientes"
+
+    # Criar instância de captura
+    capture = FaceCapture(user_name, progress_callback, frame_callback)
+    capture.captured_count = existing_photos  # Começar da contagem existente
+
+    # Atualizar mensagem de progresso
+    capture.update_progress(f"Continuando captura. {existing_photos} fotos existentes, {remaining_photos} necessárias")
+
+    return capture, f"Continue captura para {user_name}"
+
+
+if __name__ == "__main__":
+    # Exemplo de uso
+    def progress_callback(progress):
+        print(f"Progresso: {progress['message']} - {progress['captured']}/{progress['total']}")
+
+
+    def frame_callback(frame_data):
+        # Esta função receberia os frames para exibição no frontend
+        pass
+
+
+    # Testar a captura facial
+    capture = FaceCapture("Test_User", progress_callback, frame_callback)
+    success, message = capture.capture()
+    print(f"Resultado: {success}, Mensagem: {message}")

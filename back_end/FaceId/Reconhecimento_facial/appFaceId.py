@@ -7,6 +7,7 @@ import atexit
 import logging
 import sys
 import io
+import time
 
 # Configurar stdout e stderr para UTF-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -36,7 +37,7 @@ def health_check():
 @app.route('/face-login', methods=['POST'])
 def face_login():
     """Endpoint para login com reconhecimento facial."""
-    logger.info("Recebida requisicao para /face-login")
+    logger.info("Recebida requisição para /face-login")
     try:
         data = request.json
         if not data or 'imagem' not in data:
@@ -54,7 +55,7 @@ def face_login():
             logger.info(f"Login processado com sucesso. Resultado: {result['message']}")
         else:
             logger.error(
-                f"Erro ao processar login. Codigo: {status_code}, Mensagem: {result.get('error') or result.get('message')}")
+                f"Erro ao processar login. Código: {status_code}, Mensagem: {result.get('error') or result.get('message')}")
 
         return jsonify(result), status_code
 
@@ -80,14 +81,30 @@ def reload_database_route():
         return jsonify({"error": message}), 500
 
 
+# Nova rota para verificar o status do monitoramento
+@app.route('/monitor-status', methods=['GET'])
+def monitor_status():
+    """Retorna o status do monitoramento do banco de dados."""
+    from face_recognition_logic import db_observer, last_db_update
+
+    status = {
+        "monitor_active": db_observer is not None and db_observer.is_alive(),
+        "last_update": last_db_update,
+        "database_dir": "C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
+    }
+
+    return jsonify(status), 200
+
+
 # ====================== INICIALIZAÇÃO ======================
 
 def start_app():
     """Inicializa o sistema e o servidor Flask."""
     if initialize():
-        logger.info("Servidor de reconhecimento facial pronto para aceitar conexoes.")
+        logger.info("Servidor de reconhecimento facial pronto para aceitar conexões.")
+        logger.info("Monitoramento do banco de dados ativado - o sistema atualizará automaticamente.")
     else:
-        logger.error("Falha na inicializacao. Nao foi possivel iniciar o servidor.")
+        logger.error("Falha na inicialização. Não foi possível iniciar o servidor.")
         sys.exit(1)
 
 
@@ -96,4 +113,4 @@ atexit.register(cleanup)
 
 if __name__ == "__main__":
     start_app()
-    app.run(host='0.0.0.0', port=5005, debug=False)
+    app.run(host='0.0.0.0', port=5005, debug=False, threaded=True)

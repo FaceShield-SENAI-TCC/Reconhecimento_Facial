@@ -41,7 +41,6 @@ if not os.path.exists(FRONTEND_DIR):
 print(f"Servindo arquivos de: {FRONTEND_DIR}")
 print(f"Caminho absoluto: {os.path.abspath(FRONTEND_DIR)}")
 
-
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=FRONTEND_DIR, **kwargs)
@@ -74,7 +73,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         return super().do_GET()
 
-
 def is_port_available(port):
     """Verifica se a porta está disponível"""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -83,7 +81,6 @@ def is_port_available(port):
             return True
         except socket.error:
             return False
-
 
 def check_backend_connection():
     """Verifica se o backend está respondendo"""
@@ -97,7 +94,6 @@ def check_backend_connection():
         print(f"❌ Não foi possível conectar ao backend: {e}")
         print("Certifique-se de que o backend está rodando na porta 5005")
         return False
-
 
 def find_available_port():
     """Encontra uma porta disponível de forma mais confiável"""
@@ -114,7 +110,6 @@ def find_available_port():
             return random_port
 
     return None
-
 
 def start_frontend_server():
     """Inicia o servidor frontend de forma mais robusta"""
@@ -160,7 +155,6 @@ def start_frontend_server():
     except OSError as e:
         print(f"❌ Erro ao iniciar servidor: {e}")
         return False
-
 
 if __name__ == '__main__':
     print("🚀 Iniciando servidor frontend...")
