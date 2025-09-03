@@ -22288,3 +22288,2125 @@ ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
 2025-09-03 14:18:46,847 - ERROR - Erro ao obter embedding para C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces\3tds\davi_mazoti\davi_mazoti_2.jpg: ⛓️‍💥 An exception occurred while downloading facenet_weights.h5 from https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5. Consider downloading it manually to C:\Users\Alexandre Santos\.deepface\weights\facenet_weights.h5.
 2025-09-03 14:19:00,919 - ERROR - Erro ao obter embedding para C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces\3tds\davi_mazoti\davi_mazoti_3.jpg: ⛓️‍💥 An exception occurred while downloading facenet_weights.h5 from https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5. Consider downloading it manually to C:\Users\Alexandre Santos\.deepface\weights\facenet_weights.h5.
 2025-09-03 14:19:04,516 - INFO - Sistema de reconhecimento facial finalizado
+2025-09-03 14:21:06,341 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:21:06,342 - INFO - Processando turma: 3tds
+2025-09-03 14:21:06,344 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 14:21:06,345 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 14:21:06,345 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 14:21:21,430 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 14:21:21,430 - INFO - SUCESSO: Banco de dados carregado com 1 usuários e 10 embeddings
+2025-09-03 14:21:21,431 - INFO - Tempo total para carregar banco: 15.09s
+2025-09-03 14:21:21,431 - INFO - Uso de memória: 462.84 MB
+2025-09-03 14:21:21,433 - INFO - Cache de embeddings atualizado.
+2025-09-03 14:21:21,435 - INFO - Monitoramento do banco de dados iniciado em: C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-09-03 14:21:21,436 - INFO - Cache de embeddings limpo
+2025-09-03 14:21:21,436 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:21:21,437 - INFO - Processando turma: 3tds
+2025-09-03 14:21:21,437 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 14:21:21,437 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 14:21:21,438 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 14:21:27,682 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 14:21:27,682 - INFO - SUCESSO: Banco de dados carregado com 1 usuários e 10 embeddings
+2025-09-03 14:21:27,682 - INFO - Tempo total para carregar banco: 6.25s
+2025-09-03 14:21:27,683 - INFO - Uso de memória: 464.08 MB
+2025-09-03 14:21:27,683 - INFO - Servidor de reconhecimento facial pronto para aceitar conexões.
+2025-09-03 14:21:27,683 - INFO - Monitoramento do banco de dados ativado - o sistema atualizará automaticamente.
+2025-09-03 14:21:27,710 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://172.20.10.11:5005
+2025-09-03 14:21:27,710 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-03 14:21:55,374 - INFO - 127.0.0.1 - - [03/Sep/2025 14:21:55] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:21:55,639 - INFO - 127.0.0.1 - - [03/Sep/2025 14:21:55] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:21:59,038 - INFO - 127.0.0.1 - - [03/Sep/2025 14:21:59] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:21:59,588 - INFO - 127.0.0.1 - - [03/Sep/2025 14:21:59] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 14:21:59,851 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:00,033 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:00] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:22:00,300 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:00,430 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:00,763 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:01,260 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:01,262 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:01,262 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0390
+2025-09-03 14:22:01,263 - INFO - Tempo total de reconhecimento: 0.96s
+2025-09-03 14:22:01,264 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:01,266 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:01] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:01,354 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:01] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:22:01,622 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:01,622 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:01,622 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0847
+2025-09-03 14:22:01,622 - INFO - Tempo total de reconhecimento: 0.86s
+2025-09-03 14:22:01,623 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:01,624 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:01] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:01,665 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:01] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:22:02,037 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:02,312 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:02] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:22:02,378 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:02,431 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:02,483 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:03,346 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:03] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:22:03,476 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:03,477 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:03,479 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0406
+2025-09-03 14:22:03,479 - INFO - Tempo total de reconhecimento: 1.05s
+2025-09-03 14:22:03,480 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:03,482 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:03] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:03,717 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:03,727 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:03,727 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:03,728 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0644
+2025-09-03 14:22:03,728 - INFO - Tempo total de reconhecimento: 1.25s
+2025-09-03 14:22:03,732 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:03,735 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:03] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:04,051 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:04,341 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:04] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:22:04,715 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:04,843 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:04,843 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:04,843 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0494
+2025-09-03 14:22:04,844 - INFO - Tempo total de reconhecimento: 0.79s
+2025-09-03 14:22:04,845 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:04,846 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:04] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:05,066 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:05,341 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:05] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:22:05,720 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:05] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:05,743 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:05,744 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:05,744 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0594
+2025-09-03 14:22:05,744 - INFO - Tempo total de reconhecimento: 0.68s
+2025-09-03 14:22:05,746 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:05,747 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:05] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:06,041 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:06,353 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:06] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:22:06,434 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:06,731 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:07,086 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:07,261 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:07,263 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:07,264 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0584
+2025-09-03 14:22:07,266 - INFO - Tempo total de reconhecimento: 0.83s
+2025-09-03 14:22:07,268 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:07,270 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:07] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:07,340 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:07] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:22:07,654 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:07] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:22:07,836 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:07,836 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:07,836 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0457
+2025-09-03 14:22:07,837 - INFO - Tempo total de reconhecimento: 0.75s
+2025-09-03 14:22:07,838 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:07,839 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:07] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:22:08,026 - INFO - Recebida requisição para /face-login
+2025-09-03 14:22:08,377 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:22:09,030 - INFO - Comparando com 1 usuários no banco...
+2025-09-03 14:22:09,031 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:22:09,031 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.0383
+2025-09-03 14:22:09,031 - INFO - Tempo total de reconhecimento: 0.65s
+2025-09-03 14:22:09,032 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 14:22:09,033 - INFO - 127.0.0.1 - - [03/Sep/2025 14:22:09] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:23:38,209 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-09-03 14:23:38,210 - INFO - Cache de embeddings limpo
+2025-09-03 14:23:38,212 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:23:38,213 - INFO - Processando turma: 3tds
+2025-09-03 14:23:38,214 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 14:23:38,214 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 14:23:38,214 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 14:23:47,852 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 14:23:47,854 - INFO - Processando turma: tds
+2025-09-03 14:23:47,854 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 14:23:47,855 - INFO - Encontrados 0 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 14:23:47,855 - INFO - Nenhum arquivo .npy encontrado para Alexandre Santos. Gerando embeddings das imagens...
+2025-09-03 14:23:55,720 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 14:23:55,720 - INFO - SUCESSO: Banco de dados carregado com 2 usuários e 20 embeddings
+2025-09-03 14:23:55,720 - INFO - Tempo total para carregar banco: 17.51s
+2025-09-03 14:23:55,721 - INFO - Uso de memória: 742.54 MB
+2025-09-03 14:24:14,409 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:14] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:24:14,659 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:14] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:17,299 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:17] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:17,688 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:17] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:17,952 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:18,279 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:18] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:18,390 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:18,555 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:18,559 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:18,561 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:18,562 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:18] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:18,691 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:19,159 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:19,340 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:19,341 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:19,346 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:19,347 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:19] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:19,600 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:19] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:19,972 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:20,284 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:20] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:24:20,409 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:20,599 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:20,601 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:20,603 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:20] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:20,607 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:20,609 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:20] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:20,976 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:21,295 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:21] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:21,375 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:21,669 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:22,261 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:22,600 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:22] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:22,706 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:22,707 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:22,709 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.0337
+2025-09-03 14:24:22,709 - INFO - Tempo total de reconhecimento: 1.33s
+2025-09-03 14:24:22,714 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:22,716 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:22] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:22,987 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:23,396 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:23,408 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:23,423 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:23,423 - INFO - Nenhum usuário reconhecido
+2025-09-03 14:24:23,424 - INFO - Tempo total de reconhecimento: 1.16s
+2025-09-03 14:24:23,429 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:23,431 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:23] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:23,554 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:23,555 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:23,558 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:23,559 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:23] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:23,599 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:23] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:23,975 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:23] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:24,236 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:24,283 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:24] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:24,653 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:24,674 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:24,916 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:24,918 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:24,920 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:24,921 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:24] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:25,593 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:25] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:25,968 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:26,400 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:26,451 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:26,599 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:26] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:24:26,666 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:26,672 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:26,674 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:26,674 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:26] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:26,912 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:26] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:27,282 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:27,592 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:27] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:27,693 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:27,976 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:28,443 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:28,597 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:28] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:28,991 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:29,441 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:29,598 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:29] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:29,627 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:29,634 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:29,635 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.2936
+2025-09-03 14:24:29,639 - INFO - Tempo total de reconhecimento: 1.95s
+2025-09-03 14:24:29,645 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:29,647 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:29] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:29,990 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:29] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:30,007 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:30,012 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:30,013 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.2012
+2025-09-03 14:24:30,014 - INFO - Tempo total de reconhecimento: 3.56s
+2025-09-03 14:24:30,022 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:30,026 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:30] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:30,317 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:30,597 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:30,598 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:30,599 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.2944
+2025-09-03 14:24:30,600 - INFO - Tempo total de reconhecimento: 2.16s
+2025-09-03 14:24:30,603 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:30,607 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:30] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:30,613 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:30] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:30,754 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:30,988 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:31,040 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:31,041 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:31,041 - INFO - Nenhum usuário reconhecido
+2025-09-03 14:24:31,041 - INFO - Tempo total de reconhecimento: 1.60s
+2025-09-03 14:24:31,045 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:31,047 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:31] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:31,349 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:31,604 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:31] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:31,650 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:31,654 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:31,660 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:31,664 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:31] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:31,901 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:31,901 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:31,901 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3825
+2025-09-03 14:24:31,901 - INFO - Tempo total de reconhecimento: 1.15s
+2025-09-03 14:24:31,905 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:31,906 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:31] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:31,993 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:32,339 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:32,602 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:32] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:24:32,615 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:32,616 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:32,619 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:32,620 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:32] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:32,915 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:32] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:33,286 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:33,539 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:33] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:33,598 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:33,609 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:33,995 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:33,996 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:34,000 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:34,001 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:34] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:34,592 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:34] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:34,965 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:35,313 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:35,593 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:35] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:35,727 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:35,797 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:35,803 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:35,804 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:35,807 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:35] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:35,973 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:35] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:36,285 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:36,462 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:36,463 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:36,463 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.1585
+2025-09-03 14:24:36,464 - INFO - Tempo total de reconhecimento: 1.15s
+2025-09-03 14:24:36,469 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:36,470 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:36] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:36,591 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:36] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:36,621 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:36,921 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:36,923 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:36,926 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:36,927 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:36] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:36,952 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:37,282 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:37,575 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:37,576 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:37,580 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:37,581 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:37] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:37,608 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:37] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:37,971 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:38,285 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:38] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:24:38,307 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:38,600 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:38] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:38,978 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:39,433 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:39,481 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:39,481 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:39,482 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.0768
+2025-09-03 14:24:39,482 - INFO - Tempo total de reconhecimento: 1.17s
+2025-09-03 14:24:39,486 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:39,487 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:39] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:39,602 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:39] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:39,978 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:40,362 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:40,404 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:40,404 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:40,405 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.0929
+2025-09-03 14:24:40,405 - INFO - Tempo total de reconhecimento: 0.97s
+2025-09-03 14:24:40,410 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:40,411 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:40] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:40,455 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:40,456 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:40,458 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:40,459 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:40] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:40,600 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:40] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:40,977 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:41,290 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:41] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:41,300 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:41,672 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:41] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:41,981 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:42,202 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:42,203 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:42,203 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.0763
+2025-09-03 14:24:42,203 - INFO - Tempo total de reconhecimento: 0.90s
+2025-09-03 14:24:42,205 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:42,206 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:42] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:42,385 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:42,589 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:42] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:42,963 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:43,279 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:43,280 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:43,280 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.1029
+2025-09-03 14:24:43,280 - INFO - Tempo total de reconhecimento: 0.89s
+2025-09-03 14:24:43,282 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:43,283 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:43] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:43,358 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:43,602 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:43] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:43,979 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:44,258 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:44,259 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:44,259 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.1207
+2025-09-03 14:24:44,259 - INFO - Tempo total de reconhecimento: 0.90s
+2025-09-03 14:24:44,262 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:44,263 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:44] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:44,384 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:44,607 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:44] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 14:24:44,919 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:44] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:45,232 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:45,238 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:45,238 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.0615
+2025-09-03 14:24:45,240 - INFO - Tempo total de reconhecimento: 0.86s
+2025-09-03 14:24:45,242 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:45,244 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:45] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:45,285 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:45,597 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:45] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:45,633 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:45,963 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:46,355 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:46,607 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:46] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:46,649 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:46,651 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:46,652 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.0984
+2025-09-03 14:24:46,653 - INFO - Tempo total de reconhecimento: 1.02s
+2025-09-03 14:24:46,656 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:46,658 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:46] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:46,991 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:47,331 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:47,332 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:47,333 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.0904
+2025-09-03 14:24:47,333 - INFO - Tempo total de reconhecimento: 0.98s
+2025-09-03 14:24:47,334 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:47,335 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:47] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:47,354 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:47,601 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:47] "GET /health HTTP/1.1" 200 -
+2025-09-03 14:24:47,977 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:47] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:48,181 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 14:24:48,182 - INFO - Tempo de comparação: 0.00s
+2025-09-03 14:24:48,182 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.0944
+2025-09-03 14:24:48,182 - INFO - Tempo total de reconhecimento: 0.83s
+2025-09-03 14:24:48,183 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 14:24:48,184 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:48] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:48,302 - INFO - Recebida requisição para /face-login
+2025-09-03 14:24:48,713 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 14:24:48,806 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 14:24:48,807 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 14:24:48,809 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 14:24:48,811 - INFO - 127.0.0.1 - - [03/Sep/2025 14:24:48] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 14:24:54,285 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-09-03 14:24:54,287 - INFO - Cache de embeddings limpo
+2025-09-03 14:24:54,287 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:24:54,288 - INFO - Processando turma: 3tds
+2025-09-03 14:24:54,288 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 14:24:54,288 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 14:24:54,288 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 14:25:02,283 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 14:25:02,283 - INFO - Processando turma: tds
+2025-09-03 14:25:02,284 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 14:25:02,288 - INFO - Encontrados 2 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 14:25:02,289 - INFO - Usuário Alexandre Santos: 2 amostras carregadas
+2025-09-03 14:25:02,289 - INFO - SUCESSO: Banco de dados carregado com 2 usuários e 12 embeddings
+2025-09-03 14:25:02,289 - INFO - Tempo total para carregar banco: 8.00s
+2025-09-03 14:25:02,290 - INFO - Uso de memória: 776.08 MB
+2025-09-03 14:25:02,562 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-09-03 14:25:02,563 - INFO - Cache de embeddings limpo
+2025-09-03 14:25:02,564 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:25:02,565 - INFO - Processando turma: 3tds
+2025-09-03 14:25:02,565 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 14:25:02,566 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 14:25:02,566 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 14:25:11,365 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-09-03 14:25:11,367 - INFO - Cache de embeddings limpo
+2025-09-03 14:25:11,369 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:25:11,371 - INFO - Processando turma: 3tds
+2025-09-03 14:25:11,373 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 14:25:11,374 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 14:25:11,375 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 14:25:11,979 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 14:25:11,980 - INFO - Processando turma: tds
+2025-09-03 14:25:11,982 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 14:25:12,019 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 14:25:12,020 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 14:25:12,021 - INFO - SUCESSO: Banco de dados carregado com 2 usuários e 20 embeddings
+2025-09-03 14:25:12,022 - INFO - Tempo total para carregar banco: 9.46s
+2025-09-03 14:25:12,023 - INFO - Uso de memória: 763.90 MB
+2025-09-03 14:25:17,851 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 14:25:17,851 - INFO - Processando turma: tds
+2025-09-03 14:25:17,852 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 14:25:17,862 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 14:25:17,862 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 14:25:17,862 - INFO - SUCESSO: Banco de dados carregado com 2 usuários e 20 embeddings
+2025-09-03 14:25:17,862 - INFO - Tempo total para carregar banco: 6.49s
+2025-09-03 14:25:17,863 - INFO - Uso de memória: 751.21 MB
+2025-09-03 14:47:26,696 - INFO - Monitoramento do banco de dados parado
+2025-09-03 14:47:26,697 - INFO - Sistema de reconhecimento facial finalizado
+2025-09-03 19:39:00,767 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 19:39:00,769 - INFO - Processando turma: 3tds
+2025-09-03 19:39:00,769 - INFO - Processando usuário: Alexandre Santos em 3tds
+2025-09-03 19:39:00,770 - INFO - Encontrados 0 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:39:00,770 - INFO - Nenhum arquivo .npy encontrado para Alexandre Santos. Gerando embeddings das imagens...
+2025-09-03 19:39:17,565 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:39:17,565 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 19:39:17,566 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 19:39:17,566 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 19:39:24,278 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 19:39:24,279 - INFO - Processando turma: tds
+2025-09-03 19:39:24,280 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 19:39:24,304 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:39:24,305 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:39:24,305 - INFO - SUCESSO: Banco de dados carregado com 3 usuários e 30 embeddings
+2025-09-03 19:39:24,305 - INFO - Tempo total para carregar banco: 23.54s
+2025-09-03 19:39:24,305 - INFO - Uso de memória: 474.82 MB
+2025-09-03 19:39:24,306 - INFO - Cache de embeddings atualizado.
+2025-09-03 19:39:24,309 - INFO - Monitoramento do banco de dados iniciado em: C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-09-03 19:39:24,311 - INFO - Cache de embeddings limpo
+2025-09-03 19:39:24,311 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 19:39:24,311 - INFO - Processando turma: 3tds
+2025-09-03 19:39:24,313 - INFO - Processando usuário: Alexandre Santos em 3tds
+2025-09-03 19:39:24,313 - INFO - Encontrados 0 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:39:24,313 - INFO - Nenhum arquivo .npy encontrado para Alexandre Santos. Gerando embeddings das imagens...
+2025-09-03 19:39:31,896 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:39:31,897 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 19:39:31,897 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 19:39:31,897 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 19:39:39,827 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 19:39:39,827 - INFO - Processando turma: tds
+2025-09-03 19:39:39,827 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 19:39:39,840 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:39:39,841 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:39:39,841 - INFO - SUCESSO: Banco de dados carregado com 3 usuários e 30 embeddings
+2025-09-03 19:39:39,841 - INFO - Tempo total para carregar banco: 15.53s
+2025-09-03 19:39:39,843 - INFO - Uso de memória: 478.20 MB
+2025-09-03 19:39:39,843 - INFO - Servidor de reconhecimento facial pronto para aceitar conexões.
+2025-09-03 19:39:39,843 - INFO - Monitoramento do banco de dados ativado - o sistema atualizará automaticamente.
+2025-09-03 19:39:39,869 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://172.28.173.70:5005
+2025-09-03 19:39:39,870 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-03 19:39:42,124 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-09-03 19:39:42,126 - INFO - Cache de embeddings limpo
+2025-09-03 19:39:42,126 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 19:39:42,127 - INFO - Processando turma: 3tds
+2025-09-03 19:39:42,129 - INFO - Processando usuário: Alexandre Santos em 3tds
+2025-09-03 19:39:42,131 - INFO - Encontrados 1 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:39:42,132 - INFO - Usuário Alexandre Santos: 1 amostras carregadas
+2025-09-03 19:39:42,132 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 19:39:42,132 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 19:39:42,134 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 19:39:49,029 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 19:39:49,029 - INFO - Processando turma: tds
+2025-09-03 19:39:49,031 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 19:39:49,042 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:39:49,043 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:39:49,043 - INFO - SUCESSO: Banco de dados carregado com 3 usuários e 21 embeddings
+2025-09-03 19:39:49,043 - INFO - Tempo total para carregar banco: 6.92s
+2025-09-03 19:39:49,043 - INFO - Uso de memória: 480.91 MB
+2025-09-03 19:39:49,314 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:49] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:39:49,575 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:49] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:39:50,572 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:50] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:39:51,980 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-09-03 19:39:51,981 - INFO - Cache de embeddings limpo
+2025-09-03 19:39:51,981 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 19:39:51,984 - INFO - Processando turma: 3tds
+2025-09-03 19:39:51,986 - INFO - Processando usuário: Alexandre Santos em 3tds
+2025-09-03 19:39:51,994 - INFO - Encontrados 4 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:39:51,996 - INFO - Usuário Alexandre Santos: 4 amostras carregadas
+2025-09-03 19:39:51,996 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 19:39:51,996 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 19:39:51,996 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 19:39:53,787 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:53] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:39:54,054 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:54] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:39:54,177 - INFO - Recebida requisição para /face-login
+2025-09-03 19:39:54,479 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:54] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:39:54,558 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:39:54,805 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:54] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:39:55,179 - INFO - Recebida requisição para /face-login
+2025-09-03 19:39:55,289 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:39:55,794 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:55] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:39:56,147 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:39:56,149 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:39:56,153 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:56] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:39:56,168 - INFO - Recebida requisição para /face-login
+2025-09-03 19:39:56,466 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:39:56,789 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:56] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:39:57,080 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-09-03 19:39:57,085 - INFO - Cache de embeddings limpo
+2025-09-03 19:39:57,087 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 19:39:57,096 - INFO - Processando turma: 3tds
+2025-09-03 19:39:57,103 - INFO - Processando usuário: Alexandre Santos em 3tds
+2025-09-03 19:39:57,169 - INFO - Recebida requisição para /face-login
+2025-09-03 19:39:57,207 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:39:57,208 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:39:57,216 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 19:39:57,226 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 19:39:57,229 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 19:39:57,291 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:39:57,512 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:39:57,517 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:39:57,521 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:57] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:39:57,796 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:57] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:39:58,170 - INFO - Recebida requisição para /face-login
+2025-09-03 19:39:58,459 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:39:58,801 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:58] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:39:59,150 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:39:59,155 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:39:59,158 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:59] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:39:59,187 - INFO - Recebida requisição para /face-login
+2025-09-03 19:39:59,475 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:39:59,789 - INFO - 127.0.0.1 - - [03/Sep/2025 19:39:59] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:00,171 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:00] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:00,439 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:00,455 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:00,459 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:00] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:00,484 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:00,798 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:00,802 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:00] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:01,133 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:01] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:01,513 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:01,779 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:01] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:01,832 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:01,845 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:01,846 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:01,855 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:01] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:02,160 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:02,479 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:02,804 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:02] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:03,189 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:03,272 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:03,275 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:03,279 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:03] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:03,484 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:03,780 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:03] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:04,161 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:04,359 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:04,802 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:04] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:05,232 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:05,552 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:05,557 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:05,565 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:05] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:05,655 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:05,818 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:05] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:06,218 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:06] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:06,530 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:06,795 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:06] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:06,796 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:06,806 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:06,812 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:06] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:06,853 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:07,146 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:07] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:07,521 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:07,636 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:07,644 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:07,651 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:07] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:07,800 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:07] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:07,831 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:08,192 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:08,517 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:08,525 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:08,530 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:08,535 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:08] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:08,793 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:08] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:09,174 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:09,276 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:09,360 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 19:40:09,381 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:09,392 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:09,396 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:09] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:09,484 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 19:40:09,492 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:09,496 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:09] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:09,792 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:09] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:10,077 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:10,083 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:10,088 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:10] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:10,169 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:10,462 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:10,799 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:10] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:11,011 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:11,015 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:11,022 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:11] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:11,172 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:11,505 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:11,797 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:11] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:11,846 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:11,850 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:11,853 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:11] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:12,191 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:12] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:12,389 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:12,395 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:12,396 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:12] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:12,510 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:12,791 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:12] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:12,831 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:12,855 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 19:40:12,861 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 19:40:12,866 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:12,871 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:12] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:13,113 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:13] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:13,500 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:13,710 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:13,713 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:13,716 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:13] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:13,775 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:13,796 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:13] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:14,179 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:14,486 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:14,502 - WARNING - Banco de dados facial está vazio. Nenhum reconhecimento será feito.
+2025-09-03 19:40:14,508 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:14,516 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:14] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:15,044 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 19:40:15,046 - INFO - Processando turma: tds
+2025-09-03 19:40:15,052 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 19:40:15,148 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:40:15,150 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:40:15,155 - INFO - SUCESSO: Banco de dados carregado com 3 usuários e 24 embeddings
+2025-09-03 19:40:15,157 - INFO - Tempo total para carregar banco: 23.18s
+2025-09-03 19:40:15,164 - INFO - Uso de memória: 716.61 MB
+2025-09-03 19:40:15,907 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:15,909 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:15,911 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3924
+2025-09-03 19:40:15,912 - INFO - Tempo total de reconhecimento: 2.14s
+2025-09-03 19:40:15,915 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:40:15,920 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:15] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:16,165 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:16,166 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:16,167 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3696
+2025-09-03 19:40:16,167 - INFO - Tempo total de reconhecimento: 1.68s
+2025-09-03 19:40:16,170 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:16,171 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:16] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:18,904 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 19:40:18,904 - INFO - Processando turma: tds
+2025-09-03 19:40:18,905 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 19:40:18,915 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:40:18,916 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:40:18,916 - INFO - SUCESSO: Banco de dados carregado com 3 usuários e 30 embeddings
+2025-09-03 19:40:18,916 - INFO - Tempo total para carregar banco: 21.83s
+2025-09-03 19:40:18,916 - INFO - Uso de memória: 696.70 MB
+2025-09-03 19:40:27,464 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:27] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:27,731 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:27] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:30,345 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:30] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:30,808 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:30] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:31,074 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:31,357 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:31] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:31,385 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:31,730 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:32,136 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:32,667 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:32] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:32,697 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:32,697 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:32,698 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3509
+2025-09-03 19:40:32,699 - INFO - Tempo total de reconhecimento: 1.31s
+2025-09-03 19:40:32,701 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:32,703 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:32] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:33,045 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:33,316 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:33,316 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:33,317 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3660
+2025-09-03 19:40:33,317 - INFO - Tempo total de reconhecimento: 1.18s
+2025-09-03 19:40:33,317 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:33,319 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:33] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:33,325 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:33,661 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:33] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:33,976 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:33] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:34,067 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:34,068 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:34,068 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3422
+2025-09-03 19:40:34,068 - INFO - Tempo total de reconhecimento: 0.74s
+2025-09-03 19:40:34,070 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:34,071 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:34] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:34,345 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:34,583 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:34,649 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:34] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:35,011 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:35,276 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:35,443 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:35,443 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:35,444 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3405
+2025-09-03 19:40:35,444 - INFO - Tempo total de reconhecimento: 0.86s
+2025-09-03 19:40:35,446 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:35,449 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:35] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:35,660 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:35] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:36,032 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:36,049 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:36,049 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:36,050 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3401
+2025-09-03 19:40:36,050 - INFO - Tempo total de reconhecimento: 0.77s
+2025-09-03 19:40:36,051 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:40:36,052 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:36] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:36,282 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:36,658 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:36] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:37,030 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:37] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:37,032 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:37,033 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:37,034 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3018
+2025-09-03 19:40:37,034 - INFO - Tempo total de reconhecimento: 0.75s
+2025-09-03 19:40:37,036 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:37,038 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:37] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:37,343 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:37,620 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:37,661 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:37] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:38,035 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:38,305 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:38,491 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:38,491 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:38,491 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3459
+2025-09-03 19:40:38,491 - INFO - Tempo total de reconhecimento: 0.87s
+2025-09-03 19:40:38,493 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:40:38,496 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:38] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:38,662 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:38] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:39,038 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:39,128 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:39,128 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:39,128 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3076
+2025-09-03 19:40:39,129 - INFO - Tempo total de reconhecimento: 0.82s
+2025-09-03 19:40:39,130 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:39,131 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:39] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:39,290 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:39,667 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:39] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:39,981 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:39] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:40,085 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:40,086 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:40,086 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3218
+2025-09-03 19:40:40,086 - INFO - Tempo total de reconhecimento: 0.80s
+2025-09-03 19:40:40,087 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:40,089 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:40] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:40,351 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:40,606 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:40,665 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:40] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:41,039 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:41,297 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:41,407 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:41,408 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:41,408 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3520
+2025-09-03 19:40:41,408 - INFO - Tempo total de reconhecimento: 0.80s
+2025-09-03 19:40:41,410 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:41,411 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:41] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:41,662 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:41] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:42,035 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:42,099 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:42,101 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:42,101 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3846
+2025-09-03 19:40:42,101 - INFO - Tempo total de reconhecimento: 0.80s
+2025-09-03 19:40:42,102 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:42,104 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:42] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:42,279 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:42,664 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:42] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:43,031 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:43,032 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:43,032 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3665
+2025-09-03 19:40:43,032 - INFO - Tempo total de reconhecimento: 0.75s
+2025-09-03 19:40:43,032 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:43,035 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:43] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:43,037 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:43] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:43,361 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:43,613 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:43] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:43,623 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:43,679 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:43,962 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:44,666 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:44] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:44,690 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:44,691 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:44,691 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3564
+2025-09-03 19:40:44,691 - INFO - Tempo total de reconhecimento: 1.07s
+2025-09-03 19:40:44,693 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:40:44,694 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:44] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:44,986 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:44,986 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:44,986 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3294
+2025-09-03 19:40:44,986 - INFO - Tempo total de reconhecimento: 1.02s
+2025-09-03 19:40:44,988 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:44,989 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:44] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:45,033 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:45,275 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:45,661 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:45] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:45,974 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:45] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:46,004 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:46,005 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:46,005 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3404
+2025-09-03 19:40:46,005 - INFO - Tempo total de reconhecimento: 0.73s
+2025-09-03 19:40:46,006 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:46,006 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:46] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:46,334 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:46,602 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:46] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:46,607 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:46,665 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:46,994 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:47,656 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:47] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:47,914 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:47,916 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:47,916 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:40:47,917 - INFO - Tempo total de reconhecimento: 1.31s
+2025-09-03 19:40:47,919 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:47,923 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:47] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:48,027 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:48,233 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:48,234 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:48,234 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3864
+2025-09-03 19:40:48,234 - INFO - Tempo total de reconhecimento: 1.24s
+2025-09-03 19:40:48,235 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:48,236 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:48] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:48,298 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:48,668 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:48] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:49,043 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:49] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:49,056 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:49,057 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:49,057 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3927
+2025-09-03 19:40:49,057 - INFO - Tempo total de reconhecimento: 0.76s
+2025-09-03 19:40:49,058 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:49,059 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:49] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:49,353 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:49,656 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:49,667 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:49] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:50,041 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:50,327 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:50,525 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:50,526 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:50,527 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:40:50,527 - INFO - Tempo total de reconhecimento: 0.87s
+2025-09-03 19:40:50,529 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:50,530 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:50] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:50,671 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:50] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:51,048 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:51,151 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:51,152 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:51,153 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3495
+2025-09-03 19:40:51,153 - INFO - Tempo total de reconhecimento: 0.83s
+2025-09-03 19:40:51,154 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:51,155 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:51] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:51,304 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:51,660 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:51] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:51,971 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:51] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:52,051 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:52,052 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:52,052 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3864
+2025-09-03 19:40:52,052 - INFO - Tempo total de reconhecimento: 0.75s
+2025-09-03 19:40:52,053 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:52,055 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:52] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:52,344 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:52,657 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:52] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:52,662 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:53,049 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:53,341 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:53,559 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:53,563 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:53,564 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:40:53,567 - INFO - Tempo total de reconhecimento: 0.91s
+2025-09-03 19:40:53,569 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:53,571 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:53] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:53,673 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:53] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:54,047 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:54,187 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:54,187 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:54,187 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:40:54,188 - INFO - Tempo total de reconhecimento: 0.85s
+2025-09-03 19:40:54,189 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:54,191 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:54] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:54,299 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:54,661 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:54] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:55,024 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:55,025 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:55,025 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3548
+2025-09-03 19:40:55,025 - INFO - Tempo total de reconhecimento: 0.73s
+2025-09-03 19:40:55,026 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:55,027 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:55] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:55,031 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:55] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:55,346 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:55,611 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:55] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:55,617 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:55,674 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:55,956 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:56,669 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:56] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:56,704 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:56,705 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:56,705 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3561
+2025-09-03 19:40:56,705 - INFO - Tempo total de reconhecimento: 1.09s
+2025-09-03 19:40:56,707 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:56,709 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:56] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:56,979 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:56,979 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:56,979 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3789
+2025-09-03 19:40:56,979 - INFO - Tempo total de reconhecimento: 1.02s
+2025-09-03 19:40:56,980 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:40:56,982 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:56] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:57,041 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:57,292 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:57,656 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:57] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:40:57,971 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:57] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:58,047 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:58,047 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:58,047 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:40:58,048 - INFO - Tempo total de reconhecimento: 0.76s
+2025-09-03 19:40:58,049 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:58,049 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:58] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:58,341 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:58,621 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:58,659 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:58] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:40:59,022 - INFO - Recebida requisição para /face-login
+2025-09-03 19:40:59,305 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:40:59,492 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:40:59,492 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:40:59,494 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:40:59,494 - INFO - Tempo total de reconhecimento: 0.87s
+2025-09-03 19:40:59,495 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:40:59,496 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:59] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:40:59,667 - INFO - 127.0.0.1 - - [03/Sep/2025 19:40:59] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:00,042 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:00,190 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:00,191 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:00,191 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:41:00,191 - INFO - Tempo total de reconhecimento: 0.89s
+2025-09-03 19:41:00,194 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:41:00,195 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:00] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:00,324 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:00,667 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:00] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:01,044 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:01] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:01,076 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:01,076 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:01,076 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:41:01,076 - INFO - Tempo total de reconhecimento: 0.75s
+2025-09-03 19:41:01,077 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:41:01,078 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:01] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:01,355 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:01,623 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:01,667 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:01] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:02,044 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:02,301 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:02,452 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:02,455 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:02,455 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3983
+2025-09-03 19:41:02,456 - INFO - Tempo total de reconhecimento: 0.83s
+2025-09-03 19:41:02,457 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:02,459 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:02] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:02,671 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:02] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:03,032 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:03,082 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:03,083 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:03,083 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3881
+2025-09-03 19:41:03,084 - INFO - Tempo total de reconhecimento: 0.78s
+2025-09-03 19:41:03,086 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:03,087 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:03] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:03,283 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:03,670 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:03] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:41:03,986 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:03] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:04,011 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:04,011 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:04,011 - INFO - Nenhum usuário reconhecido
+2025-09-03 19:41:04,012 - INFO - Tempo total de reconhecimento: 0.73s
+2025-09-03 19:41:04,013 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:41:04,014 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:04] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:04,345 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:04,610 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:04] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:04,625 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:04,673 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:04,961 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:05,661 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:05] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:05,903 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:05,904 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:05,906 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3760
+2025-09-03 19:41:05,907 - INFO - Tempo total de reconhecimento: 1.28s
+2025-09-03 19:41:05,909 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:05,912 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:05] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:06,033 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:06,236 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:06,237 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:06,237 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3661
+2025-09-03 19:41:06,237 - INFO - Tempo total de reconhecimento: 1.28s
+2025-09-03 19:41:06,238 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:06,241 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:06] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:06,313 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:06,663 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:06] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:07,051 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:07] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:07,125 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:07,126 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:07,126 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3520
+2025-09-03 19:41:07,126 - INFO - Tempo total de reconhecimento: 0.81s
+2025-09-03 19:41:07,128 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:07,128 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:07] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:07,362 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:07,650 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:07,657 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:07] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:08,033 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:08,309 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:08,632 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:08,634 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:08,636 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3976
+2025-09-03 19:41:08,636 - INFO - Tempo total de reconhecimento: 0.99s
+2025-09-03 19:41:08,639 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:08,641 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:08] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:08,661 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:08] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:09,024 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:09,277 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:09,277 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:09,277 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3838
+2025-09-03 19:41:09,277 - INFO - Tempo total de reconhecimento: 0.97s
+2025-09-03 19:41:09,278 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:09,279 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:09] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:09,289 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:09,665 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:09] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:41:09,980 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:09] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:10,149 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:10,149 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:10,151 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3777
+2025-09-03 19:41:10,151 - INFO - Tempo total de reconhecimento: 0.86s
+2025-09-03 19:41:10,152 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:10,153 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:10] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:10,345 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:10,625 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:10,673 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:10] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:11,036 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:11,312 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:11,530 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:11,534 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:11,535 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3623
+2025-09-03 19:41:11,538 - INFO - Tempo total de reconhecimento: 0.91s
+2025-09-03 19:41:11,540 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:11,543 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:11] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:11,662 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:11] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:12,038 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:12,174 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:12,175 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:12,175 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3800
+2025-09-03 19:41:12,175 - INFO - Tempo total de reconhecimento: 0.86s
+2025-09-03 19:41:12,178 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:12,180 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:12] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:12,341 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:12,659 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:12] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:13,021 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:13] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:13,056 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:13,056 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:13,056 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3601
+2025-09-03 19:41:13,056 - INFO - Tempo total de reconhecimento: 0.72s
+2025-09-03 19:41:13,057 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:13,058 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:13] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:13,332 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:13,564 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:13,660 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:13] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:14,023 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:14,285 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:14,384 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:14,385 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:14,385 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3789
+2025-09-03 19:41:14,386 - INFO - Tempo total de reconhecimento: 0.82s
+2025-09-03 19:41:14,387 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:14,388 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:14] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:14,664 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:14] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:15,036 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:15,064 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:15,065 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:15,065 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3873
+2025-09-03 19:41:15,065 - INFO - Tempo total de reconhecimento: 0.78s
+2025-09-03 19:41:15,066 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:15,068 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:15] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:15,287 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:15,661 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:15] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:41:15,974 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:15] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:16,019 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:16,021 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:16,021 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3304
+2025-09-03 19:41:16,021 - INFO - Tempo total de reconhecimento: 0.74s
+2025-09-03 19:41:16,023 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:16,025 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:16] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:16,358 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:16,607 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:16] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:16,621 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:16,667 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:16,933 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:17,672 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:17] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:17,882 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:17,884 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:17,886 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3777
+2025-09-03 19:41:17,886 - INFO - Tempo total de reconhecimento: 1.26s
+2025-09-03 19:41:17,888 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:17,891 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:17] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:18,040 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:18,053 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:18,053 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:18,055 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3650
+2025-09-03 19:41:18,055 - INFO - Tempo total de reconhecimento: 1.12s
+2025-09-03 19:41:18,056 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:18,057 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:18] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:18,295 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:18,666 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:18] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:19,043 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:19] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:19,049 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:19,049 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:19,049 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3711
+2025-09-03 19:41:19,049 - INFO - Tempo total de reconhecimento: 0.75s
+2025-09-03 19:41:19,051 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:19,052 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:19] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:19,354 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:19,642 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:20,333 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:20,333 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:20,334 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3584
+2025-09-03 19:41:20,334 - INFO - Tempo total de reconhecimento: 0.69s
+2025-09-03 19:41:20,334 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:20,335 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:20] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:27,954 - INFO - Mudança detectada no banco de dados. Recarregando...
+2025-09-03 19:41:27,955 - INFO - Cache de embeddings limpo
+2025-09-03 19:41:27,956 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 19:41:27,957 - INFO - Processando turma: 3tds
+2025-09-03 19:41:27,957 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 19:41:27,957 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 19:41:27,957 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 19:41:30,679 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:30] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:41:30,926 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:30] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:33,524 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:33] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:33,909 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:33] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:34,174 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:34,415 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:34,433 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 19:41:34,433 - INFO - Processando turma: tds
+2025-09-03 19:41:34,434 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 19:41:34,451 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:41:34,451 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:41:34,451 - INFO - SUCESSO: Banco de dados carregado com 2 usuários e 20 embeddings
+2025-09-03 19:41:34,452 - INFO - Tempo total para carregar banco: 6.50s
+2025-09-03 19:41:34,452 - INFO - Uso de memória: 711.80 MB
+2025-09-03 19:41:34,506 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:34] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:34,892 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:35,276 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:35,324 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:35,324 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:35,326 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3615
+2025-09-03 19:41:35,327 - INFO - Tempo total de reconhecimento: 0.91s
+2025-09-03 19:41:35,328 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:35,330 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:35] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:35,817 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:35] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:36,113 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:36,113 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:36,113 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3626
+2025-09-03 19:41:36,113 - INFO - Tempo total de reconhecimento: 0.84s
+2025-09-03 19:41:36,114 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:36,115 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:36] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:36,189 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:36,434 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:36,822 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:36] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:41:37,139 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:37] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:37,189 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:37,189 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:37,190 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3578
+2025-09-03 19:41:37,190 - INFO - Tempo total de reconhecimento: 0.76s
+2025-09-03 19:41:37,191 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:37,193 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:37] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:37,507 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:37,776 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:37] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:37,808 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:37,836 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:38,118 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:38,812 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:38] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:38,871 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:38,873 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:38,874 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3464
+2025-09-03 19:41:38,875 - INFO - Tempo total de reconhecimento: 1.07s
+2025-09-03 19:41:38,876 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:38,879 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:38] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:39,144 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:39,145 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:39,145 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3603
+2025-09-03 19:41:39,145 - INFO - Tempo total de reconhecimento: 1.03s
+2025-09-03 19:41:39,146 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:39,146 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:39] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:39,181 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:39,416 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:39,828 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:39] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:40,152 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:40,153 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:40,153 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3369
+2025-09-03 19:41:40,155 - INFO - Tempo total de reconhecimento: 0.74s
+2025-09-03 19:41:40,156 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:40,157 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:40] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:40,200 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:40] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:40,511 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:40,781 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:40] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:40,812 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:40,839 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:41,115 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:41,815 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:41] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:41,903 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:41,907 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:41,908 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3451
+2025-09-03 19:41:41,909 - INFO - Tempo total de reconhecimento: 1.10s
+2025-09-03 19:41:41,911 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:41,913 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:41] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:42,130 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:42,131 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:42,131 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3566
+2025-09-03 19:41:42,131 - INFO - Tempo total de reconhecimento: 1.02s
+2025-09-03 19:41:42,132 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:42,133 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:42] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:42,183 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:42,417 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:42,827 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:42] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:41:43,114 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:43,114 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:43,114 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3509
+2025-09-03 19:41:43,114 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:41:43,115 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:43,116 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:43] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:43,138 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:43] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:43,494 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:43,742 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:43,761 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:43] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:43,819 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:44,080 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:44,805 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:44,808 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:44,811 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:44] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:44,812 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3431
+2025-09-03 19:41:44,814 - INFO - Tempo total de reconhecimento: 1.07s
+2025-09-03 19:41:44,815 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:44,817 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:44] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:45,077 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:45,077 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:45,077 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3248
+2025-09-03 19:41:45,079 - INFO - Tempo total de reconhecimento: 1.00s
+2025-09-03 19:41:45,079 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:45,080 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:45] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:45,180 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:45,417 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:45,826 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:45] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:46,145 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:46,145 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:46,146 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3401
+2025-09-03 19:41:46,146 - INFO - Tempo total de reconhecimento: 0.73s
+2025-09-03 19:41:46,147 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:46,147 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:46] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:46,201 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:46] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:46,510 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:46,778 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:46] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:46,811 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:46,845 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:47,132 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:47,818 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:47] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:47,982 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:47,985 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:47,986 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3474
+2025-09-03 19:41:47,987 - INFO - Tempo total de reconhecimento: 1.18s
+2025-09-03 19:41:47,990 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:47,993 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:47] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:48,187 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:48,218 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:48,218 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:48,218 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3604
+2025-09-03 19:41:48,218 - INFO - Tempo total de reconhecimento: 1.09s
+2025-09-03 19:41:48,219 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:48,222 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:48] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:48,448 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:48,813 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:48] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:41:49,127 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:49] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:41:49,182 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:49,182 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:49,182 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3532
+2025-09-03 19:41:49,183 - INFO - Tempo total de reconhecimento: 0.73s
+2025-09-03 19:41:49,184 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:41:49,184 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:49] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:49,492 - INFO - Recebida requisição para /face-login
+2025-09-03 19:41:49,791 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:41:50,590 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:41:50,590 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:41:50,590 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3702
+2025-09-03 19:41:50,592 - INFO - Tempo total de reconhecimento: 0.80s
+2025-09-03 19:41:50,593 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:41:50,594 - INFO - 127.0.0.1 - - [03/Sep/2025 19:41:50] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:41:57,445 - INFO - Monitoramento do banco de dados parado
+2025-09-03 19:41:57,445 - INFO - Sistema de reconhecimento facial finalizado
+2025-09-03 19:42:38,567 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 19:42:38,569 - INFO - Processando turma: 3tds
+2025-09-03 19:42:38,569 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 19:42:38,569 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 19:42:38,569 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 19:42:52,979 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 19:42:52,979 - INFO - Processando turma: tds
+2025-09-03 19:42:52,980 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 19:42:52,989 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:42:52,990 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:42:52,990 - INFO - SUCESSO: Banco de dados carregado com 2 usuários e 20 embeddings
+2025-09-03 19:42:52,990 - INFO - Tempo total para carregar banco: 14.42s
+2025-09-03 19:42:52,990 - INFO - Uso de memória: 459.44 MB
+2025-09-03 19:42:52,992 - INFO - Cache de embeddings atualizado.
+2025-09-03 19:42:52,995 - INFO - Monitoramento do banco de dados iniciado em: C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-09-03 19:42:52,996 - INFO - Cache de embeddings limpo
+2025-09-03 19:42:52,996 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 19:42:52,997 - INFO - Processando turma: 3tds
+2025-09-03 19:42:52,997 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 19:42:52,997 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 19:42:52,997 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 19:42:59,135 - INFO - Usuário Davi Mazoti: 10 amostras carregadas
+2025-09-03 19:42:59,135 - INFO - Processando turma: tds
+2025-09-03 19:42:59,136 - INFO - Processando usuário: Alexandre Santos em tds
+2025-09-03 19:42:59,146 - INFO - Encontrados 10 embeddings em arquivos .npy para Alexandre Santos
+2025-09-03 19:42:59,146 - INFO - Usuário Alexandre Santos: 10 amostras carregadas
+2025-09-03 19:42:59,146 - INFO - SUCESSO: Banco de dados carregado com 2 usuários e 20 embeddings
+2025-09-03 19:42:59,146 - INFO - Tempo total para carregar banco: 6.15s
+2025-09-03 19:42:59,146 - INFO - Uso de memória: 461.64 MB
+2025-09-03 19:42:59,147 - INFO - Servidor de reconhecimento facial pronto para aceitar conexões.
+2025-09-03 19:42:59,147 - INFO - Monitoramento do banco de dados ativado - o sistema atualizará automaticamente.
+2025-09-03 19:42:59,168 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5005
+ * Running on http://172.28.173.70:5005
+2025-09-03 19:42:59,168 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-03 19:43:13,175 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:13] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:43:13,441 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:13] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:16,102 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:16] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:16,515 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:16] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:16,789 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:17,099 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:17] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:17,135 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:17,478 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:17,734 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:18,047 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:18,050 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:18,051 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3827
+2025-09-03 19:43:18,053 - INFO - Tempo total de reconhecimento: 0.92s
+2025-09-03 19:43:18,056 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:18,058 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:18] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:18,415 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:18] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:18,552 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:18,553 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:18,553 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3430
+2025-09-03 19:43:18,553 - INFO - Tempo total de reconhecimento: 0.82s
+2025-09-03 19:43:18,554 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:18,555 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:18] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:18,774 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:19,077 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:19,419 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:19] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:43:19,747 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:19] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:19,782 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:19,782 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:19,782 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3383
+2025-09-03 19:43:19,783 - INFO - Tempo total de reconhecimento: 0.71s
+2025-09-03 19:43:19,783 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:19,784 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:19] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:20,119 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:20,385 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:20] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:20,399 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:20,446 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:20,710 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:21,408 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:21] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:21,489 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:21,490 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:21,491 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3634
+2025-09-03 19:43:21,491 - INFO - Tempo total de reconhecimento: 1.09s
+2025-09-03 19:43:21,492 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:21,496 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:21] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:21,743 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:21,744 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:21,744 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3543
+2025-09-03 19:43:21,744 - INFO - Tempo total de reconhecimento: 1.04s
+2025-09-03 19:43:21,745 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:21,746 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:21] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:21,780 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:22,016 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:22,423 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:22] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:22,734 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:22,736 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:22,736 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3355
+2025-09-03 19:43:22,736 - INFO - Tempo total de reconhecimento: 0.72s
+2025-09-03 19:43:22,737 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:22,737 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:22] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:22,801 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:22] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:23,113 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:23,381 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:23] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:23,390 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:23,441 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:23,704 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:24,414 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:24] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:24,497 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:24,498 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:24,500 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3425
+2025-09-03 19:43:24,500 - INFO - Tempo total de reconhecimento: 1.11s
+2025-09-03 19:43:24,502 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:24,504 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:24] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:24,729 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:24,730 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:24,730 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3444
+2025-09-03 19:43:24,730 - INFO - Tempo total de reconhecimento: 1.03s
+2025-09-03 19:43:24,731 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:24,732 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:24] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:24,785 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:25,018 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:25,427 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:25] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:43:25,708 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:25,708 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:25,708 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3572
+2025-09-03 19:43:25,708 - INFO - Tempo total de reconhecimento: 0.69s
+2025-09-03 19:43:25,710 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:25,710 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:25] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:25,741 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:25] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:26,103 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:26,369 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:26] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:26,375 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:26,432 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:26,685 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:27,424 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:27] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:27,439 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:27,440 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:27,441 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3181
+2025-09-03 19:43:27,441 - INFO - Tempo total de reconhecimento: 1.07s
+2025-09-03 19:43:27,444 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:27,446 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:27] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:27,715 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:27,715 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:27,715 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3374
+2025-09-03 19:43:27,716 - INFO - Tempo total de reconhecimento: 1.03s
+2025-09-03 19:43:27,716 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:27,717 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:27] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:27,790 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:28,026 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:28,419 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:28] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:28,736 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:28,737 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:28,737 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3266
+2025-09-03 19:43:28,737 - INFO - Tempo total de reconhecimento: 0.71s
+2025-09-03 19:43:28,738 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:28,740 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:28] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:28,793 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:28] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:29,107 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:29,370 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:29] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:29,396 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:29,433 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:29,702 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:30,421 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:30] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:30,489 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:30,489 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:30,491 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3407
+2025-09-03 19:43:30,492 - INFO - Tempo total de reconhecimento: 1.10s
+2025-09-03 19:43:30,494 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:30,496 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:30] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:30,735 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:30,736 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:30,736 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3412
+2025-09-03 19:43:30,736 - INFO - Tempo total de reconhecimento: 1.04s
+2025-09-03 19:43:30,737 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:30,737 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:30] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:30,795 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:31,045 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:31,422 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:31] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:43:31,735 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:31] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:31,809 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:31,810 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:31,810 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3325
+2025-09-03 19:43:31,810 - INFO - Tempo total de reconhecimento: 0.76s
+2025-09-03 19:43:31,811 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:31,812 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:31] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:32,095 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:32,363 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:32,424 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:32] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:32,780 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:33,036 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:33,185 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:33,186 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:33,187 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3566
+2025-09-03 19:43:33,187 - INFO - Tempo total de reconhecimento: 0.82s
+2025-09-03 19:43:33,189 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:33,191 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:33] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:33,408 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:33] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:33,782 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:33,790 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:33,790 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:33,790 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3307
+2025-09-03 19:43:33,790 - INFO - Tempo total de reconhecimento: 0.75s
+2025-09-03 19:43:33,791 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:43:33,793 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:33] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:34,025 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:34,423 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:34] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:34,734 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:34,735 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:34,735 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3425
+2025-09-03 19:43:34,735 - INFO - Tempo total de reconhecimento: 0.71s
+2025-09-03 19:43:34,736 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:34,737 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:34] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:34,788 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:34] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:35,106 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:35,378 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:35] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:35,389 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:35,439 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:35,709 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:36,415 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:36] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:36,484 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:36,486 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:36,487 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3240
+2025-09-03 19:43:36,490 - INFO - Tempo total de reconhecimento: 1.10s
+2025-09-03 19:43:36,491 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:36,494 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:36] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:36,753 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:36,753 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:36,754 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.2568
+2025-09-03 19:43:36,754 - INFO - Tempo total de reconhecimento: 1.04s
+2025-09-03 19:43:36,755 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:36,756 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:36] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:36,782 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:37,009 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:37,425 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:37] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:43:37,718 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:37,719 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:37,719 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3204
+2025-09-03 19:43:37,719 - INFO - Tempo total de reconhecimento: 0.71s
+2025-09-03 19:43:37,719 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:37,721 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:37] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:37,733 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:37] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:38,092 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:38,349 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:38,358 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:38] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:38,418 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:38,685 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:39,406 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:39,410 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:39,411 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:39] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:39,411 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.2838
+2025-09-03 19:43:39,415 - INFO - Tempo total de reconhecimento: 1.07s
+2025-09-03 19:43:39,416 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:39,418 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:39] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:39,691 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:39,692 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:39,692 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3264
+2025-09-03 19:43:39,692 - INFO - Tempo total de reconhecimento: 1.01s
+2025-09-03 19:43:39,693 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:39,696 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:39] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:39,782 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:40,013 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:40,426 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:40] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:43:40,725 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:40,726 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:40,726 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3057
+2025-09-03 19:43:40,726 - INFO - Tempo total de reconhecimento: 0.71s
+2025-09-03 19:43:40,727 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:40,727 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:40] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:40,799 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:40] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:43:41,108 - INFO - Recebida requisição para /face-login
+2025-09-03 19:43:41,356 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:43:42,083 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:43:42,083 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:43:42,084 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3204
+2025-09-03 19:43:42,084 - INFO - Tempo total de reconhecimento: 0.73s
+2025-09-03 19:43:42,085 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:43:42,086 - INFO - 127.0.0.1 - - [03/Sep/2025 19:43:42] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:15,362 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:15] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:44:15,681 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:15] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:18,221 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:18] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:18,626 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:18] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:18,874 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:19,167 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:19,218 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:19] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:19,594 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:19,834 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:19,924 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:19,925 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:19,925 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3447
+2025-09-03 19:44:19,925 - INFO - Tempo total de reconhecimento: 0.76s
+2025-09-03 19:44:19,926 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:19,927 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:19] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:20,514 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:20] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:20,546 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:20,547 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:20,547 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3530
+2025-09-03 19:44:20,547 - INFO - Tempo total de reconhecimento: 0.71s
+2025-09-03 19:44:20,548 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:20,549 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:20] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:20,886 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:21,144 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:21,215 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:21] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:44:21,545 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:21] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:21,825 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:21,825 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:21,825 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3439
+2025-09-03 19:44:21,826 - INFO - Tempo total de reconhecimento: 0.68s
+2025-09-03 19:44:21,826 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:21,827 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:21] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:21,917 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:22,144 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:22,515 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:22] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:22,848 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:22,848 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:22,849 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3334
+2025-09-03 19:44:22,849 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:44:22,849 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:22,850 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:22] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:22,875 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:23,098 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:23,518 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:23] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:23,788 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:23,789 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:23,789 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3640
+2025-09-03 19:44:23,789 - INFO - Tempo total de reconhecimento: 0.69s
+2025-09-03 19:44:23,791 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:23,791 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:23] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:23,891 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:24,123 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:24,515 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:24] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:24,817 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:24,817 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:24,818 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3362
+2025-09-03 19:44:24,818 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:44:24,819 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:24,820 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:24] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:24,888 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:24] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:25,197 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:25,473 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:25] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:25,530 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:25,535 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:25,615 - ERROR - ERRO: Erro no reconhecimento: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+2025-09-03 19:44:25,621 - ERROR - Traceback (most recent call last):
+  File "C:\Users\Alexandre Santos\Desktop\Arduino\back_end\FaceId\Reconhecimento_facial\face_recognition_logic.py", line 331, in recognize_face_from_array
+    result = DeepFace.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\DeepFace.py", line 450, in represent
+    return representation.represent(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\representation.py", line 92, in represent
+    img_objs = detection.extract_faces(
+  File "C:\Users\Alexandre Santos\miniconda3\envs\back_end\lib\site-packages\deepface\modules\detection.py", line 128, in extract_faces
+    raise ValueError(
+ValueError: Face could not be detected in numpy array.Please confirm that the picture is a face photo or consider to set enforce_detection param to False.
+
+2025-09-03 19:44:25,624 - INFO - Login processado com sucesso. Resultado: Usuário não reconhecido. Faça o cadastro.
+2025-09-03 19:44:25,625 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:25] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:25,805 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:26,489 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:26,490 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:26,490 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3439
+2025-09-03 19:44:26,490 - INFO - Tempo total de reconhecimento: 0.69s
+2025-09-03 19:44:26,491 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:26,492 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:26] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:26,522 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:26] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:26,879 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:27,126 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:27,212 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:27] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:44:27,527 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:27] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:27,809 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:27,809 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:27,809 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3486
+2025-09-03 19:44:27,810 - INFO - Tempo total de reconhecimento: 0.68s
+2025-09-03 19:44:27,810 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:27,811 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:27] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:27,883 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:28,110 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:28,523 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:28] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:28,804 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:28,804 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:28,804 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3374
+2025-09-03 19:44:28,805 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:44:28,806 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:28,806 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:28] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:28,893 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:29,143 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:29,519 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:29] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:29,826 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:29,827 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:29,827 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3203
+2025-09-03 19:44:29,827 - INFO - Tempo total de reconhecimento: 0.68s
+2025-09-03 19:44:29,829 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:29,829 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:29] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:29,876 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:30,100 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:30,522 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:30] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:30,792 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:30,793 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:30,793 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3331
+2025-09-03 19:44:30,793 - INFO - Tempo total de reconhecimento: 0.69s
+2025-09-03 19:44:30,794 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:30,794 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:30] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:30,893 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:30] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:31,205 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:31,456 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:31,472 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:31] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:31,532 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:31,796 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:32,519 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:32] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:32,648 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:32,651 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:32,652 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3330
+2025-09-03 19:44:32,652 - INFO - Tempo total de reconhecimento: 1.20s
+2025-09-03 19:44:32,654 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:32,657 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:32] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:32,889 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:32,895 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:32,896 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:32,896 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3472
+2025-09-03 19:44:32,896 - INFO - Tempo total de reconhecimento: 1.10s
+2025-09-03 19:44:32,897 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:32,898 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:32] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:33,106 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:33,517 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:33] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:44:33,792 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:33,792 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:33,792 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3419
+2025-09-03 19:44:33,792 - INFO - Tempo total de reconhecimento: 0.69s
+2025-09-03 19:44:33,793 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:33,794 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:33] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:33,829 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:33] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:34,186 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:34,427 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:34,459 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:34] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:34,519 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:34,763 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:35,483 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:35,487 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:35,487 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3324
+2025-09-03 19:44:35,488 - INFO - Tempo total de reconhecimento: 1.06s
+2025-09-03 19:44:35,491 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:35,492 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:35] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:35,520 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:35] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:35,762 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:35,762 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:35,762 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3482
+2025-09-03 19:44:35,762 - INFO - Tempo total de reconhecimento: 1.00s
+2025-09-03 19:44:35,763 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:35,764 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:35] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:35,893 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:36,124 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:36,533 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:36] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:36,824 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:36,824 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:36,824 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3325
+2025-09-03 19:44:36,825 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:44:36,826 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:36,826 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:36] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:36,901 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:36] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:37,212 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:37,452 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:37,488 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:37] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:37,552 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:37,795 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:38,503 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:38,504 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:38,505 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3424
+2025-09-03 19:44:38,505 - INFO - Tempo total de reconhecimento: 1.05s
+2025-09-03 19:44:38,506 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:38,509 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:38] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:38,514 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:38] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:38,784 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:38,785 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:38,785 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3721
+2025-09-03 19:44:38,785 - INFO - Tempo total de reconhecimento: 0.99s
+2025-09-03 19:44:38,786 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:38,787 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:38] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:38,882 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:39,100 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:39,524 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:39] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:44:39,791 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:39,791 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:39,791 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3330
+2025-09-03 19:44:39,791 - INFO - Tempo total de reconhecimento: 0.69s
+2025-09-03 19:44:39,793 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:39,794 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:39] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:39,834 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:39] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:40,193 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:40,448 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:40,462 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:40] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:40,527 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:40,769 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:41,517 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:41] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:41,533 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:41,534 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:41,536 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3605
+2025-09-03 19:44:41,537 - INFO - Tempo total de reconhecimento: 1.09s
+2025-09-03 19:44:41,539 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:41,541 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:41] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:41,768 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:41,769 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:41,769 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3438
+2025-09-03 19:44:41,769 - INFO - Tempo total de reconhecimento: 1.00s
+2025-09-03 19:44:41,771 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:41,772 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:41] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:41,891 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:42,138 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:42,532 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:42] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:42,831 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:42,831 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:42,831 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3428
+2025-09-03 19:44:42,831 - INFO - Tempo total de reconhecimento: 0.69s
+2025-09-03 19:44:42,832 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:42,833 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:42] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:42,909 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:42] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:43,219 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:43,459 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:43,496 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:43] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:43,551 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:43,792 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:44,515 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:44,518 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:44] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:44,521 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:44,523 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3353
+2025-09-03 19:44:44,523 - INFO - Tempo total de reconhecimento: 1.06s
+2025-09-03 19:44:44,526 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:44,529 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:44] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:44,776 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:44,777 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:44,777 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3545
+2025-09-03 19:44:44,777 - INFO - Tempo total de reconhecimento: 0.99s
+2025-09-03 19:44:44,778 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:44,779 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:44] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:44,890 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:45,114 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:45,531 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:45] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:44:45,793 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:45,793 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:45,793 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3985
+2025-09-03 19:44:45,794 - INFO - Tempo total de reconhecimento: 0.68s
+2025-09-03 19:44:45,794 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:45,795 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:45] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:45,853 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:45] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:46,212 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:46,491 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:46] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:46,503 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:46,552 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:46,805 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:47,525 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:47] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:47,604 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:47,605 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:47,605 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3473
+2025-09-03 19:44:47,606 - INFO - Tempo total de reconhecimento: 1.10s
+2025-09-03 19:44:47,609 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:47,610 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:47] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:47,829 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:47,829 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:47,829 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3374
+2025-09-03 19:44:47,831 - INFO - Tempo total de reconhecimento: 1.03s
+2025-09-03 19:44:47,832 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:47,832 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:47] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:47,897 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:48,120 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:48,526 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:48] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:48,819 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:48,819 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:48,819 - INFO - Usuário reconhecido: Davi Mazoti com distância 0.3582
+2025-09-03 19:44:48,819 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:44:48,821 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Davi Mazoti!
+2025-09-03 19:44:48,821 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:48] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:48,898 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:48] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:49,205 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:49,448 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:49,486 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:49] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:49,549 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:49,789 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:50,466 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:50,467 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:50,467 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3794
+2025-09-03 19:44:50,469 - INFO - Tempo total de reconhecimento: 1.02s
+2025-09-03 19:44:50,470 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:50,471 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:50] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:50,511 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:50] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:50,749 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:50,749 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:50,749 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3533
+2025-09-03 19:44:50,749 - INFO - Tempo total de reconhecimento: 0.96s
+2025-09-03 19:44:50,750 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:50,751 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:50] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:50,874 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:51,099 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:51,519 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:51] "OPTIONS /health HTTP/1.1" 200 -
+2025-09-03 19:44:51,793 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:51,794 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:51,794 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3392
+2025-09-03 19:44:51,794 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:44:51,796 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:51,796 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:51] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:51,828 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:51] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:52,206 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:52,457 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:52,466 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:52] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:52,534 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:52,777 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:53,480 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:53,482 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:53,482 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3150
+2025-09-03 19:44:53,483 - INFO - Tempo total de reconhecimento: 1.03s
+2025-09-03 19:44:53,485 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:53,487 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:53] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:53,517 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:53] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:53,757 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:53,758 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:53,758 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3211
+2025-09-03 19:44:53,758 - INFO - Tempo total de reconhecimento: 0.98s
+2025-09-03 19:44:53,759 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:53,760 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:53] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:53,891 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:54,120 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:54,535 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:54] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:54,823 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:54,823 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:54,823 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3583
+2025-09-03 19:44:54,823 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:44:54,825 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:54,826 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:54] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:54,909 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:54] "OPTIONS /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:55,221 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:55,489 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:55] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:55,532 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:55,553 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:55,815 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:56,525 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:56] "GET /health HTTP/1.1" 200 -
+2025-09-03 19:44:56,646 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:56,646 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:56,648 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3564
+2025-09-03 19:44:56,648 - INFO - Tempo total de reconhecimento: 1.12s
+2025-09-03 19:44:56,650 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:56,650 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:56] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:56,850 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:56,850 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:56,850 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3201
+2025-09-03 19:44:56,851 - INFO - Tempo total de reconhecimento: 1.04s
+2025-09-03 19:44:56,852 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:56,852 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:56] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:44:56,890 - INFO - Recebida requisição para /face-login
+2025-09-03 19:44:57,115 - INFO - Iniciando reconhecimento facial com Facenet...
+2025-09-03 19:44:57,809 - INFO - Comparando com 2 usuários no banco...
+2025-09-03 19:44:57,809 - INFO - Tempo de comparação: 0.00s
+2025-09-03 19:44:57,810 - INFO - Usuário reconhecido: Alexandre Santos com distância 0.3248
+2025-09-03 19:44:57,810 - INFO - Tempo total de reconhecimento: 0.70s
+2025-09-03 19:44:57,810 - INFO - Login processado com sucesso. Resultado: Bem-vindo, Alexandre Santos!
+2025-09-03 19:44:57,812 - INFO - 127.0.0.1 - - [03/Sep/2025 19:44:57] "POST /face-login HTTP/1.1" 200 -
+2025-09-03 19:45:17,220 - INFO - Monitoramento do banco de dados parado
+2025-09-03 19:45:17,221 - INFO - Sistema de reconhecimento facial finalizado

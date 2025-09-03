@@ -202,7 +202,7 @@ function iniciarReconhecimentoFacial() {
                    
                     // Redirecionar após 1 segundo
                     setTimeout(() => {
-                        window.location.href = "../MenuAluno/Menu.html";
+                        window.location.href = "../MenuProf/Menu.html";
                     }, 1000);
                 }
             } else if (resultado && !resultado.authenticated) {

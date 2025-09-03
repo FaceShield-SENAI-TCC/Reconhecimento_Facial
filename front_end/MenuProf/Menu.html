@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema do Professor</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="JS/menuJS.js"></script>
+    <link rel="stylesheet" href="CSS/Menu.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>Sistema do Professor</h1>
+    </div>
+
+    <div class="menu-container">
+      <!-- Alunos -->
+      <div
+        class="menu-card"
+        id="alunos"
+        onclick="window.location.href='../ListaAluno/ListUsuário.html'"
+      >
+        <h2>Usuários</h2>
+        <p>Visualizar Usuários</p>
+      </div>
+
+      <!-- Empréstimos -->
+      <div
+        class="menu-card"
+        id="emprestimos"
+        onclick="window.location.href='../VerEmprestimo/Emprestimos.html'"
+      >
+        <h2>Empréstimos</h2>
+        <p>Histórico de itens emprestados</p>
+      </div>
+
+      <!-- Ferramentas -->
+      <div
+        class="menu-card"
+        id="ferramentas"
+        onclick="window.location.href='../ListaFerramentas/ListaFerramentas.html'"
+      >
+        <h2>Ferramentas</h2>
+        <p>Visualizar ferramentas cadastradas</p>
+      </div>
+
+      <!-- Locais -->
+      <div
+        class="menu-card"
+        id="locais"
+        onclick="window.location.href='../Locais/local.html'"
+      >
+        <h2>Locais</h2>
+        <p>Áreas cadastradas</p>
+      </div>
+
+      <!-- Novo Empréstimo -->
+      <div
+        class="menu-card"
+        id="novo-emprestimo"
+        onclick="window.location.href='#'"
+      >
+        <h2>Fazer Empréstimo</h2>
+        <p>Registrar empréstimo do professor</p>
+      </div>
+    </div>
+
+    <a href="../index.html" class="logout-btn" id="logout">Sair</a>
+  </body>
+</html>
