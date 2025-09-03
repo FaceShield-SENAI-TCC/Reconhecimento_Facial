@@ -17,7 +17,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 
 # ====================== CONFIGURAÇÕES ======================
-CAPTURE_BASE_DIR = "C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
+CAPTURE_BASE_DIR = "C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
 os.makedirs(CAPTURE_BASE_DIR, exist_ok=True)
 
 MIN_PHOTOS_REQUIRED = 10

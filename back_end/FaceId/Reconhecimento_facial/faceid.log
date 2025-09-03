@@ -22258,3 +22258,33 @@ ValueError: shapes (4096,) and (128,) not aligned: 4096 (dim 0) != 128 (dim 0)
 2025-08-31 20:39:10,911 - INFO - 127.0.0.1 - - [31/Aug/2025 20:39:10] "POST /face-login HTTP/1.1" 200 -
 2025-08-31 20:58:34,493 - INFO - Monitoramento do banco de dados parado
 2025-08-31 20:58:34,493 - INFO - Sistema de reconhecimento facial finalizado
+2025-09-03 14:15:34,291 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:15:34,292 - ERROR - Diretório do banco de dados não existe: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-09-03 14:15:34,293 - ERROR - Diretório de monitoramento não existe: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-09-03 14:15:34,294 - ERROR - Falha ao iniciar monitoramento do banco de dados: [WinError 5] Acesso negado: 'C:/Users/WBS'
+2025-09-03 14:15:34,294 - ERROR - Falha na inicialização. Não foi possível iniciar o servidor.
+2025-09-03 14:15:34,294 - INFO - Sistema de reconhecimento facial finalizado
+2025-09-03 14:16:06,234 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:16:06,234 - ERROR - Diretório do banco de dados não existe: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-09-03 14:16:06,235 - ERROR - Diretório de monitoramento não existe: C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces
+2025-09-03 14:16:06,236 - ERROR - Falha ao iniciar monitoramento do banco de dados: [WinError 5] Acesso negado: 'C:/Users/WBS'
+2025-09-03 14:16:06,236 - ERROR - Falha na inicialização. Não foi possível iniciar o servidor.
+2025-09-03 14:16:06,236 - INFO - Sistema de reconhecimento facial finalizado
+2025-09-03 14:16:36,376 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:16:36,378 - INFO - Processando turma: 3tds
+2025-09-03 14:16:36,379 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 14:16:36,379 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 14:16:36,380 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 14:16:51,089 - ERROR - Erro ao obter embedding para C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces\3tds\davi_mazoti\davi_mazoti_1.jpg: ⛓️‍💥 An exception occurred while downloading facenet_weights.h5 from https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5. Consider downloading it manually to C:\Users\Alexandre Santos\.deepface\weights\facenet_weights.h5.
+2025-09-03 14:17:05,245 - ERROR - Erro ao obter embedding para C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces\3tds\davi_mazoti\davi_mazoti_10.jpg: ⛓️‍💥 An exception occurred while downloading facenet_weights.h5 from https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5. Consider downloading it manually to C:\Users\Alexandre Santos\.deepface\weights\facenet_weights.h5.
+2025-09-03 14:17:13,381 - INFO - Sistema de reconhecimento facial finalizado
+2025-09-03 14:18:06,347 - INFO - Iniciando carregamento do banco de dados facial...
+2025-09-03 14:18:06,347 - INFO - Processando turma: 3tds
+2025-09-03 14:18:06,348 - INFO - Processando usuário: Davi Mazoti em 3tds
+2025-09-03 14:18:06,348 - INFO - Encontrados 0 embeddings em arquivos .npy para Davi Mazoti
+2025-09-03 14:18:06,349 - INFO - Nenhum arquivo .npy encontrado para Davi Mazoti. Gerando embeddings das imagens...
+2025-09-03 14:18:20,044 - ERROR - Erro ao obter embedding para C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces\3tds\davi_mazoti\davi_mazoti_1.jpg: ⛓️‍💥 An exception occurred while downloading facenet_weights.h5 from https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5. Consider downloading it manually to C:\Users\Alexandre Santos\.deepface\weights\facenet_weights.h5.
+2025-09-03 14:18:33,497 - ERROR - Erro ao obter embedding para C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces\3tds\davi_mazoti\davi_mazoti_10.jpg: ⛓️‍💥 An exception occurred while downloading facenet_weights.h5 from https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5. Consider downloading it manually to C:\Users\Alexandre Santos\.deepface\weights\facenet_weights.h5.
+2025-09-03 14:18:46,847 - ERROR - Erro ao obter embedding para C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces\3tds\davi_mazoti\davi_mazoti_2.jpg: ⛓️‍💥 An exception occurred while downloading facenet_weights.h5 from https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5. Consider downloading it manually to C:\Users\Alexandre Santos\.deepface\weights\facenet_weights.h5.
+2025-09-03 14:19:00,919 - ERROR - Erro ao obter embedding para C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces\3tds\davi_mazoti\davi_mazoti_3.jpg: ⛓️‍💥 An exception occurred while downloading facenet_weights.h5 from https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5. Consider downloading it manually to C:\Users\Alexandre Santos\.deepface\weights\facenet_weights.h5.
+2025-09-03 14:19:04,516 - INFO - Sistema de reconhecimento facial finalizado

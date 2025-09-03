@@ -90,7 +90,7 @@ def monitor_status():
     status = {
         "monitor_active": db_observer is not None and db_observer.is_alive(),
         "last_update": last_db_update,
-        "database_dir": "C:/Users/WBS/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
+        "database_dir": "C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
     }
 
     return jsonify(status), 200
