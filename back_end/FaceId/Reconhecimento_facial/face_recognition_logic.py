@@ -31,7 +31,7 @@ DISTANCE_THRESHOLD = 0.40  # Threshold otimizado para Facenet
 MIN_FACE_SIZE = (100, 100)
 EMBEDDINGS_CACHE = os.path.join(BASE_DIR, "embeddings_cache.pkl")
 CACHE_VALIDITY_HOURS = 24  # Cache válido por 24 horas
-RELOAD_COOLDOWN = 5  # Tempo mínimo entre recarregamentos (segundos)
+RELOAD_COOLDOWN = 3  # Tempo mínimo entre recarregamentos (segundos)
 
 # Configurar logging
 logging.basicConfig(
