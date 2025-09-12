@@ -1,2 +1,2 @@
-# Arduino
-Repositório para a configuração do Arduino
+# Reconhecimento Facial      
+Repositório para o Reconhecimento facial
