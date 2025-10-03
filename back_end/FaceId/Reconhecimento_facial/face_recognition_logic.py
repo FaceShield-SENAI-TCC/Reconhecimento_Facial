@@ -23,7 +23,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # ====================== CONFIGURAÇÕES ======================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE_DIR = "C:/Users/Alexandre Santos/Desktop/Arduino/back_end/FaceId/Cadastro/Faces"
+DATABASE_DIR = "../Cadastro/Faces"
 
 # Usar Facenet em ambos os sistemas para compatibilidade total
 MODEL_NAME = "Facenet"
