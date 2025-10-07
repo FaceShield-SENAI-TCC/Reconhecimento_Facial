@@ -1,425 +1,453 @@
 import cv2
 import os
 import time
-import re
-import numpy as np
-from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor
 import logging
-import urllib.request
-import shutil
+import numpy as np
 import base64
+import re
+import psycopg2
+from psycopg2.extras import Json
 from deepface import DeepFace
-from pathlib import Path
+from contextlib import contextmanager
 
-# ====================== CONFIGURAÇÕES AVANÇADAS ======================
-DATABASE_DIR = "facial_database"
-CAPTURE_DURATION = 15  # Segundos
-TARGET_FACES = 50
-MIN_FACE_SIZE = (120, 120)
-FACE_DETECTOR = "dnn"
-MODELS_DIR = "models"
+logger = logging.getLogger(__name__)
 
-# Parâmetros de qualidade
-MIN_SHARPNESS = 100
-MIN_BRIGHTNESS = 50
-MAX_BRIGHTNESS = 200
-MIN_FACE_CONFIDENCE = 0.9
+# Configurações
+DB_CONFIG = {
+    "dbname": os.getenv("DB_NAME", "faceshild"),
+    "user": os.getenv("DB_USER", "postgres"),
+    "password": os.getenv("DB_PASSWORD", "root"),
+    "host": os.getenv("DB_HOST", "localhost"),
+    "port": os.getenv("DB_PORT", "5432")
+}
 
-# Configurar logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-# Verificar disponibilidade do MTCNN
-try:
-    from mtcnn import MTCNN
-
-    MTCNN_AVAILABLE = True
-except ImportError:
-    MTCNN_AVAILABLE = False
+MIN_PHOTOS_REQUIRED = 10
+MIN_FACE_SIZE = (100, 100)
+FRAME_WIDTH = 640
+FRAME_HEIGHT = 480
 
 
-# ====================== FUNÇÕES AUXILIARES ======================
+# ====================== BANCO DE DADOS ======================
+@contextmanager
+def get_db_connection():
+    conn = psycopg2.connect(**DB_CONFIG)
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+
+def init_face_database():
+    """Inicializa tabela de usuários no PostgreSQL"""
+    try:
+        with get_db_connection() as conn:
+            cur = conn.cursor()
+
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS usuarios(
+                    id SERIAL PRIMARY KEY,
+                    nome VARCHAR(100) NOT NULL,
+                    sobrenome VARCHAR(100) NOT NULL,
+                    turma VARCHAR(50) NOT NULL,
+                    tipo VARCHAR(20) DEFAULT 'aluno',
+                    embeddings JSONB NOT NULL,
+                    foto_perfil BYTEA,
+                    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE(nome, sobrenome, turma)
+                )
+            """)
+
+            conn.commit()
+            logger.info("✅ Banco facial inicializado")
+            return True
+
+    except Exception as e:
+        logger.error(f"❌ Erro no banco facial: {e}")
+        return False
+
+
+def check_user_exists(nome, sobrenome, turma):
+    """Verifica se usuário já existe"""
+    try:
+        with get_db_connection() as conn:
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT COUNT(*) FROM usuarios WHERE nome = %s AND sobrenome = %s AND turma = %s",
+                (nome, sobrenome, turma)
+            )
+            count = cur.fetchone()[0]
+            return count
+    except Exception as e:
+        logger.error(f"Erro ao verificar usuário: {e}")
+        return 0
+
+
+# ====================== UTILITÁRIOS ======================
 def sanitize_name(name):
-    """Remove caracteres especiais do nome para criar um nome de diretório seguro"""
-    safe_name = re.sub(r'[^\w\s-]', '', name).strip()
-    safe_name = re.sub(r'[-\s]+', '_', safe_name)
-    return safe_name
+    """Cria nome seguro para arquivos"""
+    if not name:
+        return "unknown"
+    name = str(name).lower().strip()
+    return re.sub(r'[^a-z0-9_]', '', name.replace(' ', '_')) or "unknown"
 
 
 def calculate_sharpness(image):
-    """Calcula a nitidez da imagem usando o operador Laplaciano"""
-    if image.size == 0 or len(image.shape) < 2:
+    """Calcula nitidez da imagem"""
+    if image is None or image.size == 0:
         return 0
     try:
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        small_img = cv2.resize(image, (100, 100))
+        gray = cv2.cvtColor(small_img, cv2.COLOR_BGR2GRAY)
         return cv2.Laplacian(gray, cv2.CV_64F).var()
-    except Exception:
+    except:
         return 0
 
 
-def calculate_brightness(image):
-    """Calcula o brilho médio da imagem no espaço de cores HSV"""
-    if image.size == 0 or len(image.shape) < 3:
-        return 0
-    try:
-        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        return np.mean(hsv[:, :, 2])
-    except Exception:
-        return 0
-
-
-def enhance_face_image(face_img):
-    """Melhora la calidad de la imagen facial usando CLAHE y denoising"""
+def validate_face_image(face_img):
+    """Valida qualidade da imagem facial de forma mais rigorosa"""
     if face_img is None or face_img.size == 0:
-        return np.zeros((100, 100, 3), np.uint8)
+        return False, "Imagem vazia"
+
+    height, width = face_img.shape[:2]
+    if height < MIN_FACE_SIZE[0] or width < MIN_FACE_SIZE[1]:
+        return False, "Rosto muito pequeno"
+
+    # ✅ VERIFICAÇÃO MAIS RIGOROSA: Proporção do rosto
+    aspect_ratio = width / height
+    if aspect_ratio < 0.6 or aspect_ratio > 1.4:  # Rostos humanos tem proporção ~0.7-1.3
+        return False, f"Proporção inválida: {aspect_ratio:.2f}"
+
+    sharpness = calculate_sharpness(face_img)
+    if sharpness < 100:  # ✅ AUMENTADO o limite de nitidez
+        return False, f"Imagem muito borrada: {sharpness:.1f}"
+
+    # ✅ NOVA VERIFICAÇÃO: Verificar se há características faciais
     try:
-        # Convertir a LAB para mejorar la iluminación
-        lab = cv2.cvtColor(face_img, cv2.COLOR_BGR2LAB)
-        l, a, b = cv2.split(lab)
+        # Tentar detectar olhos para confirmar que é um rosto
+        gray = cv2.cvtColor(face_img, cv2.COLOR_BGR2GRAY)
+        eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
+        eyes = eye_cascade.detectMultiScale(gray, 1.1, 4)
 
-        # Aplicar CLAHE al canal L (luminancia)
-        clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
-        cl = clahe.apply(l)
-
-        # Fusionar los canales y convertir de vuelta a BGR
-        limg = cv2.merge((cl, a, b))
-        enhanced = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
-
-        # Aplicar denoising
-        enhanced = cv2.fastNlMeansDenoisingColored(enhanced, None, 10, 10, 7, 21)
-        return enhanced
+        if len(eyes) < 1:  # Se não detectar pelo menos 1 olho
+            return False, "Não detectou características faciais"
     except Exception as e:
-        logging.error(f"Erro em enhance_face_image: {e}")
-        return face_img
+        logger.warning(f"Erro na detecção de olhos: {e}")
+
+    return True, f"Qualidade: {sharpness:.1f}"
 
 
-def face_quality_score(face_img):
-    """Calcula una puntuación de calidad para la imagen facial"""
-    if face_img is None or face_img.size == 0:
-        return 0
-    try:
-        sharpness = calculate_sharpness(face_img)
-        sharp_score = min(1, sharpness / 200) * 50
+# ====================== DETECTOR FACIAL MELHORADO ======================
+class FaceDetector:
+    def __init__(self):
+        self.last_detection_time = 0
+        self.detection_interval = 0.3  # ✅ AUMENTADO o intervalo para mais precisão
+        self.cached_faces = []
+        self.consecutive_failures = 0
+        self.max_failures = 3
 
-        brightness = calculate_brightness(face_img)
-        bright_score = 0
-        if MIN_BRIGHTNESS < brightness < MAX_BRIGHTNESS:
-            bright_score = (1 - abs(brightness - 120) / 80) * 30
+    def detect_faces(self, frame):
+        """Detecta rostos no frame com verificações mais rigorosas"""
+        current_time = time.time()
+        if current_time - self.last_detection_time < self.detection_interval:
+            return self.cached_faces
 
-        return sharp_score + bright_score
-    except Exception:
-        return 0
-
-
-# ====================== DETECÇÃO FACIAL ======================
-def detect_faces(frame, detector):
-    """Detecta rostos no frame usando o detector selecionado"""
-    faces = []
-    if detector["type"] == "dnn":
         try:
-            h, w = frame.shape[:2]
-            blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0,
-                                         (300, 300), (104.0, 177.0, 123.0))
-            detector["net"].setInput(blob)
-            detections = detector["net"].forward()
-            for i in range(detections.shape[2]):
-                confidence = detections[0, 0, i, 2]
-                if confidence > MIN_FACE_CONFIDENCE:
-                    box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-                    (startX, startY, endX, endY) = box.astype("int")
-                    faces.append([max(0, startX), max(0, startY), min(w, endX), min(h, endY)])
+            # ✅ REDUZIR MAIS a resolução para melhor performance e precisão
+            small_frame = cv2.resize(frame, (240, 180))
+
+            detected_faces = DeepFace.extract_faces(
+                img_path=small_frame,
+                detector_backend="opencv",
+                enforce_detection=False,
+                align=False
+            )
+
+            faces = []
+            valid_faces_count = 0
+
+            for face in detected_faces:
+                if 'facial_area' in face and face['confidence'] > 0.8:  # ✅ FILTRAR por confiança
+                    x = int(face['facial_area']['x'] * frame.shape[1] / 240)
+                    y = int(face['facial_area']['y'] * frame.shape[0] / 180)
+                    w = int(face['facial_area']['w'] * frame.shape[1] / 240)
+                    h = int(face['facial_area']['h'] * frame.shape[0] / 180)
+
+                    # ✅ VALIDAÇÃO MAIS RIGOROSA
+                    if (w >= MIN_FACE_SIZE[0] and h >= MIN_FACE_SIZE[1] and
+                            w <= 400 and h <= 400):  # ✅ LIMITE MÁXIMO para evitar falsos positivos
+
+                        face_roi = frame[y:y + h, x:x + w]
+                        if face_roi.size > 0:
+                            # ✅ VERIFICAÇÃO DE QUALIDADE ANTES de considerar como rosto
+                            is_valid, validation_msg = validate_face_image(face_roi)
+                            if is_valid:
+                                faces.append((x, y, w, h))
+                                valid_faces_count += 1
+                                logger.info(f"✅ Rosto válido detectado: {validation_msg}")
+                            else:
+                                logger.debug(f"❌ Rosto inválido: {validation_msg}")
+
+            self.cached_faces = faces
+            self.last_detection_time = current_time
+            self.consecutive_failures = 0
+
+            logger.debug(f"👁️  Rostos detectados: {valid_faces_count}")
+            return faces
+
         except Exception as e:
-            logging.error(f"Erro na detecção DNN: {str(e)}")
-    elif detector["type"] == "haar":
-        try:
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            detected_faces = detector["detector"].detectMultiScale(
-                gray, scaleFactor=1.1, minNeighbors=5, minSize=MIN_FACE_SIZE)
-            for (x, y, w, h) in detected_faces:
-                faces.append([x, y, x + w, y + h])
-        except Exception as e:
-            logging.error(f"Erro na detecção Haar: {str(e)}")
-    elif detector["type"] == "mtcnn" and MTCNN_AVAILABLE:
-        try:
-            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = detector["detector"].detect_faces(rgb_frame)
-            for result in results:
-                if result['confidence'] > MIN_FACE_CONFIDENCE:
-                    x, y, w, h = result['box']
-                    faces.append([x, y, x + w, y + h])
-        except Exception as e:
-            logging.error(f"Erro na detecção MTCNN: {str(e)}")
-
-    return faces
+            self.consecutive_failures += 1
+            logger.warning(f"Erro na detecção (tentativa {self.consecutive_failures}): {e}")
+            if self.consecutive_failures >= self.max_failures:
+                logger.error("Muitas falhas consecutivas na detecção")
+                self.consecutive_failures = 0
+            return []
 
 
-# ====================== DOWNLOAD DE MODELOS ======================
-def download_dnn_model():
-    """Baixa os modelos DNN necessários se não existirem localmente"""
-    logging.info("Verificando modelos DNN...")
-    os.makedirs(MODELS_DIR, exist_ok=True)
-    model_file = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
-    config_file = os.path.join(MODELS_DIR, "deploy.prototxt")
-
-    files = {
-        config_file: "https://raw.githubusercontent.com/opencv/opencv/master/samples/dnn/face_detector/deploy.prototxt",
-        model_file: "https://github.com/opencv/opencv_3rdparty/raw/dnn_samples_face_detector_20170830/res10_300x300_ssd_iter_140000.caffemodel"
-    }
-
-    for file_path, url in files.items():
-        if not os.path.exists(file_path):
-            logging.info(f"Baixando modelo: {os.path.basename(file_path)}")
-            try:
-                with urllib.request.urlopen(url) as response, open(file_path, 'wb') as out_file:
-                    shutil.copyfileobj(response, out_file)
-                logging.info(f"Download concluído: {os.path.basename(file_path)}")
-            except Exception as e:
-                logging.error(f"Erro ao baixar modelo {os.path.basename(file_path)}: {str(e)}")
-                raise FileNotFoundError(f"Não foi possível baixar o modelo DNN: {file_path}")
-
-
-def initialize_detector(detector_type):
-    """Inicializa o detector facial escolhido"""
-    if detector_type == "dnn":
-        try:
-            download_dnn_model()
-            model_file = os.path.join(MODELS_DIR, "res10_300x300_ssd_iter_140000.caffemodel")
-            config_file = os.path.join(MODELS_DIR, "deploy.prototxt")
-            net = cv2.dnn.readNetFromCaffe(config_file, model_file)
-            return {"type": "dnn", "net": net}
-        except Exception as e:
-            logging.error(f"Erro ao carregar modelo DNN: {str(e)}. Tentando fallback para Haar.")
-            detector_type = "haar"
-
-    # Haar Cascade padrão (fallback)
-    if detector_type == "haar":
-        try:
-            cascade_file = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
-            if not os.path.exists(cascade_file):
-                url = "https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml"
-                os.makedirs(MODELS_DIR, exist_ok=True)
-                cascade_file_local = os.path.join(MODELS_DIR, 'haarcascade_frontalface_default.xml')
-                logging.info("Baixando modelo Haar Cascade...")
-                urllib.request.urlretrieve(url, cascade_file_local)
-                cascade_file = cascade_file_local
-
-            detector = cv2.CascadeClassifier(cascade_file)
-            if detector.empty():
-                raise RuntimeError("Falha ao carregar Haar Cascade")
-            return {"type": "haar", "detector": detector}
-        except Exception as e:
-            logging.error(f"Erro fatal ao inicializar detector Haar: {str(e)}")
-            raise RuntimeError("Nenhum detector facial disponível")
-
-    raise ValueError("Tipo de detector não suportado.")
-
-
-# ====================== CLASSE DE CAPTURA FACIAL ATUALIZADA ======================
-class FaceCapture:
-    def __init__(self, user_name, progress_callback=None, frame_callback=None):
-        self.user_name = user_name
-        self.safe_name = sanitize_name(user_name)
-        self.user_dir = os.path.join(DATABASE_DIR, self.safe_name)
+# ====================== CAPTURA PRINCIPAL CORRIGIDA ======================
+class FluidFaceCapture:
+    def __init__(self, nome, sobrenome, turma, tipo, progress_callback=None, frame_callback=None):
+        self.nome = nome
+        self.sobrenome = sobrenome
+        self.turma = turma
+        self.tipo = tipo
         self.progress_callback = progress_callback
         self.frame_callback = frame_callback
+
+        self.captured_faces = []
         self.captured_count = 0
         self.running = False
-        self.start_time = None
-        self.last_frame_sent = time.time()
-        self.frame_interval = 0.1  # Envia frames a cada 0.1s (10 FPS)
-        self.processing_interval = 0.2  # Processa detecção a cada 0.2s (5 FPS)
 
-    def update_progress(self, message, count=None):
+        self.detector = FaceDetector()
+        self.last_face_time = 0
+        self.face_capture_interval = 0.8  # ✅ AUMENTADO intervalo entre capturas
+        self.last_face_detected_time = 0
+        self.consecutive_no_face_count = 0
+
+    def update_progress(self, message=None):
+        """Atualiza progresso"""
         if self.progress_callback:
-            progress = {
-                "message": message,
-                "captured": count if count is not None else self.captured_count,
-                "total": TARGET_FACES,
-            }
-            self.progress_callback(progress)
+            self.progress_callback({
+                "captured": self.captured_count,
+                "total": MIN_PHOTOS_REQUIRED,
+                "message": message
+            })
 
-    def stop(self):
-        self.running = False
+    def send_frame(self, frame):
+        """Envia frame para o cliente"""
+        if self.frame_callback:
+            try:
+                small_frame = cv2.resize(frame, (426, 320))
+                _, buffer = cv2.imencode('.jpg', small_frame, [cv2.IMWRITE_JPEG_QUALITY, 50])
+                jpg_as_text = base64.b64encode(buffer).decode('utf-8')
+                self.frame_callback(jpg_as_text)
+            except Exception as e:
+                logger.error(f"Erro ao enviar frame: {e}")
+
+    def save_to_database(self, embeddings, profile_image):
+        """Salva usuário no PostgreSQL"""
+        try:
+            with get_db_connection() as conn:
+                cur = conn.cursor()
+
+                _, buffer = cv2.imencode('.jpg', profile_image)
+                image_bytes = buffer.tobytes()
+
+                embeddings_list = [embedding.tolist() for embedding in embeddings]
+
+                cur.execute("""
+                    INSERT INTO usuarios (nome, sobrenome, turma, tipo, embeddings, foto_perfil)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (nome, sobrenome, turma) 
+                    DO UPDATE SET embeddings = EXCLUDED.embeddings, 
+                                  foto_perfil = EXCLUDED.foto_perfil,
+                                  tipo = EXCLUDED.tipo,
+                                  data_cadastro = CURRENT_TIMESTAMP
+                """, (self.nome, self.sobrenome, self.turma, self.tipo, Json(embeddings_list), image_bytes))
+
+                conn.commit()
+                return True, "Usuário salvo com sucesso"
+
+        except Exception as e:
+            return False, f"Erro ao salvar: {str(e)}"
+
+    def generate_embeddings(self):
+        """Gera embeddings das faces capturadas"""
+        try:
+            embeddings = []
+            successful = 0
+
+            # ✅ VERIFICAÇÃO FINAL: Garantir que todas as faces são válidas
+            valid_faces = []
+            for i, face_img in enumerate(self.captured_faces):
+                is_valid, validation_msg = validate_face_image(face_img)
+                if is_valid:
+                    valid_faces.append(face_img)
+                    logger.info(f"✅ Face {i + 1} válida para embedding")
+                else:
+                    logger.warning(f"❌ Face {i + 1} descartada: {validation_msg}")
+
+            if len(valid_faces) < MIN_PHOTOS_REQUIRED:
+                return False, f"Faces válidas insuficientes: {len(valid_faces)}/{MIN_PHOTOS_REQUIRED}"
+
+            for i, face_img in enumerate(valid_faces):
+                try:
+                    temp_path = f"temp_face_{i}.jpg"
+                    cv2.imwrite(temp_path, face_img)
+
+                    embedding_obj = DeepFace.represent(
+                        img_path=temp_path,
+                        model_name="Facenet",
+                        enforce_detection=False,
+                        detector_backend="skip"
+                    )
+
+                    embedding = np.array(embedding_obj[0]["embedding"])
+                    embeddings.append(embedding)
+                    successful += 1
+
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
+
+                except Exception as e:
+                    logger.warning(f"Erro no embedding {i}: {e}")
+                    continue
+
+            if successful >= MIN_PHOTOS_REQUIRED:
+                best_face = max(valid_faces, key=lambda img: calculate_sharpness(img))
+                return self.save_to_database(embeddings, best_face)
+            else:
+                return False, f"Embeddings insuficientes: {successful}/{MIN_PHOTOS_REQUIRED}"
+
+        except Exception as e:
+            return False, f"Erro crítico: {str(e)}"
 
     def capture(self):
+        """Método principal de captura com verificações rigorosas"""
         self.running = True
-        self.start_time = time.time()
-        cap = None
-        try:
-            os.makedirs(self.user_dir, exist_ok=True)
-            detector = initialize_detector(FACE_DETECTOR)
-            cap = cv2.VideoCapture(0)
-            if not cap.isOpened():
-                self.update_progress("Erro: Câmera não disponível")
-                return False, "Câmera não disponível"
+        self.captured_faces = []
+        self.captured_count = 0
+        self.last_face_detected_time = time.time()
+        self.consecutive_no_face_count = 0
 
-            # Configurar câmera para melhor performance
-            cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-            cap.set(cv2.CAP_PROP_FPS, 15)
+        cap = cv2.VideoCapture(0)
+        if not cap.isOpened():
+            return False, "Não foi possível acessar a câmera"
+
+        try:
+            cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
+            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
             self.update_progress("Preparando câmera...")
-            time.sleep(2)
+            start_time = time.time()
+            no_face_timeout = 10
 
-            executor = ThreadPoolExecutor(max_workers=4)
-            faces = []
+            while (self.running and
+                   self.captured_count < MIN_PHOTOS_REQUIRED and
+                   (time.time() - start_time) < 120):
 
-            self.update_progress("Capturando rostos...")
-
-            while self.running and self.captured_count < TARGET_FACES:
                 ret, frame = cap.read()
                 if not ret:
                     continue
 
-                # Corrigir orientação da câmera
                 frame = cv2.flip(frame, 1)
                 display_frame = frame.copy()
 
-                # Processar detecção periodicamente
-                current_time = time.time()
-                if current_time - self.last_frame_sent >= self.processing_interval:
-                    faces = detect_faces(frame, detector)
-                    self.last_frame_sent = current_time
+                # ✅ DETECÇÃO COM VERIFICAÇÃO RIGOROSA
+                faces = self.detector.detect_faces(frame)
+                face_detected = len(faces) == 1
 
-                # Desenhar e salvar faces detectadas
-                for (x1, y1, x2, y2) in faces:
-                    cv2.rectangle(display_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                    face_img = frame[y1:y2, x1:x2]
+                if face_detected:
+                    self.last_face_detected_time = time.time()
+                    self.consecutive_no_face_count = 0
 
-                    if face_img.size > 0:
-                        quality = face_quality_score(face_img)
+                    x, y, w, h = faces[0]
+                    cropped_face = frame[y:y + h, x:x + w]
 
-                        if quality > 40:
-                            # Salvar a imagem e gerar embedding
-                            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S%f")
-                            filename = f"{self.safe_name}_{self.captured_count:03d}_{int(quality)}.jpg"
-                            filepath = os.path.join(self.user_dir, filename)
-
-                            # Salvar imagem
-                            enhanced = enhance_face_image(face_img)
-                            cv2.imwrite(filepath, enhanced)
-
-                            # Gerar embedding usando DeepFace
-                            try:
-                                embedding_obj = DeepFace.represent(
-                                    img_path=enhanced,
-                                    model_name="Facenet",
-                                    enforce_detection=False,
-                                    detector_backend="skip"
-                                )
-
-                                if embedding_obj and len(embedding_obj) > 0:
-                                    embedding = np.array(embedding_obj[0]["embedding"])
-                                    embedding_filename = f"{self.safe_name}_{self.captured_count:03d}_{int(quality)}.npy"
-                                    embedding_path = os.path.join(self.user_dir, embedding_filename)
-                                    np.save(embedding_path, embedding)
-                                    logging.info(f"Embedding salvo: {embedding_filename}")
-                            except Exception as e:
-                                logging.error(f"Erro ao gerar embedding: {str(e)}")
-
+                    # ✅ VERIFICAÇÃO DUPLA antes de capturar
+                    current_time = time.time()
+                    if (current_time - self.last_face_time) > self.face_capture_interval:
+                        is_valid, validation_msg = validate_face_image(cropped_face)
+                        if is_valid:
+                            self.captured_faces.append(cropped_face.copy())
                             self.captured_count += 1
-                            self.update_progress(f"Face {self.captured_count} capturada", self.captured_count)
+                            self.last_face_time = current_time
 
-                # Adicionar contador e tempo ao frame de exibição
-                cv2.putText(display_frame, f"Capturadas: {self.captured_count}/{TARGET_FACES}",
-                            (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+                            # Feedback visual
+                            cv2.rectangle(display_frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
+                            cv2.putText(display_frame, f"✅ CAPTURADO: {self.captured_count}/{MIN_PHOTOS_REQUIRED}",
+                                        (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
-                # Enviar frame para o front-end
-                _, buffer = cv2.imencode('.jpg', display_frame)
-                jpg_as_text = base64.b64encode(buffer).decode('utf-8')
-                self.frame_callback(jpg_as_text)
+                            self.update_progress(f"Capturado: {self.captured_count}/{MIN_PHOTOS_REQUIRED}")
+                            logger.info(f"📸 Face {self.captured_count} capturada com sucesso")
+                        else:
+                            cv2.rectangle(display_frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                            cv2.putText(display_frame, "❌ QUALIDADE BAIXA",
+                                        (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1)
+                    else:
+                        cv2.rectangle(display_frame, (x, y), (x + w, y + h), (0, 165, 255), 2)
+                        cv2.putText(display_frame, "⏳ AGUARDANDO...",
+                                    (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 165, 255), 1)
+                else:
+                    # ✅ CONTAGEM DE FRAMES SEM ROSTO
+                    self.consecutive_no_face_count += 1
+                    elapsed_no_face = time.time() - self.last_face_detected_time
 
-                # Controle de tempo para evitar uso excessivo da CPU
-                if time.time() - self.start_time > CAPTURE_DURATION:
-                    break
+                    if elapsed_no_face > no_face_timeout:
+                        return False, "❌ Nenhum rosto detectado por 10 segundos. Posicione seu rosto na câmera e tente novamente."
 
-            executor.shutdown(wait=True)
+                    # Feedback visual
+                    if elapsed_no_face > 3:  # Só mostra alerta após 3 segundos
+                        remaining_time = no_face_timeout - elapsed_no_face
+                        if remaining_time <= 5:
+                            cv2.putText(display_frame, f"🚨 PROCURE A CÂMERA! {int(remaining_time)}s",
+                                        (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+                        else:
+                            cv2.putText(display_frame, "🔍 PROCURANDO ROSTO...",
+                                        (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 165, 255), 2)
 
-            success = self.captured_count >= TARGET_FACES
-            message = f"{self.captured_count} faces capturadas com sucesso!" if success else "Falha na captura"
-            self.update_progress(message)
-            return success, message
+                # Informações na tela
+                cv2.putText(display_frame, f"Capturadas: {self.captured_count}/{MIN_PHOTOS_REQUIRED}",
+                            (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+
+                # Mostrar estatísticas de detecção
+                if self.consecutive_no_face_count > 0:
+                    cv2.putText(display_frame, f"Sem rosto: {self.consecutive_no_face_count} frames",
+                                (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 1)
+
+                self.send_frame(display_frame)
+                time.sleep(0.03)
+
+            # ✅ VERIFICAÇÃO FINAL ANTES DE SALVAR
+            if self.captured_count >= MIN_PHOTOS_REQUIRED:
+                self.update_progress("Validando imagens...")
+                logger.info(f"🔍 Validando {len(self.captured_faces)} faces capturadas...")
+
+                # Verificação final de qualidade
+                valid_faces_count = 0
+                for i, face in enumerate(self.captured_faces):
+                    is_valid, msg = validate_face_image(face)
+                    if is_valid:
+                        valid_faces_count += 1
+                    else:
+                        logger.warning(f"Face {i + 1} inválida na validação final: {msg}")
+
+                if valid_faces_count >= MIN_PHOTOS_REQUIRED:
+                    self.update_progress("Salvando dados...")
+                    success, message = self.generate_embeddings()
+                    return success, message
+                else:
+                    return False, f"❌ Validação final falhou: {valid_faces_count}/{MIN_PHOTOS_REQUIRED} faces válidas"
+            else:
+                elapsed_no_face = time.time() - self.last_face_detected_time
+                if elapsed_no_face > no_face_timeout:
+                    return False, "❌ Nenhum rosto detectado por 10 segundos. Posicione seu rosto na câmera e tente novamente."
+                else:
+                    return False, f"Captura incompleta: {self.captured_count}/{MIN_PHOTOS_REQUIRED}"
 
         except Exception as e:
-            logging.error(f"Erro na captura: {str(e)}")
-            self.update_progress(f"Erro: {str(e)}")
-            return False, str(e)
+            logger.error(f"Erro na captura: {e}")
+            return False, f"Erro na captura: {str(e)}"
         finally:
-            if cap and cap.isOpened():
-                cap.release()
-            self.running = False
-
-    def save_face_image(self, face_img, index, quality):
-        """Salva a imagem facial aprimorada no diretório do usuário"""
-        try:
-            if face_img is None or face_img.size == 0:
-                return
-
-            enhanced = enhance_face_image(face_img)
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S%f")
-            filename = f"{self.safe_name}_{index:03d}_{int(quality)}.jpg"
-            filepath = os.path.join(self.user_dir, filename)
-
-            # Tenta salvar a imagem, garantindo que o diretório existe
-            os.makedirs(self.user_dir, exist_ok=True)
-            cv2.imwrite(filepath, enhanced)
-            logging.info(f"Face salva: {filename}")
-        except Exception as e:
-            logging.error(f"Erro ao salvar face: {str(e)}")
-
-
-# Função auxiliar para verificar se um usuário já está cadastrado
-def check_user_registration(user_name):
-    """Verifica se um usuário já está cadastrado e retorna o número de fotos existentes"""
-    safe_name = sanitize_name(user_name)
-    user_dir = os.path.join(DATABASE_DIR, safe_name)
-
-    if not os.path.exists(user_dir):
-        return 0
-
-    # Contar arquivos de imagem
-    image_files = [f for f in os.listdir(user_dir) if f.endswith('.jpg')]
-    return len(image_files)
-
-
-# Função para continuar captura de usuário existente
-def continue_user_capture(user_name, progress_callback=None, frame_callback=None):
-    """Continua a captura para um usuário já existente"""
-    safe_name = sanitize_name(user_name)
-    user_dir = os.path.join(DATABASE_DIR, safe_name)
-
-    if not os.path.exists(user_dir):
-        return False, "Usuário não encontrado"
-
-    # Contar fotos existentes
-    existing_photos = len([f for f in os.listdir(user_dir) if f.endswith('.jpg')])
-    remaining_photos = TARGET_FACES - existing_photos
-
-    if remaining_photos <= 0:
-        return False, "Usuário já possui fotos suficientes"
-
-    # Criar instância de captura
-    capture = FaceCapture(user_name, progress_callback, frame_callback)
-    capture.captured_count = existing_photos  # Começar da contagem existente
-
-    # Atualizar mensagem de progresso
-    capture.update_progress(f"Continuando captura. {existing_photos} fotos existentes, {remaining_photos} necessárias")
-
-    return capture, f"Continue captura para {user_name}"
-
-
-if __name__ == "__main__":
-    # Exemplo de uso
-    def progress_callback(progress):
-        print(f"Progresso: {progress['message']} - {progress['captured']}/{progress['total']}")
-
-
-    def frame_callback(frame_data):
-        # Esta função receberia os frames para exibição no frontend
-        pass
-
-
-    # Testar a captura facial
-    capture = FaceCapture("Test_User", progress_callback, frame_callback)
-    success, message = capture.capture()
-    print(f"Resultado: {success}, Mensagem: {message}")
+            cap.release()
+            cv2.destroyAllWindows()
+            logger.info("🎬 Captura finalizada")

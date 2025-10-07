@@ -134,7 +134,7 @@ def start_frontend_server():
             # Verificar conexão com o backend
             if not check_backend_connection():
                 print("\n⚠️  Aviso: Frontend funcionará, mas não se conectará ao backend")
-                print("   Execute o backend com: python appFaceId.py")
+                print("   Execute o backend com: python app.py")
 
             # Abrir navegador após um breve delay
             threading.Timer(1.0, lambda: webbrowser.open(f"{url}/CameraLogin.html")).start()

@@ -3,7 +3,7 @@ import socketserver
 import os
 
 # Altere este caminho para o diretório do seu frontend
-FRONTEND_DIR = "../../../front_end/Cadastro"
+FRONTEND_DIR = "../../../../front_end/Cadastro"
 
 PORT = 8001
 

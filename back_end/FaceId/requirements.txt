@@ -1,51 +1,66 @@
-# Requirements para Sistema de Reconhecimento Facial
-# Versões testadas e compatíveis
+# ======================
+# REQUISITOS PARA SISTEMA DE RECONHECIMENTO FACIAL
+# ======================
+# Para instalar todas as dependências, execute:
+# pip install -r requirements.txt
 
-# Framework principal
-deepface==0.0.79
+# ======================
+# BIBLIOTECAS PRINCIPAIS
+# ======================
 
-# Processamento de imagem e visão computacional
-opencv-python==4.8.1.78
-numpy==1.24.3
-pillow==10.0.0
-
-# Servidor web e API
+# Framework web
 flask==2.3.3
 flask-socketio==5.3.6
 flask-cors==4.0.0
 
-# Autenticação
+# Autenticação JWT
 pyjwt==2.8.0
+
+# Segurança
 werkzeug==2.3.7
 
+# Banco de dados
+psycopg2-binary==2.9.7
+
+# Processamento de imagem e visão computacional
+opencv-python==4.8.1.78
+deepface==0.0.79
+
+# Computação científica
+numpy==1.24.3
+
 # Monitoramento do sistema
-watchdog==3.0.0
 psutil==5.9.5
 
-# Utilidades
-python-dotenv==1.0.0
-requests==2.31.0
-charset-normalizer==3.2.0
+# Monitoramento de arquivos (para versão original)
+watchdog==3.0.0
 
-# Framework de ML (backend do DeepFace)
-tensorflow==2.13.0
-keras==2.13.1
+# ======================
+# DEPENDÊNCIAS DO DEEPFACE (incluídas automaticamente)
+# ======================
+# tensorflow==2.13.0
+# keras==2.13.1
+# mtcnn==0.1.1
+# retina-face==0.0.15
+# gdown==4.7.1
+# pandas==2.0.3
+# tqdm==4.65.0
+# Pillow==10.0.0
+# matplotlib==3.7.2
+# seaborn==0.12.2
 
-# Outras dependências
-scikit-learn==1.3.0
-mtcnn==0.1.1
-gunicorn==21.2.0
+# ======================
+# COMANDO DE INSTALAÇÃO COMPLETO:
+# ======================
+# pip install flask==2.3.3 flask-socketio==5.3.6 flask-cors==4.0.0 pyjwt==2.8.0 werkzeug==2.3.7 psycopg2-binary==2.9.7 opencv-python==4.8.1.78 deepface==0.0.79 numpy==1.24.3 psutil==5.9.5 watchdog==3.0.0
 
+# ======================
+# INSTALAÇÃO ALTERNATIVA (se tiver problemas de compatibilidade):
+# ======================
+# pip install flask flask-socketio flask-cors pyjwt werkzeug psycopg2-binary opencv-python deepface numpy psutil watchdog
 
-
-# Criar ambiente virtual
-python -m venv reconhecimento_facial_env
-
-# Ativar no Windows
-reconhecimento_facial_env\Scripts\activate
-
-# Ativar no Linux/Mac
-source reconhecimento_facial_env/bin/activate
-
-
-pip install -r requirements.txt
+# ======================
+# PARA SISTEMAS COM GPU NVIDIA (opcional):
+# ======================
+# pip install tensorflow-gpu==2.13.0
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
