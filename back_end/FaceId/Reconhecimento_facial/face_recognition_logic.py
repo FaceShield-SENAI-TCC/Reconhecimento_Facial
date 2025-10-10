@@ -26,11 +26,12 @@ class DatabaseConfig:
     DB_PORT = "5432"
 
 class ModelConfig:
-    """Configurações do modelo de reconhecimento"""
-    MODEL_NAME = "Facenet"
-    DISTANCE_THRESHOLD = 0.40
+    """Configurações do modelo de reconhecimento - VGG-Face"""
+    MODEL_NAME = "VGG-Face"  # ✅ Alterado para VGG-Face
+    DISTANCE_THRESHOLD = 0.6  # ✅ Ajustado para VGG-Face (era 0.4 para Facenet)
     MIN_FACE_SIZE = (100, 100)
     DETECTOR_BACKEND = "opencv"
+    EMBEDDING_DIMENSION = 2622  # ✅ Dimensão do VGG-Face (Facenet era 128)
 
 class DatabaseMonitor:
     """
@@ -43,6 +44,7 @@ class DatabaseMonitor:
         self.monitor_thread = None
         self.running = False
         self._db_config = DatabaseConfig()
+        self.reconnect_delay = 5  # Delay entre tentativas de reconexão
 
     def start_monitoring(self):
         """Inicia o monitoramento em tempo real"""
@@ -60,19 +62,24 @@ class DatabaseMonitor:
         """Para o monitoramento"""
         self.running = False
         if self.connection and not self.connection.closed:
-            self.connection.close()
+            try:
+                self.connection.close()
+            except:
+                pass
         logger.info("⏹️ Database monitoring stopped")
 
     def _monitor_loop(self):
         """Loop principal de monitoramento"""
         while self.running:
             try:
+                # Estabelecer conexão para monitoramento
                 self.connection = psycopg2.connect(
                     dbname=self._db_config.DB_NAME,
                     user=self._db_config.DB_USER,
                     password=self._db_config.DB_PASSWORD,
                     host=self._db_config.DB_HOST,
-                    port=self._db_config.DB_PORT
+                    port=self._db_config.DB_PORT,
+                    connect_timeout=10
                 )
                 self.connection.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
@@ -80,24 +87,34 @@ class DatabaseMonitor:
                 cursor.execute("LISTEN usuarios_update;")
                 logger.info("👂 Listening for database changes...")
 
-                while self.running:
-                    self.connection.poll()
-                    while self.connection.notifies:
-                        notify = self.connection.notifies.pop(0)
-                        logger.info(f"🔄 Database change detected: {notify.payload}")
-                        self.callback()  # Recarrega o banco de dados
+                # Loop de escuta por notificações
+                while self.running and self.connection and not self.connection.closed:
+                    try:
+                        # Verificar por notificações
+                        self.connection.poll()
+                        while self.connection.notifies:
+                            notify = self.connection.notifies.pop(0)
+                            logger.info(f"🔄 Database change detected: {notify.payload}")
+                            self.callback()  # Recarrega o banco de dados
 
-                    time.sleep(1)  # Pequeno delay para evitar CPU alto
+                        # Pequeno delay para evitar uso excessivo de CPU
+                        time.sleep(0.5)
+
+                    except psycopg2.InterfaceError as e:
+                        logger.warning(f"Database connection interrupted: {str(e)}")
+                        break
+                    except Exception as e:
+                        logger.error(f"Error in monitor inner loop: {str(e)}")
+                        break
 
             except psycopg2.OperationalError as e:
-                logger.warning(f"Database connection lost, reconnecting...: {str(e)}")
-                time.sleep(5)  # Espera antes de reconectar
+                logger.warning(f"❌ Database connection failed, retrying in {self.reconnect_delay}s: {str(e)}")
             except Exception as e:
-                logger.error(f"Monitor loop error: {str(e)}")
-                time.sleep(5)  # Espera antes de tentar novamente
-            finally:
-                if self.connection and not self.connection.closed:
-                    self.connection.close()
+                logger.error(f"❌ Monitor loop error: {str(e)}")
+
+            # Esperar antes de tentar reconectar
+            if self.running:
+                time.sleep(self.reconnect_delay)
 
     def trigger_manual_update(self):
         """Dispara uma atualização manual no banco de dados"""
@@ -137,7 +154,8 @@ class FaceRecognitionService:
                 user=self._db_config.DB_USER,
                 password=self._db_config.DB_PASSWORD,
                 host=self._db_config.DB_HOST,
-                port=self._db_config.DB_PORT
+                port=self._db_config.DB_PORT,
+                connect_timeout=10
             )
         except Exception as e:
             logger.error(f"Database connection failed: {str(e)}")
@@ -204,12 +222,18 @@ class FaceRecognitionService:
 
             cursor = conn.cursor()
 
-            # Criar função de trigger
+            # Criar função de trigger se não existir
             cursor.execute("""
                 CREATE OR REPLACE FUNCTION notify_usuarios_update()
                 RETURNS TRIGGER AS $$
                 BEGIN
-                    PERFORM pg_notify('usuarios_update', 'table_updated');
+                    PERFORM pg_notify('usuarios_update', 
+                        CASE 
+                            WHEN TG_OP = 'INSERT' THEN 'user_added'
+                            WHEN TG_OP = 'UPDATE' THEN 'user_updated' 
+                            WHEN TG_OP = 'DELETE' THEN 'user_deleted'
+                        END
+                    );
                     RETURN NEW;
                 END;
                 $$ LANGUAGE plpgsql;
@@ -218,6 +242,9 @@ class FaceRecognitionService:
             # Criar trigger para INSERT, UPDATE, DELETE
             cursor.execute("""
                 DROP TRIGGER IF EXISTS usuarios_notify_trigger ON usuarios;
+            """)
+
+            cursor.execute("""
                 CREATE TRIGGER usuarios_notify_trigger
                 AFTER INSERT OR UPDATE OR DELETE ON usuarios
                 FOR EACH ROW EXECUTE FUNCTION notify_usuarios_update();
@@ -229,8 +256,25 @@ class FaceRecognitionService:
             return True
 
         except Exception as e:
-            logger.warning(f"Could not setup database triggers: {str(e)}")
+            logger.warning(f"⚠️ Could not setup database triggers: {str(e)}")
+            logger.info("💡 System will work without real-time monitoring")
             return False
+
+    def _validate_embedding_dimension(self, embedding) -> bool:
+        """Valida se o embedding tem a dimensão correta para VGG-Face"""
+        if not embedding or len(embedding) != self._model_config.EMBEDDING_DIMENSION:
+            return False
+        return True
+
+    def _normalize_embedding(self, embedding) -> np.ndarray:
+        """Normaliza o embedding para comparação"""
+        embedding_array = np.array(embedding, dtype=np.float32)
+        embedding_norm = np.linalg.norm(embedding_array)
+
+        if embedding_norm > 0:
+            return embedding_array / embedding_norm
+        else:
+            raise ValueError("Embedding has zero norm")
 
     def load_facial_database(self) -> bool:
         """
@@ -256,11 +300,12 @@ class FaceRecognitionService:
                 database = {}
                 user_count = 0
                 embedding_count = 0
+                invalid_embeddings = 0
 
                 for nome, sobrenome, turma, tipo, embeddings in cursor.fetchall():
                     # Armazenar informações separadas para formatação flexível
                     user_info = {
-                        'display_name': f"{nome} {sobrenome}",  # Apenas nome e sobrenome
+                        'display_name': f"{nome} {sobrenome}",
                         'full_info': f"{nome} {sobrenome} - {turma} ({tipo})",
                         'nome': nome,
                         'sobrenome': sobrenome,
@@ -268,19 +313,24 @@ class FaceRecognitionService:
                         'tipo': tipo
                     }
 
-                    # Processar embeddings
+                    # Processar embeddings - ✅ ATUALIZADO para VGG-Face
                     valid_embeddings = []
                     for embedding in embeddings:
-                        if len(embedding) == 128:  # Dimensão do Facenet
-                            embedding_array = np.array(embedding, dtype=np.float32)
-                            embedding_norm = np.linalg.norm(embedding_array)
-
-                            if embedding_norm > 0:
-                                embedding_array /= embedding_norm
-                                valid_embeddings.append(embedding_array)
+                        # ✅ Verificar dimensão para VGG-Face (2622)
+                        if self._validate_embedding_dimension(embedding):
+                            try:
+                                normalized_embedding = self._normalize_embedding(embedding)
+                                valid_embeddings.append(normalized_embedding)
+                            except Exception as e:
+                                logger.warning(f"Invalid embedding for {user_info['display_name']}: {str(e)}")
+                                invalid_embeddings += 1
+                        else:
+                            invalid_embeddings += 1
+                            logger.warning(f"Wrong embedding dimension for {user_info['display_name']}: "
+                                         f"expected {self._model_config.EMBEDDING_DIMENSION}, "
+                                         f"got {len(embedding) if embedding else 'None'}")
 
                     if valid_embeddings:
-                        # Usar display_name como chave para mostrar apenas nome
                         database[user_info['display_name']] = {
                             'embeddings': valid_embeddings,
                             'info': user_info
@@ -292,9 +342,12 @@ class FaceRecognitionService:
             self.facial_database = database
             self.last_update = time.time()
 
+            if invalid_embeddings > 0:
+                logger.warning(f"⚠️ Found {invalid_embeddings} invalid embeddings (wrong dimension for VGG-Face)")
+
             if user_count == 0:
-                logger.warning("⚠️ Database loaded but no users with embeddings found")
-                logger.info("💡 Use the registration system to add users first")
+                logger.warning("⚠️ Database loaded but no users with valid embeddings found")
+                logger.info("💡 Use the registration system to add users with VGG-Face embeddings")
             else:
                 logger.info(f"✅ Database loaded: {user_count} users, {embedding_count} embeddings")
             return True
@@ -303,11 +356,12 @@ class FaceRecognitionService:
             logger.error(f"❌ Database loading failed: {str(e)}")
             return False
         finally:
-            conn.close()
+            if conn:
+                conn.close()
 
     def _extract_face_embedding(self, face_image: np.ndarray) -> Optional[np.ndarray]:
         """
-        Extrai embedding facial da imagem
+        Extrai embedding facial da imagem usando VGG-Face
 
         Args:
             face_image: Imagem do rosto (BGR format)
@@ -318,13 +372,21 @@ class FaceRecognitionService:
         try:
             result = DeepFace.represent(
                 img_path=face_image,
-                model_name=self._model_config.MODEL_NAME,
+                model_name=self._model_config.MODEL_NAME,  # ✅ VGG-Face
                 detector_backend=self._model_config.DETECTOR_BACKEND,
                 enforce_detection=False
             )
 
             if result and isinstance(result, list) and "embedding" in result[0]:
                 embedding = np.array(result[0]["embedding"], dtype=np.float32)
+
+                # ✅ Validar dimensão do VGG-Face
+                if embedding.shape[0] != self._model_config.EMBEDDING_DIMENSION:
+                    logger.error(f"Wrong embedding dimension from VGG-Face: "
+                               f"expected {self._model_config.EMBEDDING_DIMENSION}, "
+                               f"got {embedding.shape[0]}")
+                    return None
+
                 embedding_norm = np.linalg.norm(embedding)
                 return embedding / embedding_norm if embedding_norm > 0 else None
 
@@ -337,7 +399,7 @@ class FaceRecognitionService:
 
     def _recognize_face(self, face_image: np.ndarray) -> Tuple[Optional[str], Optional[float]]:
         """
-        Reconhece face comparando com banco de dados
+        Reconhece face comparando com banco de dados usando VGG-Face
 
         Args:
             face_image: Imagem do rosto para reconhecer
@@ -356,11 +418,12 @@ class FaceRecognitionService:
             # Busca linear no banco de dados
             for user_key, user_data in self.facial_database.items():
                 for db_embedding in user_data['embeddings']:
+                    # ✅ Usar distância cosseno para VGG-Face
                     distance = 1 - np.dot(captured_embedding, db_embedding)
 
                     if distance < min_distance and distance < self._model_config.DISTANCE_THRESHOLD:
                         min_distance = distance
-                        best_match = user_key  # Já é o display_name (apenas nome)
+                        best_match = user_key
 
             return best_match, min_distance if best_match else None
 
@@ -467,7 +530,7 @@ class FaceRecognitionService:
         """Resposta para autenticação bem-sucedida"""
         return {
             "authenticated": True,
-            "user": user,  # Apenas nome e sobrenome
+            "user": user,
             "confidence": round(confidence, 4),
             "message": f"Bem-vindo, {user}!",
             "timestamp": self.get_current_timestamp()
@@ -506,6 +569,7 @@ class FaceRecognitionService:
             "monitoring_active": self.database_monitor.running if hasattr(self, 'database_monitor') else False,
             "database_type": "PostgreSQL",
             "model": self._model_config.MODEL_NAME,
+            "embedding_dimension": self._model_config.EMBEDDING_DIMENSION,
             "threshold": self._model_config.DISTANCE_THRESHOLD
         }
 
@@ -527,6 +591,8 @@ class FaceRecognitionService:
     def initialize(self) -> bool:
         """Inicializa o serviço com monitoramento em tempo real"""
         logger.info("🔧 Initializing Face Recognition Service...")
+        logger.info(f"🎯 Using model: {self._model_config.MODEL_NAME}")
+        logger.info(f"📊 Embedding dimension: {self._model_config.EMBEDDING_DIMENSION}")
 
         # 1. Criar tabela se não existir
         if not self._create_table_if_not_exists():
@@ -534,17 +600,22 @@ class FaceRecognitionService:
             return False
 
         # 2. Configurar triggers no banco de dados
-        self._setup_database_triggers()
+        trigger_success = self._setup_database_triggers()
 
         # 3. Carregar banco de dados inicial
-        success = self.load_facial_database()
+        db_success = self.load_facial_database()
 
-        # 4. Iniciar monitoramento em tempo real
-        if success:
-            self.database_monitor.start_monitoring()
-            logger.info("🎯 Real-time database monitoring activated")
+        # 4. Iniciar monitoramento em tempo real (mesmo se triggers falharem)
+        monitor_success = self.database_monitor.start_monitoring()
 
-        return success
+        if db_success:
+            if trigger_success and monitor_success:
+                logger.info("🎯 Real-time database monitoring: ACTIVE")
+            else:
+                logger.warning("⚠️ Real-time database monitoring: LIMITED")
+                logger.info("💡 Manual reload available via /reload-database endpoint")
+
+        return db_success
 
     def cleanup(self):
         """Limpeza do serviço"""
