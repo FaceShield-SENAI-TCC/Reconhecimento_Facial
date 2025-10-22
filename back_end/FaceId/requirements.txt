@@ -24,7 +24,7 @@ psycopg2-binary==2.9.7
 
 # Processamento de imagem e visão computacional
 opencv-python==4.8.1.78
-deepface==0.0.79
+deepface==0.0.75
 
 # Computação científica
 numpy==1.24.3
@@ -38,7 +38,7 @@ watchdog==3.0.0
 # ======================
 # DEPENDÊNCIAS DO DEEPFACE (incluídas automaticamente)
 # ======================
-# tensorflow==2.13.0
+# tensorflow==2.10.0
 # keras==2.13.1
 # mtcnn==0.1.1
 # retina-face==0.0.15
@@ -52,7 +52,8 @@ watchdog==3.0.0
 # ======================
 # COMANDO DE INSTALAÇÃO COMPLETO:
 # ======================
-# pip install flask==2.3.3 flask-socketio==5.3.6 flask-cors==4.0.0 pyjwt==2.8.0 werkzeug==2.3.7 psycopg2-binary==2.9.7 opencv-python==4.8.1.78 deepface==0.0.79 numpy==1.24.3 psutil==5.9.5 watchdog==3.0.0
+# pip install flask==2.3.3 flask-socketio==5.3.6 flask-cors==4.0.0 pyjwt==2.8.0 werkzeug==2.3.7 psycopg2-binary==2.9.7 opencv-python==4.8.1.78 deepface==0.0.75 numpy==1.24.3 psutil==5.9.5  tensorflow==2.10.0
+
 
 # ======================
 # INSTALAÇÃO ALTERNATIVA (se tiver problemas de compatibilidade):

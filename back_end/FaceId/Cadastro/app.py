@@ -426,7 +426,7 @@ def initialize_application():
         logger.info("🎯 Sistema configurado com as seguintes características:")
         logger.info("   📍 Modo: Circuito Contínuo - Múltiplos Usuários")
         logger.info("   🔧 Modelo: VGG-Face (2622 dimensões)")
-        logger.info("   📸 Fotos necessárias: 3 por usuário")
+        logger.info("   📸 Fotos necessárias: 8 por usuário")
         logger.info("   🌐 WebSocket: Ativo na porta 7001")
         logger.info("   💾 Banco: PostgreSQL com monitoramento em tempo real")
 
