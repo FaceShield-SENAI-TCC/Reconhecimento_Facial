@@ -12,7 +12,7 @@ from contextlib import contextmanager
 
 logger = logging.getLogger(__name__)
 
-# ====================== CONFIGURAÇÕES ATUALIZADAS ======================
+# Configurações
 DB_CONFIG = {
     "dbname": "faceshild",
     "user": "postgres",
@@ -21,17 +21,13 @@ DB_CONFIG = {
     "port": "5432"
 }
 
-# ✅ AUMENTADO DE 3 PARA 8 EMBEDDINGS
-MIN_PHOTOS_REQUIRED = 8
-MIN_FACE_SIZE = (120, 120)  # ✅ Aumentado tamanho mínimo
+MIN_PHOTOS_REQUIRED = 3
+MIN_FACE_SIZE = (100, 100)
 FRAME_WIDTH = 640
 FRAME_HEIGHT = 480
 
-# ✅ NOVOS PARÂMETROS DE QUALIDADE
-MIN_SHARPNESS = 100  # ✅ Aumentado de 70 para 100
-FACE_CONFIDENCE_THRESHOLD = 0.8  # ✅ Nova validação de confiança
 
-
+# ====================== BANCO DE DADOS ======================
 @contextmanager
 def get_db_connection():
     conn = psycopg2.connect(**DB_CONFIG)
@@ -86,26 +82,29 @@ def check_user_exists(nome, sobrenome, turma):
         return 0
 
 
-# ====================== UTILITÁRIOS MELHORADOS ======================
+# ====================== UTILITÁRIOS ======================
+def sanitize_name(name):
+    """Cria nome seguro para arquivos"""
+    if not name:
+        return "unknown"
+    name = str(name).lower().strip()
+    return re.sub(r'[^a-z0-9_]', '', name.replace(' ', '_')) or "unknown"
+
+
 def calculate_sharpness(image):
-    """Calcula nitidez da imagem com método melhorado"""
+    """Calcula nitidez da imagem"""
     if image is None or image.size == 0:
         return 0
     try:
-        # Reduzir ruído antes do cálculo
         small_img = cv2.resize(image, (100, 100))
         gray = cv2.cvtColor(small_img, cv2.COLOR_BGR2GRAY)
-
-        # Aplicar filtro Gaussiano para reduzir ruído
-        gray = cv2.GaussianBlur(gray, (3, 3), 0)
-
         return cv2.Laplacian(gray, cv2.CV_64F).var()
     except:
         return 0
 
 
-def validate_face_quality(face_img):
-    """Validação MELHORADA da qualidade da imagem facial"""
+def validate_face_image(face_img):
+    """Valida qualidade da imagem facial"""
     if face_img is None or face_img.size == 0:
         return False, "Imagem vazia"
 
@@ -114,60 +113,47 @@ def validate_face_quality(face_img):
         return False, "Rosto muito pequeno"
 
     sharpness = calculate_sharpness(face_img)
-    if sharpness < MIN_SHARPNESS:
-        return False, f"Imagem muito borrada: {sharpness:.1f}"
+    if sharpness < 70:  # Limite de nitidez
+        return False, "Imagem muito borrada"
 
-    # ✅ NOVA VALIDAÇÃO: Brilho adequado
-    gray = cv2.cvtColor(face_img, cv2.COLOR_BGR2GRAY)
-    brightness = np.mean(gray)
-    if brightness < 50 or brightness > 200:
-        return False, f"Brilho inadequado: {brightness:.1f}"
-
-    # ✅ NOVA VALIDAÇÃO: Contraste
-    contrast = np.std(gray)
-    if contrast < 40:
-        return False, f"Contraste baixo: {contrast:.1f}"
-
-    return True, f"Qualidade: Sharp={sharpness:.1f}, Bright={brightness:.1f}, Contrast={contrast:.1f}"
+    return True, f"Qualidade: {sharpness:.1f}"
 
 
-# ====================== DETECTOR FACIAL MELHORADO ======================
+# ====================== DETECTOR FACIAL ======================
 class FaceDetector:
     def __init__(self):
         self.last_detection_time = 0
-        self.detection_interval = 0.3  # ✅ Reduzido FPS para mais precisão
+        self.detection_interval = 0.2  # 5 FPS para detecção
         self.cached_faces = []
 
     def detect_faces(self, frame):
-        """Detecta rostos no frame com validação MELHORADA"""
+        """Detecta rostos no frame com otimização"""
         current_time = time.time()
         if current_time - self.last_detection_time < self.detection_interval:
             return self.cached_faces
 
         try:
             small_frame = cv2.resize(frame, (320, 240))
-
-            # ✅ USAR DETECTOR MAIS ROBUSTO PARA ÓCULOS
             detected_faces = DeepFace.extract_faces(
                 img_path=small_frame,
-                detector_backend="ssd",  # ✅ Alterado para SSD (melhor com óculos)
+                detector_backend="opencv",
                 enforce_detection=False,
-                align=True  # ✅ Alinhamento para melhor reconhecimento
+                align=False
             )
 
             faces = []
             for face in detected_faces:
-                if 'facial_area' in face and face['confidence'] > FACE_CONFIDENCE_THRESHOLD:
+                if 'facial_area' in face:
                     x = int(face['facial_area']['x'] * frame.shape[1] / 320)
                     y = int(face['facial_area']['y'] * frame.shape[0] / 240)
                     w = int(face['facial_area']['w'] * frame.shape[1] / 320)
                     h = int(face['facial_area']['h'] * frame.shape[0] / 240)
 
-                    # Validar tamanho mínimo e qualidade
+                    # Validar tamanho mínimo e qualidade básica
                     face_roi = frame[y:y + h, x:x + w]
                     if (w >= MIN_FACE_SIZE[0] and h >= MIN_FACE_SIZE[1] and
-                            face_roi.size > 0):
-                        faces.append((x, y, w, h, face['confidence']))
+                            face_roi.size > 0 and calculate_sharpness(face_roi) > 50):
+                        faces.append((x, y, w, h))
 
             self.cached_faces = faces
             self.last_detection_time = current_time
@@ -178,7 +164,7 @@ class FaceDetector:
             return []
 
 
-# ====================== CAPTURA PRINCIPAL ATUALIZADA ======================
+# ====================== CAPTURA PRINCIPAL ======================
 class FluidFaceCapture:
     def __init__(self, nome, sobrenome, turma, tipo, progress_callback=None, frame_callback=None):
         self.nome = nome
@@ -194,13 +180,13 @@ class FluidFaceCapture:
 
         self.detector = FaceDetector()
         self.last_face_time = 0
-        self.face_capture_interval = 1.0  # ✅ Aumentado intervalo para capturas mais variadas
+        self.face_capture_interval = 0.5  # 2 faces por segundo no máximo
         self.last_face_detected_time = 0
         self.consecutive_no_face_count = 0
 
-        # ✅ CONFIGURAÇÃO VGG-FACE MANTIDA
+        # ✅ CONFIGURAÇÃO VGG-FACE
         self.model_name = "VGG-Face"
-        self.embedding_dimension = 2622
+        self.embedding_dimension = 2622  # Dimensão do VGG-Face
 
     def update_progress(self, message=None):
         """Atualiza progresso"""
@@ -215,6 +201,7 @@ class FluidFaceCapture:
         """Envia frame para o cliente"""
         if self.frame_callback:
             try:
+                # Reduzir qualidade para transmissão
                 small_frame = cv2.resize(frame, (426, 320))
                 _, buffer = cv2.imencode('.jpg', small_frame, [cv2.IMWRITE_JPEG_QUALITY, 50])
                 jpg_as_text = base64.b64encode(buffer).decode('utf-8')
@@ -248,15 +235,15 @@ class FluidFaceCapture:
                 cur.execute("""
                     INSERT INTO usuarios (nome, sobrenome, turma, tipo, embeddings, foto_perfil)
                     VALUES (%s, %s, %s, %s, %s, %s)
-                    ON CONFLICT (nome, sobrenome, turma)
-                    DO UPDATE SET embeddings = EXCLUDED.embeddings,
+                    ON CONFLICT (nome, sobrenome, turma) 
+                    DO UPDATE SET embeddings = EXCLUDED.embeddings, 
                                   foto_perfil = EXCLUDED.foto_perfil,
                                   tipo = EXCLUDED.tipo,
                                   data_cadastro = CURRENT_TIMESTAMP
                 """, (self.nome, self.sobrenome, self.turma, self.tipo, Json(valid_embeddings), image_bytes))
 
                 conn.commit()
-                return True, f"Usuário salvo com {len(valid_embeddings)} embeddings"
+                return True, "Usuário salvo com sucesso"
 
         except Exception as e:
             logger.error(f"Erro ao salvar no banco: {str(e)}")
@@ -267,31 +254,25 @@ class FluidFaceCapture:
         try:
             embeddings = []
             successful = 0
-            quality_scores = []
 
             for i, face_img in enumerate(self.captured_faces):
                 try:
-                    # ✅ VALIDAÇÃO MAIS RIGOROSA
-                    is_valid, validation_msg = validate_face_quality(face_img)
+                    # Validar face
+                    is_valid, validation_msg = validate_face_image(face_img)
                     if not is_valid:
-                        logger.warning(f"Face {i + 1} rejeitada: {validation_msg}")
+                        logger.warning(f"Face {i + 1} inválida: {validation_msg}")
                         continue
-
-                    # Calcular score de qualidade
-                    sharpness = calculate_sharpness(face_img)
-                    quality_scores.append((i, sharpness))
 
                     # Salvar temporariamente para DeepFace
                     temp_path = f"temp_face_{int(time.time())}_{i}.jpg"
                     cv2.imwrite(temp_path, face_img)
 
-                    # ✅ USAR VGG-FACE COM CONFIGURAÇÃO OTIMIZADA
+                    # ✅ USAR VGG-FACE
                     embedding_obj = DeepFace.represent(
                         img_path=temp_path,
-                        model_name=self.model_name,
+                        model_name=self.model_name,  # VGG-Face
                         enforce_detection=False,
-                        detector_backend="skip",
-                        align=True  # ✅ Alinhamento para melhor precisão
+                        detector_backend="skip"
                     )
 
                     embedding = np.array(embedding_obj[0]["embedding"])
@@ -304,7 +285,7 @@ class FluidFaceCapture:
 
                     embeddings.append(embedding)
                     successful += 1
-                    logger.info(f"✅ Embedding {i + 1} gerado - {validation_msg}")
+                    logger.info(f"✅ Embedding {i + 1} gerado com sucesso")
 
                     # Limpar arquivo temporário
                     if os.path.exists(temp_path):
@@ -313,15 +294,6 @@ class FluidFaceCapture:
                 except Exception as e:
                     logger.warning(f"Erro no embedding {i + 1}: {e}")
                     continue
-
-            # ✅ SELECIONAR AS MELHORES 8 IMAGENS (se tiver mais)
-            if successful > MIN_PHOTOS_REQUIRED:
-                # Ordenar por qualidade e pegar as melhores
-                quality_scores.sort(key=lambda x: x[1], reverse=True)
-                best_indices = [idx for idx, _ in quality_scores[:MIN_PHOTOS_REQUIRED]]
-                embeddings = [embeddings[i] for i in best_indices]
-                successful = MIN_PHOTOS_REQUIRED
-                logger.info(f"📊 Selecionadas as {MIN_PHOTOS_REQUIRED} melhores imagens de {successful}")
 
             if successful >= MIN_PHOTOS_REQUIRED:
                 # Usar a melhor imagem como perfil
@@ -354,6 +326,7 @@ class FluidFaceCapture:
         max_attempts = 3
         for attempt in range(max_attempts):
             try:
+                # ✅ FECHAR QUALQUER CÂMERA ABERTA ANTES
                 self._cleanup_camera()
 
                 cap = cv2.VideoCapture(0)
@@ -386,17 +359,18 @@ class FluidFaceCapture:
         return None
 
     def _cleanup_camera(self):
-        """Limpa recursos da câmera"""
+        """Limpa recursos da câmera - IMPORTANTE PARA REUTILIZAÇÃO"""
         try:
+            # Tentar liberar qualquer câmera que possa estar aberta
             cap = cv2.VideoCapture(0)
             if cap.isOpened():
                 cap.release()
-            time.sleep(0.5)
+            time.sleep(0.5)  # Dar tempo para o sistema liberar
         except:
             pass
 
     def capture(self):
-        """Método principal de captura - ATUALIZADO PARA 8 FOTOS"""
+        """Método principal de captura - AGORA REUTILIZÁVEL"""
         self.running = True
         self.captured_faces = []
         self.captured_count = 0
@@ -411,11 +385,11 @@ class FluidFaceCapture:
 
             self.update_progress("Preparando câmera...")
             start_time = time.time()
-            no_face_timeout = 15  # ✅ Aumentado timeout
+            no_face_timeout = 10
 
             while (self.running and
                    self.captured_count < MIN_PHOTOS_REQUIRED and
-                   (time.time() - start_time) < 180):  # ✅ Timeout de 3 minutos
+                   (time.time() - start_time) < 120):  # Timeout de 2 minutos
 
                 ret, frame = cap.read()
                 if not ret:
@@ -435,13 +409,13 @@ class FluidFaceCapture:
                     self.last_face_detected_time = time.time()
                     self.consecutive_no_face_count = 0
 
-                    x, y, w, h, confidence = faces[0]
+                    x, y, w, h = faces[0]
                     cropped_face = frame[y:y + h, x:x + w]
 
                     # Verificar se deve capturar
                     current_time = time.time()
                     if (current_time - self.last_face_time) > self.face_capture_interval:
-                        is_valid, validation_msg = validate_face_quality(cropped_face)
+                        is_valid, validation_msg = validate_face_image(cropped_face)
                         if is_valid:
                             self.captured_faces.append(cropped_face.copy())
                             self.captured_count += 1
@@ -453,7 +427,7 @@ class FluidFaceCapture:
                                         (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
                             self.update_progress(f"Capturado: {self.captured_count}/{MIN_PHOTOS_REQUIRED}")
-                            logger.info(f"📸 Face {self.captured_count} capturada - Confiança: {confidence:.2f}")
+                            logger.info(f"📸 Face {self.captured_count} capturada com sucesso")
                         else:
                             cv2.rectangle(display_frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
                             cv2.putText(display_frame, "QUALIDADE BAIXA",
@@ -468,7 +442,7 @@ class FluidFaceCapture:
                     elapsed_no_face = time.time() - self.last_face_detected_time
 
                     if elapsed_no_face > no_face_timeout:
-                        return False, "❌ Nenhum rosto detectado por 15 segundos. Posicione seu rosto na câmera e tente novamente."
+                        return False, "❌ Nenhum rosto detectado por 10 segundos. Posicione seu rosto na câmera e tente novamente."
 
                     # Feedback visual
                     if elapsed_no_face > 3:
@@ -497,7 +471,7 @@ class FluidFaceCapture:
             else:
                 elapsed_no_face = time.time() - self.last_face_detected_time
                 if elapsed_no_face > no_face_timeout:
-                    return False, "❌ Nenhum rosto detectado por 15 segundos. Posicione seu rosto na câmera e tente novamente."
+                    return False, "❌ Nenhum rosto detectado por 10 segundos. Posicione seu rosto na câmera e tente novamente."
                 else:
                     return False, f"Captura incompleta: {self.captured_count}/{MIN_PHOTOS_REQUIRED}"
 
@@ -505,9 +479,11 @@ class FluidFaceCapture:
             logger.error(f"Erro na captura: {str(e)}")
             return False, f"Erro na captura: {str(e)}"
         finally:
+            # ✅ SEMPRE LIBERAR RECURSOS DA CÂMERA
             if cap and cap.isOpened():
                 cap.release()
             cv2.destroyAllWindows()
+            # ✅ LIMPAR CACHE DO DETECTOR PARA PRÓXIMA CAPTURA
             self.detector.cached_faces = []
             self.detector.last_detection_time = 0
             logger.info("✅ Recursos da câmera liberados para próxima captura")
