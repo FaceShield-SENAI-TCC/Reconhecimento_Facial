@@ -1,7 +1,6 @@
 """
-Serviço de Reconhecimento Facial MELHORADO
-Com validações rigorosas e tratamento para óculos
-Versão: 2.0 - Com 8 embeddings e reconhecimento mais preciso
+Serviço de Reconhecimento Facial com Monitoramento em Tempo Real
+Gerencia banco de dados PostgreSQL e processamento de imagens
 """
 
 import logging
@@ -29,24 +28,12 @@ class DatabaseConfig:
 class ModelConfig:
     """Configurações do modelo de reconhecimento - VGG-Face OTIMIZADO"""
     MODEL_NAME = "VGG-Face"
-
-    # ✅ THRESHOLD MAIS RIGOROSO para evitar falsos positivos
-    DISTANCE_THRESHOLD = 0.55  # ✅ Ajustado de 0.6 para 0.55
-
-    # ✅ NOVO: Threshold de confiança mínimo
-    MIN_CONFIDENCE_THRESHOLD = 0.7
-
-    MIN_FACE_SIZE = (120, 120)  # ✅ Aumentado tamanho mínimo
-
-    # ✅ DETECTOR OTIMIZADO PARA ÓCULOS
-    DETECTOR_BACKEND = "ssd"  # ✅ Alterado para SSD (melhor com óculos)
-
+    DISTANCE_THRESHOLD = 0.65  # ✅ AJUSTADO: Balance entre precisão e recall
+    MIN_FACE_SIZE = (60, 60)   # ✅ REDUZIDO: Para aceitar mais rostos
+    DETECTOR_BACKEND = "opencv"
     EMBEDDING_DIMENSION = 2622
-
-    # ✅ NOVOS PARÂMETROS DE QUALIDADE
-    MIN_SHARPNESS = 80  # ✅ Nitidez mínima para reconhecimento
-    MIN_BRIGHTNESS = 60  # ✅ Brilho mínimo
-    MAX_BRIGHTNESS = 190 # ✅ Brilho máximo
+    MIN_CONFIDENCE = 0.60      # ✅ REDUZIDO: Confiança mais acessível
+    MARGIN_REQUIREMENT = 0.03  # ✅ REDUZIDO: Margem mais flexível
 
 class DatabaseMonitor:
     """
@@ -151,8 +138,7 @@ class DatabaseMonitor:
 
 class FaceRecognitionService:
     """
-    Serviço principal de reconhecimento facial MELHORADO
-    Com 8 embeddings por usuário e validações rigorosas
+    Serviço principal de reconhecimento facial com monitoramento em tempo real
     """
 
     def __init__(self):
@@ -161,14 +147,6 @@ class FaceRecognitionService:
         self._db_config = DatabaseConfig()
         self._model_config = ModelConfig()
         self.database_monitor = DatabaseMonitor(self.load_facial_database)
-
-        # ✅ NOVO: Estatísticas de reconhecimento
-        self.recognition_stats = {
-            'total_attempts': 0,
-            'successful_auth': 0,
-            'failed_auth': 0,
-            'quality_rejections': 0
-        }
 
     def _get_db_connection(self) -> Optional[psycopg2.extensions.connection]:
         """Estabelece conexão com PostgreSQL"""
@@ -300,49 +278,6 @@ class FaceRecognitionService:
         else:
             raise ValueError("Embedding has zero norm")
 
-    def _calculate_sharpness(self, image):
-        """Calcula nitidez da imagem (melhorado)"""
-        if image is None or image.size == 0:
-            return 0
-        try:
-            small_img = cv2.resize(image, (100, 100))
-            gray = cv2.cvtColor(small_img, cv2.COLOR_BGR2GRAY)
-            gray = cv2.GaussianBlur(gray, (3, 3), 0)  # ✅ Reduzir ruído
-            return cv2.Laplacian(gray, cv2.CV_64F).var()
-        except:
-            return 0
-
-    def _validate_face_quality(self, face_image: np.ndarray) -> Tuple[bool, str]:
-        """
-        ✅ VALIDAÇÃO RIGOROSA da qualidade da face para reconhecimento
-        """
-        if face_image is None or face_image.size == 0:
-            return False, "Imagem vazia"
-
-        height, width = face_image.shape[:2]
-        if height < self._model_config.MIN_FACE_SIZE[0] or width < self._model_config.MIN_FACE_SIZE[1]:
-            return False, "Rosto muito pequeno"
-
-        # Validar nitidez
-        sharpness = self._calculate_sharpness(face_image)
-        if sharpness < self._model_config.MIN_SHARPNESS:
-            return False, f"Imagem muito borrada: {sharpness:.1f}"
-
-        # Validar brilho
-        gray = cv2.cvtColor(face_image, cv2.COLOR_BGR2GRAY)
-        brightness = np.mean(gray)
-        if brightness < self._model_config.MIN_BRIGHTNESS:
-            return False, f"Brilho muito baixo: {brightness:.1f}"
-        if brightness > self._model_config.MAX_BRIGHTNESS:
-            return False, f"Brilho muito alto: {brightness:.1f}"
-
-        # Validar contraste
-        contrast = np.std(gray)
-        if contrast < 35:
-            return False, f"Contraste insuficiente: {contrast:.1f}"
-
-        return True, f"Qualidade OK: Sharp={sharpness:.1f}, Bright={brightness:.1f}"
-
     def load_facial_database(self) -> bool:
         """
         Carrega embeddings faciais do PostgreSQL
@@ -417,7 +352,6 @@ class FaceRecognitionService:
                 logger.info("💡 Use the registration system to add users with VGG-Face embeddings")
             else:
                 logger.info(f"✅ Database loaded: {user_count} users, {embedding_count} embeddings")
-                logger.info(f"📊 Average embeddings per user: {embedding_count/user_count:.1f}")
             return True
 
         except Exception as e:
@@ -427,209 +361,239 @@ class FaceRecognitionService:
             if conn:
                 conn.close()
 
-    def _preprocess_face(self, face_image: np.ndarray) -> np.ndarray:
-        """
-        ✅ NOVO: Pré-processamento da imagem para melhor reconhecimento
-        Especialmente útil para usuários com óculos
-        """
-        try:
-            # Equalização de histograma para melhorar contraste
-            lab = cv2.cvtColor(face_image, cv2.COLOR_BGR2LAB)
-            lab[:,:,0] = cv2.createCLAHE(clipLimit=2.0).apply(lab[:,:,0])
-            processed = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
-
-            # Suavização leve para reduzir ruído
-            processed = cv2.GaussianBlur(processed, (1, 1), 0)
-
-            return processed
-        except:
-            return face_image
-
     def _extract_face_embedding(self, face_image: np.ndarray) -> Optional[np.ndarray]:
         """
-        Extrai embedding facial com validação MELHORADA
+        Extrai embedding facial da imagem usando VGG-Face
+
+        Args:
+            face_image: Imagem do rosto (BGR format)
+
+        Returns:
+            Optional[np.ndarray]: Embedding normalizado ou None
         """
         try:
-            # ✅ PRÉ-PROCESSAMENTO para melhorar reconhecimento com óculos
-            processed_face = self._preprocess_face(face_image)
-
             result = DeepFace.represent(
-                img_path=processed_face,
-                model_name=self._model_config.MODEL_NAME,
+                img_path=face_image,
+                model_name=self._model_config.MODEL_NAME,  # ✅ VGG-Face
                 detector_backend=self._model_config.DETECTOR_BACKEND,
                 enforce_detection=False,
-                align=True  # ✅ Alinhamento ativado
+                align=True  # ✅ Alinhamento para melhor precisão
             )
 
             if result and isinstance(result, list) and "embedding" in result[0]:
                 embedding = np.array(result[0]["embedding"], dtype=np.float32)
 
+                # ✅ Validar dimensão do VGG-Face
                 if embedding.shape[0] != self._model_config.EMBEDDING_DIMENSION:
-                    logger.error(f"Dimensão incorreta: {embedding.shape[0]}")
+                    logger.error(f"Wrong embedding dimension from VGG-Face: "
+                               f"expected {self._model_config.EMBEDDING_DIMENSION}, "
+                               f"got {embedding.shape[0]}")
                     return None
 
                 embedding_norm = np.linalg.norm(embedding)
                 return embedding / embedding_norm if embedding_norm > 0 else None
 
-            logger.warning("Nenhum embedding gerado")
+            logger.warning("No face embedding generated")
             return None
 
         except Exception as e:
-            logger.error(f"Falha na extração do embedding: {str(e)}")
+            logger.error(f"Face embedding extraction failed: {str(e)}")
             return None
 
-    def _recognize_face(self, face_image: np.ndarray) -> Tuple[Optional[str], Optional[float], Optional[float]]:
+    def _recognize_face(self, face_image: np.ndarray) -> Tuple[Optional[str], Optional[float]]:
         """
-        ✅ RECONHECIMENTO MELHORADO com múltiplas validações
+        Reconhece face comparando com banco de dados - MAIS FLEXÍVEL
         """
         try:
             captured_embedding = self._extract_face_embedding(face_image)
             if captured_embedding is None:
-                return None, None, None
+                return None, None
 
             best_match = None
             min_distance = float('inf')
-            best_confidence = 0.0
+            second_best_distance = float('inf')
+            best_user_data = None
 
-            # Busca no banco de dados
+            # Busca linear no banco de dados
             for user_key, user_data in self.facial_database.items():
                 for db_embedding in user_data['embeddings']:
-                    # Distância cosseno para VGG-Face
+                    # ✅ Usar distância cosseno para VGG-Face
                     distance = 1 - np.dot(captured_embedding, db_embedding)
 
-                    # ✅ VALIDAÇÃO DUPLA: distância E confiança
-                    confidence = 1 - distance
-
-                    if (distance < min_distance and
-                        distance < self._model_config.DISTANCE_THRESHOLD and
-                        confidence > self._model_config.MIN_CONFIDENCE_THRESHOLD):
-
+                    if distance < min_distance:
+                        second_best_distance = min_distance
                         min_distance = distance
                         best_match = user_key
-                        best_confidence = confidence
+                        best_user_data = user_data
 
-            return best_match, min_distance, best_confidence
+            # ✅ VERIFICAÇÃO MAIS FLEXÍVEL
+            if best_match and min_distance < self._model_config.DISTANCE_THRESHOLD:
+                confidence = 1 - min_distance
+
+                # Se há apenas um usuário no banco, aceitar com critérios mais flexíveis
+                if len(self.facial_database) == 1:
+                    if confidence >= 0.55:  # ✅ Critério mais baixo para único usuário
+                        logger.info(f"✅ Match ÚNICO usuário: {best_match} (distância: {min_distance:.4f}, confiança: {confidence:.4f})")
+                        return best_match, min_distance
+                    else:
+                        logger.info(f"❌ Match rejeitado: confiança insuficiente para único usuário ({confidence:.4f})")
+                        return None, None
+
+                # Para múltiplos usuários, usar margem
+                margin = second_best_distance - min_distance
+
+                if (confidence >= self._model_config.MIN_CONFIDENCE and
+                    margin >= self._model_config.MARGIN_REQUIREMENT):
+
+                    logger.info(f"✅ Match VÁLIDO: {best_match} (distância: {min_distance:.4f}, confiança: {confidence:.4f}, margem: {margin:.4f})")
+                    return best_match, min_distance
+                else:
+                    if confidence < self._model_config.MIN_CONFIDENCE:
+                        logger.info(f"❌ Match rejeitado: confiança insuficiente ({confidence:.4f} < {self._model_config.MIN_CONFIDENCE})")
+                    else:
+                        logger.info(f"❌ Match rejeitado: margem insuficiente ({margin:.4f} < {self._model_config.MARGIN_REQUIREMENT})")
+                    return None, None
+
+            else:
+                if best_match:
+                    logger.info(f"❌ Match rejeitado: distância muito alta ({min_distance:.4f} >= {self._model_config.DISTANCE_THRESHOLD})")
+                else:
+                    logger.info("❌ Nenhum match encontrado no banco de dados")
+            return None, None
 
         except Exception as e:
-            logger.error(f"Falha no reconhecimento: {str(e)}")
-            return None, None, None
+            logger.error(f"Face recognition failed: {str(e)}")
+            return None, None
 
     def _decode_base64_image(self, image_data: str) -> Optional[np.ndarray]:
-        """Decodifica imagem base64 para array numpy"""
+        """
+        Decodifica imagem base64 para array numpy
+
+        Args:
+            image_data: String base64 da imagem
+
+        Returns:
+            Optional[np.ndarray]: Imagem decodificada ou None
+        """
         try:
             img_bytes = base64.b64decode(image_data)
             nparr = np.frombuffer(img_bytes, np.uint8)
             image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             return image if image is not None and image.size > 0 else None
         except Exception as e:
-            logger.error(f"Falha na decodificação: {str(e)}")
+            logger.error(f"Image decoding failed: {str(e)}")
             return None
 
     def _detect_face(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
         """
-        Detecção de rostos MELHORADA
+        Detecta rostos na imagem - MAIS FLEXÍVEL
         """
         try:
-            detected_faces = DeepFace.extract_faces(
-                img_path=image,
-                detector_backend=self._model_config.DETECTOR_BACKEND,  # ✅ SSD
-                enforce_detection=False
-            )
+            # ✅ TENTAR DIFERENTES DETECTORES
+            detectors_to_try = ["opencv", "ssd"]
 
-            if (detected_faces and len(detected_faces) > 0 and
-                "facial_area" in detected_faces[0] and
-                detected_faces[0].get('confidence', 0) > 0.7):  # ✅ Confiança mínima
-                return detected_faces[0]
+            for detector in detectors_to_try:
+                try:
+                    detected_faces = DeepFace.extract_faces(
+                        img_path=image,
+                        detector_backend=detector,
+                        enforce_detection=False,
+                        align=False
+                    )
 
+                    if (detected_faces and len(detected_faces) > 0 and
+                        "facial_area" in detected_faces[0]):
+
+                        face_data = detected_faces[0]
+
+                        # ✅ VALIDAÇÃO MAIS FLEXÍVEL
+                        facial_area = face_data["facial_area"]
+                        x, y, w, h = facial_area['x'], facial_area['y'], facial_area['w'], facial_area['h']
+
+                        # Verificar se a região da face é válida
+                        if (w >= self._model_config.MIN_FACE_SIZE[0] and
+                            h >= self._model_config.MIN_FACE_SIZE[1] and
+                            x >= 0 and y >= 0 and
+                            x + w <= image.shape[1] and y + h <= image.shape[0]):
+
+                            logger.info(f"✅ Rosto detectado com {detector} (tamanho: {w}x{h})")
+                            return face_data
+
+                except Exception as e:
+                    logger.debug(f"Detector {detector} falhou: {str(e)}")
+                    continue
+
+            logger.warning("❌ Nenhum rosto detectado")
             return None
 
         except Exception as e:
-            logger.error(f"Falha na detecção: {str(e)}")
+            logger.error(f"Face detection failed: {str(e)}")
             return None
 
     def process_face_login(self, image_data: str) -> Dict[str, Any]:
         """
-        ✅ PROCESSAMENTO DE LOGIN MELHORADO com validações rigorosas
+        Processa tentativa de login por reconhecimento facial - MAIS FLEXÍVEL
         """
-        self.recognition_stats['total_attempts'] += 1
-
         # Verificar se há usuários no banco
         if not self.facial_database:
-            self.recognition_stats['failed_auth'] += 1
             return {
                 "authenticated": False,
                 "user": None,
                 "confidence": 0.0,
-                "message": "⚠️ Nenhum usuário cadastrado no sistema",
+                "message": "⚠️ Nenhum usuário cadastrado no sistema. Use o sistema de cadastro primeiro.",
                 "timestamp": self.get_current_timestamp()
             }
 
         # Decodificar imagem
         frame = self._decode_base64_image(image_data)
         if frame is None:
-            self.recognition_stats['failed_auth'] += 1
             return self._error_response("Dados de imagem inválidos")
+
+        # ✅ APLICAR MELHORIAS NA IMAGEM
+        try:
+            # Melhorar contraste
+            lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
+            lab[:,:,0] = cv2.createCLAHE(clipLimit=2.0).apply(lab[:,:,0])
+            frame = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+        except:
+            pass
 
         # Detectar rosto
         face_data = self._detect_face(frame)
         if not face_data:
-            self.recognition_stats['failed_auth'] += 1
-            return self._error_response("Nenhum rosto detectado - posicione-se melhor")
+            return self._error_response("Nenhum rosto detectado - posicione-se melhor na frente da câmera")
 
-        # Extrair região do rosto
+        # Extrair e reconhecer rosto
         face_area = face_data["facial_area"]
-        x, y, w, h = face_area['x'], face_area['y'], face_area['w'], face_area['h']
-
-        # ✅ VALIDAR TAMANHO DO ROSTO
-        if w < self._model_config.MIN_FACE_SIZE[0] or h < self._model_config.MIN_FACE_SIZE[1]:
-            self.recognition_stats['failed_auth'] += 1
-            return self._error_response("Rosto muito pequeno - aproxime-se da câmera")
-
+        x, y = face_area['x'], face_area['y']
+        w, h = face_area['w'], face_area['h']
         face_roi = frame[y:y+h, x:x+w]
 
-        # ✅ VALIDAÇÃO RIGOROSA DE QUALIDADE
-        is_quality_ok, quality_msg = self._validate_face_quality(face_roi)
-        if not is_quality_ok:
-            self.recognition_stats['quality_rejections'] += 1
-            return self._error_response(f"Qualidade insuficiente: {quality_msg}")
+        user, distance = self._recognize_face(face_roi)
 
-        # Reconhecer rosto
-        user, distance, confidence = self._recognize_face(face_roi)
-
-        if user and confidence and confidence > self._model_config.MIN_CONFIDENCE_THRESHOLD:
-            self.recognition_stats['successful_auth'] += 1
-
-            # ✅ LOG DETALHADO para análise
-            logger.info(f"✅ AUTH SUCCESS: {user} - Dist: {distance:.3f} - Conf: {confidence:.3f}")
-
-            return self._success_response(user, confidence, distance)
+        if user:
+            confidence = 1 - distance
+            user_data = self.facial_database[user]['info']
+            return {
+                "authenticated": True,
+                "user": user,
+                "confidence": round(confidence, 4),
+                "distance": round(distance, 4),
+                "user_info": user_data,
+                "message": f"Bem-vindo(a), {user_data['nome']}!",
+                "timestamp": self.get_current_timestamp()
+            }
         else:
-            self.recognition_stats['failed_auth'] += 1
-
-            # ✅ LOG PARA ANÁLISE DE FALHAS
-            if user:  # Usuário encontrado mas confiança baixa
-                logger.warning(f"⚠️ AUTH REJECTED: {user} - Confiança muito baixa: {confidence:.3f}")
-            else:
-                logger.info(f"❌ AUTH FAILED: Usuário não reconhecido")
-
             return self._rejection_response()
 
-    def _success_response(self, user: str, confidence: float, distance: float) -> Dict[str, Any]:
+    def _success_response(self, user: str, confidence: float) -> Dict[str, Any]:
         """Resposta para autenticação bem-sucedida"""
-        user_data = self.facial_database[user]['info']
-
         return {
             "authenticated": True,
             "user": user,
-            "user_details": user_data,  # ✅ MAIS INFORMAÇÕES
             "confidence": round(confidence, 4),
-            "distance": round(distance, 4),  # ✅ NOVO: incluir distância
-            "message": f"Bem-vindo(a), {user_data['nome']}!",
-            "timestamp": self.get_current_timestamp(),
-            "stats": {  # ✅ NOVO: estatísticas
-                "total_attempts": self.recognition_stats['total_attempts'],
-                "success_rate": round(self.recognition_stats['successful_auth'] / self.recognition_stats['total_attempts'] * 100, 1)
-            }
+            "message": f"Bem-vindo, {user}!",
+            "timestamp": self.get_current_timestamp()
         }
 
     def _rejection_response(self) -> Dict[str, Any]:
@@ -638,12 +602,8 @@ class FaceRecognitionService:
             "authenticated": False,
             "user": None,
             "confidence": 0.0,
-            "message": "Usuário não reconhecido - verifique posicionamento e iluminação",
-            "timestamp": self.get_current_timestamp(),
-            "stats": {
-                "total_attempts": self.recognition_stats['total_attempts'],
-                "success_rate": round(self.recognition_stats['successful_auth'] / self.recognition_stats['total_attempts'] * 100, 1)
-            }
+            "message": "Usuário não reconhecido - verifique se está cadastrado no sistema",
+            "timestamp": self.get_current_timestamp()
         }
 
     def _error_response(self, message: str) -> Dict[str, Any]:
@@ -657,38 +617,28 @@ class FaceRecognitionService:
         }
 
     def get_database_status(self) -> Dict[str, Any]:
-        """Status do banco de dados com estatísticas MELHORADAS"""
+        """Retorna status do banco de dados"""
         user_count = len(self.facial_database)
         total_embeddings = sum(len(user_data['embeddings']) for user_data in self.facial_database.values())
-
-        # ✅ ESTATÍSTICAS DE RECONHECIMENTO
-        success_rate = 0
-        if self.recognition_stats['total_attempts'] > 0:
-            success_rate = round(self.recognition_stats['successful_auth'] / self.recognition_stats['total_attempts'] * 100, 1)
 
         return {
             "status": "loaded" if self.facial_database else "empty",
             "user_count": user_count,
             "total_embeddings": total_embeddings,
-            "avg_embeddings_per_user": round(total_embeddings / user_count, 1) if user_count > 0 else 0,
             "last_update": self.last_update,
             "monitoring_active": self.database_monitor.running if hasattr(self, 'database_monitor') else False,
             "database_type": "PostgreSQL",
             "model": self._model_config.MODEL_NAME,
             "embedding_dimension": self._model_config.EMBEDDING_DIMENSION,
             "threshold": self._model_config.DISTANCE_THRESHOLD,
-            "recognition_stats": {  # ✅ NOVO: estatísticas
-                "total_attempts": self.recognition_stats['total_attempts'],
-                "successful_auth": self.recognition_stats['successful_auth'],
-                "failed_auth": self.recognition_stats['failed_auth'],
-                "quality_rejections": self.recognition_stats['quality_rejections'],
-                "success_rate": f"{success_rate}%"
-            }
+            "min_confidence": self._model_config.MIN_CONFIDENCE,
+            "min_face_size": self._model_config.MIN_FACE_SIZE,
+            "margin_requirement": self._model_config.MARGIN_REQUIREMENT
         }
 
     def reload_database(self) -> Tuple[bool, str]:
         """
-        Recarrega banco de dados com logging MELHORADO
+        Recarrega banco de dados
 
         Returns:
             Tuple[bool, str]: (sucesso, mensagem)
@@ -696,29 +646,25 @@ class FaceRecognitionService:
         success = self.load_facial_database()
         if success:
             status = self.get_database_status()
-            message = (f"Database recarregado - {status['user_count']} usuários, "
-                      f"{status['total_embeddings']} embeddings "
-                      f"(média: {status['avg_embeddings_per_user']} por usuário)")
-
-            # ✅ LOG DETALHADO
-            logger.info(f"🔄 {message}")
-            logger.info(f"📊 Estatísticas: {status['recognition_stats']}")
-
+            message = f"Database reloaded - {status['user_count']} users, {status['total_embeddings']} embeddings"
             return True, message
         else:
-            return False, "Falha no recarregamento do banco"
+            return False, "Database reload failed"
 
     def initialize(self) -> bool:
-        """Inicializa o serviço com logging MELHORADO"""
-        logger.info("🔧 Inicializando Serviço de Reconhecimento Facial MELHORADO...")
-        logger.info(f"🎯 Modelo: {self._model_config.MODEL_NAME}")
-        logger.info(f"📊 Dimensão: {self._model_config.EMBEDDING_DIMENSION}")
-        logger.info(f"🎯 Threshold: {self._model_config.DISTANCE_THRESHOLD}")
-        logger.info(f"🔍 Detector: {self._model_config.DETECTOR_BACKEND} (otimizado para óculos)")
+        """Inicializa o serviço com monitoramento em tempo real"""
+        logger.info("🔧 Initializing Face Recognition Service...")
+        logger.info(f"🎯 Using model: {self._model_config.MODEL_NAME}")
+        logger.info(f"📊 Embedding dimension: {self._model_config.EMBEDDING_DIMENSION}")
+        logger.info(f"🎪 Configuração OTIMIZADA para reconhecimento preciso")
+        logger.info(f"   📏 Tamanho mínimo do rosto: {self._model_config.MIN_FACE_SIZE}")
+        logger.info(f"   📐 Threshold de distância: {self._model_config.DISTANCE_THRESHOLD}")
+        logger.info(f"   🎯 Confiança mínima: {self._model_config.MIN_CONFIDENCE}")
+        logger.info(f"   📊 Margem necessária: {self._model_config.MARGIN_REQUIREMENT}")
 
         # 1. Criar tabela se não existir
         if not self._create_table_if_not_exists():
-            logger.error("❌ Falha na criação da tabela")
+            logger.error("❌ Failed to create database table")
             return False
 
         # 2. Configurar triggers no banco de dados
@@ -731,13 +677,11 @@ class FaceRecognitionService:
         monitor_success = self.database_monitor.start_monitoring()
 
         if db_success:
-            status = self.get_database_status()
-            logger.info(f"✅ Database carregado: {status['user_count']} usuários, {status['total_embeddings']} embeddings")
-
             if trigger_success and monitor_success:
-                logger.info("🎯 Monitoramento em tempo real: ATIVO")
+                logger.info("🎯 Real-time database monitoring: ACTIVE")
             else:
-                logger.warning("⚠️ Monitoramento em tempo real: LIMITADO")
+                logger.warning("⚠️ Real-time database monitoring: LIMITED")
+                logger.info("💡 Manual reload available via /reload-database endpoint")
 
         return db_success
 
