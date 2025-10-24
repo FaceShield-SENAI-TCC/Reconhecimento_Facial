@@ -26,7 +26,7 @@ SERVER_PORT = int(os.getenv("SERVER_PORT", "7001"))
 
 # Configurações do banco via environment variables
 DB_CONFIG = {
-    "dbname": os.getenv("DB_NAME", "faceshild"),
+    "dbname": os.getenv("DB_NAME", "faceshield"),
     "user": os.getenv("DB_USER", "postgres"),
     "password": os.getenv("DB_PASSWORD", "root"),
     "host": os.getenv("DB_HOST", "localhost"),

@@ -1,6 +1,6 @@
 """
 Serviço de Reconhecimento Facial com Monitoramento em Tempo Real
-VERSÃO AJUSTADA - Critérios mais tolerantes para aceitar usuários cadastrados
+VERSÃO COM ATUALIZAÇÃO AUTOMÁTICA DO BANCO
 """
 
 import logging
@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 class DatabaseConfig:
     """Configurações do banco de dados PostgreSQL com variáveis de ambiente"""
-    DB_NAME = os.getenv("DB_NAME", "faceshild")
+    DB_NAME = os.getenv("DB_NAME", "faceshield")
     DB_USER = os.getenv("DB_USER", "postgres")
     DB_PASSWORD = os.getenv("DB_PASSWORD", "root")
     DB_HOST = os.getenv("DB_HOST", "localhost")
@@ -43,14 +43,16 @@ class DatabaseConfig:
             raise ValueError("Configurações de banco de dados incompletas")
 
 class ModelConfig:
-    """Configurações do modelo de reconhecimento - MAIS TOLERANTE"""
+    """Configurações do modelo de reconhecimento - SEGURO E PRECISO"""
     MODEL_NAME = "VGG-Face"
-    DISTANCE_THRESHOLD = 0.68  # ✅ AUMENTADO: era 0.60 - maior distância = mais tolerante
-    MIN_FACE_SIZE = (80, 80)   # ✅ REDUZIDO: era 100x100 - aceita rostos menores
-    DETECTOR_BACKEND = "skip"  # COMPATÍVEL com cadastro
+    DISTANCE_THRESHOLD = 0.25
+    MIN_FACE_SIZE = (100, 100)
+    DETECTOR_BACKEND = "skip"
     EMBEDDING_DIMENSION = 2622
-    MIN_CONFIDENCE = 0.55      # ✅ REDUZIDO: era 0.70 - confiança mínima mais baixa
-    MARGIN_REQUIREMENT = 0.008 # ✅ REDUZIDO: era 0.015 - margem menor entre 1º e 2º
+    MIN_CONFIDENCE = 0.75
+    MARGIN_REQUIREMENT = 0.03
+    HIGH_CONFIDENCE_THRESHOLD = 0.85
+    VERY_LOW_DISTANCE = 0.15
 
 @dataclass
 class RecognitionMetrics:
@@ -60,8 +62,10 @@ class RecognitionMetrics:
     failed_recognitions: int = 0
     no_face_detected: int = 0
     false_positives: int = 0
+    false_negatives: int = 0
     processing_times: deque = None
     user_recognitions: Counter = None
+    database_reloads: int = 0  # ✅ NOVO: Contador de recarregamentos do banco
 
     def __post_init__(self):
         if self.processing_times is None:
@@ -69,46 +73,115 @@ class RecognitionMetrics:
         if self.user_recognitions is None:
             self.user_recognitions = Counter()
 
-class ImageValidator:
-    """Validador de imagens base64"""
+class DatabaseMonitor:
+    """
+    Monitora o banco de dados PostgreSQL em tempo real usando LISTEN/NOTIFY
+    para detectar quando novos usuários são cadastrados
+    """
 
-    @staticmethod
-    def validate_base64_image(image_data: str) -> Tuple[bool, str]:
-        """
-        Valida dados de imagem base64
+    def __init__(self, database_reload_callback):
+        self.database_reload_callback = database_reload_callback
+        self.connection = None
+        self.monitor_thread = None
+        self.running = False
+        self._db_config = DatabaseConfig()
+        self.reconnect_delay = 5
 
-        Returns:
-            Tuple[bool, str]: (é_válido, mensagem_erro)
-        """
+    def start_monitoring(self):
+        """Inicia o monitoramento em tempo real"""
         try:
-            if not image_data or not isinstance(image_data, str):
-                return False, "Dados de imagem vazios ou inválidos"
-
-            if len(image_data) > 7 * 1024 * 1024:
-                return False, "Imagem muito grande (máximo 5MB)"
-
-            if 'data:image' in image_data:
-                image_data = image_data.split(',')[1]
-
-            base64_pattern = re.compile(r'^[A-Za-z0-9+/]*={0,2}$')
-            if not base64_pattern.match(image_data):
-                return False, "Formato base64 inválido"
-
-            try:
-                decoded = base64.b64decode(image_data)
-                if len(decoded) == 0:
-                    return False, "Dados base64 vazios após decodificação"
-            except Exception:
-                return False, "Falha na decodificação base64"
-
-            return True, "Imagem válida"
-
+            self.running = True
+            self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
+            self.monitor_thread.start()
+            logger.info("✅ Database monitoring started - Novos usuários serão detectados automaticamente")
+            return True
         except Exception as e:
-            return False, f"Erro na validação: {str(e)}"
+            logger.error(f"❌ Failed to start database monitoring: {str(e)}")
+            return False
+
+    def stop_monitoring(self):
+        """Para o monitoramento"""
+        self.running = False
+        if self.connection and not self.connection.closed:
+            try:
+                self.connection.close()
+            except:
+                pass
+        logger.info("⏹️ Database monitoring stopped")
+
+    def _monitor_loop(self):
+        """Loop principal de monitoramento"""
+        while self.running:
+            try:
+                # Estabelecer conexão para monitoramento
+                self.connection = psycopg2.connect(
+                    dbname=self._db_config.DB_NAME,
+                    user=self._db_config.DB_USER,
+                    password=self._db_config.DB_PASSWORD,
+                    host=self._db_config.DB_HOST,
+                    port=self._db_config.DB_PORT,
+                    connect_timeout=10
+                )
+                self.connection.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+
+                cursor = self.connection.cursor()
+                cursor.execute("LISTEN usuarios_update;")
+                logger.info("👂 Listening for database changes (novos usuários)...")
+
+                # Loop de escuta por notificações
+                while self.running and self.connection and not self.connection.closed:
+                    try:
+                        # Verificar por notificações
+                        self.connection.poll()
+                        while self.connection.notifies:
+                            notify = self.connection.notifies.pop(0)
+                            logger.info(f"🔄 Database change detected: {notify.payload}")
+
+                            # Recarregar o banco de dados
+                            if self.database_reload_callback:
+                                logger.info("🔄 Recarregando banco de dados devido a mudanças...")
+                                self.database_reload_callback()
+
+                        # Pequeno delay para evitar uso excessivo de CPU
+                        time.sleep(1)
+
+                    except psycopg2.InterfaceError as e:
+                        logger.warning(f"Database connection interrupted: {str(e)}")
+                        break
+                    except Exception as e:
+                        logger.error(f"Error in monitor inner loop: {str(e)}")
+                        break
+
+            except psycopg2.OperationalError as e:
+                logger.warning(f"❌ Database connection failed, retrying in {self.reconnect_delay}s: {str(e)}")
+            except Exception as e:
+                logger.error(f"❌ Monitor loop error: {str(e)}")
+
+            # Esperar antes de tentar reconectar
+            if self.running:
+                time.sleep(self.reconnect_delay)
+
+    def trigger_manual_reload(self):
+        """Dispara uma atualização manual no banco de dados"""
+        try:
+            conn = psycopg2.connect(
+                dbname=self._db_config.DB_NAME,
+                user=self._db_config.DB_USER,
+                password=self._db_config.DB_PASSWORD,
+                host=self._db_config.DB_HOST,
+                port=self._db_config.DB_PORT
+            )
+            conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+            cursor = conn.cursor()
+            cursor.execute("NOTIFY usuarios_update, 'manual_reload';")
+            conn.close()
+            logger.info("🔔 Manual database reload triggered")
+        except Exception as e:
+            logger.error(f"Failed to trigger manual reload: {str(e)}")
 
 class FaceRecognitionService:
     """
-    Serviço principal de reconhecimento facial - VERSÃO MAIS TOLERANTE
+    Serviço principal de reconhecimento facial com atualização automática do banco
     """
 
     def __init__(self):
@@ -116,11 +189,12 @@ class FaceRecognitionService:
         self.last_update = None
         self._db_config = DatabaseConfig()
         self._model_config = ModelConfig()
-        self.validator = ImageValidator()
         self.metrics = RecognitionMetrics()
         self._metrics_lock = threading.RLock()
 
-        # Validar configurações na inicialização
+        # ✅ NOVO: Monitor de banco de dados em tempo real
+        self.database_monitor = DatabaseMonitor(self.load_facial_database)
+
         DatabaseConfig.validate_config()
 
     @contextmanager
@@ -137,38 +211,58 @@ class FaceRecognitionService:
                 connect_timeout=10
             )
             yield conn
-        except psycopg2.OperationalError as e:
-            logger.error(f"❌ Erro de conexão com o banco: {str(e)}")
-            raise
         except Exception as e:
-            logger.error(f"❌ Erro inesperado na conexão: {str(e)}")
+            logger.error(f"❌ Erro de conexão com o banco: {str(e)}")
             raise
         finally:
             if conn:
                 conn.close()
 
-    def _validate_embedding_dimension(self, embedding) -> bool:
-        """Valida se o embedding tem a dimensão correta para VGG-Face"""
-        if not embedding or len(embedding) != self._model_config.EMBEDDING_DIMENSION:
+    def _setup_database_triggers(self):
+        """Configura triggers no PostgreSQL para notificar quando novos usuários são cadastrados"""
+        try:
+            with self.get_db_connection() as conn:
+                with conn.cursor() as cursor:
+                    # Criar função de trigger se não existir
+                    cursor.execute("""
+                        CREATE OR REPLACE FUNCTION notify_usuarios_update()
+                        RETURNS TRIGGER AS $$
+                        BEGIN
+                            PERFORM pg_notify('usuarios_update',
+                                CASE
+                                    WHEN TG_OP = 'INSERT' THEN 'user_added'
+                                    WHEN TG_OP = 'UPDATE' THEN 'user_updated' 
+                                    WHEN TG_OP = 'DELETE' THEN 'user_deleted'
+                                END
+                            );
+                            RETURN NEW;
+                        END;
+                        $$ LANGUAGE plpgsql;
+                    """)
+
+                    # Criar trigger para INSERT, UPDATE, DELETE
+                    cursor.execute("""
+                        DROP TRIGGER IF EXISTS usuarios_notify_trigger ON usuarios;
+                    """)
+
+                    cursor.execute("""
+                        CREATE TRIGGER usuarios_notify_trigger
+                        AFTER INSERT OR UPDATE OR DELETE ON usuarios
+                        FOR EACH ROW EXECUTE FUNCTION notify_usuarios_update();
+                    """)
+
+                    conn.commit()
+                    logger.info("✅ Database triggers configured for real-time updates")
+                    return True
+
+        except Exception as e:
+            logger.warning(f"⚠️ Could not setup database triggers: {str(e)}")
+            logger.info("💡 Sistema funcionará com atualização manual do banco")
             return False
-        return True
-
-    def _normalize_embedding(self, embedding) -> np.ndarray:
-        """Normaliza o embedding para comparação"""
-        embedding_array = np.array(embedding, dtype=np.float32)
-        embedding_norm = np.linalg.norm(embedding_array)
-
-        if embedding_norm > 0:
-            return embedding_array / embedding_norm
-        else:
-            raise ValueError("Embedding has zero norm")
 
     def load_facial_database(self) -> bool:
         """
-        Carrega embeddings faciais do PostgreSQL
-
-        Returns:
-            bool: True se carregado com sucesso
+        Carrega embeddings faciais do PostgreSQL com verificação de atualização
         """
         logger.info("🔄 Loading facial database from PostgreSQL...")
 
@@ -184,12 +278,10 @@ class FaceRecognitionService:
                     database = {}
                     user_count = 0
                     embedding_count = 0
-                    invalid_embeddings = 0
 
                     for nome, sobrenome, turma, tipo, embeddings in cursor.fetchall():
                         user_info = {
                             'display_name': f"{nome} {sobrenome}",
-                            'full_info': f"{nome} {sobrenome} - {turma} ({tipo})",
                             'nome': nome,
                             'sobrenome': sobrenome,
                             'turma': turma,
@@ -198,18 +290,11 @@ class FaceRecognitionService:
 
                         valid_embeddings = []
                         for embedding in embeddings:
-                            if self._validate_embedding_dimension(embedding):
-                                try:
-                                    normalized_embedding = self._normalize_embedding(embedding)
-                                    valid_embeddings.append(normalized_embedding)
-                                except Exception as e:
-                                    logger.warning(f"Invalid embedding for {user_info['display_name']}: {str(e)}")
-                                    invalid_embeddings += 1
-                            else:
-                                invalid_embeddings += 1
-                                logger.warning(f"Wrong embedding dimension for {user_info['display_name']}: "
-                                             f"expected {self._model_config.EMBEDDING_DIMENSION}, "
-                                             f"got {len(embedding) if embedding else 'None'}")
+                            if embedding and len(embedding) == self._model_config.EMBEDDING_DIMENSION:
+                                embedding_array = np.array(embedding, dtype=np.float32)
+                                embedding_norm = np.linalg.norm(embedding_array)
+                                if embedding_norm > 0:
+                                    valid_embeddings.append(embedding_array / embedding_norm)
 
                         if valid_embeddings:
                             database[user_info['display_name']] = {
@@ -218,19 +303,22 @@ class FaceRecognitionService:
                             }
                             user_count += 1
                             embedding_count += len(valid_embeddings)
-                            logger.debug(f"Loaded user: {user_info['display_name']} - {len(valid_embeddings)} embeddings")
 
+            # ✅ ATUALIZAR BANCO EM MEMÓRIA
+            old_user_count = len(self.facial_database)
             self.facial_database = database
             self.last_update = time.time()
 
-            if invalid_embeddings > 0:
-                logger.warning(f"⚠️ Found {invalid_embeddings} invalid embeddings (wrong dimension for VGG-Face)")
+            with self._metrics_lock:
+                self.metrics.database_reloads += 1
 
-            if user_count == 0:
-                logger.warning("⚠️ Database loaded but no users with valid embeddings found")
-                logger.info("💡 Use the registration system to add users with VGG-Face embeddings")
-            else:
-                logger.info(f"✅ Database loaded: {user_count} users, {embedding_count} embeddings")
+            logger.info(f"✅ Database loaded: {user_count} users, {embedding_count} embeddings")
+
+            if user_count > old_user_count:
+                logger.info(f"🎉 NOVOS USUÁRIOS DETECTADOS! Antes: {old_user_count}, Agora: {user_count}")
+            elif user_count < old_user_count:
+                logger.warning(f"⚠️ Usuários removidos: Antes: {old_user_count}, Agora: {user_count}")
+
             return True
 
         except Exception as e:
@@ -238,42 +326,31 @@ class FaceRecognitionService:
             return False
 
     def _extract_face_embedding(self, face_image: np.ndarray) -> Optional[np.ndarray]:
-        """
-        Extrai embedding facial da imagem usando VGG-Face
-        ✅ COMPATÍVEL com processo de cadastro (usa 'skip' como detector)
-        """
+        """Extrai embedding facial da imagem"""
         try:
-            # ✅ MESMA CONFIGURAÇÃO DO CADASTRO
             result = DeepFace.represent(
                 img_path=face_image,
                 model_name=self._model_config.MODEL_NAME,
-                detector_backend="skip",  # ✅ COMPATÍVEL: Não detecta, usa ROI direto
+                detector_backend="skip",
                 enforce_detection=False,
-                align=True  # ✅ COMPATÍVEL: Alinha como no cadastro
+                align=True
             )
 
             if result and isinstance(result, list) and "embedding" in result[0]:
                 embedding = np.array(result[0]["embedding"], dtype=np.float32)
 
-                if embedding.shape[0] != self._model_config.EMBEDDING_DIMENSION:
-                    logger.error(f"Wrong embedding dimension from VGG-Face: "
-                               f"expected {self._model_config.EMBEDDING_DIMENSION}, "
-                               f"got {embedding.shape[0]}")
-                    return None
+                if embedding.shape[0] == self._model_config.EMBEDDING_DIMENSION:
+                    embedding_norm = np.linalg.norm(embedding)
+                    return embedding / embedding_norm if embedding_norm > 0 else None
 
-                embedding_norm = np.linalg.norm(embedding)
-                return embedding / embedding_norm if embedding_norm > 0 else None
-
-            logger.warning("No face embedding generated")
             return None
-
         except Exception as e:
             logger.error(f"Face embedding extraction failed: {str(e)}")
             return None
 
-    def _recognize_face_tolerant(self, face_image: np.ndarray) -> Tuple[Optional[str], Optional[float]]:
+    def _recognize_face_secure(self, face_image: np.ndarray) -> Tuple[Optional[str], Optional[float]]:
         """
-        Reconhecimento facial MAIS TOLERANTE para usuários cadastrados
+        Reconhecimento facial SEGURO
         """
         try:
             captured_embedding = self._extract_face_embedding(face_image)
@@ -283,67 +360,47 @@ class FaceRecognitionService:
             best_match = None
             min_distance = float('inf')
             second_best_distance = float('inf')
-            best_user_data = None
 
-            # Busca linear no banco de dados
+            # Busca no banco de dados
             for user_key, user_data in self.facial_database.items():
                 for db_embedding in user_data['embeddings']:
-                    # ✅ MESMA MÉTRICA DO CADASTRO: Distância Cosseno
                     distance = 1 - np.dot(captured_embedding, db_embedding)
 
                     if distance < min_distance:
                         second_best_distance = min_distance
                         min_distance = distance
                         best_match = user_key
-                        best_user_data = user_data
                     elif distance < second_best_distance:
                         second_best_distance = distance
 
-            # ✅ CRITÉRIOS MAIS TOLERANTES
+            # ✅ CRITÉRIOS SEGUROS
             if best_match and min_distance < self._model_config.DISTANCE_THRESHOLD:
                 confidence = 1 - min_distance
-
-                # Se há apenas um usuário no banco - CRITÉRIOS MUITO MAIS TOLERANTES
-                if len(self.facial_database) == 1:
-                    if confidence >= 0.50:  # ✅ MUITO REDUZIDO: era 0.65
-                        logger.info(f"✅ Match ÚNICO usuário: {best_match} (dist: {min_distance:.4f}, conf: {confidence:.4f})")
-                        return best_match, min_distance
-                    else:
-                        logger.info(f"❌ Match rejeitado: confiança insuficiente para único usuário ({confidence:.4f} < 0.50)")
-                        return None, None
-
-                # Para múltiplos usuários - CRITÉRIOS MAIS TOLERANTES
                 margin = second_best_distance - min_distance
-                min_margin_required = self._model_config.MARGIN_REQUIREMENT
 
-                # ✅ REGRAS MAIS TOLERANTES:
-                high_confidence = confidence >= 0.70  # ✅ REDUZIDO: era 0.80
-                very_low_distance = min_distance < 0.45  # ✅ AUMENTADO: era 0.40
+                logger.info(f"🔍 Match encontrado: {best_match} - Distância: {min_distance:.4f}, Confiança: {confidence:.4f}, Margem: {margin:.4f}")
 
-                # ✅ ACEITAR COM CRITÉRIOS MAIS BAIXOS:
-                if high_confidence or very_low_distance:
-                    # Margem mínima muito reduzida para alta confiança
-                    if margin >= 0.001:  # ✅ MUITO REDUZIDO: era 0.005
-                        logger.info(f"✅ Match ACEITO (critério alto): {best_match} (dist: {min_distance:.4f}, conf: {confidence:.4f}, margem: {margin:.4f})")
-                        return best_match, min_distance
-                    else:
-                        logger.info(f"❌ Match rejeitado: critério alto mas margem insuficiente ({margin:.4f} < 0.001)")
-                        return None, None
-                elif (confidence >= self._model_config.MIN_CONFIDENCE and
-                      margin >= min_margin_required):
-                    logger.info(f"✅ Match VÁLIDO: {best_match} (dist: {min_distance:.4f}, conf: {confidence:.4f}, margem: {margin:.4f})")
+                # Critérios de aceitação
+                very_high_confidence = confidence >= self._model_config.HIGH_CONFIDENCE_THRESHOLD
+                very_low_distance = min_distance <= self._model_config.VERY_LOW_DISTANCE
+                good_confidence_with_margin = (confidence >= self._model_config.MIN_CONFIDENCE and
+                                            margin >= self._model_config.MARGIN_REQUIREMENT)
+
+                if very_high_confidence or very_low_distance:
+                    logger.info(f"✅ ACEITO - Critério alto: {best_match}")
                     return best_match, min_distance
-                else:
-                    if confidence < self._model_config.MIN_CONFIDENCE:
-                        logger.info(f"❌ Match rejeitado: confiança insuficiente ({confidence:.4f} < {self._model_config.MIN_CONFIDENCE})")
-                    else:
-                        logger.info(f"❌ Match rejeitado: margem insuficiente ({margin:.4f} < {min_margin_required})")
 
+                elif good_confidence_with_margin:
+                    logger.info(f"✅ ACEITO - Boa confiança com margem: {best_match}")
+                    return best_match, min_distance
+
+                else:
+                    logger.info(f"❌ REJEITADO - Confiança insuficiente ou margem pequena")
                     return None, None
 
             else:
                 if best_match:
-                    logger.info(f"❌ Match rejeitado: distância alta ({min_distance:.4f} >= {self._model_config.DISTANCE_THRESHOLD})")
+                    logger.info(f"❌ REJEITADO - Distância acima do threshold: {min_distance:.4f}")
                 else:
                     logger.info("❌ Nenhum match encontrado")
                 return None, None
@@ -353,120 +410,68 @@ class FaceRecognitionService:
             return None, None
 
     def _decode_base64_image(self, image_data: str) -> Optional[np.ndarray]:
-        """
-        Decodifica imagem base64 para array numpy
-        """
+        """Decodifica imagem base64 para array numpy"""
         try:
-            # Validar imagem antes de processar
-            is_valid, message = self.validator.validate_base64_image(image_data)
-            if not is_valid:
-                logger.error(f"❌ Imagem inválida: {message}")
-                return None
-
-            # Remover header se presente
             if 'data:image' in image_data:
                 image_data = image_data.split(',')[1]
 
             img_bytes = base64.b64decode(image_data)
             nparr = np.frombuffer(img_bytes, np.uint8)
             image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-
-            if image is None or image.size == 0:
-                logger.error("❌ Falha ao decodificar imagem")
-                return None
-
-            return image
+            return image if image is not None and image.size > 0 else None
 
         except Exception as e:
             logger.error(f"❌ Erro na decodificação de imagem: {str(e)}")
             return None
 
-    def _detect_face_tolerant(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
-        """
-        Detecta rostos na imagem - MAIS TOLERANTE
-        """
+    def _detect_face(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
+        """Detecta rostos na imagem"""
         try:
-            # ✅ MESMO PROCESSO DO CADASTRO: Detector OpenCV
-            detectors_to_try = ["opencv", "ssd"]  # ✅ ADICIONADO ssd como fallback
+            detected_faces = DeepFace.extract_faces(
+                img_path=image,
+                detector_backend="opencv",
+                enforce_detection=False,
+                align=False
+            )
 
-            for detector in detectors_to_try:
-                try:
-                    detected_faces = DeepFace.extract_faces(
-                        img_path=image,
-                        detector_backend=detector,
-                        enforce_detection=False,
-                        align=False  # ✅ COMPATÍVEL: Não alinha durante detecção
-                    )
+            if detected_faces and len(detected_faces) > 0 and "facial_area" in detected_faces[0]:
+                face_data = detected_faces[0]
+                facial_area = face_data["facial_area"]
+                w, h = facial_area['w'], facial_area['h']
 
-                    if (detected_faces and len(detected_faces) > 0 and
-                        "facial_area" in detected_faces[0]):
+                if w >= self._model_config.MIN_FACE_SIZE[0] and h >= self._model_config.MIN_FACE_SIZE[1]:
+                    return face_data
 
-                        face_data = detected_faces[0]
-                        facial_area = face_data["facial_area"]
-                        x, y, w, h = facial_area['x'], facial_area['y'], facial_area['w'], facial_area['h']
-
-                        # ✅ CRITÉRIOS MAIS TOLERANTES
-                        if (w >= self._model_config.MIN_FACE_SIZE[0] and
-                            h >= self._model_config.MIN_FACE_SIZE[1] and
-                            x >= 0 and y >= 0 and
-                            x + w <= image.shape[1] and y + h <= image.shape[0]):
-
-                            # ✅ VALIDAÇÃO DE NITIDEZ MAIS TOLERANTE
-                            face_roi = image[y:y+h, x:x+w]
-
-                            # Calcular nitidez (mais tolerante)
-                            try:
-                                small_img = cv2.resize(face_roi, (100, 100))
-                                gray = cv2.cvtColor(small_img, cv2.COLOR_BGR2GRAY)
-                                sharpness = cv2.Laplacian(gray, cv2.CV_64F).var()
-
-                                if sharpness > 30:  # ✅ LIMITE MAIS BAIXO: era 50
-                                    logger.info(f"✅ Rosto detectado com {detector} (tamanho: {w}x{h}, nitidez: {sharpness:.1f})")
-                                    return face_data
-                                else:
-                                    logger.warning(f"❌ Rosto muito borrado: {sharpness:.1f}")
-                            except:
-                                # ✅ ACEITAR MESMO SE NÃO CONSEGUIR CALCULAR NITIDEZ
-                                logger.info(f"✅ Rosto detectado com {detector} (tamanho: {w}x{h})")
-                                return face_data
-
-                except Exception as e:
-                    logger.debug(f"Detector {detector} falhou: {str(e)}")
-                    continue
-
-            logger.warning("❌ Nenhum rosto detectado ou rosto de baixa qualidade")
             return None
-
         except Exception as e:
             logger.error(f"Face detection failed: {str(e)}")
             return None
 
     def process_face_login(self, image_data: str) -> Dict[str, Any]:
-        """Processamento MAIS TOLERANTE para usuários cadastrados"""
+        """Processamento de login facial com verificação de banco atualizado"""
         start_time = time.time()
 
         try:
             with self._metrics_lock:
                 self.metrics.total_attempts += 1
 
-            # Verificar se há usuários no banco
+            # ✅ VERIFICAR SE O BANCO ESTÁ VAZIO
             if not self.facial_database:
-                with self._metrics_lock:
-                    self.metrics.failed_recognitions += 1
-                return {
-                    "authenticated": False,
-                    "user": None,
-                    "confidence": 0.0,
-                    "message": "⚠️ Nenhum usuário cadastrado no sistema. Use o sistema de cadastro primeiro.",
-                    "timestamp": self.get_current_timestamp()
-                }
+                logger.warning("⚠️ Banco de dados vazio - tentando recarregar...")
+                self.load_facial_database()
 
-            # Validar imagem
-            is_valid, message = self.validator.validate_base64_image(image_data)
-            if not is_valid:
-                with self._metrics_lock:
-                    self.metrics.failed_recognitions += 1
-                return self._error_response(f"Imagem inválida: {message}")
+                if not self.facial_database:
+                    with self._metrics_lock:
+                        self.metrics.failed_recognitions += 1
+                    return {
+                        "authenticated": False,
+                        "user": None,
+                        "confidence": 0.0,
+                        "message": "⚠️ Nenhum usuário cadastrado no sistema.",
+                        "timestamp": self.get_current_timestamp()
+                    }
+
+            logger.info(f"📊 Banco atual: {len(self.facial_database)} usuários cadastrados")
 
             # Decodificar imagem
             frame = self._decode_base64_image(image_data)
@@ -475,38 +480,21 @@ class FaceRecognitionService:
                     self.metrics.failed_recognitions += 1
                 return self._error_response("Dados de imagem inválidos")
 
-            # ✅ APLICAR MELHORIAS NA IMAGEM
-            try:
-                # Redimensionar se necessário
-                if frame.shape[0] > 800 or frame.shape[1] > 800:
-                    scale = 800 / max(frame.shape[0], frame.shape[1])
-                    new_width = int(frame.shape[1] * scale)
-                    new_height = int(frame.shape[0] * scale)
-                    frame = cv2.resize(frame, (new_width, new_height))
-
-                # Melhorar contraste
-                lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
-                lab[:,:,0] = cv2.createCLAHE(clipLimit=2.0).apply(lab[:,:,0])
-                frame = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
-            except Exception as e:
-                logger.warning(f"⚠️ Melhoria de imagem falhou: {str(e)}")
-
-            # Detectar rosto com validação mais tolerante
-            face_data = self._detect_face_tolerant(frame)
+            # Detectar rosto
+            face_data = self._detect_face(frame)
             if not face_data:
                 with self._metrics_lock:
                     self.metrics.failed_recognitions += 1
                     self.metrics.no_face_detected += 1
-                return self._error_response("Nenhum rosto detectado - posicione-se melhor na frente da câmera")
+                return self._error_response("Nenhum rosto detectado")
 
             # Extrair ROI do rosto
             face_area = face_data["facial_area"]
-            x, y = face_area['x'], face_area['y']
-            w, h = face_area['w'], face_area['h']
+            x, y, w, h = face_area['x'], face_area['y'], face_area['w'], face_area['h']
             face_roi = frame[y:y+h, x:x+w]
 
-            # ✅ USAR RECONHECIMENTO MAIS TOLERANTE
-            user, distance = self._recognize_face_tolerant(face_roi)
+            # Reconhecer face
+            user, distance = self._recognize_face_secure(face_roi)
 
             # Coletar métricas
             processing_time = time.time() - start_time
@@ -520,8 +508,6 @@ class FaceRecognitionService:
                     confidence = 1 - distance
                     user_data = self.facial_database[user]['info']
 
-                    logger.info(f"⏱️ Tempo de processamento: {processing_time:.3f}s")
-
                     return {
                         "authenticated": True,
                         "user": user,
@@ -529,12 +515,12 @@ class FaceRecognitionService:
                         "distance": round(distance, 4),
                         "user_info": user_data,
                         "message": f"Bem-vindo(a), {user_data['nome']}!",
-                        "timestamp": self.get_current_timestamp()
+                        "timestamp": self.get_current_timestamp(),
+                        "database_info": f"{len(self.facial_database)} usuários cadastrados"  # ✅ INFO EXTRA
                     }
                 else:
                     self.metrics.failed_recognitions += 1
 
-            logger.info(f"⏱️ Tempo de processamento: {processing_time:.3f}s")
             return self._rejection_response()
 
         except Exception as e:
@@ -543,16 +529,6 @@ class FaceRecognitionService:
             logger.error(f"❌ Erro no processamento: {str(e)}")
             return self._error_response("Erro interno no processamento")
 
-    def _success_response(self, user: str, confidence: float) -> Dict[str, Any]:
-        """Resposta para autenticação bem-sucedida"""
-        return {
-            "authenticated": True,
-            "user": user,
-            "confidence": round(confidence, 4),
-            "message": f"Bem-vindo, {user}!",
-            "timestamp": self.get_current_timestamp()
-        }
-
     def _rejection_response(self) -> Dict[str, Any]:
         """Resposta para usuário não reconhecido"""
         return {
@@ -560,7 +536,8 @@ class FaceRecognitionService:
             "user": None,
             "confidence": 0.0,
             "message": "Usuário não reconhecido - verifique se está cadastrado no sistema",
-            "timestamp": self.get_current_timestamp()
+            "timestamp": self.get_current_timestamp(),
+            "database_info": f"{len(self.facial_database)} usuários cadastrados"  # ✅ INFO EXTRA
         }
 
     def _error_response(self, message: str) -> Dict[str, Any]:
@@ -583,53 +560,16 @@ class FaceRecognitionService:
             "user_count": user_count,
             "total_embeddings": total_embeddings,
             "last_update": self.last_update,
-            "database_type": "PostgreSQL",
-            "model": self._model_config.MODEL_NAME,
-            "embedding_dimension": self._model_config.EMBEDDING_DIMENSION,
+            "monitoring_active": self.database_monitor.running,
+            "database_reloads": self.metrics.database_reloads,
+            "security_level": "HIGH",
             "threshold": self._model_config.DISTANCE_THRESHOLD,
-            "min_confidence": self._model_config.MIN_CONFIDENCE,
-            "min_face_size": self._model_config.MIN_FACE_SIZE,
-            "margin_requirement": self._model_config.MARGIN_REQUIREMENT,
-            "tolerance_level": "HIGH"  # ✅ NOVO: Indica tolerância aumentada
+            "min_confidence": self._model_config.MIN_CONFIDENCE
         }
 
-    def get_performance_metrics(self) -> Dict[str, Any]:
-        """Retorna métricas de desempenho"""
-        with self._metrics_lock:
-            times = list(self.metrics.processing_times)
-            avg_time = sum(times) / len(times) if times else 0
-
-            success_rate = (self.metrics.successful_recognitions /
-                          self.metrics.total_attempts if self.metrics.total_attempts > 0 else 0)
-
-            return {
-                "performance": {
-                    "total_attempts": self.metrics.total_attempts,
-                    "success_rate": round(success_rate, 4),
-                    "successful_recognitions": self.metrics.successful_recognitions,
-                    "failed_recognitions": self.metrics.failed_recognitions,
-                    "no_face_detected": self.metrics.no_face_detected,
-                    "false_positives": self.metrics.false_positives,
-                    "average_processing_time": round(avg_time, 3),
-                    "recent_processing_times": [round(t, 3) for t in times[-10:]]
-                },
-                "top_recognized_users": self.metrics.user_recognitions.most_common(5),
-                "database_status": self.get_database_status(),
-                "compatibility_info": {
-                    "cadastro_alignment": "FULL",
-                    "embedding_generation": "IDENTICAL",
-                    "face_detection": "COMPATIBLE",
-                    "recognition_tolerance": "HIGH"  # ✅ NOVO: Tolerância alta
-                }
-            }
-
     def reload_database(self) -> Tuple[bool, str]:
-        """
-        Recarrega banco de dados
-
-        Returns:
-            Tuple[bool, str]: (sucesso, mensagem)
-        """
+        """Recarrega banco de dados manualmente"""
+        logger.info("🔄 Recarregamento manual do banco de dados solicitado")
         success = self.load_facial_database()
         if success:
             status = self.get_database_status()
@@ -639,29 +579,34 @@ class FaceRecognitionService:
             return False, "Database reload failed"
 
     def initialize(self) -> bool:
-        """Inicializa o serviço"""
-        logger.info("🔧 Initializing Face Recognition Service...")
+        """Inicializa o serviço com monitoramento em tempo real"""
+        logger.info("🔧 Initializing Face Recognition Service with Real-Time Database Monitoring...")
         logger.info(f"🎯 Using model: {self._model_config.MODEL_NAME}")
-        logger.info(f"📊 Embedding dimension: {self._model_config.EMBEDDING_DIMENSION}")
-        logger.info(f"🎪 MODO TOLERANTE ATIVADO - Critérios relaxados para aceitar usuários cadastrados")
-        logger.info(f"   📏 Tamanho mínimo do rosto: {self._model_config.MIN_FACE_SIZE}")
-        logger.info(f"   📐 Threshold de distância: {self._model_config.DISTANCE_THRESHOLD}")
-        logger.info(f"   🎯 Confiança mínima: {self._model_config.MIN_CONFIDENCE}")
-        logger.info(f"   📊 Margem necessária: {self._model_config.MARGIN_REQUIREMENT}")
+        logger.info("🔄 SISTEMA DE ATUALIZAÇÃO AUTOMÁTICA ATIVADO")
 
-        # Carregar banco de dados inicial
+        # 1. Configurar triggers no banco de dados
+        trigger_success = self._setup_database_triggers()
+
+        # 2. Carregar banco de dados inicial
         db_success = self.load_facial_database()
 
+        # 3. Iniciar monitoramento em tempo real
+        monitor_success = self.database_monitor.start_monitoring()
+
         if db_success:
-            logger.info("✅ Facial recognition service initialized successfully")
-        else:
-            logger.error("❌ Failed to initialize facial recognition service")
+            if trigger_success and monitor_success:
+                logger.info("🎯 Real-time database monitoring: ACTIVE - Novos usuários serão detectados automaticamente")
+            else:
+                logger.warning("⚠️ Real-time database monitoring: LIMITED")
+                logger.info("💡 Manual reload available via /reload-database endpoint")
 
         return db_success
 
     def cleanup(self):
         """Limpeza do serviço"""
-        logger.info("🧹 Face recognition service cleaned up")
+        if hasattr(self, 'database_monitor'):
+            self.database_monitor.stop_monitoring()
+        logger.info("🧹 Serviço de reconhecimento facial finalizado")
 
     @staticmethod
     def get_current_timestamp() -> str:
