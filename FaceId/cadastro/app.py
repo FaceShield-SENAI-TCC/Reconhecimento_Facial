@@ -2,6 +2,9 @@
 Servidor de Cadastro Facial Refatorado
 Usa módulos compartilhados e estrutura profissional
 """
+import eventlet
+eventlet.monkey_patch()  # IMPORTANTE: Deve ser a primeira linha
+
 import os
 import logging
 import signal
@@ -32,18 +35,27 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = SECURITY_CONFIG.SECRET_KEY
 app.config['JSON_SORT_KEYS'] = False
 
-# Configuração CORS
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Configuração CORS mais permissiva para WebSocket
+CORS(app, resources={r"/*": {
+    "origins": "*",
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"]
+}})
 
-# SocketIO com configurações otimizadas
+# SocketIO com configurações otimizadas PARA PRODUÇÃO
 socketio = SocketIO(
     app,
     cors_allowed_origins="*",
     max_http_buffer_size=SECURITY_CONFIG.MAX_FILE_SIZE,
-    ping_timeout=60,
-    ping_interval=25,
+    ping_timeout=120,  # Aumentado
+    ping_interval=60,   # Aumentado
     logger=True,
-    engineio_logger=True
+    engineio_logger=True,
+    async_mode='eventlet',  # Forçar eventlet
+    always_connect=True,
+    allow_upgrades=True,
+    http_compression=True,
+    compression_threshold=1024
 )
 
 # Estado da aplicação
@@ -114,32 +126,41 @@ def on_connect():
         'status': 'connected',
         'ip_address': request.environ.get('REMOTE_ADDR', 'unknown')
     }
+
+    # Enviar confirmação de conexão
     emit("connected", {
         "status": "connected",
         "sid": request.sid,
-        "message": "Conectado ao servidor de captura facial"
+        "message": "Conectado ao servidor de captura facial",
+        "timestamp": datetime.now().isoformat()
     })
+
+    logger.info(f"📡 Cliente {request.sid} registrado com sucesso")
 
 @socketio.on('disconnect')
 def on_disconnect():
     """Cliente desconectado"""
-    if request.sid in active_captures:
-        capture = active_captures[request.sid]
+    client_sid = request.sid
+    logger.info(f"🔌 Iniciando desconexão para: {client_sid}")
+
+    if client_sid in active_captures:
+        capture = active_captures[client_sid]
         if capture:
+            logger.info(f"⏹️ Parando captura ativa para: {client_sid}")
             capture.stop()
-            logger.info(f"⏹️ Captura interrompida para cliente desconectado: {request.sid}")
-        del active_captures[request.sid]
+        del active_captures[client_sid]
 
-    if request.sid in connected_clients:
-        del connected_clients[request.sid]
+    if client_sid in connected_clients:
+        del connected_clients[client_sid]
 
-    logger.info(f"❌ Cliente desconectado: {request.sid}")
+    logger.info(f"❌ Cliente desconectado: {client_sid}")
 
 @socketio.on('start_camera')
 def on_start_camera(data):
     """Inicia captura facial para cadastro biométrico"""
     try:
         logger.info(f"🎬 Iniciando captura para SID: {request.sid}")
+        logger.info(f"📦 Dados recebidos: {data}")
 
         # Validação dos dados
         nome = data.get("nome", "").strip()
@@ -177,6 +198,7 @@ def on_start_camera(data):
 
         # Registrar cliente na sala
         join_room(request.sid)
+        logger.info(f"🏠 Cliente {request.sid} entrou na sala")
 
         # Atualizar informações do cliente
         connected_clients[request.sid].update({
@@ -189,6 +211,14 @@ def on_start_camera(data):
         active_captures[request.sid] = None
 
         logger.info(f"🚀 Iniciando captura para: {nome} {sobrenome} - {turma} ({tipo})")
+
+        # Enviar confirmação de início
+        emit("capture_started", {
+            "message": "Captura iniciada com sucesso",
+            "session_id": request.sid,
+            "user": f"{nome} {sobrenome}",
+            "timestamp": datetime.now().isoformat()
+        })
 
         # Iniciar captura em thread separada
         thread = threading.Thread(
@@ -209,6 +239,17 @@ def on_start_camera(data):
             "message": f"Erro interno ao iniciar captura: {str(e)}"
         })
 
+@socketio.on('test_connection')
+def on_test_connection(data):
+    """Teste de conexão WebSocket"""
+    logger.info(f"🧪 Teste de conexão recebido de {request.sid}: {data}")
+    emit("test_response", {
+        "status": "success",
+        "message": "Conexão WebSocket funcionando",
+        "timestamp": datetime.now().isoformat(),
+        "session_id": request.sid
+    })
+
 def run_face_capture(nome, sobrenome, turma, tipo, session_id):
     """Executa o processo de captura facial em thread separada"""
     try:
@@ -221,8 +262,10 @@ def run_face_capture(nome, sobrenome, turma, tipo, session_id):
                     'captured': progress['captured'],
                     'total': progress['total'],
                     'message': progress.get('message', ''),
-                    'session_id': session_id
+                    'session_id': session_id,
+                    'timestamp': datetime.now().isoformat()
                 }, room=session_id)
+                logger.debug(f"📊 Progresso enviado para {session_id}: {progress['captured']}/{progress['total']}")
             except Exception as e:
                 logger.error(f"Erro no callback de progresso: {str(e)}")
 
@@ -231,7 +274,8 @@ def run_face_capture(nome, sobrenome, turma, tipo, session_id):
             try:
                 socketio.emit('capture_frame', {
                     'frame': frame_data,
-                    'session_id': session_id
+                    'session_id': session_id,
+                    'timestamp': datetime.now().isoformat()
                 }, room=session_id)
             except Exception as e:
                 logger.error(f"Erro no callback de frame: {str(e)}")
@@ -250,6 +294,7 @@ def run_face_capture(nome, sobrenome, turma, tipo, session_id):
         active_captures[session_id] = capture
 
         # Executar captura
+        logger.info(f"🎯 Executando captura para sessão: {session_id}")
         success, message = capture.capture()
 
         # Enviar resultado final
@@ -297,7 +342,7 @@ def initialize_application():
         logger.info("🎯 Sistema configurado com as seguintes características:")
         logger.info(f"   📍 Porta: {APP_CONFIG.SERVER_PORT_CADASTRO}")
         logger.info(f"   📸 Fotos necessárias: {APP_CONFIG.MIN_PHOTOS_REQUIRED}")
-        logger.info("   🌐 WebSocket: Ativo")
+        logger.info("   🌐 WebSocket: Ativo com Eventlet")
         logger.info("   💾 Banco: PostgreSQL")
         logger.info("   🔄 Compatibilidade: FULL")
 
@@ -307,6 +352,25 @@ def initialize_application():
         logger.error(f"❌ Falha crítica na inicialização: {str(e)}")
         return False
 
+# Handler para graceful shutdown
+def signal_handler(sig, frame):
+    """Manipula sinais de desligamento"""
+    logger.info("🛑 Recebido sinal de desligamento...")
+    logger.info("🧹 Limpando recursos...")
+
+    # Parar todas as capturas ativas
+    for session_id, capture in list(active_captures.items()):
+        if capture:
+            capture.stop()
+            logger.info(f"⏹️ Captura parada para sessão: {session_id}")
+
+    logger.info("👋 Servidor finalizado graciosamente")
+    sys.exit(0)
+
+# Registrar handlers de sinal
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
+
 if __name__ == "__main__":
     logger.info("=" * 60)
     logger.info("🟢 INICIANDO SISTEMA DE CAPTURA FACIAL")
@@ -314,12 +378,16 @@ if __name__ == "__main__":
 
     if initialize_application():
         try:
+            logger.info(f"🌐 Servidor WebSocket iniciando na porta {APP_CONFIG.SERVER_PORT_CADASTRO}")
+            logger.info("📡 Aguardando conexões WebSocket...")
+
             socketio.run(
                 app,
                 host='0.0.0.0',
                 port=APP_CONFIG.SERVER_PORT_CADASTRO,
                 debug=False,
-                allow_unsafe_werkzeug=True
+                allow_unsafe_werkzeug=True,
+                use_reloader=False  # Importante para evitar dupla inicialização
             )
         except KeyboardInterrupt:
             logger.info("🛑 Servidor interrompido pelo usuário")

@@ -109,9 +109,18 @@ class FluidFaceCapture:
             try:
                 # Reduzir qualidade para transmissão
                 small_frame = cv2.resize(frame, (426, 320))
-                _, buffer = cv2.imencode('.jpg', small_frame, [cv2.IMWRITE_JPEG_QUALITY, 50])
-                jpg_as_text = base64.b64encode(buffer).decode('utf-8')
-                self.frame_callback(jpg_as_text)
+
+                # Codificar como JPEG
+                success, buffer = cv2.imencode('.jpg', small_frame, [
+                    cv2.IMWRITE_JPEG_QUALITY, 70  # Qualidade reduzida para performance
+                ])
+
+                if success:
+                    jpg_as_text = base64.b64encode(buffer).decode('utf-8')
+                    self.frame_callback(jpg_as_text)
+                else:
+                    logger.warning("Falha ao codificar frame JPEG")
+
             except Exception as e:
                 logger.error(f"Erro ao enviar frame: {e}")
 
@@ -202,51 +211,65 @@ class FluidFaceCapture:
         return best_idx
 
     def _setup_camera(self):
-        """Configura a câmera de forma reutilizável"""
-        max_attempts = 3
-        for attempt in range(max_attempts):
-            try:
-                # Fechar qualquer câmera aberta antes
-                self._cleanup_camera()
+        """Configura a câmera com fallbacks robustos"""
+        max_attempts = 5
+        camera_indexes = [0, 1, -1]  # Tenta diferentes índices
 
-                cap = cv2.VideoCapture(0)
-                if not cap.isOpened():
-                    logger.warning(f"Tentativa {attempt + 1}: Câmera não abriu")
+        for camera_index in camera_indexes:
+            for attempt in range(max_attempts):
+                try:
+                    # Limpar câmeras anteriores
+                    self._cleanup_camera()
+                    time.sleep(0.5)
+
+                    cap = cv2.VideoCapture(camera_index)
+
+                    # Configurações alternativas se a câmera não abrir
+                    if not cap.isOpened():
+                        # Tentar abrir sem parâmetros específicos
+                        cap = cv2.VideoCapture(camera_index, cv2.CAP_ANY)
+
+                    if cap.isOpened():
+                        # Testar leitura básica
+                        ret, test_frame = cap.read()
+                        if ret and test_frame is not None:
+                            logger.info(f"✅ Câmera {camera_index} funcionando na tentativa {attempt + 1}")
+
+                            # Configurações otimizadas
+                            cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+                            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+                            cap.set(cv2.CAP_PROP_FPS, 20)
+                            cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+                            cap.set(cv2.CAP_PROP_AUTOFOCUS, 1)
+                            cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+
+                            return cap
+                        else:
+                            cap.release()
+                    else:
+                        logger.warning(f"❌ Câmera {camera_index} não abriu na tentativa {attempt + 1}")
+
+                except Exception as e:
+                    logger.warning(f"Erro na câmera {camera_index}, tentativa {attempt + 1}: {e}")
+                    if 'cap' in locals() and cap.isOpened():
+                        cap.release()
                     time.sleep(1)
-                    continue
 
-                # Configurações de performance
-                cap.set(cv2.CAP_PROP_FRAME_WIDTH, APP_CONFIG.FRAME_WIDTH)
-                cap.set(cv2.CAP_PROP_FRAME_HEIGHT, APP_CONFIG.FRAME_HEIGHT)
-                cap.set(cv2.CAP_PROP_FPS, 30)
-                cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-
-                # Testar se a câmera funciona
-                ret, test_frame = cap.read()
-                if ret and test_frame is not None:
-                    logger.info(f"✅ Câmera configurada na tentativa {attempt + 1}")
-                    return cap
-                else:
-                    cap.release()
-
-            except Exception as e:
-                logger.warning(f"Erro na tentativa {attempt + 1}: {e}")
-                if 'cap' in locals():
-                    cap.release()
-                time.sleep(1)
-
-        logger.error("❌ Não foi possível configurar a câmera após várias tentativas")
+        logger.error("❌ Todas as tentativas de câmera falharam")
         return None
 
     def _cleanup_camera(self):
         """Limpa recursos da câmera para reutilização"""
         try:
-            cap = cv2.VideoCapture(0)
-            if cap.isOpened():
-                cap.release()
-            time.sleep(0.5)  # Dar tempo para o sistema liberar
-        except:
-            pass
+            # Tentar liberar todas as câmeras possíveis
+            for i in range(5):
+                cap = cv2.VideoCapture(i)
+                if cap.isOpened():
+                    cap.release()
+                time.sleep(0.1)
+            cv2.destroyAllWindows()
+        except Exception as e:
+            logger.debug(f"Erro durante cleanup: {e}")
 
     def capture(self):
         """Método principal de captura - reutilizável"""
