@@ -270,7 +270,7 @@ class FaceRecognitionService:
             with self.get_db_connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("""
-                        SELECT nome, sobrenome, turma, tipo, embeddings
+                        SELECT nome, sobrenome, turma, tipo_usuario, embeddings
                         FROM usuarios
                         WHERE embeddings IS NOT NULL AND jsonb_array_length(embeddings) > 0
                     """)
@@ -285,7 +285,7 @@ class FaceRecognitionService:
                             'nome': nome,
                             'sobrenome': sobrenome,
                             'turma': turma,
-                            'tipo': tipo
+                            'tipo_usuario': tipo
                         }
 
                         valid_embeddings = []

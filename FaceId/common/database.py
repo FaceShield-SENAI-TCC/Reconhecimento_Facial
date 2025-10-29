@@ -45,7 +45,8 @@ class DatabaseManager:
 
     def init_database(self) -> bool:
         """
-        Inicializa tabelas do banco de dados se não existirem
+        Inicializa (Cria) ou Atualiza (Altera) tabelas do banco de dados
+        para garantir que todas as colunas existam.
 
         Returns:
             bool: True se bem-sucedido
@@ -53,6 +54,9 @@ class DatabaseManager:
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
+                    # 1. TENTA CRIAR A TABELA (para novas instalações)
+                    # Esta é a definição "ideal" da tabela.
+                    # Se a tabela já existir, este comando não faz nada.
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS usuarios(
                             id SERIAL PRIMARY KEY,
@@ -67,31 +71,46 @@ class DatabaseManager:
                         )
                     """)
 
-                    # Criar índices para performance
+                    # 2. GARANTE QUE AS COLUNAS EXISTAM (para migrar tabelas antigas)
+                    # ... (comandos ALTER TABLE estão corretos) ...
                     cursor.execute("""
-                        CREATE INDEX IF NOT EXISTS idx_usuarios_nome_sobrenome 
-                        ON usuarios(nome, sobrenome, turma)
+                        ALTER TABLE usuarios
+                        ADD COLUMN IF NOT EXISTS embeddings JSONB NOT NULL DEFAULT '[]'::jsonb
                     """)
 
-                    # Índice para username (quando não nulo)
+                    cursor.execute("""
+                        ALTER TABLE usuarios
+                        ADD COLUMN IF NOT EXISTS foto_perfil BYTEA
+                    """)
+
+                    # 3. Criar índices (como no original)
+
+                    # --- A CORREÇÃO ESTÁ AQUI ---
+                    # Precisamos de um ÍNDICE ÚNICO (UNIQUE INDEX) para que
+                    # o "ON CONFLICT (nome, sobrenome, turma)" funcione.
+                    cursor.execute("""
+                        CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_nome_sobrenome 
+                        ON usuarios(nome, sobrenome, turma)
+                    """)
+                    # --- FIM DA CORREÇÃO ---
+
                     cursor.execute("""
                         CREATE INDEX IF NOT EXISTS idx_usuarios_username 
                         ON usuarios(username) 
                         WHERE username IS NOT NULL
                     """)
 
-                    # Índice para tipo de usuário
                     cursor.execute("""
                         CREATE INDEX IF NOT EXISTS idx_usuarios_tipo 
                         ON usuarios(tipo_usuario)
                     """)
 
                     conn.commit()
-                    logger.info("✅ Banco de dados inicializado com sucesso")
+                    logger.info("✅ Banco de dados inicializado/atualizado com sucesso")
                     return True
 
         except Exception as e:
-            logger.error(f"❌ Falha na inicialização do banco: {str(e)}")
+            logger.error(f"❌ Falha na inicialização/atualização do banco: {str(e)}")
             return False
 
     def check_user_exists(self, nome: str, sobrenome: str, turma: str) -> int:
