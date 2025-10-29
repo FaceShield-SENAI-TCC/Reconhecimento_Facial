@@ -166,6 +166,29 @@ def on_start_camera(data):
         nome = data.get("nome", "").strip()
         sobrenome = data.get("sobrenome", "").strip()
         turma = data.get("turma", "").strip()
+        tipo_usuario_num = data.get("tipoUsuario", "1")  # 1=ALUNO, 2=PROFESSOR
+        username = data.get("username", "").strip()
+
+        # Determinar tipo de usuário
+        if str(tipo_usuario_num) == "2":
+            tipo_usuario = "PROFESSOR"
+            # Para professor, validar username
+            if not username:
+                error_msg = "Username é obrigatório para professores"
+                logger.warning(f"❌ {error_msg}")
+                emit("capture_complete", {"success": False, "message": error_msg})
+                return
+
+            # Verificar se username já existe
+            existing_username = db_manager.check_username_exists(username)
+            if existing_username > 0:
+                error_msg = f"Username '{username}' já está em uso"
+                logger.warning(f"❌ {error_msg}")
+                emit("capture_complete", {"success": False, "message": error_msg})
+                return
+        else:
+            tipo_usuario = "ALUNO"
+            username = None  # Para aluno, username é NULL
 
         if not nome or not sobrenome or not turma:
             error_msg = "Nome, sobrenome e turma são obrigatórios"
@@ -180,7 +203,7 @@ def on_start_camera(data):
             emit("capture_complete", {"success": False, "message": error_msg})
             return
 
-        # Verificar se usuário já está cadastrado
+        # Verificar se usuário já está cadastrado (por nome, sobrenome e turma)
         existing_count = db_manager.check_user_exists(nome, sobrenome, turma)
         if existing_count > 0:
             error_msg = f"Usuário {nome} {sobrenome} já está cadastrado na turma {turma}"
@@ -192,10 +215,6 @@ def on_start_camera(data):
             })
             return
 
-        # Determinar tipo de usuário
-        tipo_usuario = data.get("tipoUsuario", "1")
-        tipo = "professor" if str(tipo_usuario) == "2" else "aluno"
-
         # Registrar cliente na sala
         join_room(request.sid)
         logger.info(f"🏠 Cliente {request.sid} entrou na sala")
@@ -204,26 +223,34 @@ def on_start_camera(data):
         connected_clients[request.sid].update({
             'status': 'capturing',
             'start_time': datetime.now(),
-            'user_data': {'nome': nome, 'sobrenome': sobrenome, 'turma': turma, 'tipo': tipo}
+            'user_data': {
+                'nome': nome,
+                'sobrenome': sobrenome,
+                'turma': turma,
+                'tipo_usuario': tipo_usuario,
+                'username': username
+            }
         })
 
         # Registrar captura ativa
         active_captures[request.sid] = None
 
-        logger.info(f"🚀 Iniciando captura para: {nome} {sobrenome} - {turma} ({tipo})")
+        user_type_display = "aluno" if tipo_usuario == "ALUNO" else "professor"
+        logger.info(f"🚀 Iniciando captura para: {nome} {sobrenome} - {turma} ({user_type_display})")
 
         # Enviar confirmação de início
         emit("capture_started", {
             "message": "Captura iniciada com sucesso",
             "session_id": request.sid,
             "user": f"{nome} {sobrenome}",
+            "tipo_usuario": tipo_usuario,
             "timestamp": datetime.now().isoformat()
         })
 
         # Iniciar captura em thread separada
         thread = threading.Thread(
             target=run_face_capture,
-            args=(nome, sobrenome, turma, tipo, request.sid),
+            args=(nome, sobrenome, turma, tipo_usuario, username, request.sid),
             daemon=True
         )
         thread.start()
@@ -239,18 +266,7 @@ def on_start_camera(data):
             "message": f"Erro interno ao iniciar captura: {str(e)}"
         })
 
-@socketio.on('test_connection')
-def on_test_connection(data):
-    """Teste de conexão WebSocket"""
-    logger.info(f"🧪 Teste de conexão recebido de {request.sid}: {data}")
-    emit("test_response", {
-        "status": "success",
-        "message": "Conexão WebSocket funcionando",
-        "timestamp": datetime.now().isoformat(),
-        "session_id": request.sid
-    })
-
-def run_face_capture(nome, sobrenome, turma, tipo, session_id):
+def run_face_capture(nome, sobrenome, turma, tipo_usuario, username, session_id):
     """Executa o processo de captura facial em thread separada"""
     try:
         logger.info(f"📷 Iniciando thread de captura para sessão: {session_id}")
@@ -285,7 +301,8 @@ def run_face_capture(nome, sobrenome, turma, tipo, session_id):
             nome=nome,
             sobrenome=sobrenome,
             turma=turma,
-            tipo=tipo,
+            tipo_usuario=tipo_usuario,
+            username=username,
             progress_callback=progress_callback,
             frame_callback=frame_callback
         )
@@ -303,8 +320,9 @@ def run_face_capture(nome, sobrenome, turma, tipo, session_id):
             "message": message,
             "captured_count": capture.captured_count,
             "user": f"{nome} {sobrenome}",
+            "tipo_usuario": tipo_usuario,
+            "username": username,
             "turma": turma,
-            "tipo": tipo,
             "session_id": session_id,
             "timestamp": datetime.now().isoformat()
         }
@@ -312,7 +330,8 @@ def run_face_capture(nome, sobrenome, turma, tipo, session_id):
         socketio.emit("capture_complete", result_data, room=session_id)
 
         if success:
-            logger.info(f"✅ Captura concluída com sucesso: {nome} {sobrenome}")
+            user_type = "aluno" if tipo_usuario == "ALUNO" else "professor"
+            logger.info(f"✅ Captura concluída com sucesso: {nome} {sobrenome} ({user_type})")
         else:
             logger.warning(f"⚠️ Captura falhou: {message}")
 
@@ -344,6 +363,7 @@ def initialize_application():
         logger.info(f"   📸 Fotos necessárias: {APP_CONFIG.MIN_PHOTOS_REQUIRED}")
         logger.info("   🌐 WebSocket: Ativo com Eventlet")
         logger.info("   💾 Banco: PostgreSQL")
+        logger.info("   👤 Estrutura: ALUNO (sem username) / PROFESSOR (com username)")
         logger.info("   🔄 Compatibilidade: FULL")
 
         return True

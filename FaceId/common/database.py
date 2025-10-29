@@ -58,11 +58,11 @@ class DatabaseManager:
                             id SERIAL PRIMARY KEY,
                             nome VARCHAR(100) NOT NULL,
                             sobrenome VARCHAR(100) NOT NULL,
+                            tipo_usuario VARCHAR(20) NOT NULL DEFAULT 'ALUNO',
                             turma VARCHAR(50) NOT NULL,
-                            tipo VARCHAR(20) DEFAULT 'aluno',
+                            username VARCHAR(100) NULL,
                             embeddings JSONB NOT NULL,
                             foto_perfil BYTEA,
-                            data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             UNIQUE(nome, sobrenome, turma)
                         )
                     """)
@@ -71,6 +71,19 @@ class DatabaseManager:
                     cursor.execute("""
                         CREATE INDEX IF NOT EXISTS idx_usuarios_nome_sobrenome 
                         ON usuarios(nome, sobrenome, turma)
+                    """)
+
+                    # Índice para username (quando não nulo)
+                    cursor.execute("""
+                        CREATE INDEX IF NOT EXISTS idx_usuarios_username 
+                        ON usuarios(username) 
+                        WHERE username IS NOT NULL
+                    """)
+
+                    # Índice para tipo de usuário
+                    cursor.execute("""
+                        CREATE INDEX IF NOT EXISTS idx_usuarios_tipo 
+                        ON usuarios(tipo_usuario)
                     """)
 
                     conn.commit()
@@ -106,6 +119,29 @@ class DatabaseManager:
             logger.error(f"Erro ao verificar usuário: {e}")
             return 0
 
+    def check_username_exists(self, username: str) -> int:
+        """
+        Verifica se username já existe no banco (apenas para professores)
+
+        Args:
+            username: Nome de usuário
+
+        Returns:
+            int: Número de usuários encontrados
+        """
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute(
+                        "SELECT COUNT(*) FROM usuarios WHERE username = %s AND username IS NOT NULL",
+                        (username,)
+                    )
+                    count = cursor.fetchone()[0]
+                    return count
+        except Exception as e:
+            logger.error(f"Erro ao verificar username: {e}")
+            return 0
+
     def count_users(self) -> int:
         """
         Conta número total de usuários cadastrados
@@ -123,8 +159,8 @@ class DatabaseManager:
             logger.error(f"Erro ao contar usuários: {e}")
             return 0
 
-    def save_user(self, nome: str, sobrenome: str, turma: str, tipo: str,
-                 embeddings: list, profile_image: bytes) -> Tuple[bool, str]:
+    def save_user(self, nome: str, sobrenome: str, turma: str, tipo_usuario: str,
+                 username: Optional[str], embeddings: list, profile_image: bytes) -> Tuple[bool, str]:
         """
         Salva usuário no banco de dados
 
@@ -132,7 +168,8 @@ class DatabaseManager:
             nome: Nome do usuário
             sobrenome: Sobrenome do usuário
             turma: Turma do usuário
-            tipo: Tipo de usuário (aluno/professor)
+            tipo_usuario: Tipo de usuário (ALUNO/PROFESSOR)
+            username: Nome de usuário (apenas para professores, None para alunos)
             embeddings: Lista de embeddings faciais
             profile_image: Imagem de perfil em bytes
 
@@ -142,24 +179,76 @@ class DatabaseManager:
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
+                    # Para alunos, garantir que username seja NULL
+                    if tipo_usuario.upper() == "ALUNO":
+                        username = None
+
+                    # Para professores, verificar se username foi fornecido
+                    if tipo_usuario.upper() == "PROFESSOR" and not username:
+                        return False, "Username é obrigatório para professores"
+
+                    # Verificar se username já existe (apenas para professores)
+                    if tipo_usuario.upper() == "PROFESSOR" and username:
+                        existing_count = self.check_username_exists(username)
+                        if existing_count > 0:
+                            return False, f"Username '{username}' já está em uso"
+
                     # Inserir ou atualizar usuário
                     cursor.execute("""
-                        INSERT INTO usuarios (nome, sobrenome, turma, tipo, embeddings, foto_perfil)
-                        VALUES (%s, %s, %s, %s, %s, %s)
+                        INSERT INTO usuarios (nome, sobrenome, turma, tipo_usuario, username, embeddings, foto_perfil)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)
                         ON CONFLICT (nome, sobrenome, turma)
-                        DO UPDATE SET embeddings = EXCLUDED.embeddings,
-                                    foto_perfil = EXCLUDED.foto_perfil,
-                                    tipo = EXCLUDED.tipo,
-                                    data_cadastro = CURRENT_TIMESTAMP
-                    """, (nome, sobrenome, turma, tipo, Json(embeddings), profile_image))
+                        DO UPDATE SET 
+                            tipo_usuario = EXCLUDED.tipo_usuario,
+                            username = EXCLUDED.username,
+                            embeddings = EXCLUDED.embeddings,
+                            foto_perfil = EXCLUDED.foto_perfil
+                    """, (nome, sobrenome, turma, tipo_usuario.upper(), username, Json(embeddings), profile_image))
 
                     conn.commit()
-                    return True, "Usuário salvo com sucesso"
+
+                    user_type = "aluno" if tipo_usuario.upper() == "ALUNO" else "professor"
+                    return True, f"{user_type.capitalize()} {nome} {sobrenome} salvo com sucesso"
 
         except Exception as e:
             error_msg = f"Erro ao salvar usuário: {str(e)}"
             logger.error(error_msg)
             return False, error_msg
+
+    def get_user_by_username(self, username: str) -> Optional[dict]:
+        """
+        Busca usuário pelo username (apenas professores)
+
+        Args:
+            username: Nome de usuário
+
+        Returns:
+            Optional[dict]: Dados do usuário ou None
+        """
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute("""
+                        SELECT id, nome, sobrenome, tipo_usuario, turma, username, embeddings
+                        FROM usuarios 
+                        WHERE username = %s AND username IS NOT NULL
+                    """, (username,))
+
+                    result = cursor.fetchone()
+                    if result:
+                        return {
+                            'id': result[0],
+                            'nome': result[1],
+                            'sobrenome': result[2],
+                            'tipo_usuario': result[3],
+                            'turma': result[4],
+                            'username': result[5],
+                            'embeddings': result[6]
+                        }
+                    return None
+        except Exception as e:
+            logger.error(f"Erro ao buscar usuário por username: {e}")
+            return None
 
 # Instância global
 db_manager = DatabaseManager()

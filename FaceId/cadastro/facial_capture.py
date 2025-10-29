@@ -10,6 +10,7 @@ import numpy as np
 import base64
 import os
 from datetime import datetime
+from typing import Optional
 from deepface import DeepFace
 
 # Módulos compartilhados
@@ -71,11 +72,13 @@ class FaceDetector:
 class FluidFaceCapture:
     """Capturador facial fluido com reutilização de recursos"""
 
-    def __init__(self, nome, sobrenome, turma, tipo, progress_callback=None, frame_callback=None):
+    def __init__(self, nome: str, sobrenome: str, turma: str, tipo_usuario: str,
+                 username: Optional[str] = None, progress_callback=None, frame_callback=None):
         self.nome = nome
         self.sobrenome = sobrenome
         self.turma = turma
-        self.tipo = tipo
+        self.tipo_usuario = tipo_usuario.upper()  # Garantir maiúsculas
+        self.username = username if tipo_usuario.upper() == "PROFESSOR" else None
         self.progress_callback = progress_callback
         self.frame_callback = frame_callback
 
@@ -109,18 +112,9 @@ class FluidFaceCapture:
             try:
                 # Reduzir qualidade para transmissão
                 small_frame = cv2.resize(frame, (426, 320))
-
-                # Codificar como JPEG
-                success, buffer = cv2.imencode('.jpg', small_frame, [
-                    cv2.IMWRITE_JPEG_QUALITY, 70  # Qualidade reduzida para performance
-                ])
-
-                if success:
-                    jpg_as_text = base64.b64encode(buffer).decode('utf-8')
-                    self.frame_callback(jpg_as_text)
-                else:
-                    logger.warning("Falha ao codificar frame JPEG")
-
+                _, buffer = cv2.imencode('.jpg', small_frame, [cv2.IMWRITE_JPEG_QUALITY, 50])
+                jpg_as_text = base64.b64encode(buffer).decode('utf-8')
+                self.frame_callback(jpg_as_text)
             except Exception as e:
                 logger.error(f"Erro ao enviar frame: {e}")
 
@@ -183,7 +177,8 @@ class FluidFaceCapture:
                     nome=self.nome,
                     sobrenome=self.sobrenome,
                     turma=self.turma,
-                    tipo=self.tipo,
+                    tipo_usuario=self.tipo_usuario,
+                    username=self.username,
                     embeddings=[emb.tolist() for emb in embeddings],
                     profile_image=image_bytes
                 )
@@ -359,7 +354,13 @@ class FluidFaceCapture:
                 # Informações na tela
                 cv2.putText(display_frame, f"Capturadas: {self.captured_count}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}",
                             (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
-                cv2.putText(display_frame, f"Usuário: {self.nome} {self.sobrenome}",
+
+                user_type = "Aluno" if self.tipo_usuario == "ALUNO" else "Professor"
+                user_display = f"{self.nome} {self.sobrenome}"
+                if self.username:
+                    user_display += f" (@{self.username})"
+
+                cv2.putText(display_frame, f"Usuário: {user_display} - {user_type}",
                             (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
                 self.send_frame(display_frame)

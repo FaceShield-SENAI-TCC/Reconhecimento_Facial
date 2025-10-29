@@ -9,10 +9,11 @@ import numpy as np
 import cv2
 import psycopg2
 import psycopg2.extensions
-from typing import Tuple, Optional, Dict, Any, Generator
+from typing import Tuple, Optional, Dict, Any
 from contextlib import contextmanager
 from collections import Counter, deque
 from dataclasses import dataclass
+from datetime import datetime
 from deepface import DeepFace
 
 # Módulos compartilhados
@@ -23,9 +24,41 @@ from common.exceptions import (
     DatabaseError, DatabaseConnectionError, ImageValidationError,
     FaceDetectionError, FaceRecognitionServiceError
 )
-from shared_models.models import RecognitionResult, DatabaseStatus, SystemMetrics
 
 logger = logging.getLogger(__name__)
+
+# Classes de dados locais (substituindo shared_models.models)
+@dataclass
+class RecognitionResult:
+    """Resultado do reconhecimento facial"""
+    authenticated: bool
+    confidence: float
+    message: str
+    timestamp: str
+    user: Optional[str] = None
+    distance: Optional[float] = None
+    user_info: Optional[Dict[str, Any]] = None
+
+@dataclass
+class DatabaseStatus:
+    """Status do banco de dados"""
+    status: str
+    user_count: int
+    total_embeddings: int
+    last_update: Optional[float]
+    monitoring_active: bool
+    database_type: str
+
+@dataclass
+class SystemMetrics:
+    """Métricas do sistema"""
+    total_attempts: int
+    successful_recognitions: int
+    failed_recognitions: int
+    no_face_detected: int
+    average_processing_time: float
+    success_rate: float
+    database_reloads: int
 
 @dataclass
 class RecognitionMetrics:
@@ -164,7 +197,7 @@ class FaceRecognitionService:
             with self.db_manager.get_connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("""
-                        SELECT nome, sobrenome, turma, tipo, embeddings
+                        SELECT nome, sobrenome, turma, tipo_usuario, username, embeddings
                         FROM usuarios
                         WHERE embeddings IS NOT NULL AND jsonb_array_length(embeddings) > 0
                     """)
@@ -174,13 +207,21 @@ class FaceRecognitionService:
                     embedding_count = 0
                     invalid_embeddings = 0
 
-                    for nome, sobrenome, turma, tipo, embeddings in cursor.fetchall():
+                    for nome, sobrenome, turma, tipo_usuario, username, embeddings in cursor.fetchall():
+                        # Criar display name com informações completas
+                        if tipo_usuario.upper() == "PROFESSOR" and username:
+                            display_name = f"{nome} {sobrenome} (@{username})"
+                        else:
+                            display_name = f"{nome} {sobrenome}"
+
                         user_info = {
-                            'display_name': f"{nome} {sobrenome}",
+                            'display_name': display_name,
                             'nome': nome,
                             'sobrenome': sobrenome,
                             'turma': turma,
-                            'tipo': tipo
+                            'tipo_usuario': tipo_usuario,
+                            'username': username,
+                            'is_professor': tipo_usuario.upper() == "PROFESSOR"
                         }
 
                         valid_embeddings = []
@@ -198,7 +239,7 @@ class FaceRecognitionService:
                                 invalid_embeddings += 1
 
                         if valid_embeddings:
-                            database[user_info['display_name']] = {
+                            database[display_name] = {
                                 'embeddings': valid_embeddings,
                                 'info': user_info
                             }
@@ -213,7 +254,12 @@ class FaceRecognitionService:
             with self._metrics_lock:
                 self.metrics.database_reloads += 1
 
-            logger.info(f"✅ Banco carregado: {user_count} usuários, {embedding_count} embeddings")
+            # Contar estatísticas por tipo de usuário
+            professores_count = sum(1 for user_data in database.values()
+                                  if user_data['info']['tipo_usuario'].upper() == "PROFESSOR")
+            alunos_count = user_count - professores_count
+
+            logger.info(f"✅ Banco carregado: {user_count} usuários ({professores_count} professores, {alunos_count} alunos), {embedding_count} embeddings")
 
             if invalid_embeddings > 0:
                 logger.warning(f"⚠️ Encontrados {invalid_embeddings} embeddings inválidos")
@@ -402,7 +448,12 @@ class FaceRecognitionService:
                         timestamp=self.get_current_timestamp()
                     ).__dict__
 
-            logger.info(f"📊 Banco atual: {len(self.facial_database)} usuários cadastrados")
+            # Estatísticas do banco atual
+            professores_count = sum(1 for user_data in self.facial_database.values()
+                                  if user_data['info']['tipo_usuario'].upper() == "PROFESSOR")
+            alunos_count = len(self.facial_database) - professores_count
+
+            logger.info(f"📊 Banco atual: {len(self.facial_database)} usuários ({professores_count} professores, {alunos_count} alunos)")
 
             # Decodificar imagem
             frame = ImageValidator.decode_base64_image(image_data)
@@ -467,6 +518,15 @@ class FaceRecognitionService:
                     confidence = 1 - distance
                     user_data = self.facial_database[user]['info']
 
+                    # Mensagem personalizada por tipo de usuário
+                    if user_data['tipo_usuario'].upper() == "PROFESSOR":
+                        if user_data['username']:
+                            message = f"Bem-vindo(a), Professor(a) {user_data['nome']} (@{user_data['username']})!"
+                        else:
+                            message = f"Bem-vindo(a), Professor(a) {user_data['nome']}!"
+                    else:
+                        message = f"Bem-vindo(a), {user_data['nome']}!"
+
                     logger.info(f"⏱️ Tempo de processamento: {processing_time:.3f}s")
 
                     return RecognitionResult(
@@ -475,7 +535,7 @@ class FaceRecognitionService:
                         confidence=round(confidence, 4),
                         distance=round(distance, 4),
                         user_info=user_data,
-                        message=f"Bem-vindo(a), {user_data['nome']}!",
+                        message=message,
                         timestamp=self.get_current_timestamp()
                     ).__dict__
                 else:
@@ -511,6 +571,11 @@ class FaceRecognitionService:
             for user_data in self.facial_database.values()
         )
 
+        # Estatísticas por tipo de usuário
+        professores_count = sum(1 for user_data in self.facial_database.values()
+                              if user_data['info']['tipo_usuario'].upper() == "PROFESSOR")
+        alunos_count = user_count - professores_count
+
         return DatabaseStatus(
             status="loaded" if self.facial_database else "empty",
             user_count=user_count,
@@ -519,6 +584,35 @@ class FaceRecognitionService:
             monitoring_active=self.database_monitor.running,
             database_type="PostgreSQL"
         ).__dict__
+
+    def get_detailed_database_status(self) -> Dict[str, Any]:
+        """Retorna status detalhado do banco de dados com estatísticas por tipo"""
+        user_count = len(self.facial_database)
+        total_embeddings = sum(
+            len(user_data['embeddings'])
+            for user_data in self.facial_database.values()
+        )
+
+        # Estatísticas detalhadas
+        professores_count = sum(1 for user_data in self.facial_database.values()
+                              if user_data['info']['tipo_usuario'].upper() == "PROFESSOR")
+        alunos_count = user_count - professores_count
+
+        professores_com_username = sum(1 for user_data in self.facial_database.values()
+                                     if user_data['info']['tipo_usuario'].upper() == "PROFESSOR"
+                                     and user_data['info']['username'] is not None)
+
+        return {
+            "status": "loaded" if self.facial_database else "empty",
+            "user_count": user_count,
+            "total_embeddings": total_embeddings,
+            "professores_count": professores_count,
+            "alunos_count": alunos_count,
+            "professores_com_username": professores_com_username,
+            "last_update": self.last_update,
+            "monitoring_active": self.database_monitor.running,
+            "database_type": "PostgreSQL"
+        }
 
     def get_performance_metrics(self) -> Dict[str, Any]:
         """Retorna métricas de desempenho"""
@@ -546,8 +640,8 @@ class FaceRecognitionService:
         logger.info("🔄 Recarregamento manual do banco de dados solicitado")
         success = self.load_facial_database()
         if success:
-            status = self.get_database_status()
-            message = f"Banco recarregado - {status['user_count']} usuários, {status['total_embeddings']} embeddings"
+            status = self.get_detailed_database_status()
+            message = f"Banco recarregado - {status['user_count']} usuários ({status['professores_count']} professores, {status['alunos_count']} alunos), {status['total_embeddings']} embeddings"
             return True, message
         else:
             return False, "Falha no recarregamento do banco"
@@ -626,5 +720,4 @@ class FaceRecognitionService:
     @staticmethod
     def get_current_timestamp() -> str:
         """Retorna timestamp atual formatado"""
-        from datetime import datetime
         return datetime.now().isoformat(sep=' ', timespec='seconds')

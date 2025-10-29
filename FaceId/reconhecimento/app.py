@@ -2,6 +2,9 @@
 Servidor Principal de Reconhecimento Facial Refatorado
 Usa estrutura modular e compartilhada
 """
+import eventlet
+eventlet.monkey_patch()  # IMPORTANTE para compatibilidade
+
 import os
 import logging
 import signal
@@ -172,6 +175,19 @@ def database_status():
             "message": "Não foi possível conectar ao banco de dados"
         }), 500
 
+@app.route('/api/database/detailed-status', methods=['GET'])
+def detailed_database_status():
+    """Status detalhado do banco de dados com estatísticas por tipo de usuário"""
+    try:
+        status = face_service.get_detailed_database_status()
+        return jsonify(status), 200
+    except Exception as e:
+        logger.error(f"Erro ao obter status detalhado do banco: {str(e)}")
+        return jsonify({
+            "error": "Erro ao obter status detalhado do banco",
+            "message": "Não foi possível conectar ao banco de dados"
+        }), 500
+
 @app.route('/reload-database', methods=['POST'])
 def reload_database_legacy():
     """Recarregamento manual do banco de dados (endpoint legacy)"""
@@ -205,15 +221,25 @@ def reload_database():
 def system_info():
     """Informações do sistema"""
     try:
-        db_status = face_service.get_database_status()
+        db_status = face_service.get_detailed_database_status()
         metrics = face_service.get_performance_metrics()
 
         return jsonify({
             "service": "face_recognition_api",
             "version": "2.0.0",
             "status": "operational",
-            "database": db_status,
-            "performance": metrics["performance"],
+            "database": {
+                "total_users": db_status["user_count"],
+                "professores": db_status["professores_count"],
+                "alunos": db_status["alunos_count"],
+                "total_embeddings": db_status["total_embeddings"],
+                "status": db_status["status"]
+            },
+            "performance": {
+                "total_attempts": metrics["total_attempts"],
+                "success_rate": metrics["success_rate"],
+                "average_processing_time": metrics["average_processing_time"]
+            },
             "compatibility": "FULL",
             "timestamp": face_service.get_current_timestamp()
         }), 200
@@ -235,6 +261,24 @@ def system_metrics():
     except Exception as e:
         logger.error(f"Erro ao obter métricas: {str(e)}")
         return jsonify({"error": "Erro ao obter métricas do sistema"}), 500
+
+@app.route('/api/users/list', methods=['GET'])
+@token_required
+def list_users():
+    """Lista todos os usuários cadastrados (requer autenticação)"""
+    try:
+        # Esta funcionalidade precisaria ser implementada no FaceRecognitionService
+        # Por enquanto, retornamos uma mensagem informativa
+        db_status = face_service.get_detailed_database_status()
+        return jsonify({
+            "message": "Endpoint em desenvolvimento",
+            "total_users": db_status["user_count"],
+            "professores": db_status["professores_count"],
+            "alunos": db_status["alunos_count"]
+        }), 200
+    except Exception as e:
+        logger.error(f"Erro ao listar usuários: {str(e)}")
+        return jsonify({"error": "Erro ao listar usuários"}), 500
 
 # Handlers de erro melhorados
 @app.errorhandler(404)
@@ -273,6 +317,9 @@ def initialize_application():
         if face_service.initialize():
             logger.info("✅ Serviço de reconhecimento facial inicializado com sucesso")
 
+            # Obter status detalhado do banco
+            db_status = face_service.get_detailed_database_status()
+
             # Log de endpoints disponíveis
             logger.info("📊 Endpoints Legacy disponíveis:")
             logger.info("   POST /face-login        - Autenticação facial")
@@ -282,9 +329,17 @@ def initialize_application():
             logger.info("📊 Endpoints Novos disponíveis:")
             logger.info("   POST /api/face-login     - Autenticação facial")
             logger.info("   GET  /api/database/status - Status do banco")
+            logger.info("   GET  /api/database/detailed-status - Status detalhado")
             logger.info("   POST /api/database/reload - Recarregar banco")
             logger.info("   GET  /api/system/info    - Informações do sistema")
             logger.info("   GET  /api/system/metrics - Métricas (autenticado)")
+            logger.info("   GET  /api/users/list     - Listar usuários (autenticado)")
+
+            logger.info("📈 ESTATÍSTICAS DO BANCO:")
+            logger.info(f"   👥 Total de usuários: {db_status['user_count']}")
+            logger.info(f"   👨‍🏫 Professores: {db_status['professores_count']}")
+            logger.info(f"   👨‍🎓 Alunos: {db_status['alunos_count']}")
+            logger.info(f"   📊 Total de embeddings: {db_status['total_embeddings']}")
 
             logger.info("🔔 Monitoramento em tempo real do banco: ATIVO")
             return True
