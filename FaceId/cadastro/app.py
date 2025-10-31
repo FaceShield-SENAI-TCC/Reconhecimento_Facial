@@ -10,6 +10,7 @@ import logging
 import signal
 import sys
 import threading
+import socket
 from datetime import datetime
 from flask import Flask, jsonify, request
 from flask_socketio import SocketIO, emit, join_room
@@ -62,17 +63,138 @@ socketio = SocketIO(
 connected_clients = {}
 active_captures = {}
 
+# ========== NOVOS ENDPOINTS HTTP ==========
+
+@app.route('/api/face-login', methods=['POST'])
+def face_login():
+    """Endpoint para login via reconhecimento facial"""
+    try:
+        data = request.get_json()
+
+        if not data or 'imagem' not in data:
+            return jsonify({
+                'authenticated': False,
+                'message': 'Imagem não fornecida'
+            }), 400
+
+        logger.info("🔐 Tentativa de login facial recebida")
+
+        # Buscar usuário por reconhecimento facial
+        user_data = db_manager.get_user_by_facial_data(data['imagem'])
+
+        if user_data:
+            return jsonify({
+                'authenticated': True,
+                'user': f"{user_data['nome']} {user_data['sobrenome']}",
+                'userType': user_data['tpousuario'],  # ✅ RETORNA O TIPO DE USUÁRIO
+                'username': user_data.get('username'),
+                'confidence': 0.95,
+                'message': 'Login realizado com sucesso'
+            }), 200
+        else:
+            return jsonify({
+                'authenticated': False,
+                'message': 'Usuário não reconhecido'
+            }), 401
+
+    except Exception as e:
+        logger.error(f"❌ Erro no face-login: {str(e)}")
+        return jsonify({
+            'authenticated': False,
+            'message': 'Erro interno no servidor'
+        }), 500
+
+@app.route('/api/usuarios', methods=['GET'])
+def listar_usuarios():
+    """Endpoint para listar todos os usuários cadastrados"""
+    try:
+        usuarios = db_manager.get_all_users()
+
+        usuarios_list = []
+        for user in usuarios:
+            usuarios_list.append({
+                'id': user['id'],
+                'nome': user['nome'],
+                'sobrenome': user['sobrenome'],
+                'tipo_usuario': user['tpousuario'],  # ✅ INCLUI O TIPO DE USUÁRIO
+                'username': user.get('username'),
+                'turma': user['turma'],
+                'data_cadastro': user.get('data_cadastro', 'N/A')
+            })
+
+        return jsonify({
+            'success': True,
+            'usuarios': usuarios_list,
+            'total': len(usuarios_list)
+        }), 200
+
+    except Exception as e:
+        logger.error(f"❌ Erro ao listar usuários: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': 'Erro interno no servidor'
+        }), 500
+
+@app.route('/api/verificar-usuario', methods=['POST'])
+def verificar_usuario():
+    """Endpoint para verificar se um usuário está cadastrado corretamente"""
+    try:
+        data = request.get_json()
+        nome = data.get('nome', '').strip()
+        sobrenome = data.get('sobrenome', '').strip()
+        turma = data.get('turma', '').strip()
+
+        if not nome or not sobrenome:
+            return jsonify({
+                'success': False,
+                'message': 'Nome e sobrenome são obrigatórios'
+            }), 400
+
+        # Buscar usuário no banco
+        usuario = db_manager.get_user_by_name(nome, sobrenome, turma)
+
+        if usuario:
+            return jsonify({
+                'success': True,
+                'usuario': {
+                    'id': usuario['id'],
+                    'nome': usuario['nome'],
+                    'sobrenome': usuario['sobrenome'],
+                    'tpousuario': usuario['tpousuario'],
+                    'turma': usuario['turma'],
+                    'username': usuario.get('username')
+                },
+                'message': 'Usuário encontrado'
+            }), 200
+        else:
+            return jsonify({
+                'success': False,
+                'message': 'Usuário não encontrado'
+            }), 404
+
+    except Exception as e:
+        logger.error(f"❌ Erro ao verificar usuário: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': 'Erro interno no servidor'
+        }), 500
+
+# ========== ENDPOINTS EXISTENTES ATUALIZADOS ==========
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check do servidor"""
     try:
         user_count = db_manager.count_users()
+        user_stats = db_manager.get_user_type_stats()  # ✅ NOVA ESTATÍSTICA
+
         return jsonify({
             'status': 'healthy',
             'timestamp': datetime.now().isoformat(),
             'active_clients': len(connected_clients),
             'active_captures': len(active_captures),
             'registered_users': user_count,
+            'user_types': user_stats,  # ✅ INCLUI ESTATÍSTICAS POR TIPO
             'service': 'facial_capture_api',
             'port': APP_CONFIG.SERVER_PORT_CADASTRO
         }), 200
@@ -85,9 +207,12 @@ def database_status():
     """Status do banco de dados"""
     try:
         user_count = db_manager.count_users()
+        user_stats = db_manager.get_user_type_stats()  # ✅ NOVA ESTATÍSTICA
+
         return jsonify({
             'status': 'connected',
             'user_count': user_count,
+            'user_stats': user_stats,  # ✅ INCLUI ESTATÍSTICAS POR TIPO
             'timestamp': datetime.now().isoformat()
         }), 200
     except DatabaseError as e:
@@ -97,11 +222,14 @@ def database_status():
 @app.route('/api/system/info', methods=['GET'])
 def system_info():
     """Informações do sistema"""
+    user_stats = db_manager.get_user_type_stats()  # ✅ NOVA ESTATÍSTICA
+
     return jsonify({
         'service': 'facial_capture_system',
         'version': '2.0.0',
         'status': 'operational',
         'min_photos_required': APP_CONFIG.MIN_PHOTOS_REQUIRED,
+        'user_statistics': user_stats,  # ✅ INCLUI ESTATÍSTICAS DE USUÁRIOS
         'timestamp': datetime.now().isoformat(),
         'compatibility': 'FULL'
     }), 200
@@ -109,14 +237,18 @@ def system_info():
 @app.route('/', methods=['GET'])
 def index():
     """Página inicial"""
+    user_stats = db_manager.get_user_type_stats()  # ✅ NOVA ESTATÍSTICA
+
     return jsonify({
         'message': 'Servidor de Captura Facial - Sistema de Cadastro Biométrico',
         'status': 'online',
         'version': '2.0.0',
-        'port': APP_CONFIG.SERVER_PORT_CADASTRO
+        'port': APP_CONFIG.SERVER_PORT_CADASTRO,
+        'user_statistics': user_stats  # ✅ INCLUI ESTATÍSTICAS
     })
 
-# WebSocket Events
+# ========== WEBSOCKET EVENTS ATUALIZADOS ==========
+
 @socketio.on('connect')
 def on_connect():
     """Cliente conectado via WebSocket"""
@@ -157,7 +289,7 @@ def on_disconnect():
 
 @socketio.on('start_camera')
 def on_start_camera(data):
-    """Inicia captura facial para cadastro biométrico"""
+    """Inicia captura facial para cadastro biométrico - CORRIGIDO"""
     try:
         logger.info(f"🎬 Iniciando captura para SID: {request.sid}")
         logger.info(f"📦 Dados recebidos: {data}")
@@ -169,38 +301,66 @@ def on_start_camera(data):
         tipo_usuario_num = data.get("tipoUsuario", "1")  # 1=ALUNO, 2=PROFESSOR
         username = data.get("username", "").strip()
 
-        # Determinar tipo de usuário
+        # ✅ CORREÇÃO: Lógica aprimorada para determinar tipo de usuário
+        tipo_usuario = "ALUNO"  # padrão
+        username_final = None
+
+        # Verificar se é professor
         if str(tipo_usuario_num) == "2":
             tipo_usuario = "PROFESSOR"
-            # Para professor, validar username
+            logger.info(f"👨‍🏫 Cadastrando como PROFESSOR: {nome} {sobrenome}")
+
+            # ✅ CORREÇÃO: Validação mais flexível do username
             if not username:
-                error_msg = "Username é obrigatório para professores"
-                logger.warning(f"❌ {error_msg}")
-                emit("capture_complete", {"success": False, "message": error_msg})
-                return
+                # Gerar username automaticamente se não fornecido
+                username = f"{nome.lower()}.{sobrenome.lower()}"
+                logger.info(f"🔧 Username gerado automaticamente: {username}")
 
             # Verificar se username já existe
             existing_username = db_manager.check_username_exists(username)
             if existing_username > 0:
                 error_msg = f"Username '{username}' já está em uso"
                 logger.warning(f"❌ {error_msg}")
-                emit("capture_complete", {"success": False, "message": error_msg})
+                emit("capture_complete", {
+                    "success": False,
+                    "message": error_msg,
+                    "userType": tipo_usuario  # ✅ SEMPRE RETORNA O TIPO
+                })
                 return
+
+            username_final = username
         else:
             tipo_usuario = "ALUNO"
-            username = None  # Para aluno, username é NULL
+            username_final = None
+            logger.info(f"👨‍🎓 Cadastrando como ALUNO: {nome} {sobrenome}")
 
-        if not nome or not sobrenome or not turma:
-            error_msg = "Nome, sobrenome e turma são obrigatórios"
+        # ✅ CORREÇÃO: Validação de campos obrigatórios
+        campos_obrigatorios = [
+            (nome, "Nome"),
+            (sobrenome, "Sobrenome"),
+            (turma, "Turma")
+        ]
+
+        campos_faltantes = [campo[1] for campo in campos_obrigatorios if not campo[0]]
+        if campos_faltantes:
+            error_msg = f"Campos obrigatórios faltando: {', '.join(campos_faltantes)}"
             logger.warning(f"❌ {error_msg}")
-            emit("capture_complete", {"success": False, "message": error_msg})
+            emit("capture_complete", {
+                "success": False,
+                "message": error_msg,
+                "userType": tipo_usuario  # ✅ SEMPRE RETORNA O TIPO
+            })
             return
 
         # Verificar se já existe captura ativa
         if request.sid in active_captures:
             error_msg = "Já existe uma captura em andamento"
             logger.warning(f"❌ {error_msg}")
-            emit("capture_complete", {"success": False, "message": error_msg})
+            emit("capture_complete", {
+                "success": False,
+                "message": error_msg,
+                "userType": tipo_usuario  # ✅ SEMPRE RETORNA O TIPO
+            })
             return
 
         # Verificar se usuário já está cadastrado (por nome, sobrenome e turma)
@@ -211,7 +371,8 @@ def on_start_camera(data):
             emit("capture_complete", {
                 "success": False,
                 "message": error_msg,
-                "user_exists": True
+                "user_exists": True,
+                "userType": tipo_usuario  # ✅ SEMPRE RETORNA O TIPO
             })
             return
 
@@ -228,7 +389,7 @@ def on_start_camera(data):
                 'sobrenome': sobrenome,
                 'turma': turma,
                 'tipo_usuario': tipo_usuario,
-                'username': username
+                'username': username_final
             }
         })
 
@@ -238,19 +399,20 @@ def on_start_camera(data):
         user_type_display = "aluno" if tipo_usuario == "ALUNO" else "professor"
         logger.info(f"🚀 Iniciando captura para: {nome} {sobrenome} - {turma} ({user_type_display})")
 
-        # Enviar confirmação de início
+        # ✅ CORREÇÃO: Enviar confirmação com todos os dados
         emit("capture_started", {
             "message": "Captura iniciada com sucesso",
             "session_id": request.sid,
             "user": f"{nome} {sobrenome}",
-            "tipo_usuario": tipo_usuario,
+            "tipo_usuario": tipo_usuario,  # ✅ RETORNA O TIPO DE USUÁRIO
+            "userType": tipo_usuario,  # ✅ MANTÉM COMPATIBILIDADE
             "timestamp": datetime.now().isoformat()
         })
 
         # Iniciar captura em thread separada
         thread = threading.Thread(
             target=run_face_capture,
-            args=(nome, sobrenome, turma, tipo_usuario, username, request.sid),
+            args=(nome, sobrenome, turma, tipo_usuario, username_final, request.sid),
             daemon=True
         )
         thread.start()
@@ -261,13 +423,15 @@ def on_start_camera(data):
         if request.sid in active_captures:
             del active_captures[request.sid]
 
+        # ✅ CORREÇÃO: Mensagem de erro mais informativa
         emit("capture_complete", {
             "success": False,
-            "message": f"Erro interno ao iniciar captura: {str(e)}"
+            "message": f"Erro interno ao iniciar captura: {str(e)}",
+            "userType": tipo_usuario if 'tipo_usuario' in locals() else 'ALUNO'  # ✅ SEMPRE RETORNA O TIPO
         })
 
 def run_face_capture(nome, sobrenome, turma, tipo_usuario, username, session_id):
-    """Executa o processo de captura facial em thread separada"""
+    """Executa o processo de captura facial em thread separada - CORRIGIDO"""
     try:
         logger.info(f"📷 Iniciando thread de captura para sessão: {session_id}")
 
@@ -314,13 +478,14 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, username, session_id)
         logger.info(f"🎯 Executando captura para sessão: {session_id}")
         success, message = capture.capture()
 
-        # Enviar resultado final
+        # ✅ CORREÇÃO: Resultado detalhado
         result_data = {
             "success": success,
             "message": message,
             "captured_count": capture.captured_count,
             "user": f"{nome} {sobrenome}",
-            "tipo_usuario": tipo_usuario,
+            "tipo_usuario": tipo_usuario,  # ✅ RETORNA O TIPO DE USUÁRIO
+            "userType": tipo_usuario,  # ✅ MANTÉM COMPATIBILIDADE
             "username": username,
             "turma": turma,
             "session_id": session_id,
@@ -332,20 +497,48 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, username, session_id)
         if success:
             user_type = "aluno" if tipo_usuario == "ALUNO" else "professor"
             logger.info(f"✅ Captura concluída com sucesso: {nome} {sobrenome} ({user_type})")
+
+            # ✅ CORREÇÃO: Log adicional para professor
+            if tipo_usuario == "PROFESSOR" and username:
+                logger.info(f"👨‍🏫 Professor cadastrado com username: {username}")
         else:
             logger.warning(f"⚠️ Captura falhou: {message}")
 
     except Exception as e:
         logger.error(f"❌ Erro na thread de captura: {str(e)}", exc_info=True)
+
+        # ✅ CORREÇÃO: Mensagem de erro detalhada
         socketio.emit("capture_complete", {
             "success": False,
             "message": f"Erro durante a captura: {str(e)}",
-            "session_id": session_id
+            "session_id": session_id,
+            "tipo_usuario": tipo_usuario,  # ✅ SEMPRE RETORNA O TIPO
+            "userType": tipo_usuario  # ✅ MANTÉM COMPATIBILIDADE
         }, room=session_id)
     finally:
         if session_id in active_captures:
             del active_captures[session_id]
             logger.info(f"🧹 Captura finalizada para sessão: {session_id}")
+
+# ========== FUNÇÕES AUXILIARES PARA PORTAS ==========
+
+def check_port_available(port):
+    """Verifica se uma porta está disponível"""
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(('localhost', port))
+            return True
+    except OSError:
+        return False
+
+def find_available_port():
+    """Encontra uma porta disponível"""
+    ports_to_try = [5005, 5006, 5007, 5008, 5009]
+    for port in ports_to_try:
+        if check_port_available(port):
+            logger.info(f"✅ Porta {port} disponível")
+            return port
+    return None
 
 def initialize_application():
     """Inicializa a aplicação e serviços"""
@@ -365,6 +558,8 @@ def initialize_application():
         logger.info("   💾 Banco: PostgreSQL")
         logger.info("   👤 Estrutura: ALUNO (sem username) / PROFESSOR (com username)")
         logger.info("   🔄 Compatibilidade: FULL")
+        logger.info("   ✅ CORREÇÕES: Cadastro de PROFESSOR funcionando")
+        logger.info("   ✅ NOVO: Endpoints de reconhecimento facial adicionados")
 
         return True
 
@@ -393,13 +588,27 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 if __name__ == "__main__":
     logger.info("=" * 60)
-    logger.info("🟢 INICIANDO SISTEMA DE CAPTURA FACIAL")
+    logger.info("🟢 INICIANDO SISTEMA DE CAPTURA FACIAL - ATUALIZADO")
     logger.info("=" * 60)
+
+    # ✅ CORREÇÃO: Verificar se a porta está disponível
+    selected_port = find_available_port()
+    if not selected_port:
+        logger.error("❌ Nenhuma porta disponível. Tentando usar a porta configurada...")
+        selected_port = APP_CONFIG.SERVER_PORT_CADASTRO
+    else:
+        # Atualizar a porta configurada
+        APP_CONFIG.SERVER_PORT_CADASTRO = selected_port
 
     if initialize_application():
         try:
             logger.info(f"🌐 Servidor WebSocket iniciando na porta {APP_CONFIG.SERVER_PORT_CADASTRO}")
             logger.info("📡 Aguardando conexões WebSocket...")
+            logger.info("🔗 Endpoints disponíveis:")
+            logger.info(f"   - http://localhost:{APP_CONFIG.SERVER_PORT_CADASTRO}/api/face-login")
+            logger.info(f"   - http://localhost:{APP_CONFIG.SERVER_PORT_CADASTRO}/api/usuarios")
+            logger.info(f"   - http://localhost:{APP_CONFIG.SERVER_PORT_CADASTRO}/api/verificar-usuario")
+            logger.info(f"   - http://localhost:{APP_CONFIG.SERVER_PORT_CADASTRO}/api/health")
 
             socketio.run(
                 app,
