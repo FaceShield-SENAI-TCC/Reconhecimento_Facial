@@ -72,13 +72,14 @@ class FaceDetector:
 class FluidFaceCapture:
     """Capturador facial fluido com reutilização de recursos"""
 
+    # --- CORREÇÃO: Removido 'username' do __init__ ---
     def __init__(self, nome: str, sobrenome: str, turma: str, tipo_usuario: str,
-                 username: Optional[str] = None, progress_callback=None, frame_callback=None):
+                 progress_callback=None, frame_callback=None):
         self.nome = nome
         self.sobrenome = sobrenome
         self.turma = turma
         self.tipo_usuario = tipo_usuario.upper()  # Garantir maiúsculas
-        self.username = username if tipo_usuario.upper() == "PROFESSOR" else None
+
         self.progress_callback = progress_callback
         self.frame_callback = frame_callback
 
@@ -172,16 +173,29 @@ class FluidFaceCapture:
                 _, buffer = cv2.imencode('.jpg', profile_image)
                 image_bytes = buffer.tobytes()
 
-                # Salvar no banco
-                return db_manager.save_user(
+                # --- INÍCIO DA CORREÇÃO (O BUG ESTÁ AQUI) ---
+                # Salvar no banco (sem username)
+                success, saved_user_or_error = db_manager.save_user(
                     nome=self.nome,
                     sobrenome=self.sobrenome,
                     turma=self.turma,
                     tipo_usuario=self.tipo_usuario,
-                    username=self.username,
+                    # username foi removido
                     embeddings=[emb.tolist() for emb in embeddings],
                     profile_image=image_bytes
                 )
+
+                if success:
+                    # CORREÇÃO: Retorna SÓ O ID (acessando o dicionário)
+                    user_id_number = saved_user_or_error['id']
+                    logger.info(f"Usuário salvo, retornando ID: {user_id_number}")
+                    return True, user_id_number # Retorna o NÚMERO
+                else:
+                    # Se falhou, 'saved_user_or_error' é a string de erro
+                    logger.error(f"Falha ao salvar usuário: {saved_user_or_error}")
+                    return False, saved_user_or_error
+                # --- FIM DA CORREÇÃO ---
+
             else:
                 return False, f"Embeddings insuficientes: {successful}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}"
 
@@ -349,7 +363,7 @@ class FluidFaceCapture:
                                         (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
                         else:
                             cv2.putText(display_frame, "PROCURANDO ROSTO...",
-                                        (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 165, 255), 2)
+                                        (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 165, 255), 1)
 
                 # Informações na tela
                 cv2.putText(display_frame, f"Capturadas: {self.captured_count}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}",
@@ -357,8 +371,7 @@ class FluidFaceCapture:
 
                 user_type = "Aluno" if self.tipo_usuario == "ALUNO" else "Professor"
                 user_display = f"{self.nome} {self.sobrenome}"
-                if self.username:
-                    user_display += f" (@{self.username})"
+                # (Username removido do display da câmera)
 
                 cv2.putText(display_frame, f"Usuário: {user_display} - {user_type}",
                             (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)

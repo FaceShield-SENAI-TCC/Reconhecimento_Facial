@@ -167,28 +167,15 @@ def on_start_camera(data):
         sobrenome = data.get("sobrenome", "").strip()
         turma = data.get("turma", "").strip()
         tipo_usuario_num = data.get("tipoUsuario", "1")  # 1=ALUNO, 2=PROFESSOR
-        username = data.get("username", "").strip()
+
+        # --- CORREÇÃO: Username não é mais pego ou validado aqui ---
+        # (O Java vai cuidar disso)
 
         # Determinar tipo de usuário
         if str(tipo_usuario_num) == "2":
             tipo_usuario = "PROFESSOR"
-            # Para professor, validar username
-            if not username:
-                error_msg = "Username é obrigatório para professores"
-                logger.warning(f"❌ {error_msg}")
-                emit("capture_complete", {"success": False, "message": error_msg})
-                return
-
-            # Verificar se username já existe
-            existing_username = db_manager.check_username_exists(username)
-            if existing_username > 0:
-                error_msg = f"Username '{username}' já está em uso"
-                logger.warning(f"❌ {error_msg}")
-                emit("capture_complete", {"success": False, "message": error_msg})
-                return
         else:
             tipo_usuario = "ALUNO"
-            username = None  # Para aluno, username é NULL
 
         if not nome or not sobrenome or not turma:
             error_msg = "Nome, sobrenome e turma são obrigatórios"
@@ -228,7 +215,7 @@ def on_start_camera(data):
                 'sobrenome': sobrenome,
                 'turma': turma,
                 'tipo_usuario': tipo_usuario,
-                'username': username
+                # 'username' removido
             }
         })
 
@@ -248,9 +235,10 @@ def on_start_camera(data):
         })
 
         # Iniciar captura em thread separada
+        # --- CORREÇÃO: Removido 'username' dos argumentos da thread ---
         thread = threading.Thread(
             target=run_face_capture,
-            args=(nome, sobrenome, turma, tipo_usuario, username, request.sid),
+            args=(nome, sobrenome, turma, tipo_usuario, request.sid),
             daemon=True
         )
         thread.start()
@@ -266,7 +254,8 @@ def on_start_camera(data):
             "message": f"Erro interno ao iniciar captura: {str(e)}"
         })
 
-def run_face_capture(nome, sobrenome, turma, tipo_usuario, username, session_id):
+# --- CORREÇÃO: Removido 'username' dos parâmetros da função ---
+def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
     """Executa o processo de captura facial em thread separada"""
     try:
         logger.info(f"📷 Iniciando thread de captura para sessão: {session_id}")
@@ -297,12 +286,13 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, username, session_id)
                 logger.error(f"Erro no callback de frame: {str(e)}")
 
         # Criar instância do capturador facial
+        # --- CORREÇÃO: Removido 'username' do construtor ---
         capture = FluidFaceCapture(
             nome=nome,
             sobrenome=sobrenome,
             turma=turma,
             tipo_usuario=tipo_usuario,
-            username=username,
+            # username=username, (removido)
             progress_callback=progress_callback,
             frame_callback=frame_callback
         )
@@ -317,23 +307,34 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, username, session_id)
         # Enviar resultado final
         result_data = {
             "success": success,
-            "message": message,
+            "message": message, # 'message' aqui é o ID (se sucesso) ou o Erro (se falha)
             "captured_count": capture.captured_count,
             "user": f"{nome} {sobrenome}",
             "tipo_usuario": tipo_usuario,
-            "username": username,
+            # "username": username, (removido)
             "turma": turma,
             "session_id": session_id,
             "timestamp": datetime.now().isoformat()
         }
 
-        socketio.emit("capture_complete", result_data, room=session_id)
-
+        # (Esta parte já estava correta, pois foi corrigida antes)
         if success:
+            # Se deu certo, 'message' (vindo do facial_capture) contém o ID do usuário.
+            user_id = message  # 'message' é o ID (NÚMERO)
+            result_data['id'] = user_id # Adiciona a chave 'id'
+
+            # Atualiza a mensagem para ser algo mais claro
+            result_data['message'] = f"Usuário {nome} {sobrenome} salvo com ID: {user_id}"
+
             user_type = "aluno" if tipo_usuario == "ALUNO" else "professor"
-            logger.info(f"✅ Captura concluída com sucesso: {nome} {sobrenome} ({user_type})")
+            logger.info(f"✅ Captura concluída com sucesso: {nome} {sobrenome} ({user_type}) - ID: {user_id}")
+
         else:
+            # Se deu errado, 'message' já é a mensagem de erro correta.
             logger.warning(f"⚠️ Captura falhou: {message}")
+
+        # Emitir o resultado DEPOIS de ter formatado os dados corretos
+        socketio.emit("capture_complete", result_data, room=session_id)
 
     except Exception as e:
         logger.error(f"❌ Erro na thread de captura: {str(e)}", exc_info=True)
@@ -363,7 +364,8 @@ def initialize_application():
         logger.info(f"   📸 Fotos necessárias: {APP_CONFIG.MIN_PHOTOS_REQUIRED}")
         logger.info("   🌐 WebSocket: Ativo com Eventlet")
         logger.info("   💾 Banco: PostgreSQL")
-        logger.info("   👤 Estrutura: ALUNO (sem username) / PROFESSOR (com username)")
+        # --- CORREÇÃO no Log (só para ficar certo) ---
+        logger.info("   👤 Estrutura: Pré-cadastro (Python) -> Registro (Java c/ username)")
         logger.info("   🔄 Compatibilidade: FULL")
 
         return True

@@ -10,6 +10,8 @@ from typing import Generator, Optional, Tuple
 from common.config import DATABASE_CONFIG
 from common.exceptions import DatabaseError, DatabaseConnectionError
 
+# A linha "from common.models" foi REMOVIDA
+
 logger = logging.getLogger(__name__)
 
 class DatabaseManager:
@@ -22,12 +24,6 @@ class DatabaseManager:
     def get_connection(self) -> Generator[psycopg2.extensions.connection, None, None]:
         """
         Context manager para conexões de banco de dados com tratamento de erro
-
-        Yields:
-            psycopg2.extensions.connection: Conexão com o banco
-
-        Raises:
-            DatabaseConnectionError: Se não conseguir conectar
         """
         conn = None
         try:
@@ -47,16 +43,12 @@ class DatabaseManager:
         """
         Inicializa (Cria) ou Atualiza (Altera) tabelas do banco de dados
         para garantir que todas as colunas existam.
-
-        Returns:
-            bool: True se bem-sucedido
         """
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
-                    # 1. TENTA CRIAR A TABELA (para novas instalações)
-                    # Esta é a definição "ideal" da tabela.
-                    # Se a tabela já existir, este comando não faz nada.
+                    # 1. TENTA CRIAR A TABELA
+                    # (Ela bate com a sua imagem, com 'username' e 'senha' nulos)
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS usuarios(
                             id SERIAL PRIMARY KEY,
@@ -64,67 +56,41 @@ class DatabaseManager:
                             sobrenome VARCHAR(100) NOT NULL,
                             tipo_usuario VARCHAR(20) NOT NULL DEFAULT 'ALUNO',
                             turma VARCHAR(50) NOT NULL,
-                            username VARCHAR(100) NULL,
+                            username VARCHAR(100) UNIQUE,
+                            senha VARCHAR(255),
                             embeddings JSONB NOT NULL,
-                            foto_perfil BYTEA,
-                            UNIQUE(nome, sobrenome, turma)
+                            foto_perfil BYTEA
                         )
                     """)
 
-                    # 2. GARANTE QUE AS COLUNAS EXISTAM (para migrar tabelas antigas)
-                    # ... (comandos ALTER TABLE estão corretos) ...
-                    cursor.execute("""
-                        ALTER TABLE usuarios
-                        ADD COLUMN IF NOT EXISTS embeddings JSONB NOT NULL DEFAULT '[]'::jsonb
-                    """)
+                    # 2. GARANTE QUE AS COLUNAS EXISTAM
+                    cursor.execute("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS embeddings JSONB NOT NULL DEFAULT '[]'::jsonb")
+                    cursor.execute("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS foto_perfil BYTEA")
+                    cursor.execute("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS senha VARCHAR(255)")
 
-                    cursor.execute("""
-                        ALTER TABLE usuarios
-                        ADD COLUMN IF NOT EXISTS foto_perfil BYTEA
-                    """)
+                    # Garante que username é UNIQUE
+                    try:
+                        cursor.execute("ALTER TABLE usuarios ADD CONSTRAINT usuarios_username_key UNIQUE (username)")
+                    except psycopg2.Error as e:
+                        if e.pgcode == '42P07': # duplicate_table / constraint_already_exists
+                            conn.rollback()
+                        else:
+                            raise e
 
-                    # 3. Criar índices (como no original)
-
-                    # --- A CORREÇÃO ESTÁ AQUI ---
-                    # Precisamos de um ÍNDICE ÚNICO (UNIQUE INDEX) para que
-                    # o "ON CONFLICT (nome, sobrenome, turma)" funcione.
-                    cursor.execute("""
-                        CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_nome_sobrenome 
-                        ON usuarios(nome, sobrenome, turma)
-                    """)
-                    # --- FIM DA CORREÇÃO ---
-
-                    cursor.execute("""
-                        CREATE INDEX IF NOT EXISTS idx_usuarios_username 
-                        ON usuarios(username) 
-                        WHERE username IS NOT NULL
-                    """)
-
-                    cursor.execute("""
-                        CREATE INDEX IF NOT EXISTS idx_usuarios_tipo 
-                        ON usuarios(tipo_usuario)
-                    """)
+                    # Cria índice para busca por nome/sobrenome/turma
+                    cursor.execute("CREATE INDEX IF NOT EXISTS idx_usuarios_nome_sobrenome_turma ON usuarios(nome, sobrenome, turma)")
 
                     conn.commit()
                     logger.info("✅ Banco de dados inicializado/atualizado com sucesso")
                     return True
 
         except Exception as e:
+            conn.rollback()
             logger.error(f"❌ Falha na inicialização/atualização do banco: {str(e)}")
             return False
 
     def check_user_exists(self, nome: str, sobrenome: str, turma: str) -> int:
-        """
-        Verifica se usuário já existe no banco
-
-        Args:
-            nome: Nome do usuário
-            sobrenome: Sobrenome do usuário
-            turma: Turma do usuário
-
-        Returns:
-            int: Número de usuários encontrados
-        """
+        """ Verifica se usuário já existe no banco """
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
@@ -139,15 +105,7 @@ class DatabaseManager:
             return 0
 
     def check_username_exists(self, username: str) -> int:
-        """
-        Verifica se username já existe no banco (apenas para professores)
-
-        Args:
-            username: Nome de usuário
-
-        Returns:
-            int: Número de usuários encontrados
-        """
+        """ Verifica se username já existe no banco """
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
@@ -162,12 +120,7 @@ class DatabaseManager:
             return 0
 
     def count_users(self) -> int:
-        """
-        Conta número total de usuários cadastrados
-
-        Returns:
-            int: Total de usuários
-        """
+        """ Conta número total de usuários cadastrados """
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
@@ -179,71 +132,63 @@ class DatabaseManager:
             return 0
 
     def save_user(self, nome: str, sobrenome: str, turma: str, tipo_usuario: str,
-                 username: Optional[str], embeddings: list, profile_image: bytes) -> Tuple[bool, str]:
+                 embeddings: list, profile_image: bytes) -> Tuple[bool, object]:
         """
-        Salva usuário no banco de dados
+        Salva o pré-cadastro do usuário (sem username/senha)
 
-        Args:
-            nome: Nome do usuário
-            sobrenome: Sobrenome do usuário
-            turma: Turma do usuário
-            tipo_usuario: Tipo de usuário (ALUNO/PROFESSOR)
-            username: Nome de usuário (apenas para professores, None para alunos)
-            embeddings: Lista de embeddings faciais
-            profile_image: Imagem de perfil em bytes
-
-        Returns:
-            Tuple[bool, str]: (sucesso, mensagem)
+        RETORNA:
+            (True, <dicionario_com_id>) em sucesso (ex: (True, {'id': 42}))
+            (False, <string_de_erro>) em falha
         """
+
+        # --- ESTA É A CORREÇÃO MAIS IMPORTANTE ---
+        # 1. username é NULL (será preenchido pelo Java)
+        # 2. Usamos 'RETURNING id' para pegar o ID que o Postgres acabou de criar
+
+        sql = """
+            INSERT INTO usuarios (nome, sobrenome, turma, tipo_usuario, username, embeddings, foto_perfil)
+            VALUES (%s, %s, %s, %s, NULL, %s, %s)
+            ON CONFLICT (nome, sobrenome, turma) 
+            DO NOTHING 
+            RETURNING id 
+        """
+
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
-                    # Para alunos, garantir que username seja NULL
-                    if tipo_usuario.upper() == "ALUNO":
-                        username = None
 
-                    # Para professores, verificar se username foi fornecido
-                    if tipo_usuario.upper() == "PROFESSOR" and not username:
-                        return False, "Username é obrigatório para professores"
+                    # Verificar se usuário já existe
+                    existing_count = self.check_user_exists(nome, sobrenome, turma)
+                    if existing_count > 0:
+                        return False, f"Usuário {nome} {sobrenome} turma {turma} já existe."
 
-                    # Verificar se username já existe (apenas para professores)
-                    if tipo_usuario.upper() == "PROFESSOR" and username:
-                        existing_count = self.check_username_exists(username)
-                        if existing_count > 0:
-                            return False, f"Username '{username}' já está em uso"
+                    # Inserir usuário
+                    cursor.execute(
+                        sql,
+                        (nome, sobrenome, turma, tipo_usuario.upper(), Json(embeddings), profile_image)
+                    )
 
-                    # Inserir ou atualizar usuário
-                    cursor.execute("""
-                        INSERT INTO usuarios (nome, sobrenome, turma, tipo_usuario, username, embeddings, foto_perfil)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s)
-                        ON CONFLICT (nome, sobrenome, turma)
-                        DO UPDATE SET 
-                            tipo_usuario = EXCLUDED.tipo_usuario,
-                            username = EXCLUDED.username,
-                            embeddings = EXCLUDED.embeddings,
-                            foto_perfil = EXCLUDED.foto_perfil
-                    """, (nome, sobrenome, turma, tipo_usuario.upper(), username, Json(embeddings), profile_image))
+                    # Recuperar o ID que acabou de ser inserido
+                    inserted_row = cursor.fetchone()
 
-                    conn.commit()
+                    if inserted_row:
+                        conn.commit()
+                        user_id = inserted_row[0] # Pega o ID (ex: 42)
 
-                    user_type = "aluno" if tipo_usuario.upper() == "ALUNO" else "professor"
-                    return True, f"{user_type.capitalize()} {nome} {sobrenome} salvo com sucesso"
+                        # Retorna um DICIONÁRIO com o ID
+                        return True, {"id": user_id}
+                    else:
+                        # Isso acontece se o ON CONFLICT foi ativado
+                        return False, f"Usuário {nome} {sobrenome} turma {turma} já existe (ON CONFLICT)."
 
         except Exception as e:
+            conn.rollback()
             error_msg = f"Erro ao salvar usuário: {str(e)}"
             logger.error(error_msg)
             return False, error_msg
 
     def get_user_by_username(self, username: str) -> Optional[dict]:
-        """
-        Busca usuário pelo username (apenas professores)
-
-        Args:
-            username: Nome de usuário
-
-        Returns:
-            Optional[dict]: Dados do usuário ou None
-        """
+        """ Busca usuário pelo username """
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
