@@ -374,7 +374,7 @@ def initialize_application():
         logger.error(f"❌ Falha crítica na inicialização: {str(e)}")
         return False
 
-# Handler para graceful shutdown
+# Handler para shutdown
 def signal_handler(sig, frame):
     """Manipula sinais de desligamento"""
     logger.info("🛑 Recebido sinal de desligamento...")
