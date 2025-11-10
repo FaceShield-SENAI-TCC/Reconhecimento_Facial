@@ -345,36 +345,42 @@ class FaceRecognitionService:
                     elif distance < second_best_distance:
                         second_best_distance = distance
 
-            # Critérios de aceitação
+            # NOVOS CRITÉRIOS MAIS RIGOROSOS
             if best_match and min_distance < MODEL_CONFIG.DISTANCE_THRESHOLD:
                 confidence = 1 - min_distance
                 margin = second_best_distance - min_distance
 
-                logger.info(f"🔍 Match encontrado: {best_match} - Dist: {min_distance:.4f}, Conf: {confidence:.4f}, Margem: {margin:.4f}")
+                logger.info(
+                    f"🔍 Match encontrado: {best_match} - Dist: {min_distance:.4f}, Conf: {confidence:.4f}, Margem: {margin:.4f}")
 
-                # Critérios hierárquicos de segurança
+                # CRITÉRIOS HIERÁRQUICOS MAIS RIGOROSOS
+                extremely_high_confidence = confidence >= 0.90
                 very_high_confidence = confidence >= 0.85
-                very_low_distance = min_distance <= 0.35
-                good_confidence_with_margin = (
-                    confidence >= MODEL_CONFIG.MIN_CONFIDENCE and
-                    margin >= MODEL_CONFIG.MARGIN_REQUIREMENT
-                )
+                good_margin = margin >= 0.05  # Margem aumentada significativamente
+                acceptable_margin = margin >= 0.02
 
-                if very_high_confidence or very_low_distance:
-                    logger.info(f"✅ ACEITO - Critério alto: {best_match}")
+                # Apenas aceita com confiança muito alta
+                if extremely_high_confidence:
+                    logger.info(f"✅ ACEITO - Confiança extremamente alta: {best_match}")
                     return best_match, min_distance
 
-                elif good_confidence_with_margin:
-                    logger.info(f"✅ ACEITO - Boa confiança com margem: {best_match}")
+                elif very_high_confidence and good_margin:
+                    logger.info(f"✅ ACEITO - Confiança muito alta com boa margem: {best_match}")
+                    return best_match, min_distance
+
+                elif very_high_confidence and acceptable_margin:
+                    logger.info(f"✅ ACEITO - Confiança muito alta com margem aceitável: {best_match}")
                     return best_match, min_distance
 
                 else:
-                    logger.info(f"❌ REJEITADO - Confiança insuficiente ou margem pequena")
+                    logger.info(
+                        f"❌ REJEITADO - Confiança insuficiente ({confidence:.4f}) ou margem pequena ({margin:.4f})")
                     return None, None
 
             else:
                 if best_match:
-                    logger.info(f"❌ REJEITADO - Distância acima do threshold: {min_distance:.4f}")
+                    logger.info(
+                        f"❌ REJEITADO - Distância acima do threshold: {min_distance:.4f} > {MODEL_CONFIG.DISTANCE_THRESHOLD}")
                 else:
                     logger.info("❌ Nenhum match encontrado")
                 return None, None

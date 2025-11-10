@@ -11,7 +11,6 @@ from common.config import DATABASE_CONFIG
 from common.exceptions import DatabaseError, DatabaseConnectionError
 
 # A linha "from common.models" foi REMOVIDA
-
 logger = logging.getLogger(__name__)
 
 class DatabaseManager:
@@ -44,6 +43,7 @@ class DatabaseManager:
         Inicializa (Cria) ou Atualiza (Altera) tabelas do banco de dados
         para garantir que todas as colunas existam.
         """
+        conn = None # Definir conn fora do try para o except ter acesso
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
@@ -73,9 +73,9 @@ class DatabaseManager:
                         cursor.execute("ALTER TABLE usuarios ADD CONSTRAINT usuarios_username_key UNIQUE (username)")
                     except psycopg2.Error as e:
                         if e.pgcode == '42P07': # duplicate_table / constraint_already_exists
-                            conn.rollback()
+                            conn.rollback() # Desfaz o "ALTER TABLE" que falhou
                         else:
-                            raise e
+                            raise e # Levanta outros erros
 
                     # Cria índice para busca por nome/sobrenome/turma
                     cursor.execute("CREATE INDEX IF NOT EXISTS idx_usuarios_nome_sobrenome_turma ON usuarios(nome, sobrenome, turma)")
@@ -85,7 +85,8 @@ class DatabaseManager:
                     return True
 
         except Exception as e:
-            conn.rollback()
+            if conn: # Se a conexão ainda existir, desfaça
+                conn.rollback()
             logger.error(f"❌ Falha na inicialização/atualização do banco: {str(e)}")
             return False
 
@@ -141,15 +142,9 @@ class DatabaseManager:
             (False, <string_de_erro>) em falha
         """
 
-        # --- ESTA É A CORREÇÃO MAIS IMPORTANTE ---
-        # 1. username é NULL (será preenchido pelo Java)
-        # 2. Usamos 'RETURNING id' para pegar o ID que o Postgres acabou de criar
-
         sql = """
             INSERT INTO usuarios (nome, sobrenome, turma, tipo_usuario, username, embeddings, foto_perfil)
             VALUES (%s, %s, %s, %s, NULL, %s, %s)
-            ON CONFLICT (nome, sobrenome, turma) 
-            DO NOTHING 
             RETURNING id 
         """
 
@@ -157,8 +152,13 @@ class DatabaseManager:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
 
-                    # Verificar se usuário já existe
-                    existing_count = self.check_user_exists(nome, sobrenome, turma)
+                    # Verificar se usuário já existe (usando a mesma conexão)
+                    cursor.execute(
+                        "SELECT COUNT(*) FROM usuarios WHERE nome = %s AND sobrenome = %s AND turma = %s",
+                        (nome, sobrenome, turma)
+                    )
+                    existing_count = cursor.fetchone()[0]
+
                     if existing_count > 0:
                         return False, f"Usuário {nome} {sobrenome} turma {turma} já existe."
 
@@ -175,17 +175,19 @@ class DatabaseManager:
                         conn.commit()
                         user_id = inserted_row[0] # Pega o ID (ex: 42)
 
-                        # Retorna um DICIONÁRIO com o ID
+                        logger.info(f"Usuário salvo no DB, retornando dicionário de ID: {{'id': {user_id}}}")
                         return True, {"id": user_id}
                     else:
-                        # Isso acontece se o ON CONFLICT foi ativado
-                        return False, f"Usuário {nome} {sobrenome} turma {turma} já existe (ON CONFLICT)."
+                        # Isso aconteceria se algo desse errado no INSERT
+                        return False, "Falha ao inserir usuário, ID não retornado."
 
         except Exception as e:
-            conn.rollback()
+            # --- ESTA É A CORREÇÃO ---
+            # O 'conn.rollback()' foi REMOVIDO daqui.
+            # O 'with' statement já cuida do rollback se um commit() não for chamado.
             error_msg = f"Erro ao salvar usuário: {str(e)}"
             logger.error(error_msg)
-            return False, error_msg
+            return False, error_msg # Retorna a string de erro real
 
     def get_user_by_username(self, username: str) -> Optional[dict]:
         """ Busca usuário pelo username """
