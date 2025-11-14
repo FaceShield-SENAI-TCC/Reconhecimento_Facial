@@ -84,6 +84,15 @@ def face_login_legacy():
         # Processamento da imagem
         image_data = data['imagem']
         result = face_service.process_face_login(image_data)
+
+        # CORREÇÃO: Garantir que todos os campos estejam presentes
+        if result.get('authenticated'):
+            # Se autenticado, garantir que todos os campos estejam presentes
+            required_fields = ['id', 'username', 'tipo_usuario', 'nome', 'sobrenome', 'turma']
+            for field in required_fields:
+                if field not in result:
+                    result[field] = None
+
         return jsonify(result), 200
 
     except ImageValidationError as e:
@@ -110,6 +119,7 @@ def face_login_legacy():
 def face_login():
     """
     Endpoint NOVO para autenticação facial com validação completa
+    RETORNA: Todos os campos do usuário (id, username, tipo_usuario, etc.)
     """
     try:
         # Validação do payload
@@ -120,15 +130,25 @@ def face_login():
         if not data or 'imagem' not in data:
             return jsonify({"error": "Campo obrigatório faltando: 'imagem'"}), 400
 
-        # Processamento da imagem
-        image_data = data['imagem']
-
         # Validação adicional de payload
+        image_data = data['imagem']
         if not isinstance(image_data, str) or len(image_data) == 0:
             return jsonify({"error": "Dados de imagem inválidos"}), 400
 
         # Processar reconhecimento facial
         result = face_service.process_face_login(image_data)
+
+        # CORREÇÃO: Garantir que todos os campos estejam presentes mesmo no sucesso
+        if result.get('authenticated'):
+            logger.info(f"✅ Login bem-sucedido para usuário ID: {result.get('id')} - {result.get('nome')} {result.get('sobrenome')}")
+
+            # Garantir que todos os campos obrigatórios estejam presentes
+            required_fields = ['id', 'username', 'tipo_usuario', 'nome', 'sobrenome', 'turma']
+            for field in required_fields:
+                if field not in result:
+                    result[field] = None
+                    logger.warning(f"Campo {field} não encontrado no resultado, definindo como None")
+
         return jsonify(result), 200
 
     except ImageValidationError as e:
@@ -148,6 +168,7 @@ def face_login():
     except Exception as e:
         logger.error(f"Erro interno no face login: {str(e)}", exc_info=True)
         return jsonify({
+            "authenticated": False,
             "error": "Erro interno do servidor",
             "message": "Falha temporária no serviço de autenticação"
         }), 500
@@ -262,6 +283,28 @@ def system_metrics():
         logger.error(f"Erro ao obter métricas: {str(e)}")
         return jsonify({"error": "Erro ao obter métricas do sistema"}), 500
 
+@app.route('/api/system/detailed-metrics', methods=['GET'])
+def detailed_metrics():
+    """Métricas detalhadas do sistema de reconhecimento"""
+    try:
+        db_status = face_service.get_detailed_database_status()
+        metrics = face_service.get_performance_metrics()
+
+        return jsonify({
+            "database": db_status,
+            "performance": metrics,
+            "model_config": {
+                "name": "VGG-Face",
+                "distance_threshold": 0.60,
+                "min_confidence": 0.75,
+                "margin_requirement": 0.001
+            },
+            "timestamp": face_service.get_current_timestamp()
+        }), 200
+    except Exception as e:
+        logger.error(f"Erro ao obter métricas detalhadas: {str(e)}")
+        return jsonify({"error": "Erro ao obter métricas"}), 500
+
 @app.route('/api/users/list', methods=['GET'])
 @token_required
 def list_users():
@@ -333,6 +376,7 @@ def initialize_application():
             logger.info("   POST /api/database/reload - Recarregar banco")
             logger.info("   GET  /api/system/info    - Informações do sistema")
             logger.info("   GET  /api/system/metrics - Métricas (autenticado)")
+            logger.info("   GET  /api/system/detailed-metrics - Métricas detalhadas")
             logger.info("   GET  /api/users/list     - Listar usuários (autenticado)")
 
             logger.info("📈 ESTATÍSTICAS DO BANCO:")
@@ -340,6 +384,11 @@ def initialize_application():
             logger.info(f"   👨‍🏫 Professores: {db_status['professores_count']}")
             logger.info(f"   👨‍🎓 Alunos: {db_status['alunos_count']}")
             logger.info(f"   📊 Total de embeddings: {db_status['total_embeddings']}")
+
+            logger.info("🎯 CONFIGURAÇÃO DO MODELO:")
+            logger.info(f"   📏 Distância máxima: {0.60}")
+            logger.info(f"   ✅ Confiança mínima: {0.80}")
+            logger.info(f"   📐 Margem mínima: {0.001}")
 
             logger.info("🔔 Monitoramento em tempo real do banco: ATIVO")
             return True

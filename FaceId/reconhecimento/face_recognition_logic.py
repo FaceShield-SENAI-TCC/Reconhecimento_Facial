@@ -27,10 +27,9 @@ from common.exceptions import (
 
 logger = logging.getLogger(__name__)
 
-# Classes de dados locais (substituindo shared_models.models)
 @dataclass
 class RecognitionResult:
-    """Resultado do reconhecimento facial"""
+    """Resultado do reconhecimento facial com campos completos"""
     authenticated: bool
     confidence: float
     message: str
@@ -38,6 +37,13 @@ class RecognitionResult:
     user: Optional[str] = None
     distance: Optional[float] = None
     user_info: Optional[Dict[str, Any]] = None
+    # NOVOS CAMPOS ADICIONADOS
+    id: Optional[int] = None
+    username: Optional[str] = None
+    tipo_usuario: Optional[str] = None
+    nome: Optional[str] = None
+    sobrenome: Optional[str] = None
+    turma: Optional[str] = None
 
 @dataclass
 class DatabaseStatus:
@@ -45,9 +51,9 @@ class DatabaseStatus:
     status: str
     user_count: int
     total_embeddings: int
-    last_update: Optional[float]
-    monitoring_active: bool
-    database_type: str
+    last_update: Optional[float] = None
+    monitoring_active: bool = False
+    database_type: str = "PostgreSQL"
 
 @dataclass
 class SystemMetrics:
@@ -58,7 +64,7 @@ class SystemMetrics:
     no_face_detected: int
     average_processing_time: float
     success_rate: float
-    database_reloads: int
+    database_reloads: int = 0
 
 @dataclass
 class RecognitionMetrics:
@@ -186,18 +192,16 @@ class FaceRecognitionService:
 
     def load_facial_database(self) -> bool:
         """
-        Carrega embeddings faciais do PostgreSQL com verificação de atualização
-
-        Returns:
-            bool: True se carregado com sucesso
+        Carrega embeddings faciais do PostgreSQL INCLUINDO ID
         """
         logger.info("🔄 Carregando banco de dados facial do PostgreSQL...")
 
         try:
             with self.db_manager.get_connection() as conn:
                 with conn.cursor() as cursor:
+                    # MODIFICADO: Incluir id na query
                     cursor.execute("""
-                        SELECT nome, sobrenome, turma, tipo_usuario, username, embeddings
+                        SELECT id, nome, sobrenome, turma, tipo_usuario, username, embeddings
                         FROM usuarios
                         WHERE embeddings IS NOT NULL AND jsonb_array_length(embeddings) > 0
                     """)
@@ -207,14 +211,17 @@ class FaceRecognitionService:
                     embedding_count = 0
                     invalid_embeddings = 0
 
-                    for nome, sobrenome, turma, tipo_usuario, username, embeddings in cursor.fetchall():
+                    # MODIFICADO: Incluir id no fetch
+                    for id, nome, sobrenome, turma, tipo_usuario, username, embeddings in cursor.fetchall():
                         # Criar display name com informações completas
                         if tipo_usuario.upper() == "PROFESSOR" and username:
                             display_name = f"{nome} {sobrenome} (@{username})"
                         else:
                             display_name = f"{nome} {sobrenome}"
 
+                        # MODIFICADO: Incluir id no user_info
                         user_info = {
+                            'id': id,  # NOVO CAMPO
                             'display_name': display_name,
                             'nome': nome,
                             'sobrenome': sobrenome,
@@ -313,7 +320,7 @@ class FaceRecognitionService:
 
     def _recognize_face_secure(self, face_image: np.ndarray) -> Tuple[Optional[str], Optional[float]]:
         """
-        Reconhecimento facial SEGURO com critérios balanceados
+        Reconhecimento facial OTIMIZADO - CRITÉRIOS MAIS PERMISSIVOS
 
         Args:
             face_image: Imagem do rosto para reconhecer
@@ -345,42 +352,47 @@ class FaceRecognitionService:
                     elif distance < second_best_distance:
                         second_best_distance = distance
 
-            # NOVOS CRITÉRIOS MAIS RIGOROSOS
+            # CRITÉRIOS OTIMIZADOS - MAIS PERMISSIVOS
             if best_match and min_distance < MODEL_CONFIG.DISTANCE_THRESHOLD:
                 confidence = 1 - min_distance
-                margin = second_best_distance - min_distance
+                margin = second_best_distance - min_distance if second_best_distance != float('inf') else 0.1
 
-                logger.info(
-                    f"🔍 Match encontrado: {best_match} - Dist: {min_distance:.4f}, Conf: {confidence:.4f}, Margem: {margin:.4f}")
+                logger.info(f"🔍 Match encontrado: {best_match} - Dist: {min_distance:.4f}, Conf: {confidence:.4f}, Margem: {margin:.4f}")
 
-                # CRITÉRIOS HIERÁRQUICOS MAIS RIGOROSOS
-                extremely_high_confidence = confidence >= 0.90
+                # NOVOS CRITÉRIOS MAIS PERMISSIVOS
                 very_high_confidence = confidence >= 0.85
-                good_margin = margin >= 0.05  # Margem aumentada significativamente
-                acceptable_margin = margin >= 0.02
+                high_confidence = confidence >= 0.80
+                medium_confidence = confidence >= 0.75
 
-                # Apenas aceita com confiança muito alta
-                if extremely_high_confidence:
-                    logger.info(f"✅ ACEITO - Confiança extremamente alta: {best_match}")
+                # MARGENS SIGNIFICATIVAMENTE REDUZIDAS
+                good_margin = margin >= 0.005
+                acceptable_margin = margin >= 0.001
+                minimal_margin = margin >= 0.0005
+
+                # ACEITAÇÃO MAIS PERMISSIVA
+                if very_high_confidence:
+                    # Confiança muito alta - aceita mesmo com margem mínima
+                    logger.info(f"✅ ACEITO - Confiança muito alta: {best_match}")
                     return best_match, min_distance
-
-                elif very_high_confidence and good_margin:
-                    logger.info(f"✅ ACEITO - Confiança muito alta com boa margem: {best_match}")
+                elif high_confidence and good_margin:
+                    logger.info(f"✅ ACEITO - Confiança alta com boa margem: {best_match}")
                     return best_match, min_distance
-
-                elif very_high_confidence and acceptable_margin:
-                    logger.info(f"✅ ACEITO - Confiança muito alta com margem aceitável: {best_match}")
+                elif high_confidence and acceptable_margin:
+                    logger.info(f"✅ ACEITO - Confiança alta com margem aceitável: {best_match}")
                     return best_match, min_distance
-
+                elif medium_confidence and good_margin:
+                    logger.info(f"✅ ACEITO - Confiança média com boa margem: {best_match}")
+                    return best_match, min_distance
+                elif medium_confidence and minimal_margin:
+                    logger.info(f"✅ ACEITO - Confiança média com margem mínima: {best_match}")
+                    return best_match, min_distance
                 else:
-                    logger.info(
-                        f"❌ REJEITADO - Confiança insuficiente ({confidence:.4f}) ou margem pequena ({margin:.4f})")
+                    logger.info(f"❌ REJEITADO - Confiança insuficiente ({confidence:.4f}) ou margem pequena ({margin:.4f})")
                     return None, None
 
             else:
                 if best_match:
-                    logger.info(
-                        f"❌ REJEITADO - Distância acima do threshold: {min_distance:.4f} > {MODEL_CONFIG.DISTANCE_THRESHOLD}")
+                    logger.info(f"❌ REJEITADO - Distância acima do threshold: {min_distance:.4f} > {MODEL_CONFIG.DISTANCE_THRESHOLD}")
                 else:
                     logger.info("❌ Nenhum match encontrado")
                 return None, None
@@ -535,12 +547,20 @@ class FaceRecognitionService:
 
                     logger.info(f"⏱️ Tempo de processamento: {processing_time:.3f}s")
 
+                    # RETORNO COMPLETO COM TODOS OS CAMPOS
                     return RecognitionResult(
                         authenticated=True,
                         user=user,
                         confidence=round(confidence, 4),
                         distance=round(distance, 4),
                         user_info=user_data,
+                        # NOVOS CAMPOS PREENCHIDOS
+                        id=user_data['id'],
+                        username=user_data['username'],
+                        tipo_usuario=user_data['tipo_usuario'],
+                        nome=user_data['nome'],
+                        sobrenome=user_data['sobrenome'],
+                        turma=user_data['turma'],
                         message=message,
                         timestamp=self.get_current_timestamp()
                     ).__dict__
