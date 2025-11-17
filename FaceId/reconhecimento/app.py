@@ -1,9 +1,8 @@
 """
-Servidor Principal de Reconhecimento Facial Refatorado
-Usa estrutura modular e compartilhada
+Servidor Principal de Reconhecimento Facial - VERSÃO COMPATÍVEL
 """
 import eventlet
-eventlet.monkey_patch()  # IMPORTANTE para compatibilidade
+eventlet.monkey_patch()
 
 import os
 import logging
@@ -13,9 +12,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 # Módulos compartilhados
-from common.config import APP_CONFIG
-from common.auth import token_required
-from common.exceptions import ImageValidationError, FaceRecognitionServiceError
+from common.config import APP_CONFIG, MODEL_CONFIG
 from face_recognition_logic import FaceRecognitionService
 
 # Configuração de logging
@@ -32,15 +29,13 @@ face_service = FaceRecognitionService()
 # Configuração da aplicação Flask
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 # Configuração CORS
 CORS(app, resources={
     r"/*": {
         "origins": "*",
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
-        "supports_credentials": True
+        "allow_headers": ["Content-Type", "Authorization", "Access-Control-Allow-Origin"]
     }
 })
 
@@ -54,12 +49,12 @@ def after_request(response):
 
 @app.route('/health', methods=['GET'])
 def health_check():
-    """Health check do servidor (endpoint legacy)"""
+    """Health check do servidor"""
     return jsonify({"status": "healthy"}), 200
 
 @app.route('/api/health', methods=['GET'])
 def health_check_new():
-    """Health check do servidor (endpoint novo)"""
+    """Health check do servidor"""
     return jsonify({
         "status": "operational",
         "service": "face_recognition_api",
@@ -69,11 +64,8 @@ def health_check_new():
 
 @app.route('/face-login', methods=['POST'])
 def face_login_legacy():
-    """
-    Endpoint LEGACY para autenticação facial (mantido para compatibilidade)
-    """
+    """Endpoint LEGACY para autenticação facial"""
     try:
-        # Validação do payload
         if not request.is_json:
             return jsonify({"error": "Content-Type deve ser application/json"}), 400
 
@@ -81,13 +73,11 @@ def face_login_legacy():
         if not data or 'imagem' not in data:
             return jsonify({"error": "Campo obrigatório faltando: 'imagem'"}), 400
 
-        # Processamento da imagem
         image_data = data['imagem']
         result = face_service.process_face_login(image_data)
 
-        # CORREÇÃO: Garantir que todos os campos estejam presentes
+        # Garantir que todos os campos estejam presentes
         if result.get('authenticated'):
-            # Se autenticado, garantir que todos os campos estejam presentes
             required_fields = ['id', 'username', 'tipo_usuario', 'nome', 'sobrenome', 'turma']
             for field in required_fields:
                 if field not in result:
@@ -95,21 +85,8 @@ def face_login_legacy():
 
         return jsonify(result), 200
 
-    except ImageValidationError as e:
-        logger.warning(f"Validação de imagem falhou: {str(e)}")
-        return jsonify({
-            "authenticated": False,
-            "error": "Imagem inválida",
-            "message": str(e)
-        }), 400
-    except FaceRecognitionServiceError as e:
-        logger.error(f"Erro no serviço de reconhecimento: {str(e)}")
-        return jsonify({
-            "error": "Erro no serviço de reconhecimento",
-            "message": "Serviço temporariamente indisponível"
-        }), 500
     except Exception as e:
-        logger.error(f"Erro interno no face login: {str(e)}", exc_info=True)
+        logger.error(f"Erro interno no face login: {str(e)}")
         return jsonify({
             "error": "Erro interno do servidor",
             "message": "Serviço de autenticação temporariamente indisponível"
@@ -117,12 +94,8 @@ def face_login_legacy():
 
 @app.route('/api/face-login', methods=['POST'])
 def face_login():
-    """
-    Endpoint NOVO para autenticação facial com validação completa
-    RETORNA: Todos os campos do usuário (id, username, tipo_usuario, etc.)
-    """
+    """Endpoint NOVO para autenticação facial"""
     try:
-        # Validação do payload
         if not request.is_json:
             return jsonify({"error": "Content-Type deve ser application/json"}), 400
 
@@ -130,43 +103,21 @@ def face_login():
         if not data or 'imagem' not in data:
             return jsonify({"error": "Campo obrigatório faltando: 'imagem'"}), 400
 
-        # Validação adicional de payload
         image_data = data['imagem']
-        if not isinstance(image_data, str) or len(image_data) == 0:
-            return jsonify({"error": "Dados de imagem inválidos"}), 400
-
-        # Processar reconhecimento facial
         result = face_service.process_face_login(image_data)
 
-        # CORREÇÃO: Garantir que todos os campos estejam presentes mesmo no sucesso
         if result.get('authenticated'):
-            logger.info(f"✅ Login bem-sucedido para usuário ID: {result.get('id')} - {result.get('nome')} {result.get('sobrenome')}")
+            logger.info(f"✅ Login bem-sucedido para usuário ID: {result.get('id')}")
 
-            # Garantir que todos os campos obrigatórios estejam presentes
             required_fields = ['id', 'username', 'tipo_usuario', 'nome', 'sobrenome', 'turma']
             for field in required_fields:
                 if field not in result:
                     result[field] = None
-                    logger.warning(f"Campo {field} não encontrado no resultado, definindo como None")
 
         return jsonify(result), 200
 
-    except ImageValidationError as e:
-        logger.warning(f"Validação de imagem falhou: {str(e)}")
-        return jsonify({
-            "authenticated": False,
-            "error": "Imagem inválida",
-            "message": str(e)
-        }), 400
-    except FaceRecognitionServiceError as e:
-        logger.error(f"Erro no serviço de reconhecimento: {str(e)}")
-        return jsonify({
-            "authenticated": False,
-            "error": "Erro no processamento facial",
-            "message": str(e)
-        }), 500
     except Exception as e:
-        logger.error(f"Erro interno no face login: {str(e)}", exc_info=True)
+        logger.error(f"Erro interno no face login: {str(e)}")
         return jsonify({
             "authenticated": False,
             "error": "Erro interno do servidor",
@@ -175,7 +126,7 @@ def face_login():
 
 @app.route('/database-status', methods=['GET'])
 def database_status_legacy():
-    """Status do banco de dados facial (endpoint legacy)"""
+    """Status do banco de dados facial"""
     try:
         status = face_service.get_database_status()
         return jsonify(status), 200
@@ -185,7 +136,7 @@ def database_status_legacy():
 
 @app.route('/api/database/status', methods=['GET'])
 def database_status():
-    """Status do banco de dados facial (endpoint novo)"""
+    """Status do banco de dados facial"""
     try:
         status = face_service.get_database_status()
         return jsonify(status), 200
@@ -198,20 +149,19 @@ def database_status():
 
 @app.route('/api/database/detailed-status', methods=['GET'])
 def detailed_database_status():
-    """Status detalhado do banco de dados com estatísticas por tipo de usuário"""
+    """Status detalhado do banco de dados"""
     try:
         status = face_service.get_detailed_database_status()
         return jsonify(status), 200
     except Exception as e:
         logger.error(f"Erro ao obter status detalhado do banco: {str(e)}")
         return jsonify({
-            "error": "Erro ao obter status detalhado do banco",
-            "message": "Não foi possível conectar ao banco de dados"
+            "error": "Erro ao obter status detalhado do banco"
         }), 500
 
 @app.route('/reload-database', methods=['POST'])
 def reload_database_legacy():
-    """Recarregamento manual do banco de dados (endpoint legacy)"""
+    """Recarregamento manual do banco de dados"""
     try:
         success, message = face_service.reload_database()
         if success:
@@ -224,7 +174,7 @@ def reload_database_legacy():
 
 @app.route('/api/database/reload', methods=['POST'])
 def reload_database():
-    """Recarregamento manual do banco de dados (endpoint novo)"""
+    """Recarregamento manual do banco de dados"""
     try:
         success, message = face_service.reload_database()
         if success:
@@ -234,8 +184,7 @@ def reload_database():
     except Exception as e:
         logger.error(f"Erro no recarregamento do banco: {str(e)}")
         return jsonify({
-            "error": "Falha no recarregamento do banco",
-            "message": "Não foi possível recarregar o banco de dados"
+            "error": "Falha no recarregamento do banco"
         }), 500
 
 @app.route('/api/system/info', methods=['GET'])
@@ -268,14 +217,12 @@ def system_info():
         logger.error(f"Erro ao obter informações do sistema: {str(e)}")
         return jsonify({
             "service": "face_recognition_api",
-            "status": "degraded",
-            "error": "Não foi possível obter informações completas do sistema"
+            "status": "degraded"
         }), 500
 
 @app.route('/api/system/metrics', methods=['GET'])
-@token_required
 def system_metrics():
-    """Métricas detalhadas do sistema (requer autenticação)"""
+    """Métricas detalhadas do sistema"""
     try:
         metrics = face_service.get_performance_metrics()
         return jsonify(metrics), 200
@@ -285,7 +232,7 @@ def system_metrics():
 
 @app.route('/api/system/detailed-metrics', methods=['GET'])
 def detailed_metrics():
-    """Métricas detalhadas do sistema de reconhecimento"""
+    """Métricas detalhadas do sistema"""
     try:
         db_status = face_service.get_detailed_database_status()
         metrics = face_service.get_performance_metrics()
@@ -295,9 +242,8 @@ def detailed_metrics():
             "performance": metrics,
             "model_config": {
                 "name": "VGG-Face",
-                "distance_threshold": 0.60,
-                "min_confidence": 0.75,
-                "margin_requirement": 0.001
+                "distance_threshold": MODEL_CONFIG.DISTANCE_THRESHOLD,
+                "embedding_dimension": MODEL_CONFIG.EMBEDDING_DIMENSION
             },
             "timestamp": face_service.get_current_timestamp()
         }), 200
@@ -306,12 +252,9 @@ def detailed_metrics():
         return jsonify({"error": "Erro ao obter métricas"}), 500
 
 @app.route('/api/users/list', methods=['GET'])
-@token_required
 def list_users():
-    """Lista todos os usuários cadastrados (requer autenticação)"""
+    """Lista todos os usuários cadastrados"""
     try:
-        # Esta funcionalidade precisaria ser implementada no FaceRecognitionService
-        # Por enquanto, retornamos uma mensagem informativa
         db_status = face_service.get_detailed_database_status()
         return jsonify({
             "message": "Endpoint em desenvolvimento",
@@ -323,27 +266,17 @@ def list_users():
         logger.error(f"Erro ao listar usuários: {str(e)}")
         return jsonify({"error": "Erro ao listar usuários"}), 500
 
-# Handlers de erro melhorados
+# Handlers de erro
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
-        "error": "Endpoint não encontrado",
-        "message": "Verifique a URL e tente novamente"
+        "error": "Endpoint não encontrado"
     }), 404
-
-@app.errorhandler(405)
-def method_not_allowed(error):
-    return jsonify({
-        "error": "Método não permitido",
-        "message": "Este endpoint não suporta o método HTTP utilizado"
-    }), 405
 
 @app.errorhandler(500)
 def internal_error(error):
-    logger.error(f"Erro interno do servidor: {error}")
     return jsonify({
-        "error": "Erro interno do servidor",
-        "message": "Ocorreu um erro inesperado. Tente novamente mais tarde."
+        "error": "Erro interno do servidor"
     }), 500
 
 def signal_handler(sig, frame):
@@ -360,24 +293,15 @@ def initialize_application():
         if face_service.initialize():
             logger.info("✅ Serviço de reconhecimento facial inicializado com sucesso")
 
-            # Obter status detalhado do banco
+            # Status do banco
             db_status = face_service.get_detailed_database_status()
 
-            # Log de endpoints disponíveis
-            logger.info("📊 Endpoints Legacy disponíveis:")
-            logger.info("   POST /face-login        - Autenticação facial")
-            logger.info("   GET  /database-status    - Status do banco")
-            logger.info("   POST /reload-database    - Recarregar banco")
-
-            logger.info("📊 Endpoints Novos disponíveis:")
-            logger.info("   POST /api/face-login     - Autenticação facial")
-            logger.info("   GET  /api/database/status - Status do banco")
-            logger.info("   GET  /api/database/detailed-status - Status detalhado")
-            logger.info("   POST /api/database/reload - Recarregar banco")
-            logger.info("   GET  /api/system/info    - Informações do sistema")
-            logger.info("   GET  /api/system/metrics - Métricas (autenticado)")
-            logger.info("   GET  /api/system/detailed-metrics - Métricas detalhadas")
-            logger.info("   GET  /api/users/list     - Listar usuários (autenticado)")
+            logger.info("📊 Endpoints disponíveis:")
+            logger.info("   POST /face-login              - Autenticação facial (legacy)")
+            logger.info("   POST /api/face-login          - Autenticação facial")
+            logger.info("   GET  /api/database/status     - Status do banco")
+            logger.info("   POST /api/database/reload     - Recarregar banco")
+            logger.info("   GET  /api/system/info         - Informações do sistema")
 
             logger.info("📈 ESTATÍSTICAS DO BANCO:")
             logger.info(f"   👥 Total de usuários: {db_status['user_count']}")
@@ -385,12 +309,6 @@ def initialize_application():
             logger.info(f"   👨‍🎓 Alunos: {db_status['alunos_count']}")
             logger.info(f"   📊 Total de embeddings: {db_status['total_embeddings']}")
 
-            logger.info("🎯 CONFIGURAÇÃO DO MODELO:")
-            logger.info(f"   📏 Distância máxima: {0.60}")
-            logger.info(f"   ✅ Confiança mínima: {0.80}")
-            logger.info(f"   📐 Margem mínima: {0.001}")
-
-            logger.info("🔔 Monitoramento em tempo real do banco: ATIVO")
             return True
         else:
             logger.error("❌ Falha na inicialização do serviço de reconhecimento facial")

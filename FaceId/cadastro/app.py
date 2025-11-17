@@ -256,7 +256,7 @@ def on_start_camera(data):
 
 # --- CORREÇÃO: Removido 'username' dos parâmetros da função ---
 def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
-    """Executa o processo de captura facial em thread separada"""
+    """Executa o processo de captura facial - ESTRUTURA ORIGINAL"""
     try:
         logger.info(f"📷 Iniciando thread de captura para sessão: {session_id}")
 
@@ -270,7 +270,6 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
                     'session_id': session_id,
                     'timestamp': datetime.now().isoformat()
                 }, room=session_id)
-                logger.debug(f"📊 Progresso enviado para {session_id}: {progress['captured']}/{progress['total']}")
             except Exception as e:
                 logger.error(f"Erro no callback de progresso: {str(e)}")
 
@@ -286,13 +285,11 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
                 logger.error(f"Erro no callback de frame: {str(e)}")
 
         # Criar instância do capturador facial
-        # --- CORREÇÃO: Removido 'username' do construtor ---
         capture = FluidFaceCapture(
             nome=nome,
             sobrenome=sobrenome,
             turma=turma,
             tipo_usuario=tipo_usuario,
-            # username=username, (removido)
             progress_callback=progress_callback,
             frame_callback=frame_callback
         )
@@ -301,43 +298,36 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
         active_captures[session_id] = capture
 
         # Executar captura
-        logger.info(f"🎯 Executando captura para sessão: {session_id}")
         success, message = capture.capture()
 
-        # Enviar resultado final
+        # ✅ ESTRUTURA ORIGINAL RESTAURADA - SEM mudanças no formato
         result_data = {
             "success": success,
-            "message": message, # 'message' aqui é o ID (se sucesso) ou o Erro (se falha)
+            "message": message,  # message é o ID (string) se sucesso, ou erro se falha
             "captured_count": capture.captured_count,
             "user": f"{nome} {sobrenome}",
             "tipo_usuario": tipo_usuario,
-            # "username": username, (removido)
             "turma": turma,
             "session_id": session_id,
             "timestamp": datetime.now().isoformat()
         }
 
-        # (Esta parte já estava correta, pois foi corrigida antes)
+        # ✅ MANTÉM A LÓGICA ORIGINAL - Se success, message é o ID
         if success:
-            # Se deu certo, 'message' (vindo do facial_capture) contém o ID do usuário.
-            user_id = message  # 'message' é o ID (NÚMERO)
-            result_data['id'] = user_id # Adiciona a chave 'id'
-
-            # Atualiza a mensagem para ser algo mais claro
-            result_data['message'] = f"Usuário {nome} {sobrenome} salvo com ID: {user_id}"
+            user_id = message  # message é o ID (string)
+            result_data['id'] = user_id  # Adiciona campo id
+            result_data['message'] = f"Usuário {nome} {sobrenome} cadastrado com sucesso"
 
             user_type = "aluno" if tipo_usuario == "ALUNO" else "professor"
-            logger.info(f"✅ Captura concluída com sucesso: {nome} {sobrenome} ({user_type}) - ID: {user_id}")
-
+            logger.info(f"✅ Captura concluída: {nome} {sobrenome} ({user_type}) - ID: {user_id}")
         else:
-            # Se deu errado, 'message' já é a mensagem de erro correta.
             logger.warning(f"⚠️ Captura falhou: {message}")
 
-        # Emitir o resultado DEPOIS de ter formatado os dados corretos
+        # Emitir resultado
         socketio.emit("capture_complete", result_data, room=session_id)
 
     except Exception as e:
-        logger.error(f"❌ Erro na thread de captura: {str(e)}", exc_info=True)
+        logger.error(f"❌ Erro na thread de captura: {str(e)}")
         socketio.emit("capture_complete", {
             "success": False,
             "message": f"Erro durante a captura: {str(e)}",
@@ -346,8 +336,6 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
     finally:
         if session_id in active_captures:
             del active_captures[session_id]
-            logger.info(f"🧹 Captura finalizada para sessão: {session_id}")
-
 def initialize_application():
     """Inicializa a aplicação e serviços"""
     logger.info("🚀 Inicializando Servidor de Captura Facial...")

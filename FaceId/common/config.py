@@ -1,5 +1,5 @@
 """
-Configurações centralizadas para todo o sistema
+Configurações centralizadas para todo o sistema - VERSÃO CORRIGIDA
 """
 import os
 from dataclasses import dataclass
@@ -30,14 +30,12 @@ class DatabaseConfig:
 
 @dataclass
 class ModelConfig:
-    """Configurações do modelo de reconhecimento facial - CRITÉRIOS OTIMIZADOS"""
+    """Configurações do modelo de reconhecimento facial - CORRIGIDO PARA 2622"""
     MODEL_NAME: str = "VGG-Face"
-    EMBEDDING_DIMENSION: int = 2622
-    DISTANCE_THRESHOLD: float = 0.60  # Aumentado para melhorar reconhecimento
-    MIN_FACE_SIZE: Tuple[int, int] = (80, 80)  # Reduzido para capturar mais rostos
+    EMBEDDING_DIMENSION: int = 2622  # ✅ CORRIGIDO - DeepFace retorna 2622, não 4096
+    DISTANCE_THRESHOLD: float = 0.45  # Balanceado - 55% de similaridade mínima
+    MIN_FACE_SIZE: Tuple[int, int] = (80, 80)  # Mantém compatibilidade com câmeras simples
     DETECTOR_BACKEND: str = "opencv"  # Alterado para melhor detecção
-    MIN_CONFIDENCE: float = 0.80  # Reduzido para melhorar taxa de acerto
-    MARGIN_REQUIREMENT: float = 0.001  # Reduzido significativamente
 
 @dataclass
 class SecurityConfig:
