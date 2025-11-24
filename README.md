@@ -46,7 +46,11 @@ cd Reconhecimento_Facial
 3. Instale as dependências do projeto:
 
 ```bash
+<<<<<<< HEAD
 pip install -r requirements_compleot.txt
+=======
+pip install -r requirements_completo.txt
+>>>>>>> be56f152937dd0ae3a03689be06fdf4f2b5a4981
 ```
 
 Após isso apenas clicar em run ou no botão verde acima da tela para rodar o projeto.

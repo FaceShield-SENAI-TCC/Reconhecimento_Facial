@@ -1,14 +1,32 @@
+# CORREÇÃO PARA IMPORTAÇÕES - DEVE SER AS PRIMEIRAS LINHAS DO ARQUIVO
+import sys
+import os
+import logging
+
+# Adicionar o diretório raiz do projeto ao Python path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
+
+# Verificar se as importações funcionam
+try:
+    # Testar importação do common
+    from common.config import APP_CONFIG, SECURITY_CONFIG
+    print("SUCESSO: Modulos common importados")
+except ImportError as e:
+    print(f"ERRO: Falha na importacao do common: {e}")
+    print(f"DEBUG: Python path: {sys.path}")
+    sys.exit(1)
+
 """
 Servidor de Cadastro Facial Refatorado
 Usa módulos compartilhados e estrutura profissional
 """
 import eventlet
-eventlet.monkey_patch()  # IMPORTANTE: Deve ser a primeira linha
+eventlet.monkey_patch()
 
-import os
-import logging
 import signal
-import sys
 import threading
 from datetime import datetime
 from flask import Flask, jsonify, request
@@ -28,7 +46,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('cadastro')
 
 # Configuração da aplicação Flask
 app = Flask(__name__)
@@ -47,11 +65,11 @@ socketio = SocketIO(
     app,
     cors_allowed_origins="*",
     max_http_buffer_size=SECURITY_CONFIG.MAX_FILE_SIZE,
-    ping_timeout=120,  # Aumentado
-    ping_interval=60,   # Aumentado
+    ping_timeout=120,
+    ping_interval=60,
     logger=True,
     engineio_logger=True,
-    async_mode='eventlet',  # Forçar eventlet
+    async_mode='eventlet',
     always_connect=True,
     allow_upgrades=True,
     http_compression=True,
@@ -77,7 +95,7 @@ def health_check():
             'port': APP_CONFIG.SERVER_PORT_CADASTRO
         }), 200
     except Exception as e:
-        logger.error(f"Health check error: {str(e)}")
+        logger.error(f"ERRO Health check: {str(e)}")
         return jsonify({'status': 'degraded'}), 500
 
 @app.route('/api/database/status', methods=['GET'])
@@ -91,7 +109,7 @@ def database_status():
             'timestamp': datetime.now().isoformat()
         }), 200
     except DatabaseError as e:
-        logger.error(f"Database status error: {str(e)}")
+        logger.error(f"ERRO Database status: {str(e)}")
         return jsonify({'error': 'Erro ao conectar com o banco'}), 500
 
 @app.route('/api/system/info', methods=['GET'])
@@ -120,7 +138,7 @@ def index():
 @socketio.on('connect')
 def on_connect():
     """Cliente conectado via WebSocket"""
-    logger.info(f"✅ Cliente conectado: {request.sid}")
+    logger.info(f"CLIENTE CONECTADO: {request.sid}")
     connected_clients[request.sid] = {
         'connect_time': datetime.now(),
         'status': 'connected',
@@ -135,41 +153,38 @@ def on_connect():
         "timestamp": datetime.now().isoformat()
     })
 
-    logger.info(f"📡 Cliente {request.sid} registrado com sucesso")
+    logger.info(f"CLIENTE REGISTRADO: {request.sid}")
 
 @socketio.on('disconnect')
 def on_disconnect():
     """Cliente desconectado"""
     client_sid = request.sid
-    logger.info(f"🔌 Iniciando desconexão para: {client_sid}")
+    logger.info(f"INICIANDO DESCONEXAO: {client_sid}")
 
     if client_sid in active_captures:
         capture = active_captures[client_sid]
         if capture:
-            logger.info(f"⏹️ Parando captura ativa para: {client_sid}")
+            logger.info(f"PARANDO CAPTURA ATIVA: {client_sid}")
             capture.stop()
         del active_captures[client_sid]
 
     if client_sid in connected_clients:
         del connected_clients[client_sid]
 
-    logger.info(f"❌ Cliente desconectado: {client_sid}")
+    logger.info(f"CLIENTE DESCONECTADO: {client_sid}")
 
 @socketio.on('start_camera')
 def on_start_camera(data):
     """Inicia captura facial para cadastro biométrico"""
     try:
-        logger.info(f"🎬 Iniciando captura para SID: {request.sid}")
-        logger.info(f"📦 Dados recebidos: {data}")
+        logger.info(f"INICIANDO CAPTURA: SID: {request.sid}")
+        logger.info(f"DADOS RECEBIDOS: {data}")
 
         # Validação dos dados
         nome = data.get("nome", "").strip()
         sobrenome = data.get("sobrenome", "").strip()
         turma = data.get("turma", "").strip()
-        tipo_usuario_num = data.get("tipoUsuario", "1")  # 1=ALUNO, 2=PROFESSOR
-
-        # --- CORREÇÃO: Username não é mais pego ou validado aqui ---
-        # (O Java vai cuidar disso)
+        tipo_usuario_num = data.get("tipoUsuario", "1")
 
         # Determinar tipo de usuário
         if str(tipo_usuario_num) == "2":
@@ -179,22 +194,22 @@ def on_start_camera(data):
 
         if not nome or not sobrenome or not turma:
             error_msg = "Nome, sobrenome e turma são obrigatórios"
-            logger.warning(f"❌ {error_msg}")
+            logger.warning(f"VALIDACAO: {error_msg}")
             emit("capture_complete", {"success": False, "message": error_msg})
             return
 
         # Verificar se já existe captura ativa
         if request.sid in active_captures:
             error_msg = "Já existe uma captura em andamento"
-            logger.warning(f"❌ {error_msg}")
+            logger.warning(f"VALIDACAO: {error_msg}")
             emit("capture_complete", {"success": False, "message": error_msg})
             return
 
-        # Verificar se usuário já está cadastrado (por nome, sobrenome e turma)
+        # Verificar se usuário já está cadastrado
         existing_count = db_manager.check_user_exists(nome, sobrenome, turma)
         if existing_count > 0:
             error_msg = f"Usuário {nome} {sobrenome} já está cadastrado na turma {turma}"
-            logger.warning(f"❌ {error_msg}")
+            logger.warning(f"USUARIO EXISTENTE: {error_msg}")
             emit("capture_complete", {
                 "success": False,
                 "message": error_msg,
@@ -204,7 +219,7 @@ def on_start_camera(data):
 
         # Registrar cliente na sala
         join_room(request.sid)
-        logger.info(f"🏠 Cliente {request.sid} entrou na sala")
+        logger.info(f"CLIENTE NA SALA: {request.sid}")
 
         # Atualizar informações do cliente
         connected_clients[request.sid].update({
@@ -215,7 +230,6 @@ def on_start_camera(data):
                 'sobrenome': sobrenome,
                 'turma': turma,
                 'tipo_usuario': tipo_usuario,
-                # 'username' removido
             }
         })
 
@@ -223,7 +237,7 @@ def on_start_camera(data):
         active_captures[request.sid] = None
 
         user_type_display = "aluno" if tipo_usuario == "ALUNO" else "professor"
-        logger.info(f"🚀 Iniciando captura para: {nome} {sobrenome} - {turma} ({user_type_display})")
+        logger.info(f"INICIANDO CAPTURA: {nome} {sobrenome} - {turma} ({user_type_display})")
 
         # Enviar confirmação de início
         emit("capture_started", {
@@ -235,7 +249,6 @@ def on_start_camera(data):
         })
 
         # Iniciar captura em thread separada
-        # --- CORREÇÃO: Removido 'username' dos argumentos da thread ---
         thread = threading.Thread(
             target=run_face_capture,
             args=(nome, sobrenome, turma, tipo_usuario, request.sid),
@@ -244,7 +257,7 @@ def on_start_camera(data):
         thread.start()
 
     except Exception as e:
-        logger.error(f"❌ Erro ao iniciar captura: {str(e)}", exc_info=True)
+        logger.error(f"ERRO AO INICIAR CAPTURA: {str(e)}", exc_info=True)
 
         if request.sid in active_captures:
             del active_captures[request.sid]
@@ -254,11 +267,10 @@ def on_start_camera(data):
             "message": f"Erro interno ao iniciar captura: {str(e)}"
         })
 
-# --- CORREÇÃO: Removido 'username' dos parâmetros da função ---
 def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
     """Executa o processo de captura facial em thread separada"""
     try:
-        logger.info(f"📷 Iniciando thread de captura para sessão: {session_id}")
+        logger.info(f"THREAD CAPTURA: Iniciando para sessao: {session_id}")
 
         def progress_callback(progress):
             """Callback para atualizações de progresso"""
@@ -270,9 +282,9 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
                     'session_id': session_id,
                     'timestamp': datetime.now().isoformat()
                 }, room=session_id)
-                logger.debug(f"📊 Progresso enviado para {session_id}: {progress['captured']}/{progress['total']}")
+                logger.debug(f"PROGRESSO: {session_id}: {progress['captured']}/{progress['total']}")
             except Exception as e:
-                logger.error(f"Erro no callback de progresso: {str(e)}")
+                logger.error(f"ERRO NO CALLBACK DE PROGRESSO: {str(e)}")
 
         def frame_callback(frame_data):
             """Callback para envio de frames"""
@@ -283,16 +295,14 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
                     'timestamp': datetime.now().isoformat()
                 }, room=session_id)
             except Exception as e:
-                logger.error(f"Erro no callback de frame: {str(e)}")
+                logger.error(f"ERRO NO CALLBACK DE FRAME: {str(e)}")
 
         # Criar instância do capturador facial
-        # --- CORREÇÃO: Removido 'username' do construtor ---
         capture = FluidFaceCapture(
             nome=nome,
             sobrenome=sobrenome,
             turma=turma,
             tipo_usuario=tipo_usuario,
-            # username=username, (removido)
             progress_callback=progress_callback,
             frame_callback=frame_callback
         )
@@ -301,43 +311,37 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
         active_captures[session_id] = capture
 
         # Executar captura
-        logger.info(f"🎯 Executando captura para sessão: {session_id}")
+        logger.info(f"EXECUTANDO CAPTURA: Sessao {session_id}")
         success, message = capture.capture()
 
         # Enviar resultado final
         result_data = {
             "success": success,
-            "message": message, # 'message' aqui é o ID (se sucesso) ou o Erro (se falha)
+            "message": message,
             "captured_count": capture.captured_count,
             "user": f"{nome} {sobrenome}",
             "tipo_usuario": tipo_usuario,
-            # "username": username, (removido)
             "turma": turma,
             "session_id": session_id,
             "timestamp": datetime.now().isoformat()
         }
 
-        # (Esta parte já estava correta, pois foi corrigida antes)
         if success:
-            # Se deu certo, 'message' (vindo do facial_capture) contém o ID do usuário.
-            user_id = message  # 'message' é o ID (NÚMERO)
-            result_data['id'] = user_id # Adiciona a chave 'id'
-
-            # Atualiza a mensagem para ser algo mais claro
+            user_id = message
+            result_data['id'] = user_id
             result_data['message'] = f"Usuário {nome} {sobrenome} salvo com ID: {user_id}"
 
             user_type = "aluno" if tipo_usuario == "ALUNO" else "professor"
-            logger.info(f"✅ Captura concluída com sucesso: {nome} {sobrenome} ({user_type}) - ID: {user_id}")
+            logger.info(f"CAPTURA CONCLUIDA: {nome} {sobrenome} ({user_type}) - ID: {user_id}")
 
         else:
-            # Se deu errado, 'message' já é a mensagem de erro correta.
-            logger.warning(f"⚠️ Captura falhou: {message}")
+            logger.warning(f"CAPTURA FALHOU: {message}")
 
-        # Emitir o resultado DEPOIS de ter formatado os dados corretos
+        # Emitir o resultado
         socketio.emit("capture_complete", result_data, room=session_id)
 
     except Exception as e:
-        logger.error(f"❌ Erro na thread de captura: {str(e)}", exc_info=True)
+        logger.error(f"ERRO NA THREAD DE CAPTURA: {str(e)}", exc_info=True)
         socketio.emit("capture_complete", {
             "success": False,
             "message": f"Erro durante a captura: {str(e)}",
@@ -346,47 +350,46 @@ def run_face_capture(nome, sobrenome, turma, tipo_usuario, session_id):
     finally:
         if session_id in active_captures:
             del active_captures[session_id]
-            logger.info(f"🧹 Captura finalizada para sessão: {session_id}")
+            logger.info(f"CAPTURA FINALIZADA: Sessao {session_id}")
 
 def initialize_application():
     """Inicializa a aplicação e serviços"""
-    logger.info("🚀 Inicializando Servidor de Captura Facial...")
+    logger.info("INICIALIZACAO: Inicializando Servidor de Captura Facial...")
 
     try:
         if db_manager.init_database():
-            logger.info("✅ Banco de dados inicializado com sucesso")
+            logger.info("SUCESSO: Banco de dados inicializado")
         else:
-            logger.error("❌ Falha na inicialização do banco de dados")
+            logger.error("FALHA: Erro na inicializacao do banco de dados")
             return False
 
-        logger.info("🎯 Sistema configurado com as seguintes características:")
-        logger.info(f"   📍 Porta: {APP_CONFIG.SERVER_PORT_CADASTRO}")
-        logger.info(f"   📸 Fotos necessárias: {APP_CONFIG.MIN_PHOTOS_REQUIRED}")
-        logger.info("   🌐 WebSocket: Ativo com Eventlet")
-        logger.info("   💾 Banco: PostgreSQL")
-        # --- CORREÇÃO no Log (só para ficar certo) ---
-        logger.info("   👤 Estrutura: Pré-cadastro (Python) -> Registro (Java c/ username)")
-        logger.info("   🔄 Compatibilidade: FULL")
+        logger.info("CONFIG: Sistema configurado:")
+        logger.info(f"CONFIG: Porta: {APP_CONFIG.SERVER_PORT_CADASTRO}")
+        logger.info(f"CONFIG: Fotos necessarias: {APP_CONFIG.MIN_PHOTOS_REQUIRED}")
+        logger.info("CONFIG: WebSocket: Ativo com Eventlet")
+        logger.info("CONFIG: Banco: PostgreSQL")
+        logger.info("CONFIG: Estrutura: Pre-cadastro (Python) -> Registro (Java c/ username)")
+        logger.info("CONFIG: Compatibilidade: FULL")
 
         return True
 
     except Exception as e:
-        logger.error(f"❌ Falha crítica na inicialização: {str(e)}")
+        logger.error(f"FALHA CRITICA: {str(e)}")
         return False
 
 # Handler para shutdown
 def signal_handler(sig, frame):
     """Manipula sinais de desligamento"""
-    logger.info("🛑 Recebido sinal de desligamento...")
-    logger.info("🧹 Limpando recursos...")
+    logger.info("SINAL: Recebido sinal de desligamento...")
+    logger.info("LIMPANDO: Limpando recursos...")
 
     # Parar todas as capturas ativas
     for session_id, capture in list(active_captures.items()):
         if capture:
             capture.stop()
-            logger.info(f"⏹️ Captura parada para sessão: {session_id}")
+            logger.info(f"CAPTURA PARADA: Sessao {session_id}")
 
-    logger.info("👋 Servidor finalizado graciosamente")
+    logger.info("SERVIDOR FINALIZADO")
     sys.exit(0)
 
 # Registrar handlers de sinal
@@ -395,13 +398,13 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 if __name__ == "__main__":
     logger.info("=" * 60)
-    logger.info("🟢 INICIANDO SISTEMA DE CAPTURA FACIAL")
+    logger.info("INICIANDO SISTEMA DE CAPTURA FACIAL")
     logger.info("=" * 60)
 
     if initialize_application():
         try:
-            logger.info(f"🌐 Servidor WebSocket iniciando na porta {APP_CONFIG.SERVER_PORT_CADASTRO}")
-            logger.info("📡 Aguardando conexões WebSocket...")
+            logger.info(f"SERVIDOR WEB SOCKET: Iniciando na porta {APP_CONFIG.SERVER_PORT_CADASTRO}")
+            logger.info("AGUARDANDO: Aguardando conexoes WebSocket...")
 
             socketio.run(
                 app,
@@ -409,12 +412,12 @@ if __name__ == "__main__":
                 port=APP_CONFIG.SERVER_PORT_CADASTRO,
                 debug=False,
                 allow_unsafe_werkzeug=True,
-                use_reloader=False  # Importante para evitar dupla inicialização
+                use_reloader=False
             )
         except KeyboardInterrupt:
-            logger.info("🛑 Servidor interrompido pelo usuário")
+            logger.info("INTERRUPCAO: Servidor interrompido pelo usuario")
         except Exception as e:
-            logger.error(f"❌ Erro durante execução do servidor: {str(e)}")
+            logger.error(f"ERRO DURANTE EXECUCAO: {str(e)}")
     else:
-        logger.critical("💥 Falha na inicialização - Encerrando aplicação")
+        logger.critical("FALHA: Erro na inicializacao - Encerrando aplicacao")
         exit(1)

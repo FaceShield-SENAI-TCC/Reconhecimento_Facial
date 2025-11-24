@@ -108,10 +108,10 @@ class DatabaseMonitor:
                 name="DatabaseMonitor"
             )
             self.monitor_thread.start()
-            logger.info("✅ Monitoramento do banco de dados iniciado - Novos usuários serão detectados automaticamente")
+            logger.info(" Monitoramento do banco de dados iniciado - Novos usuários serão detectados automaticamente")
             return True
         except Exception as e:
-            logger.error(f"❌ Falha ao iniciar monitoramento do banco: {str(e)}")
+            logger.error(f" Falha ao iniciar monitoramento do banco: {str(e)}")
             return False
 
     def stop_monitoring(self):
@@ -122,7 +122,7 @@ class DatabaseMonitor:
                 self.connection.close()
             except:
                 pass
-        logger.info("⏹️ Monitoramento do banco de dados parado")
+        logger.info(" Monitoramento do banco de dados parado")
 
     def _monitor_loop(self):
         """Loop principal de monitoramento"""
@@ -148,11 +148,11 @@ class DatabaseMonitor:
                         self.connection.poll()
                         while self.connection.notifies:
                             notify = self.connection.notifies.pop(0)
-                            logger.info(f"🔄 Mudança no banco detectada: {notify.payload}")
+                            logger.info(f" Mudança no banco detectada: {notify.payload}")
 
                             # Recarregar o banco de dados
                             if self.database_reload_callback:
-                                logger.info("🔄 Recarregando banco de dados devido a mudanças...")
+                                logger.info(" Recarregando banco de dados devido a mudanças...")
                                 self.database_reload_callback()
 
                         # Pequeno delay para evitar uso excessivo de CPU
@@ -166,9 +166,9 @@ class DatabaseMonitor:
                         break
 
             except psycopg2.OperationalError as e:
-                logger.warning(f"❌ Conexão com banco falhou, tentando novamente em {self.reconnect_delay}s: {str(e)}")
+                logger.warning(f" Conexão com banco falhou, tentando novamente em {self.reconnect_delay}s: {str(e)}")
             except Exception as e:
-                logger.error(f"❌ Erro no loop de monitoramento: {str(e)}")
+                logger.error(f" Erro no loop de monitoramento: {str(e)}")
 
             # Esperar antes de tentar reconectar
             if self.running:
@@ -194,7 +194,7 @@ class FaceRecognitionService:
         """
         Carrega embeddings faciais do PostgreSQL INCLUINDO ID
         """
-        logger.info("🔄 Carregando banco de dados facial do PostgreSQL...")
+        logger.info(" Carregando banco de dados facial do PostgreSQL...")
 
         try:
             with self.db_manager.get_connection() as conn:
@@ -266,23 +266,23 @@ class FaceRecognitionService:
                                   if user_data['info']['tipo_usuario'].upper() == "PROFESSOR")
             alunos_count = user_count - professores_count
 
-            logger.info(f"✅ Banco carregado: {user_count} usuários ({professores_count} professores, {alunos_count} alunos), {embedding_count} embeddings")
+            logger.info(f" Banco carregado: {user_count} usuários ({professores_count} professores, {alunos_count} alunos), {embedding_count} embeddings")
 
             if invalid_embeddings > 0:
-                logger.warning(f"⚠️ Encontrados {invalid_embeddings} embeddings inválidos")
+                logger.warning(f" Encontrados {invalid_embeddings} embeddings inválidos")
 
             if user_count > old_user_count:
-                logger.info(f"🎉 NOVOS USUÁRIOS DETECTADOS! Antes: {old_user_count}, Agora: {user_count}")
+                logger.info(f"NOVOS USUÁRIOS DETECTADOS! Antes: {old_user_count}, Agora: {user_count}")
             elif user_count < old_user_count:
-                logger.warning(f"⚠️ Usuários removidos: Antes: {old_user_count}, Agora: {user_count}")
+                logger.warning(f" Usuários removidos: Antes: {old_user_count}, Agora: {user_count}")
 
             return True
 
         except DatabaseConnectionError as e:
-            logger.error(f"❌ Falha de conexão ao carregar banco: {str(e)}")
+            logger.error(f" Falha de conexão ao carregar banco: {str(e)}")
             return False
         except Exception as e:
-            logger.error(f"❌ Falha ao carregar banco de dados: {str(e)}")
+            logger.error(f" Falha ao carregar banco de dados: {str(e)}")
             return False
 
     def _extract_face_embedding(self, face_image: np.ndarray) -> Optional[np.ndarray]:
@@ -357,7 +357,7 @@ class FaceRecognitionService:
                 confidence = 1 - min_distance
                 margin = second_best_distance - min_distance if second_best_distance != float('inf') else 0.1
 
-                logger.info(f"🔍 Match encontrado: {best_match} - Dist: {min_distance:.4f}, Conf: {confidence:.4f}, Margem: {margin:.4f}")
+                logger.info(f" Match encontrado: {best_match} - Dist: {min_distance:.4f}, Conf: {confidence:.4f}, Margem: {margin:.4f}")
 
                 # NOVOS CRITÉRIOS MAIS PERMISSIVOS
                 very_high_confidence = confidence >= 0.85
@@ -372,33 +372,33 @@ class FaceRecognitionService:
                 # ACEITAÇÃO MAIS PERMISSIVA
                 if very_high_confidence:
                     # Confiança muito alta - aceita mesmo com margem mínima
-                    logger.info(f"✅ ACEITO - Confiança muito alta: {best_match}")
+                    logger.info(f" ACEITO - Confiança muito alta: {best_match}")
                     return best_match, min_distance
                 elif high_confidence and good_margin:
-                    logger.info(f"✅ ACEITO - Confiança alta com boa margem: {best_match}")
+                    logger.info(f" ACEITO - Confiança alta com boa margem: {best_match}")
                     return best_match, min_distance
                 elif high_confidence and acceptable_margin:
-                    logger.info(f"✅ ACEITO - Confiança alta com margem aceitável: {best_match}")
+                    logger.info(f" ACEITO - Confiança alta com margem aceitável: {best_match}")
                     return best_match, min_distance
                 elif medium_confidence and good_margin:
-                    logger.info(f"✅ ACEITO - Confiança média com boa margem: {best_match}")
+                    logger.info(f"ACEITO - Confiança média com boa margem: {best_match}")
                     return best_match, min_distance
                 elif medium_confidence and minimal_margin:
-                    logger.info(f"✅ ACEITO - Confiança média com margem mínima: {best_match}")
+                    logger.info(f"ACEITO - Confiança média com margem mínima: {best_match}")
                     return best_match, min_distance
                 else:
-                    logger.info(f"❌ REJEITADO - Confiança insuficiente ({confidence:.4f}) ou margem pequena ({margin:.4f})")
+                    logger.info(f"REJEITADO - Confiança insuficiente ({confidence:.4f}) ou margem pequena ({margin:.4f})")
                     return None, None
 
             else:
                 if best_match:
-                    logger.info(f"❌ REJEITADO - Distância acima do threshold: {min_distance:.4f} > {MODEL_CONFIG.DISTANCE_THRESHOLD}")
+                    logger.info(f"REJEITADO - Distância acima do threshold: {min_distance:.4f} > {MODEL_CONFIG.DISTANCE_THRESHOLD}")
                 else:
-                    logger.info("❌ Nenhum match encontrado")
+                    logger.info("Nenhum match encontrado")
                 return None, None
 
         except Exception as e:
-            logger.error(f"❌ Falha no reconhecimento facial: {str(e)}")
+            logger.error(f"Falha no reconhecimento facial: {str(e)}")
             return None, None
 
     def _detect_face(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
@@ -452,7 +452,7 @@ class FaceRecognitionService:
 
             # Verificar se o banco está vazio
             if not self.facial_database:
-                logger.warning("⚠️ Banco de dados vazio - tentando recarregar...")
+                logger.warning("Banco de dados vazio - tentando recarregar...")
                 self.load_facial_database()
 
                 if not self.facial_database:
@@ -462,7 +462,7 @@ class FaceRecognitionService:
                     return RecognitionResult(
                         authenticated=False,
                         confidence=0.0,
-                        message="⚠️ Nenhum usuário cadastrado no sistema.",
+                        message="Nenhum usuário cadastrado no sistema.",
                         timestamp=self.get_current_timestamp()
                     ).__dict__
 
@@ -471,7 +471,7 @@ class FaceRecognitionService:
                                   if user_data['info']['tipo_usuario'].upper() == "PROFESSOR")
             alunos_count = len(self.facial_database) - professores_count
 
-            logger.info(f"📊 Banco atual: {len(self.facial_database)} usuários ({professores_count} professores, {alunos_count} alunos)")
+            logger.info(f"Banco atual: {len(self.facial_database)} usuários ({professores_count} professores, {alunos_count} alunos)")
 
             # Decodificar imagem
             frame = ImageValidator.decode_base64_image(image_data)
@@ -545,7 +545,7 @@ class FaceRecognitionService:
                     else:
                         message = f"Bem-vindo(a), {user_data['nome']}!"
 
-                    logger.info(f"⏱️ Tempo de processamento: {processing_time:.3f}s")
+                    logger.info(f"Tempo de processamento: {processing_time:.3f}s")
 
                     # RETORNO COMPLETO COM TODOS OS CAMPOS
                     return RecognitionResult(
@@ -567,7 +567,7 @@ class FaceRecognitionService:
                 else:
                     self.metrics.failed_recognitions += 1
 
-            logger.info(f"⏱️ Tempo de processamento: {processing_time:.3f}s")
+            logger.info(f"Tempo de processamento: {processing_time:.3f}s")
 
             return RecognitionResult(
                 authenticated=False,
@@ -580,7 +580,7 @@ class FaceRecognitionService:
             with self._metrics_lock:
                 self.metrics.failed_recognitions += 1
 
-            logger.error(f"❌ Erro no processamento: {str(e)}")
+            logger.error(f"Erro no processamento: {str(e)}")
 
             return RecognitionResult(
                 authenticated=False,
@@ -663,7 +663,7 @@ class FaceRecognitionService:
 
     def reload_database(self) -> Tuple[bool, str]:
         """Recarrega banco de dados manualmente"""
-        logger.info("🔄 Recarregamento manual do banco de dados solicitado")
+        logger.info("Recarregamento manual do banco de dados solicitado")
         success = self.load_facial_database()
         if success:
             status = self.get_detailed_database_status()
@@ -704,7 +704,7 @@ class FaceRecognitionService:
                     """)
 
                     conn.commit()
-                    logger.info("✅ Triggers do banco de dados configuradas com sucesso")
+                    logger.info("Triggers do banco de dados configuradas com sucesso")
                     return True
 
         except Exception as e:
@@ -714,10 +714,10 @@ class FaceRecognitionService:
 
     def initialize(self) -> bool:
         """Inicializa o serviço com monitoramento em tempo real"""
-        logger.info("🔧 Inicializando Serviço de Reconhecimento Facial...")
-        logger.info(f"🎯 Usando modelo: {MODEL_CONFIG.MODEL_NAME}")
-        logger.info(f"📊 Dimensão do embedding: {MODEL_CONFIG.EMBEDDING_DIMENSION}")
-        logger.info("🔄 SISTEMA DE ATUALIZAÇÃO AUTOMÁTICA ATIVADO")
+        logger.info("Inicializando Serviço de Reconhecimento Facial...")
+        logger.info(f"Usando modelo: {MODEL_CONFIG.MODEL_NAME}")
+        logger.info(f"Dimensão do embedding: {MODEL_CONFIG.EMBEDDING_DIMENSION}")
+        logger.info("SISTEMA DE ATUALIZAÇÃO AUTOMÁTICA ATIVADO")
 
         # 1. Configurar triggers no banco de dados
         trigger_success = self._setup_database_triggers()
@@ -730,10 +730,10 @@ class FaceRecognitionService:
 
         if db_success:
             if trigger_success and monitor_success:
-                logger.info("🎯 Monitoramento em tempo real do banco: ATIVO - Novos usuários detectados automaticamente")
+                logger.info("Monitoramento em tempo real do banco: ATIVO - Novos usuários detectados automaticamente")
             else:
-                logger.warning("⚠️ Monitoramento em tempo real do banco: LIMITADO")
-                logger.info("💡 Recarregamento manual disponível via /api/database/reload")
+                logger.warning("Monitoramento em tempo real do banco: LIMITADO")
+                logger.info("Recarregamento manual disponível via /api/database/reload")
 
         return db_success
 
@@ -741,7 +741,7 @@ class FaceRecognitionService:
         """Limpeza do serviço"""
         if hasattr(self, 'database_monitor'):
             self.database_monitor.stop_monitoring()
-        logger.info("🧹 Serviço de reconhecimento facial finalizado")
+        logger.info("Serviço de reconhecimento facial finalizado")
 
     @staticmethod
     def get_current_timestamp() -> str:
