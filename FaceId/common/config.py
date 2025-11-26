@@ -56,7 +56,17 @@ class AppConfig:
     SERVER_PORT_CADASTRO: int = int(os.getenv("SERVER_PORT_CADASTRO", "7001"))
     SERVER_PORT_RECONHECIMENTO: int = int(os.getenv("SERVER_PORT_RECONHECIMENTO", "5005"))
 
+@dataclass
+class WebSocketConfig:
+    """Configurações WebSocket para ESP32"""
+    ESP32_IP: str = os.getenv("ESP32_IP", "10.110.22.8")
+    ESP32_PORT: int = int(os.getenv("ESP32_PORT", "8765"))
+    TIMEOUT_ABERTURA: int = 180  # 3 minutos
+    TIMEOUT_FECHAMENTO: int = 10  # 10 segundos
+    RECONNECT_ATTEMPTS: int = 3
+
 # Instâncias globais
+WEBSOCKET_CONFIG = WebSocketConfig()
 DATABASE_CONFIG = DatabaseConfig()
 MODEL_CONFIG = ModelConfig()
 SECURITY_CONFIG = SecurityConfig()

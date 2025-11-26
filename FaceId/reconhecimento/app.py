@@ -2,7 +2,12 @@
 Servidor Principal de Reconhecimento Facial Refatorado
 Usa estrutura modular e compartilhada
 """
+import asyncio
+
 import eventlet
+
+from common.locker_controller import LockerController
+
 eventlet.monkey_patch()
 
 import os
@@ -153,6 +158,10 @@ def face_login():
                        f"Tipo={tipo_usuario}, "
                        f"Turma={turma}, "
                        f"Confianca={confidence:.2f}")
+
+            # Se for aluno, abrir trava
+            if tipo_usuario.upper() == "ALUNO":
+                asyncio.run(LockerController.abrir_trava_aluno(user_id, tipo_usuario))
 
             # Garantir que todos os campos obrigatórios estejam presentes
             required_fields = ['id', 'username', 'tipo_usuario', 'nome', 'sobrenome', 'turma']

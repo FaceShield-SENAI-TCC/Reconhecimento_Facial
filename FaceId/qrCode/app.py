@@ -1,3 +1,6 @@
+import asyncio
+from common.locker_controller import LockerController
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
@@ -133,6 +136,8 @@ def read_qrcode():
 
         if data and data.strip():
             print(f"SUCESSO: QR Code detectado - Conteudo: {data.strip()}")
+            asyncio.run(LockerController.abrir_trava_qrcode())
+
             return jsonify({
                 'success': True,
                 'qrCode': data.strip(),
@@ -144,6 +149,8 @@ def read_qrcode():
                 'success': False,
                 'error': 'Nenhum QR Code detectado. Tente: 1) Melhorar a iluminação 2) Centralizar o QR Code 3) Aproximar a câmera'
             }), 200
+
+
 
     except Exception as e:
         print(f"ERRO NO PROCESSAMENTO: {str(e)}")
