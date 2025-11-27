@@ -1,5 +1,5 @@
 """
-Configurações centralizadas para todo o sistema
+Configuracoes centralizadas para todo o sistema
 """
 import os
 from dataclasses import dataclass
@@ -10,7 +10,7 @@ load_dotenv()
 
 @dataclass
 class DatabaseConfig:
-    """Configurações do banco de dados PostgreSQL"""
+    """Configuracoes do banco de dados PostgreSQL"""
     DB_NAME: str = os.getenv("DB_NAME", "faceshield")
     DB_USER: str = os.getenv("DB_USER", "postgres")
     DB_PASSWORD: str = os.getenv("DB_PASSWORD", "root")
@@ -19,7 +19,7 @@ class DatabaseConfig:
 
     @classmethod
     def to_dict(cls):
-        """Converte configuração para dicionário"""
+        """Converte configuracao para dicionario"""
         return {
             "dbname": cls.DB_NAME,
             "user": cls.DB_USER,
@@ -30,26 +30,26 @@ class DatabaseConfig:
 
 @dataclass
 class ModelConfig:
-    """Configurações do modelo de reconhecimento facial - CRITÉRIOS OTIMIZADOS"""
+    """Configuracoes do modelo de reconhecimento facial - CRITERIOS OTIMIZADOS"""
     MODEL_NAME: str = "VGG-Face"
     EMBEDDING_DIMENSION: int = 2622
-    DISTANCE_THRESHOLD: float = 0.60  # Aumentado para melhorar reconhecimento
-    MIN_FACE_SIZE: Tuple[int, int] = (80, 80)  # Reduzido para capturar mais rostos
-    DETECTOR_BACKEND: str = "opencv"  # Alterado para melhor detecção
-    MIN_CONFIDENCE: float = 0.80  # Reduzido para melhorar taxa de acerto
-    MARGIN_REQUIREMENT: float = 0.001  # Reduzido significativamente
+    DISTANCE_THRESHOLD: float = 0.60
+    MIN_FACE_SIZE: Tuple[int, int] = (80, 80)
+    DETECTOR_BACKEND: str = "opencv"
+    MIN_CONFIDENCE: float = 0.80
+    MARGIN_REQUIREMENT: float = 0.001
 
 @dataclass
 class SecurityConfig:
-    """Configurações de segurança"""
+    """Configuracoes de seguranca"""
     SECRET_KEY: str = os.getenv("SECRET_KEY", "face-recognition-secure-key-change-in-production")
     TOKEN_EXPIRATION_HOURS: int = 24
     ALGORITHM: str = "HS256"
-    MAX_FILE_SIZE: int = 16 * 1024 * 1024  # 16MB
+    MAX_FILE_SIZE: int = 16 * 1024 * 1024
 
 @dataclass
 class AppConfig:
-    """Configurações gerais da aplicação"""
+    """Configuracoes gerais da aplicacao"""
     MIN_PHOTOS_REQUIRED: int = 8
     FRAME_WIDTH: int = 640
     FRAME_HEIGHT: int = 480
@@ -58,16 +58,16 @@ class AppConfig:
 
 @dataclass
 class WebSocketConfig:
-    """Configurações WebSocket para ESP32"""
-    ESP32_IP: str = os.getenv("ESP32_IP", "10.110.22.8")
+    """Configuracoes WebSocket para ESP32"""
+    ESP32_IP: str = os.getenv("ESP32_IP", "10.110.22.10")
     ESP32_PORT: int = int(os.getenv("ESP32_PORT", "8765"))
-    TIMEOUT_ABERTURA: int = 180  # 3 minutos
-    TIMEOUT_FECHAMENTO: int = 10  # 10 segundos
+    TIMEOUT_ABERTURA: int = 180
+    TIMEOUT_FECHAMENTO: int = 10
     RECONNECT_ATTEMPTS: int = 3
 
-# Instâncias globais
-WEBSOCKET_CONFIG = WebSocketConfig()
+# Instancias globais
 DATABASE_CONFIG = DatabaseConfig()
 MODEL_CONFIG = ModelConfig()
 SECURITY_CONFIG = SecurityConfig()
 APP_CONFIG = AppConfig()
+WEBSOCKET_CONFIG = WebSocketConfig()

@@ -1,14 +1,13 @@
-import asyncio
-from common.locker_controller import LockerController
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
 import numpy as np
+import asyncio
+from common.locker_controller import LockerController
 
 app = Flask(__name__)
 
-# Configuração do CORS para permitir seu frontend
+# Configuracao do CORS para permitir seu frontend
 CORS(app, origins=['http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:8080'])
 
 
@@ -17,14 +16,14 @@ class QRCodeDecoder:
         self.detector = cv2.QRCodeDetector()
 
     def preprocess_image(self, image: np.ndarray) -> np.ndarray:
-        """Aplica múltiplas técnicas de pré-processamento para melhorar a detecção"""
+        """Aplica multiplas tecnicas de pre-processamento para melhorar a deteccao"""
         # Converte para escala de cinza
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        # 1. Filtro para reduzir ruído
+        # 1. Filtro para reduzir ruido
         denoised = cv2.medianBlur(gray, 3)
 
-        # 2. Equalização de histograma para melhorar contraste
+        # 2. Equalizacao de histograma para melhorar contraste
         equalized = cv2.equalizeHist(denoised)
 
         # 3. Filtro bilateral (preserva bordas)
@@ -51,14 +50,14 @@ class QRCodeDecoder:
         return image
 
     def apply_sharpening(self, image: np.ndarray) -> np.ndarray:
-        """Aplica filtro de sharpening para realçar bordas"""
+        """Aplica filtro de sharpening para realcar bordas"""
         kernel = np.array([[-1, -1, -1],
                            [-1, 9, -1],
                            [-1, -1, -1]])
         return cv2.filter2D(image, -1, kernel)
 
     def try_multiple_decodings(self, image: np.ndarray) -> str:
-        """Tenta múltiplas estratégias de decodificação"""
+        """Tenta multiplas estrategias de decodificacao"""
         strategies = [
             ("Original", image),
             ("Pre-processada", self.preprocess_image(image)),
@@ -73,12 +72,12 @@ class QRCodeDecoder:
                 data, points, _ = self.detector.detectAndDecode(processed_img)
 
                 if data and data.strip():
-                    print(f"✓ QR Code detectado com estratégia: {strategy_name}")
+                    print(f"QR Code detectado com estrategia: {strategy_name}")
                     return data.strip()
 
-                # Se não detectou, tenta com diferentes níveis de threshold
-                if len(processed_img.shape) == 2:  # Se é escala de cinza
-                    # Tenta diferentes métodos de threshold
+                # Se nao detectou, tenta com diferentes niveis de threshold
+                if len(processed_img.shape) == 2:  # Se e escala de cinza
+                    # Tenta diferentes metodos de threshold
                     _, thresh1 = cv2.threshold(processed_img, 127, 255, cv2.THRESH_BINARY)
                     _, thresh2 = cv2.threshold(processed_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
                     thresh3 = cv2.adaptiveThreshold(processed_img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
@@ -87,18 +86,19 @@ class QRCodeDecoder:
                     for i, thresh_img in enumerate([thresh1, thresh2, thresh3]):
                         data, points, _ = self.detector.detectAndDecode(thresh_img)
                         if data and data.strip():
-                            print(f"✓ QR Code detectado com threshold {i + 1} na estratégia: {strategy_name}")
+                            print(f"QR Code detectado com threshold {i + 1} na estrategia: {strategy_name}")
                             return data.strip()
 
             except Exception as e:
-                print(f"✗ Erro na estratégia {strategy_name}: {e}")
+                print(f"Erro na estrategia {strategy_name}: {e}")
                 continue
 
         return ""
 
 
-# Instância global do decoder
+# Instancia global do decoder e controlador da trava
 qr_decoder = QRCodeDecoder()
+locker_controller = LockerController()
 
 
 @app.route('/read-qrcode', methods=['POST', 'OPTIONS'])
@@ -125,7 +125,7 @@ def read_qrcode():
         image = cv2.imdecode(np_image, cv2.IMREAD_COLOR)
 
         if image is None:
-            return jsonify({'success': False, 'error': 'Não foi possível decodificar a imagem.'}), 400
+            return jsonify({'success': False, 'error': 'Nao foi possivel decodificar a imagem.'}), 400
 
         print(f"DECODIFICACAO: Imagem decodificada - Dimensoes: {image.shape}")
 
@@ -136,21 +136,28 @@ def read_qrcode():
 
         if data and data.strip():
             print(f"SUCESSO: QR Code detectado - Conteudo: {data.strip()}")
-            asyncio.run(LockerController.abrir_trava_qrcode())
+
+            # Abrir trava quando QR Code for lido
+            try:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                loop.run_until_complete(locker_controller.abrir_trava_qrcode())
+                loop.close()
+                print("Trava liberada via QR Code")
+            except Exception as e:
+                print(f"Erro ao controlar trava: {e}")
 
             return jsonify({
                 'success': True,
                 'qrCode': data.strip(),
-                'message': 'QR Code detectado com sucesso!'
+                'message': 'QR Code detectado com sucesso! Trava liberada.'
             })
         else:
-            print("AVISO: Nenhum QR Code detectado na imagem após múltiplas tentativas")
+            print("AVISO: Nenhum QR Code detectado na imagem apos multiplas tentativas")
             return jsonify({
                 'success': False,
-                'error': 'Nenhum QR Code detectado. Tente: 1) Melhorar a iluminação 2) Centralizar o QR Code 3) Aproximar a câmera'
+                'error': 'Nenhum QR Code detectado. Tente: 1) Melhorar a iluminacao 2) Centralizar o QR Code 3) Aproximar a camera'
             }), 200
-
-
 
     except Exception as e:
         print(f"ERRO NO PROCESSAMENTO: {str(e)}")

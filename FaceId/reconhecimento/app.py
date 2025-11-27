@@ -2,28 +2,25 @@
 Servidor Principal de Reconhecimento Facial Refatorado
 Usa estrutura modular e compartilhada
 """
-import asyncio
-
 import eventlet
-
-from common.locker_controller import LockerController
-
 eventlet.monkey_patch()
 
 import os
 import logging
 import signal
 import sys
+import asyncio
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-# Módulos compartilhados
+# Modulos compartilhados
 from common.config import APP_CONFIG
 from common.auth import token_required
 from common.exceptions import ImageValidationError, FaceRecognitionServiceError
 from face_recognition_logic import FaceRecognitionService
+from common.locker_controller import LockerController
 
-# Configuração de logging
+# Configuracao de logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -31,15 +28,16 @@ logging.basicConfig(
 )
 logger = logging.getLogger('reconhecimento')
 
-# Inicialização do serviço
+# Inicializacao do servico
 face_service = FaceRecognitionService()
+locker_controller = LockerController()
 
-# Configuração da aplicação Flask
+# Configuracao da aplicacao Flask
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-# Configuração CORS
+# Configuracao CORS
 CORS(app, resources={
     r"/*": {
         "origins": "*",
@@ -72,10 +70,12 @@ def health_check_new():
         "port": APP_CONFIG.SERVER_PORT_RECONHECIMENTO
     }), 200
 
+
 @app.route('/face-login', methods=['POST'])
 def face_login_legacy():
     """
     Endpoint LEGACY para autenticação facial (mantido para compatibilidade)
+    AGORA COM CONTROLE DE TRAVA
     """
     try:
         # Validação do payload
@@ -89,6 +89,39 @@ def face_login_legacy():
         # Processamento da imagem
         image_data = data['imagem']
         result = face_service.process_face_login(image_data)
+
+        # 🔥 NOVO: CONTROLE DE TRAVA NO ENDPOINT LEGACY
+        logger.info("=== ENDPOINT LEGACY /face-login CHAMADO ===")
+
+        if result.get('authenticated'):
+            user_type = result.get('tipo_usuario')
+            user_id = result.get('id')
+
+            logger.info(f"=== VERIFICANDO CONDICAO PARA ABRIR TRAVA (LEGACY) ===")
+            logger.info(f"User Type: {user_type}, User ID: {user_id}")
+
+            if user_type and user_type.upper() == "ALUNO" and user_id:
+                logger.info(f"CONDICAO ATENDIDA - ALUNO DETECTADO NO ENDPOINT LEGACY")
+                logger.info(f"INICIANDO PROCESSO DE ABERTURA DA TRAVA...")
+                try:
+                    # Executa assincronamente para nao bloquear a resposta
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+                    sucesso = loop.run_until_complete(
+                        locker_controller.abrir_trava_aluno(user_id, user_type)
+                    )
+                    loop.close()
+
+                    if sucesso:
+                        logger.info(f"SUCESSO: Trava liberada via endpoint LEGACY para aluno ID: {user_id}")
+                    else:
+                        logger.error(
+                            f"FALHA: Nao foi possivel liberar trava via endpoint LEGACY para aluno ID: {user_id}")
+
+                except Exception as e:
+                    logger.error(f"ERRO EXCECAO ao controlar trava no endpoint LEGACY: {e}")
+            else:
+                logger.info(f"CONDICAO NAO ATENDIDA - Nao e aluno ou ID invalido (LEGACY)")
 
         # Garantir que todos os campos estejam presentes
         if result.get('authenticated'):
@@ -118,36 +151,69 @@ def face_login_legacy():
             "error": "Erro interno do servidor",
             "message": "Serviço de autenticação temporariamente indisponível"
         }), 500
-
 @app.route('/api/face-login', methods=['POST'])
 def face_login():
     """
-    Endpoint NOVO para autenticação facial com validação completa
+    Endpoint NOVO para autenticacao facial com controle de trava
     """
     try:
-        # Validação do payload
+        # Validacao do payload (codigo existente)
         if not request.is_json:
             return jsonify({"error": "Content-Type deve ser application/json"}), 400
 
         data = request.get_json()
         if not data or 'imagem' not in data:
-            return jsonify({"error": "Campo obrigatório faltando: 'imagem'"}), 400
+            return jsonify({"error": "Campo obrigatorio faltando: 'imagem'"}), 400
 
-        # Validação adicional de payload
+        # Validacao adicional de payload
         image_data = data['imagem']
         if not isinstance(image_data, str) or len(image_data) == 0:
-            return jsonify({"error": "Dados de imagem inválidos"}), 400
+            return jsonify({"error": "Dados de imagem invalidos"}), 400
 
-        # Processar reconhecimento facial
         result = face_service.process_face_login(image_data)
+
+        # NOVO: Log detalhado do resultado do reconhecimento
+        logger.info(f"=== RESULTADO DO RECONHECIMENTO FACIAL ===")
+        logger.info(f"Autenticado: {result.get('authenticated')}")
+        logger.info(f"Tipo Usuario: {result.get('tipo_usuario')}")
+        logger.info(f"User ID: {result.get('id')}")
+        logger.info(f"Nome: {result.get('nome')} {result.get('sobrenome')}")
 
         # Log detalhado do reconhecimento
         if result.get('authenticated'):
+            user_type = result.get('tipo_usuario')
             user_id = result.get('id')
+
+            # NOVO: Controle da trava para alunos - COM MAIS LOGS
+            logger.info(f"=== VERIFICANDO CONDICAO PARA ABRIR TRAVA ===")
+            logger.info(f"User Type: {user_type}, User ID: {user_id}")
+
+            if user_type and user_type.upper() == "ALUNO" and user_id:
+                logger.info(f"CONDICAO ATENDIDA - ALUNO DETECTADO")
+                logger.info(f"INICIANDO PROCESSO DE ABERTURA DA TRAVA...")
+                try:
+                    # Executa assincronamente para nao bloquear a resposta
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+                    sucesso = loop.run_until_complete(
+                        locker_controller.abrir_trava_aluno(user_id, user_type)
+                    )
+                    loop.close()
+
+                    if sucesso:
+                        logger.info(f"SUCESSO: Trava liberada para aluno ID: {user_id}")
+                    else:
+                        logger.error(f"FALHA: Nao foi possivel liberar trava para aluno ID: {user_id}")
+
+                except Exception as e:
+                    logger.error(f"ERRO EXCECAO ao controlar trava: {e}")
+            else:
+                logger.info(f"CONDICAO NAO ATENDIDA - Nao e aluno ou ID invalido")
+
+            # Log do reconhecimento (codigo existente)
             nome = result.get('nome')
             sobrenome = result.get('sobrenome')
             username = result.get('username')
-            tipo_usuario = result.get('tipo_usuario')
             turma = result.get('turma')
             confidence = result.get('confidence', 0)
 
@@ -155,15 +221,11 @@ def face_login():
                        f"ID={user_id}, "
                        f"Usuario={nome} {sobrenome}, "
                        f"Username={username}, "
-                       f"Tipo={tipo_usuario}, "
+                       f"Tipo={user_type}, "
                        f"Turma={turma}, "
                        f"Confianca={confidence:.2f}")
 
-            # Se for aluno, abrir trava
-            if tipo_usuario.upper() == "ALUNO":
-                asyncio.run(LockerController.abrir_trava_aluno(user_id, tipo_usuario))
-
-            # Garantir que todos os campos obrigatórios estejam presentes
+            # Garantir que todos os campos obrigatorios estejam presentes
             required_fields = ['id', 'username', 'tipo_usuario', 'nome', 'sobrenome', 'turma']
             for field in required_fields:
                 if field not in result:
@@ -181,7 +243,7 @@ def face_login():
         logger.warning(f"VALIDACAO DE IMAGEM FALHOU: {str(e)}")
         return jsonify({
             "authenticated": False,
-            "error": "Imagem inválida",
+            "error": "Imagem invalida",
             "message": str(e)
         }), 400
     except FaceRecognitionServiceError as e:
@@ -196,7 +258,7 @@ def face_login():
         return jsonify({
             "authenticated": False,
             "error": "Erro interno do servidor",
-            "message": "Falha temporária no serviço de autenticação"
+            "message": "Falha temporaria no servico de autenticacao"
         }), 500
 
 @app.route('/database-status', methods=['GET'])
@@ -219,12 +281,12 @@ def database_status():
         logger.error(f"ERRO AO OBTER STATUS DO BANCO: {str(e)}")
         return jsonify({
             "error": "Erro ao acessar banco de dados",
-            "message": "Não foi possível conectar ao banco de dados"
+            "message": "Nao foi possivel conectar ao banco de dados"
         }), 500
 
 @app.route('/api/database/detailed-status', methods=['GET'])
 def detailed_database_status():
-    """Status detalhado do banco de dados com estatísticas por tipo de usuário"""
+    """Status detalhado do banco de dados com estatisticas por tipo de usuario"""
     try:
         status = face_service.get_detailed_database_status()
         return jsonify(status), 200
@@ -232,7 +294,7 @@ def detailed_database_status():
         logger.error(f"ERRO AO OBTER STATUS DETALHADO DO BANCO: {str(e)}")
         return jsonify({
             "error": "Erro ao obter status detalhado do banco",
-            "message": "Não foi possível conectar ao banco de dados"
+            "message": "Nao foi possivel conectar ao banco de dados"
         }), 500
 
 @app.route('/reload-database', methods=['POST'])
@@ -263,12 +325,12 @@ def reload_database():
         logger.error(f"ERRO NO RECARREGAMENTO DO BANCO: {str(e)}")
         return jsonify({
             "error": "Falha no recarregamento do banco",
-            "message": "Não foi possível recarregar o banco de dados"
+            "message": "Nao foi possivel recarregar o banco de dados"
         }), 500
 
 @app.route('/api/system/info', methods=['GET'])
 def system_info():
-    """Informações do sistema"""
+    """Informacoes do sistema"""
     try:
         db_status = face_service.get_detailed_database_status()
         metrics = face_service.get_performance_metrics()
@@ -297,23 +359,23 @@ def system_info():
         return jsonify({
             "service": "face_recognition_api",
             "status": "degraded",
-            "error": "Não foi possível obter informações completas do sistema"
+            "error": "Nao foi possivel obter informacoes completas do sistema"
         }), 500
 
 @app.route('/api/system/metrics', methods=['GET'])
 @token_required
 def system_metrics():
-    """Métricas detalhadas do sistema (requer autenticação)"""
+    """Metricas detalhadas do sistema (requer autenticacao)"""
     try:
         metrics = face_service.get_performance_metrics()
         return jsonify(metrics), 200
     except Exception as e:
         logger.error(f"ERRO AO OBTER METRICAS: {str(e)}")
-        return jsonify({"error": "Erro ao obter métricas do sistema"}), 500
+        return jsonify({"error": "Erro ao obter metricas do sistema"}), 500
 
 @app.route('/api/system/detailed-metrics', methods=['GET'])
 def detailed_metrics():
-    """Métricas detalhadas do sistema de reconhecimento"""
+    """Metricas detalhadas do sistema de reconhecimento"""
     try:
         db_status = face_service.get_detailed_database_status()
         metrics = face_service.get_performance_metrics()
@@ -331,12 +393,12 @@ def detailed_metrics():
         }), 200
     except Exception as e:
         logger.error(f"ERRO AO OBTER METRICAS DETALHADAS: {str(e)}")
-        return jsonify({"error": "Erro ao obter métricas"}), 500
+        return jsonify({"error": "Erro ao obter metricas"}), 500
 
 @app.route('/api/users/list', methods=['GET'])
 @token_required
 def list_users():
-    """Lista todos os usuários cadastrados (requer autenticação)"""
+    """Lista todos os usuarios cadastrados (requer autenticacao)"""
     try:
         db_status = face_service.get_detailed_database_status()
         return jsonify({
@@ -347,21 +409,72 @@ def list_users():
         }), 200
     except Exception as e:
         logger.error(f"ERRO AO LISTAR USUARIOS: {str(e)}")
-        return jsonify({"error": "Erro ao listar usuários"}), 500
+        return jsonify({"error": "Erro ao listar usuarios"}), 500
+
+# NOVO: Endpoint para status da trava
+@app.route('/api/locker/status', methods=['GET'])
+def locker_status():
+    """Retorna status atual da trava"""
+    try:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        status = loop.run_until_complete(locker_controller.verificar_estado_trava())
+        loop.close()
+
+        return jsonify(status), 200
+    except Exception as e:
+        logger.error(f"Erro ao verificar status da trava: {e}")
+        return jsonify({"error": "Erro ao verificar status"}), 500
+
+# NOVO: Endpoint para debug manual da trava
+@app.route('/api/debug/trava', methods=['POST'])
+def debug_trava():
+    """Endpoint para debug manual da trava"""
+    try:
+        data = request.get_json() or {}
+        comando = data.get('comando', 'ABRIR_TRAVA')
+
+        logger.info(f"DEBUG TRAVA - Comando solicitado: {comando}")
+
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+        if comando.upper() == 'ABRIR_TRAVA':
+            sucesso = loop.run_until_complete(locker_controller.abrir_trava_aluno(999, "ALUNO"))
+            mensagem = "Abrir trava"
+        elif comando.upper() == 'FECHAR_TRAVA':
+            sucesso = loop.run_until_complete(locker_controller.esp32_client.fechar_trava())
+            mensagem = "Fechar trava"
+        else:
+            sucesso = False
+            mensagem = "Comando invalido"
+
+        loop.close()
+
+        return jsonify({
+            "sucesso": sucesso,
+            "mensagem": f"{mensagem} - {'Sucesso' if sucesso else 'Falha'}",
+            "conectado": locker_controller.esp32_client.conectado,
+            "trava_aberta": locker_controller.trava_aberta
+        }), 200 if sucesso else 500
+
+    except Exception as e:
+        logger.error(f"ERRO no debug trava: {e}")
+        return jsonify({"error": str(e)}), 500
 
 # Handlers de erro melhorados
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
-        "error": "Endpoint não encontrado",
+        "error": "Endpoint nao encontrado",
         "message": "Verifique a URL e tente novamente"
     }), 404
 
 @app.errorhandler(405)
 def method_not_allowed(error):
     return jsonify({
-        "error": "Método não permitido",
-        "message": "Este endpoint não suporta o método HTTP utilizado"
+        "error": "Metodo nao permitido",
+        "message": "Este endpoint nao suporta o metodo HTTP utilizado"
     }), 405
 
 @app.errorhandler(500)
@@ -379,23 +492,37 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 def initialize_application():
-    """Inicialização da aplicação"""
+    """Inicializacao da aplicacao com controle de trava"""
 
     try:
         if face_service.initialize():
-            # Obter status detalhado do banco
+            # Inicializar controlador da trava
+            try:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                locker_success = loop.run_until_complete(locker_controller.iniciar())
+                loop.close()
+
+                if locker_success:
+                    logger.info("Controlador da trava inicializado com sucesso")
+                else:
+                    logger.warning("Controlador da trava nao pode se conectar a ESP32")
+            except Exception as e:
+                logger.warning(f"Falha na inicializacao do controlador da trava: {e}")
+
+            # Obter status detalhado do banco (codigo existente)
             db_status = face_service.get_detailed_database_status()
 
             logger.info("ESTATISTICAS DO BANCO:")
-            logger.info(f"   Total de usuários: {db_status['user_count']}")
+            logger.info(f"   Total de usuarios: {db_status['user_count']}")
             logger.info(f"   Professores: {db_status['professores_count']}")
             logger.info(f"   Alunos: {db_status['alunos_count']}")
             logger.info(f"   Total de embeddings: {db_status['total_embeddings']}")
 
             logger.info("CONFIGURACAO DO MODELO:")
-            logger.info(f"   Distância máxima: {0.60}")
-            logger.info(f"   Confiança mínima: {0.80}")
-            logger.info(f"   Margem mínima: {0.001}")
+            logger.info(f"   Distancia maxima: {0.60}")
+            logger.info(f"   Confianca minima: {0.80}")
+            logger.info(f"   Margem minima: {0.001}")
 
             logger.info("MONITORAMENTO: Monitoramento em tempo real do banco: ATIVO")
             return True
