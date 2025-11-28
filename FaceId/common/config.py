@@ -10,11 +10,11 @@ load_dotenv()
 
 @dataclass
 class DatabaseConfig:
-    """Configurações do banco de dados PostgreSQL"""
-    DB_NAME: str = os.getenv("DB_NAME", "faceshield")
-    DB_USER: str = os.getenv("DB_USER", "postgres")
-    DB_PASSWORD: str = os.getenv("DB_PASSWORD", "root")
-    DB_HOST: str = os.getenv("DB_HOST", "localhost")
+    """Configurações do banco de dados PostgreSQL - RENDER"""
+    DB_NAME: str = os.getenv("DB_NAME", "faceshield_tadv")
+    DB_USER: str = os.getenv("DB_USER", "faceshield_tadv_user")
+    DB_PASSWORD: str = os.getenv("DB_PASSWORD", "GugVUOYybNZy39CjQ8boYW6vHueoENgc")
+    DB_HOST: str = os.getenv("DB_HOST", "dpg-d4k812a4d50c73db684g-a.oregon-postgres.render.com")
     DB_PORT: str = os.getenv("DB_PORT", "5432")
 
     @classmethod
