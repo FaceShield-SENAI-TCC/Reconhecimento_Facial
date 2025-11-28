@@ -59,7 +59,8 @@ class AppConfig:
 @dataclass
 class WebSocketConfig:
     """Configuracoes WebSocket para ESP32"""
-    ESP32_IP: str = os.getenv("ESP32_IP", "10.110.22.10")
+
+    ESP32_IP: str = os.getenv("ESP32_IP", "10.110.22.11")
     ESP32_PORT: int = int(os.getenv("ESP32_PORT", "8765"))
     TIMEOUT_ABERTURA: int = 180
     TIMEOUT_FECHAMENTO: int = 10

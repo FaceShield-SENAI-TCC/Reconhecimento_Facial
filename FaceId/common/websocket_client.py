@@ -4,7 +4,7 @@ Cliente WebSocket para comunicação com ESP32 - Versao Simplificada
 import asyncio
 import websockets
 import logging
-from typing import Optional
+from typing import Optional, Tuple
 
 from common.config import WEBSOCKET_CONFIG
 
@@ -96,3 +96,15 @@ class ESP32WebSocketClient:
             self.conectado = False
             self.websocket = None
             logger.info("Conexao WebSocket fechada")
+
+    async def abrir_trava_iot(self) -> Tuple[bool, str]:
+        """Envia comando para abrir trava no modo IOT"""
+        logger.info("=== ENVIANDO COMANDO ABRIR_TRAVA_IOT ===")
+        sucesso, resposta = await self.enviar_comando("ABRIR_TRAVA_IOT")
+
+        if sucesso and resposta in ["TRAVA_ABERTA_IOT", "TRAVA_JA_ABERTA"]:
+            logger.info(f"Comando ABRIR_TRAVA_IOT confirmado pela ESP32")
+            return True, resposta
+        else:
+            logger.error(f"Falha no comando ABRIR_TRAVA_IOT: {resposta}")
+            return False, resposta

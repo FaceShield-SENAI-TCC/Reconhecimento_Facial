@@ -119,3 +119,20 @@ class LockerController:
             "conectado": self.esp32_client.conectado,
             "url": self.esp32_client.url
         }
+
+    async def abrir_trava_iot(self) -> bool:
+        """
+         Abre trava no modo IOT - só fecha quando armário fechar
+        """
+        logger.info("=== INICIANDO ABERTURA DE TRAVA NO MODO IOT ===")
+
+        # Envia comando específico para modo IOT
+        sucesso, resposta = await self.esp32_client.abrir_trava_iot()
+
+        if sucesso:
+            self.trava_aberta = True
+            logger.info("TRAVA ABERTA NO MODO IOT - ESP32 AGUARDANDO FECHAMENTO DO ARMÁRIO")
+            return True
+        else:
+            logger.error(f"FALHA AO ABRIR TRAVA NO MODO IOT: {resposta}")
+            return False
