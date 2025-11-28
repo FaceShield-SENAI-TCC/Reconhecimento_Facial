@@ -5,14 +5,26 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Configuração do CORS para permitir seu frontend
-CORS(app, origins=['http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:8080'])
+# Configuração do CORS para permitir seu frontend no Render e desenvolvimento local
+CORS(app, origins=[
+    'http://127.0.0.1:5500',
+    'http://localhost:5500',
+    'http://localhost:8080',
+    'https://faceshield.onrender.com',  # Substitua pelo URL real do seu frontend
+    'https://*.onrender.com'  # Permite qualquer subdomínio do Render
+])
+
+# Ou para permitir TODOS os domínios (menos seguro, mas funcional):
+# CORS(app)
 
 @app.route('/read-qrcode', methods=['POST', 'OPTIONS'])
 def read_qrcode():
     # Handle preflight request
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
         return response
 
     if 'image' not in request.files:
