@@ -149,7 +149,7 @@ class ImageValidator:
 class FaceQualityValidator:
     """Validador de qualidade facial com critérios padronizados"""
 
-    def __init__(self, min_face_size: Tuple[int, int] = (100, 100), min_sharpness: float = 70.0):
+    def __init__(self, min_face_size: Tuple[int, int] = (100, 100), min_sharpness: float = 120.0):
         self.min_face_size = min_face_size
         self.min_sharpness = min_sharpness
 
@@ -177,3 +177,50 @@ class FaceQualityValidator:
             return False, f"Imagem muito borrada: {sharpness:.1f}"
 
         return True, f"Qualidade aceitável: {sharpness:.1f}"
+
+
+class AntiSpoofingValidator:
+    """Validador anti-spoofing para impedir reconhecimento por fotos"""
+
+    def __init__(self):
+        self.min_face_ratio = 0.15  # Rosto deve ocupar pelo menos 15% da imagem
+        self.max_face_ratio = 0.85  # Rosto não pode ocupar mais que 85%
+        self.min_sharpness_live = 120.0  # Nitidez mínima para câmera ao vivo
+        self.max_aspect_ratio = 1.8  # Proporção máxima largura/altura
+
+    def is_live_camera_face(self, image: np.ndarray, face_roi: np.ndarray) -> Tuple[bool, str]:
+        """
+        Valida se o rosto é de uma câmera ao vivo e não de uma foto
+        """
+        try:
+            img_height, img_width = image.shape[:2]
+            face_height, face_width = face_roi.shape[:2]
+
+            # 1. Verificar proporção do rosto na imagem
+            face_ratio = (face_width * face_height) / (img_width * img_height)
+
+            if face_ratio < self.min_face_ratio:
+                return False, f"Rosto muito pequeno na imagem ({face_ratio:.1%})"
+
+            if face_ratio > self.max_face_ratio:
+                return False, f"Rosto muito grande na imagem ({face_ratio:.1%}) - possível foto"
+
+            # 2. Verificar nitidez (fotos tendem a ser mais borradas)
+            sharpness = ImageValidator.calculate_sharpness(face_roi)
+            if sharpness < self.min_sharpness_live:
+                return False, f"Nitidez insuficiente ({sharpness:.1f}) - possível foto"
+
+            # 3. Verificar proporção aspecto (fotos têm proporções diferentes)
+            aspect_ratio = face_width / face_height
+            if aspect_ratio > self.max_aspect_ratio or aspect_ratio < (1/self.max_aspect_ratio):
+                return False, f"Proporção do rosto inválida ({aspect_ratio:.2f})"
+
+            # 4. Verificar iluminação (fotos têm iluminação mais uniforme)
+            brightness_std = np.std(cv2.cvtColor(face_roi, cv2.COLOR_BGR2GRAY))
+            if brightness_std < 25:  # Muito uniforme = possível foto
+                return False, "Iluminação muito uniforme - possível foto"
+
+            return True, "Rosto validado como câmera ao vivo"
+
+        except Exception as e:
+            return False, f"Erro na validação anti-spoofing: {str(e)}"

@@ -19,7 +19,7 @@ from deepface import DeepFace
 # Módulos compartilhados
 from common.config import DATABASE_CONFIG, MODEL_CONFIG
 from common.database import DatabaseManager
-from common.image_utils import ImageValidator, FaceQualityValidator
+from common.image_utils import ImageValidator, FaceQualityValidator, AntiSpoofingValidator
 from common.exceptions import (
     DatabaseError, DatabaseConnectionError, ImageValidationError,
     FaceDetectionError, FaceRecognitionServiceError
@@ -78,6 +78,7 @@ class RecognitionMetrics:
     processing_times: deque = None
     user_recognitions: Counter = None
     database_reloads: int = 0
+    anti_spoofing_blocks: int = 0  # 🔥 NOVO: contador de bloqueios anti-spoofing
 
     def __post_init__(self):
         if self.processing_times is None:
@@ -185,7 +186,8 @@ class FaceRecognitionService:
         self.metrics = RecognitionMetrics()
         self._metrics_lock = threading.RLock()
         self.db_manager = DatabaseManager()
-        self.quality_validator = FaceQualityValidator()
+        self.quality_validator = FaceQualityValidator(min_face_size=(100, 100), min_sharpness=120.0)  # 🔥 CRITÉRIOS MAIS RESTRITIVOS
+        self.anti_spoofing_validator = AntiSpoofingValidator()  # 🔥 NOVO: Validador anti-spoofing
 
         # Monitor de banco de dados em tempo real
         self.database_monitor = DatabaseMonitor(self.load_facial_database)
@@ -318,17 +320,27 @@ class FaceRecognitionService:
             logger.error(f"Falha na extração de embedding facial: {str(e)}")
             return None
 
-    def _recognize_face_secure(self, face_image: np.ndarray) -> Tuple[Optional[str], Optional[float]]:
+    def _recognize_face_secure(self, face_image: np.ndarray, full_image: np.ndarray) -> Tuple[Optional[str], Optional[float]]:
         """
-        Reconhecimento facial OTIMIZADO - CRITÉRIOS MAIS PERMISSIVOS
+        Reconhecimento facial RESTRITIVO - apenas câmera ao vivo + 85% confiança
 
         Args:
-            face_image: Imagem do rosto para reconhecer
+            face_image: ROI do rosto
+            full_image: Imagem completa para validação anti-spoofing
 
         Returns:
             Tuple[Optional[str], Optional[float]]: (usuário, distância) ou (None, None)
         """
         try:
+            # 🔥 NOVO: Validar anti-spoofing antes de extrair embedding
+            is_live, spoofing_msg = self.anti_spoofing_validator.is_live_camera_face(full_image, face_image)
+
+            if not is_live:
+                logger.warning(f"ANTI-SPOOFING BLOQUEADO: {spoofing_msg}")
+                with self._metrics_lock:
+                    self.metrics.anti_spoofing_blocks += 1
+                return None, None
+
             captured_embedding = self._extract_face_embedding(face_image)
             if captured_embedding is None:
                 return None, None
@@ -352,49 +364,19 @@ class FaceRecognitionService:
                     elif distance < second_best_distance:
                         second_best_distance = distance
 
-            # CRITÉRIOS OTIMIZADOS - MAIS PERMISSIVOS
-            if best_match and min_distance < MODEL_CONFIG.DISTANCE_THRESHOLD:
-                confidence = 1 - min_distance
-                margin = second_best_distance - min_distance if second_best_distance != float('inf') else 0.1
+            # 🔥 CRITÉRIOS RESTRITIVOS: Apenas confiança > 85% (distância < 0.15)
+            confidence = 1 - min_distance
 
-                logger.info(f" Match encontrado: {best_match} - Dist: {min_distance:.4f}, Conf: {confidence:.4f}, Margem: {margin:.4f}")
+            if best_match and confidence >= MODEL_CONFIG.MIN_CONFIDENCE:
+                margin = second_best_distance - min_distance if second_best_distance != float('inf') else 0
 
-                # NOVOS CRITÉRIOS MAIS PERMISSIVOS
-                very_high_confidence = confidence >= 0.85
-                high_confidence = confidence >= 0.80
-                medium_confidence = confidence >= 0.75
-
-                # MARGENS SIGNIFICATIVAMENTE REDUZIDAS
-                good_margin = margin >= 0.005
-                acceptable_margin = margin >= 0.001
-                minimal_margin = margin >= 0.0005
-
-                # ACEITAÇÃO MAIS PERMISSIVA
-                if very_high_confidence:
-                    # Confiança muito alta - aceita mesmo com margem mínima
-                    logger.info(f" ACEITO - Confiança muito alta: {best_match}")
-                    return best_match, min_distance
-                elif high_confidence and good_margin:
-                    logger.info(f" ACEITO - Confiança alta com boa margem: {best_match}")
-                    return best_match, min_distance
-                elif high_confidence and acceptable_margin:
-                    logger.info(f" ACEITO - Confiança alta com margem aceitável: {best_match}")
-                    return best_match, min_distance
-                elif medium_confidence and good_margin:
-                    logger.info(f"ACEITO - Confiança média com boa margem: {best_match}")
-                    return best_match, min_distance
-                elif medium_confidence and minimal_margin:
-                    logger.info(f"ACEITO - Confiança média com margem mínima: {best_match}")
-                    return best_match, min_distance
-                else:
-                    logger.info(f"REJEITADO - Confiança insuficiente ({confidence:.4f}) ou margem pequena ({margin:.4f})")
-                    return None, None
-
+                logger.info(f"✅ RECONHECIDO: {best_match} - Conf: {confidence:.4f}, Margem: {margin:.4f}")
+                return best_match, min_distance
             else:
                 if best_match:
-                    logger.info(f"REJEITADO - Distância acima do threshold: {min_distance:.4f} > {MODEL_CONFIG.DISTANCE_THRESHOLD}")
+                    logger.warning(f"❌ REJEITADO: {best_match} - Conf: {confidence:.4f} < {MODEL_CONFIG.MIN_CONFIDENCE}")
                 else:
-                    logger.info("Nenhum match encontrado")
+                    logger.info("❌ Nenhum match encontrado")
                 return None, None
 
         except Exception as e:
@@ -436,7 +418,7 @@ class FaceRecognitionService:
 
     def process_face_login(self, image_data: str) -> Dict[str, Any]:
         """
-        Processamento de login facial com verificação completa
+        Processamento de login facial COM VALIDAÇÃO ANTI-SPOOFING
 
         Args:
             image_data: Imagem em base64
@@ -521,8 +503,8 @@ class FaceRecognitionService:
                     timestamp=self.get_current_timestamp()
                 ).__dict__
 
-            # Reconhecer face
-            user, distance = self._recognize_face_secure(face_roi)
+            # 🔥 ALTERADO: Passar a imagem completa para validação anti-spoofing
+            user, distance = self._recognize_face_secure(face_roi, frame)
 
             # Coletar métricas
             processing_time = time.time() - start_time
@@ -660,6 +642,13 @@ class FaceRecognitionService:
                 success_rate=round(success_rate, 4),
                 database_reloads=self.metrics.database_reloads
             ).__dict__
+
+    def get_detailed_metrics(self) -> Dict[str, Any]:
+        """Métricas detalhadas com anti-spoofing"""
+        base_metrics = self.get_performance_metrics()
+        with self._metrics_lock:
+            base_metrics["anti_spoofing_blocks"] = self.metrics.anti_spoofing_blocks
+        return base_metrics
 
     def reload_database(self) -> Tuple[bool, str]:
         """Recarrega banco de dados manualmente"""

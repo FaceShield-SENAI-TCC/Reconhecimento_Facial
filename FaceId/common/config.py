@@ -30,14 +30,14 @@ class DatabaseConfig:
 
 @dataclass
 class ModelConfig:
-    """Configuracoes do modelo de reconhecimento facial - CRITERIOS OTIMIZADOS"""
+    """Configuracoes do modelo de reconhecimento facial - CRITERIOS RESTRITIVOS"""
     MODEL_NAME: str = "VGG-Face"
     EMBEDDING_DIMENSION: int = 2622
-    DISTANCE_THRESHOLD: float = 0.60
-    MIN_FACE_SIZE: Tuple[int, int] = (80, 80)
+    DISTANCE_THRESHOLD: float = 0.15  #  ALTERADO: 0.15 = 85% de confiança mínima
+    MIN_FACE_SIZE: Tuple[int, int] = (100, 100)  #  AUMENTADO: Rosto maior
     DETECTOR_BACKEND: str = "opencv"
-    MIN_CONFIDENCE: float = 0.80
-    MARGIN_REQUIREMENT: float = 0.001
+    MIN_CONFIDENCE: float = 0.85  #  ALTERADO: 85% mínimo
+    MARGIN_REQUIREMENT: float = 0.01  #  AUMENTADO: Margem mais restritiva
 
 @dataclass
 class SecurityConfig:
