@@ -10,7 +10,7 @@ CORS(app, origins=[
     'http://127.0.0.1:5500',
     'http://localhost:5500',
     'http://localhost:8080',
-    'https://faceshield.onrender.com',  # Substitua pelo URL real do seu frontend
+    'https://faceshield.onrender.com',  # URL frontend
     'https://*.onrender.com'  # Permite qualquer subdomínio do Render
 ])
 
