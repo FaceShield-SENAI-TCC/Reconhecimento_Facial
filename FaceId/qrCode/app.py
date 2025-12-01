@@ -1,48 +1,34 @@
+import asyncio
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
 import numpy as np
-import asyncio
-import sys
-import os
-
-# Adiciona o diretório raiz ao path para importar módulos comuns
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from common.locker_controller import LockerController
 
 app = Flask(__name__)
 
-# Configuração do CORS para permitir seu frontend
-CORS(app, origins=['http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:8080'])
+# Configuração do CORS para permitir seu frontend no Render e desenvolvimento local
+CORS(app, origins=[
+    'http://127.0.0.1:5500',
+    'http://localhost:5500',
+    'http://localhost:8080',
+    'https://faceshield.onrender.com',  # URL frontend
+    'https://*.onrender.com'  # Permite qualquer subdomínio do Render
+])
 
-# Instância do controlador da trava
-locker_controller = LockerController()
-
-
-class QRCodeDecoder:
-    def __init__(self):
-        self.detector = cv2.QRCodeDetector()
-
-    def decode_qr_code(self, image: np.ndarray) -> str:
-        """Decodifica QR Code com tratamento de erro"""
-        try:
-            data, points, _ = self.detector.detectAndDecode(image)
-            return data.strip() if data else ""
-        except Exception as e:
-            print(f"Erro na decodificação QR Code: {e}")
-            return ""
-
-
-# Instância global do decoder
-qr_decoder = QRCodeDecoder()
-
+# Ou para permitir TODOS os domínios (menos seguro, mas funcional):
+# CORS(app)
 
 @app.route('/read-qrcode', methods=['POST', 'OPTIONS'])
 def read_qrcode():
     # Handle preflight request
     if request.method == 'OPTIONS':
         response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
         return response
 
     if 'image' not in request.files:
@@ -66,8 +52,17 @@ def read_qrcode():
 
         print(f"DECODIFICACAO: Imagem decodificada - Dimensoes: {image.shape}")
 
-        # Decodifica QR Code
-        data = qr_decoder.decode_qr_code(image)
+        # Cria o detector de QR Code
+        detector = cv2.QRCodeDetector()
+
+        # Método compatível com todas as versões do OpenCV
+        result = detector.detectAndDecode(image)
+
+        # OpenCV 4.x+ retorna uma tupla, OpenCV 3.x pode retornar direto
+        if isinstance(result, tuple):
+            data = result[0]
+        else:
+            data = result
 
         print(f"DETECCAO QR CODE: Conteudo detectado: '{data}'")
 
@@ -89,8 +84,11 @@ def read_qrcode():
         print(f"ERRO NO PROCESSAMENTO: {str(e)}")
         return jsonify({'success': False, 'error': f'Erro no servidor: {str(e)}'}), 500
 
+@app.route('/test', methods=['GET'])
+def test():
+    return jsonify({'message': 'Backend Python funcionando!', 'status': 'ok'})
 
-# 🔥 NOVO ENDPOINT ADICIONADO AQUI
+
 @app.route('/iot/control', methods=['POST', 'OPTIONS'])
 def iot_control():
     """Endpoint para controle IOT da trava - só fecha quando armário fechar"""
@@ -109,10 +107,14 @@ def iot_control():
         if command == "ABRIR_TRAVA_IOT":
             print("INICIANDO ABERTURA DE TRAVA NO MODO IOT...")
 
+            # CORREÇÃO 1: Criar INSTÂNCIA de LockerController
+            # CORREÇÃO 2: Usar método existente abrir_trava_qrcode()
+            locker_controller = LockerController()
+
             # Executa assincronamente
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-            sucesso = loop.run_until_complete(locker_controller.abrir_trava_iot())
+            sucesso = loop.run_until_complete(locker_controller.abrir_trava_qrcode())
             loop.close()
 
             if sucesso:
@@ -140,13 +142,6 @@ def iot_control():
             'success': False,
             'error': f'Erro interno: {str(e)}'
         }), 500
-
-
-@app.route('/test', methods=['GET'])
-def test():
-    return jsonify({'message': 'Backend Python funcionando!', 'status': 'ok'})
-
-
 if __name__ == '__main__':
     print("INICIALIZACAO: Servidor QR Code iniciando na porta 5000...")
     print("TESTE: Acesse http://localhost:5000/test para testar")
