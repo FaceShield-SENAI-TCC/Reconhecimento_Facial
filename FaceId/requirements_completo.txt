@@ -1,1 +1,36 @@
-pip install flask==2.3.3 flask-socketio==5.3.6 flask-cors==4.0.0 opencv-python==4.8.1.78 deepface==0.0.79 psycopg2-binary==2.9.7 python-dotenv==1.0.0 pillow==9.5.0 colorlog==6.7.0 eventlet==0.33.3 pyjwt==2.8.0 tensorflow==2.13.0 keras==2.13.1 gdown==4.7.1 tqdm==4.65.0 websockets
+# Framework Web
+flask==2.3.3
+flask-socketio==5.3.6
+flask-cors==4.0.0
+eventlet==0.33.3
+
+# Processamento de Imagem e IA
+opencv-python==4.8.1.78
+deepface==0.0.79
+numpy==1.24.3
+tensorflow==2.13.0
+keras==2.13.1
+gdown==4.7.1
+tqdm==4.65.0
+
+# Banco de Dados
+psycopg2-binary==2.9.7
+
+# Autenticação e Segurança
+pyjwt==2.8.0
+python-dotenv==1.0.0
+
+# WebSocket
+websockets==12.0
+
+# Utilitários
+pillow==10.0.0
+colorlog==6.7.0
+
+
+
+
+# pip install flask==2.3.3 flask-socketio==5.3.6 flask-cors==4.0.0 opencv-python==4.8.1.78
+deepface==0.0.79 psycopg2-binary==2.9.7 python-dotenv==1.0.0 pillow==9.5.0 colorlog==6.7.0
+eventlet==0.33.3 pyjwt==2.8.0 tensorflow==2.13.0 keras==2.13.1 gdown==4.7.1 tqdm==4.65.0 websockets
+

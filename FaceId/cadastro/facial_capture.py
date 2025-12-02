@@ -4,75 +4,28 @@ Usa utilitários compartilhados e configuração centralizada
 """
 import logging
 import time
-import threading
 import cv2
 import numpy as np
 import base64
 import os
 from datetime import datetime
-from typing import Optional
 from deepface import DeepFace
 
 # Módulos compartilhados
 from common.config import MODEL_CONFIG, APP_CONFIG
 from common.database import db_manager
 from common.image_utils import ImageValidator, FaceQualityValidator
-from common.exceptions import DatabaseError, ImageValidationError, FaceDetectionError
+from common.exceptions import DatabaseError
 
+# Importa FaceDetector do novo módulo
+from face_detector import FaceDetector
+
+# Configurar logger específico para este módulo
 logger = logging.getLogger(__name__)
-
-class FaceDetector:
-    """Detector facial otimizado com cache"""
-
-    def __init__(self):
-        self.last_detection_time = 0
-        self.detection_interval = 0.2  # 5 FPS para detecção
-        self.cached_faces = []
-
-    def detect_faces(self, frame):
-        """Detecta rostos no frame com otimização"""
-        current_time = time.time()
-        if current_time - self.last_detection_time < self.detection_interval:
-            return self.cached_faces
-
-        try:
-            small_frame = cv2.resize(frame, (320, 240))
-            detected_faces = DeepFace.extract_faces(
-                img_path=small_frame,
-                detector_backend="opencv",
-                enforce_detection=False,
-                align=False
-            )
-
-            faces = []
-            quality_validator = FaceQualityValidator()
-
-            for face in detected_faces:
-                if 'facial_area' in face:
-                    x = int(face['facial_area']['x'] * frame.shape[1] / 320)
-                    y = int(face['facial_area']['y'] * frame.shape[0] / 240)
-                    w = int(face['facial_area']['w'] * frame.shape[1] / 320)
-                    h = int(face['facial_area']['h'] * frame.shape[0] / 240)
-
-                    # Validar qualidade do rosto
-                    face_roi = frame[y:y + h, x:x + w]
-                    is_valid, validation_msg = quality_validator.validate_face_image(face_roi)
-
-                    if is_valid:
-                        faces.append((x, y, w, h))
-
-            self.cached_faces = faces
-            self.last_detection_time = current_time
-            return faces
-
-        except Exception as e:
-            logger.warning(f"Erro na detecção: {e}")
-            return []
 
 class FluidFaceCapture:
     """Capturador facial fluido com reutilização de recursos"""
 
-    # --- CORREÇÃO: Removido 'username' do __init__ ---
     def __init__(self, nome: str, sobrenome: str, turma: str, tipo_usuario: str,
                  progress_callback=None, frame_callback=None):
         self.nome = nome
@@ -130,7 +83,7 @@ class FluidFaceCapture:
                     # Validar qualidade da face
                     is_valid, validation_msg = self.quality_validator.validate_face_image(face_img)
                     if not is_valid:
-                        logger.warning(f"Face {i + 1} inválida: {validation_msg}")
+                        logger.debug(f"Face {i + 1} inválida: {validation_msg}")
                         continue
 
                     # Salvar temporariamente para DeepFace
@@ -154,14 +107,14 @@ class FluidFaceCapture:
 
                     embeddings.append(embedding)
                     successful += 1
-                    logger.info(f"✅ Embedding {i + 1} gerado com sucesso")
+                    logger.debug(f"Embedding {i + 1} gerado com sucesso")
 
                     # Limpar arquivo temporário
                     if os.path.exists(temp_path):
                         os.remove(temp_path)
 
                 except Exception as e:
-                    logger.warning(f"Erro no embedding {i + 1}: {e}")
+                    logger.debug(f"Erro no embedding {i + 1}: {e}")
                     continue
 
             if successful >= APP_CONFIG.MIN_PHOTOS_REQUIRED:
@@ -173,28 +126,23 @@ class FluidFaceCapture:
                 _, buffer = cv2.imencode('.jpg', profile_image)
                 image_bytes = buffer.tobytes()
 
-                # --- INÍCIO DA CORREÇÃO (O BUG ESTÁ AQUI) ---
                 # Salvar no banco (sem username)
                 success, saved_user_or_error = db_manager.save_user(
                     nome=self.nome,
                     sobrenome=self.sobrenome,
                     turma=self.turma,
                     tipo_usuario=self.tipo_usuario,
-                    # username foi removido
                     embeddings=[emb.tolist() for emb in embeddings],
                     profile_image=image_bytes
                 )
 
                 if success:
-                    # CORREÇÃO: Retorna SÓ O ID (acessando o dicionário)
                     user_id_number = saved_user_or_error['id']
-                    logger.info(f"Usuário salvo, retornando ID: {user_id_number}")
-                    return True, user_id_number # Retorna o NÚMERO
+                    logger.info(f"Usuário salvo: ID {user_id_number}")
+                    return True, user_id_number
                 else:
-                    # Se falhou, 'saved_user_or_error' é a string de erro
                     logger.error(f"Falha ao salvar usuário: {saved_user_or_error}")
                     return False, saved_user_or_error
-                # --- FIM DA CORREÇÃO ---
 
             else:
                 return False, f"Embeddings insuficientes: {successful}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}"
@@ -242,7 +190,7 @@ class FluidFaceCapture:
                         # Testar leitura básica
                         ret, test_frame = cap.read()
                         if ret and test_frame is not None:
-                            logger.info(f"✅ Câmera {camera_index} funcionando na tentativa {attempt + 1}")
+                            logger.debug(f"Câmera {camera_index} funcionando na tentativa {attempt + 1}")
 
                             # Configurações otimizadas
                             cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -256,15 +204,15 @@ class FluidFaceCapture:
                         else:
                             cap.release()
                     else:
-                        logger.warning(f"❌ Câmera {camera_index} não abriu na tentativa {attempt + 1}")
+                        logger.debug(f"Câmera {camera_index} não abriu na tentativa {attempt + 1}")
 
                 except Exception as e:
-                    logger.warning(f"Erro na câmera {camera_index}, tentativa {attempt + 1}: {e}")
+                    logger.debug(f"Erro na câmera {camera_index}, tentativa {attempt + 1}: {e}")
                     if 'cap' in locals() and cap.isOpened():
                         cap.release()
                     time.sleep(1)
 
-        logger.error("❌ Todas as tentativas de câmera falharam")
+        logger.error("Todas as tentativas de câmera falharam")
         return None
 
     def _cleanup_camera(self):
@@ -304,7 +252,6 @@ class FluidFaceCapture:
 
                 ret, frame = cap.read()
                 if not ret:
-                    logger.warning("Frame vazio da câmera")
                     time.sleep(0.1)
                     continue
 
@@ -332,49 +279,16 @@ class FluidFaceCapture:
                             self.captured_count += 1
                             self.last_face_time = current_time
 
-                            # Feedback visual
-                            cv2.rectangle(display_frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
-                            cv2.putText(display_frame, f"CAPTURADO: {self.captured_count}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}",
-                                        (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-
+                            logger.debug(f"Face {self.captured_count} capturada")
                             self.update_progress(f"Capturado: {self.captured_count}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}")
-                            logger.info(f"📸 Face {self.captured_count} capturada com sucesso")
-                        else:
-                            cv2.rectangle(display_frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-                            cv2.putText(display_frame, "QUALIDADE BAIXA",
-                                        (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 1)
-                    else:
-                        cv2.rectangle(display_frame, (x, y), (x + w, y + h), (0, 165, 255), 2)
-                        cv2.putText(display_frame, "AGUARDANDO...",
-                                    (x, y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 165, 255), 1)
+
                 else:
                     # Contagem de frames sem rosto
                     self.consecutive_no_face_count += 1
                     elapsed_no_face = time.time() - self.last_face_detected_time
 
                     if elapsed_no_face > no_face_timeout:
-                        return False, "❌ Nenhum rosto detectado por 10 segundos. Posicione seu rosto na câmera."
-
-                    # Feedback visual
-                    if elapsed_no_face > 3:
-                        remaining_time = no_face_timeout - elapsed_no_face
-                        if remaining_time <= 5:
-                            cv2.putText(display_frame, f"PROCURE A CÂMERA! {int(remaining_time)}s",
-                                        (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-                        else:
-                            cv2.putText(display_frame, "PROCURANDO ROSTO...",
-                                        (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 165, 255), 1)
-
-                # Informações na tela
-                cv2.putText(display_frame, f"Capturadas: {self.captured_count}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}",
-                            (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
-
-                user_type = "Aluno" if self.tipo_usuario == "ALUNO" else "Professor"
-                user_display = f"{self.nome} {self.sobrenome}"
-                # (Username removido do display da câmera)
-
-                cv2.putText(display_frame, f"Usuário: {user_display} - {user_type}",
-                            (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                        return False, " Nenhum rosto detectado por 10 segundos. Posicione seu rosto na câmera."
 
                 self.send_frame(display_frame)
                 time.sleep(0.03)
@@ -382,12 +296,13 @@ class FluidFaceCapture:
             # Finalizar captura
             if self.captured_count >= APP_CONFIG.MIN_PHOTOS_REQUIRED:
                 self.update_progress("Processando embeddings...")
+                logger.info(f"Captura concluída: {self.captured_count} faces")
                 success, message = self.generate_embeddings()
                 return success, message
             else:
                 elapsed_no_face = time.time() - self.last_face_detected_time
                 if elapsed_no_face > no_face_timeout:
-                    return False, "❌ Nenhum rosto detectado por 10 segundos."
+                    return False, " Nenhum rosto detectado por 10 segundos."
                 else:
                     return False, f"Captura incompleta: {self.captured_count}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}"
 
@@ -402,9 +317,9 @@ class FluidFaceCapture:
             # Limpar cache do detector para próxima captura
             self.detector.cached_faces = []
             self.detector.last_detection_time = 0
-            logger.info("✅ Recursos da câmera liberados para próxima captura")
+            logger.debug("Recursos da câmera liberados")
 
     def stop(self):
         """Para a captura de forma segura"""
         self.running = False
-        logger.info("⏹️ Captura interrompida")
+        logger.debug("Captura interrompida")
