@@ -1,8 +1,14 @@
+"""
+Rotas para leitura de QR Code - VERSÃO CORRIGIDA
+"""
 from flask import Blueprint, request, jsonify
 import cv2
 import numpy as np
+import logging
 
+logger = logging.getLogger(__name__)
 qr_bp = Blueprint('qr_bp', __name__)
+
 
 @qr_bp.route('/read-qrcode', methods=['POST', 'OPTIONS'])
 def read_qrcode():
@@ -14,55 +20,67 @@ def read_qrcode():
         response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
         return response
 
+    logger.info("=== INICIANDO PROCESSAMENTO DE QR CODE ===")
+
+    # Verificar se há arquivo de imagem
     if 'image' not in request.files:
+        logger.error("Nenhuma imagem enviada")
         return jsonify({'success': False, 'error': 'Nenhuma imagem enviada.'}), 400
 
     file = request.files['image']
 
     if file.filename == '':
+        logger.error("Nome de arquivo vazio")
         return jsonify({'success': False, 'error': 'Nenhum arquivo selecionado.'}), 400
 
     try:
-        print("PROCESSAMENTO: Processando imagem recebida...")
+        logger.info(f"Processando arquivo: {file.filename}")
 
-        # Converte a imagem para um array numpy
+        # Ler imagem
         image_bytes = file.read()
+        logger.info(f"Tamanho da imagem: {len(image_bytes)} bytes")
+
+        # Converter para numpy array
         np_image = np.frombuffer(image_bytes, np.uint8)
         image = cv2.imdecode(np_image, cv2.IMREAD_COLOR)
 
         if image is None:
+            logger.error("Falha ao decodificar imagem")
             return jsonify({'success': False, 'error': 'Não foi possível decodificar a imagem.'}), 400
 
-        print(f"DECODIFICACAO: Imagem decodificada - Dimensoes: {image.shape}")
+        logger.info(f"Imagem decodificada - Dimensões: {image.shape}")
 
-        # Cria o detector de QR Code
+        # Criar detector de QR Code
         detector = cv2.QRCodeDetector()
 
-        # Método compatível com todas as versões do OpenCV
+        # Método compatível
         result = detector.detectAndDecode(image)
 
         # OpenCV 4.x+ retorna uma tupla, OpenCV 3.x pode retornar direto
         if isinstance(result, tuple):
             data = result[0]
+            logger.debug(f"Resultado tuple: {result}")
         else:
             data = result
+            logger.debug(f"Resultado direto: {result}")
 
-        print(f"DETECCAO QR CODE: Conteudo detectado: '{data}'")
+        logger.info(f"QR Code detectado: '{data}'")
 
         if data and data.strip():
-            print(f"SUCESSO: QR Code detectado - Conteudo: {data.strip()}")
+            qr_data = data.strip()
+            logger.info(f"✅ QR Code válido detectado: {qr_data}")
             return jsonify({
                 'success': True,
-                'qrCode': data.strip(),
+                'qrCode': qr_data,
                 'message': 'QR Code detectado com sucesso!'
             })
         else:
-            print("AVISO: Nenhum QR Code detectado na imagem")
+            logger.warning("Nenhum QR Code detectado na imagem")
             return jsonify({
                 'success': False,
                 'error': 'Nenhum QR Code detectado. Aponte para um QR Code válido.'
             }), 200
 
     except Exception as e:
-        print(f"ERRO NO PROCESSAMENTO: {str(e)}")
+        logger.error(f"❌ ERRO NO PROCESSAMENTO: {str(e)}", exc_info=True)
         return jsonify({'success': False, 'error': f'Erro no servidor: {str(e)}'}), 500

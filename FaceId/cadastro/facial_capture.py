@@ -1,6 +1,5 @@
 """
-Módulo de Captura Facial Refatorado
-Usa utilitários compartilhados e configuração centralizada
+Módulo de Captura Facial Refatorado - VERSÃO CORRIGIDA
 """
 import logging
 import time
@@ -11,16 +10,13 @@ import os
 from datetime import datetime
 from deepface import DeepFace
 
-# Módulos compartilhados
 from common.config import MODEL_CONFIG, APP_CONFIG
 from common.database import db_manager
 from common.image_utils import ImageValidator, FaceQualityValidator
 from common.exceptions import DatabaseError
 
-# Importa FaceDetector do novo módulo
 from face_detector import FaceDetector
 
-# Configurar logger específico para este módulo
 logger = logging.getLogger(__name__)
 
 class FluidFaceCapture:
@@ -31,7 +27,7 @@ class FluidFaceCapture:
         self.nome = nome
         self.sobrenome = sobrenome
         self.turma = turma
-        self.tipo_usuario = tipo_usuario.upper()  # Garantir maiúsculas
+        self.tipo_usuario = tipo_usuario.upper()
 
         self.progress_callback = progress_callback
         self.frame_callback = frame_callback
@@ -42,11 +38,10 @@ class FluidFaceCapture:
 
         self.detector = FaceDetector()
         self.last_face_time = 0
-        self.face_capture_interval = 0.5  # 2 faces por segundo máximo
+        self.face_capture_interval = 0.5
         self.last_face_detected_time = 0
         self.consecutive_no_face_count = 0
 
-        # Configuração do modelo
         self.model_name = MODEL_CONFIG.MODEL_NAME
         self.embedding_dimension = MODEL_CONFIG.EMBEDDING_DIMENSION
         self.quality_validator = FaceQualityValidator()
@@ -64,7 +59,6 @@ class FluidFaceCapture:
         """Envia frame para o cliente via callback"""
         if self.frame_callback:
             try:
-                # Reduzir qualidade para transmissão
                 small_frame = cv2.resize(frame, (426, 320))
                 _, buffer = cv2.imencode('.jpg', small_frame, [cv2.IMWRITE_JPEG_QUALITY, 50])
                 jpg_as_text = base64.b64encode(buffer).decode('utf-8')
@@ -80,17 +74,14 @@ class FluidFaceCapture:
 
             for i, face_img in enumerate(self.captured_faces):
                 try:
-                    # Validar qualidade da face
                     is_valid, validation_msg = self.quality_validator.validate_face_image(face_img)
                     if not is_valid:
                         logger.debug(f"Face {i + 1} inválida: {validation_msg}")
                         continue
 
-                    # Salvar temporariamente para DeepFace
                     temp_path = f"temp_face_{int(time.time())}_{i}.jpg"
                     cv2.imwrite(temp_path, face_img)
 
-                    # Gerar embedding usando modelo configurado
                     embedding_obj = DeepFace.represent(
                         img_path=temp_path,
                         model_name=self.model_name,
@@ -100,7 +91,6 @@ class FluidFaceCapture:
 
                     embedding = np.array(embedding_obj[0]["embedding"])
 
-                    # Validar dimensão do embedding
                     if len(embedding) != self.embedding_dimension:
                         logger.warning(f"Embedding com dimensão incorreta: {len(embedding)}")
                         continue
@@ -109,7 +99,6 @@ class FluidFaceCapture:
                     successful += 1
                     logger.debug(f"Embedding {i + 1} gerado com sucesso")
 
-                    # Limpar arquivo temporário
                     if os.path.exists(temp_path):
                         os.remove(temp_path)
 
@@ -118,16 +107,14 @@ class FluidFaceCapture:
                     continue
 
             if successful >= APP_CONFIG.MIN_PHOTOS_REQUIRED:
-                # Usar a melhor imagem como perfil
                 best_face_idx = self._select_best_profile_image()
                 profile_image = self.captured_faces[best_face_idx]
 
-                # Converter para bytes
                 _, buffer = cv2.imencode('.jpg', profile_image)
                 image_bytes = buffer.tobytes()
 
-                # Salvar no banco (sem username)
-                success, saved_user_or_error = db_manager.save_user(
+                # ✅ CHAMADA CORRIGIDA: save_user agora retorna (bool, user_id_int)
+                success, result = db_manager.save_user(
                     nome=self.nome,
                     sobrenome=self.sobrenome,
                     turma=self.turma,
@@ -137,12 +124,12 @@ class FluidFaceCapture:
                 )
 
                 if success:
-                    user_id_number = saved_user_or_error['id']
-                    logger.info(f"Usuário salvo: ID {user_id_number}")
-                    return True, user_id_number
+                    user_id = result  # ✅ Agora é o ID inteiro diretamente
+                    logger.info(f"Usuário salvo: ID {user_id}")
+                    return True, user_id  # ✅ RETORNO CORRETO: (True, user_id)
                 else:
-                    logger.error(f"Falha ao salvar usuário: {saved_user_or_error}")
-                    return False, saved_user_or_error
+                    logger.error(f"Falha ao salvar usuário: {result}")
+                    return False, result  # ✅ RETORNO CORRETO: (False, mensagem_erro)
 
             else:
                 return False, f"Embeddings insuficientes: {successful}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}"

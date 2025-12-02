@@ -1,6 +1,5 @@
 """
-Serviço Central de Reconhecimento Facial
-Orquestra o processamento da imagem, chama a IA e formata o resultado
+Serviço Central de Reconhecimento Facial - VERSÃO CORRIGIDA
 """
 import logging
 import time
@@ -14,9 +13,8 @@ import cv2
 # Módulos compartilhados
 from common.config import MODEL_CONFIG
 from common.exceptions import ImageValidationError, FaceRecognitionServiceError
-from face_recognition_ia import FaceRecognizer
-from utils.image_processor import base64_to_image
 from common.image_utils import ImageValidator, FaceQualityValidator
+from face_recognition_ia import FaceRecognizer
 
 logger = logging.getLogger(__name__)
 
@@ -79,8 +77,8 @@ class RecognitionService:
             self.metrics.total_attempts += 1
 
         try:
-            # 1. Decodificar imagem
-            frame = base64_to_image(image_data)
+            # 1. Decodificar imagem usando common.image_utils
+            frame = ImageValidator.decode_base64_image(image_data)
             if frame is None:
                 raise ImageValidationError("Dados de imagem inválidos")
 
@@ -147,7 +145,7 @@ class RecognitionService:
                     self.metrics.successful_recognitions += 1
                     confidence = 1 - distance
 
-                    # IMPORTANTE: Garantir que tipo_usuario está em maiúsculas
+                    # Garantir que tipo_usuario está em maiúsculas
                     tipo_usuario = user_data['tipo_usuario'].upper() if user_data.get('tipo_usuario') else None
 
                     # Mensagens personalizadas
@@ -162,28 +160,24 @@ class RecognitionService:
                     # Log detalhado
                     logger.info(f"RECONHECIMENTO BEM SUCEDIDO - Tipo: {tipo_usuario}, Nome: {user_data.get('nome')}, Tempo: {processing_time:.3f}s")
 
-                    # Construir resultado com TODOS os campos necessários
+                    # Construir resultado
                     result = {
                         "authenticated": True,
-                        "user": user,  # Display name
+                        "user": user,
                         "confidence": round(confidence, 4),
                         "distance": round(distance, 4),
                         "message": message,
                         "timestamp": self.get_current_timestamp(),
-                        # CAMPOS CRUCIAIS para o front-end
                         "id": user_data.get('id'),
                         "username": user_data.get('username'),
-                        "tipo_usuario": tipo_usuario,  # Garantido em maiúsculas
+                        "tipo_usuario": tipo_usuario,
                         "nome": user_data.get('nome'),
                         "sobrenome": user_data.get('sobrenome'),
                         "turma": user_data.get('turma'),
-                        # Campo extra para debugging
                         "user_info": user_data
                     }
 
-                    # Log do resultado final
                     logger.info(f"RESULTADO ENVIADO AO FRONT-END: {result}")
-
                     return result
                 else:
                     self.metrics.failed_recognitions += 1
@@ -209,7 +203,6 @@ class RecognitionService:
                 message="Erro interno no processamento",
                 timestamp=self.get_current_timestamp()
             ).__dict__
-
     def _detect_face(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
         """Detecta rostos na imagem"""
         return self.face_recognizer._detect_face(image)

@@ -1,16 +1,15 @@
 """
-Camada de acesso a dados unificada para PostgreSQL
+Camada de acesso a dados unificada para PostgreSQL - VERSÃO CORRIGIDA
 """
 import logging
 import psycopg2
 from psycopg2.extras import Json
 from contextlib import contextmanager
-from typing import Generator, Optional, Tuple
+from typing import Generator, Optional, Tuple, Union
 
 from common.config import DATABASE_CONFIG
 from common.exceptions import DatabaseError, DatabaseConnectionError
 
-# A linha "from common.models" foi REMOVIDA
 logger = logging.getLogger(__name__)
 
 class DatabaseManager:
@@ -41,14 +40,11 @@ class DatabaseManager:
     def init_database(self) -> bool:
         """
         Inicializa (Cria) ou Atualiza (Altera) tabelas do banco de dados
-        para garantir que todas as colunas existam.
         """
-        conn = None # Definir conn fora do try para o except ter acesso
+        conn = None
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
-                    # 1. TENTA CRIAR A TABELA
-                    # (Ela bate com a sua imagem, com 'username' e 'senha' nulos)
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS usuarios(
                             id SERIAL PRIMARY KEY,
@@ -63,35 +59,32 @@ class DatabaseManager:
                         )
                     """)
 
-                    # 2. GARANTE QUE AS COLUNAS EXISTAM
                     cursor.execute("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS embeddings JSONB NOT NULL DEFAULT '[]'::jsonb")
                     cursor.execute("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS foto_perfil BYTEA")
                     cursor.execute("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS senha VARCHAR(255)")
 
-                    # Garante que username é UNIQUE
                     try:
                         cursor.execute("ALTER TABLE usuarios ADD CONSTRAINT usuarios_username_key UNIQUE (username)")
                     except psycopg2.Error as e:
-                        if e.pgcode == '42P07': # duplicate_table / constraint_already_exists
-                            conn.rollback() # Desfaz o "ALTER TABLE" que falhou
+                        if e.pgcode == '42P07':
+                            conn.rollback()
                         else:
-                            raise e # Levanta outros erros
+                            raise e
 
-                    # Cria índice para busca por nome/sobrenome/turma
                     cursor.execute("CREATE INDEX IF NOT EXISTS idx_usuarios_nome_sobrenome_turma ON usuarios(nome, sobrenome, turma)")
 
                     conn.commit()
-                    logger.info("✅ Banco de dados inicializado/atualizado com sucesso")
+                    logger.info(" Banco de dados inicializado/atualizado com sucesso")
                     return True
 
         except Exception as e:
-            if conn: # Se a conexão ainda existir, desfaça
+            if conn:
                 conn.rollback()
-            logger.error(f"❌ Falha na inicialização/atualização do banco: {str(e)}")
+            logger.error(f" Falha na inicialização/atualização do banco: {str(e)}")
             return False
 
     def check_user_exists(self, nome: str, sobrenome: str, turma: str) -> int:
-        """ Verifica se usuário já existe no banco """
+        """Verifica se usuário já existe no banco"""
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
@@ -105,23 +98,8 @@ class DatabaseManager:
             logger.error(f"Erro ao verificar usuário: {e}")
             return 0
 
-    def check_username_exists(self, username: str) -> int:
-        """ Verifica se username já existe no banco """
-        try:
-            with self.get_connection() as conn:
-                with conn.cursor() as cursor:
-                    cursor.execute(
-                        "SELECT COUNT(*) FROM usuarios WHERE username = %s AND username IS NOT NULL",
-                        (username,)
-                    )
-                    count = cursor.fetchone()[0]
-                    return count
-        except Exception as e:
-            logger.error(f"Erro ao verificar username: {e}")
-            return 0
-
     def count_users(self) -> int:
-        """ Conta número total de usuários cadastrados """
+        """Conta número total de usuários cadastrados"""
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
@@ -133,26 +111,18 @@ class DatabaseManager:
             return 0
 
     def save_user(self, nome: str, sobrenome: str, turma: str, tipo_usuario: str,
-                 embeddings: list, profile_image: bytes) -> Tuple[bool, object]:
+                 embeddings: list, profile_image: bytes) -> Tuple[bool, Union[int, str]]:
         """
         Salva o pré-cadastro do usuário (sem username/senha)
 
-        RETORNA:
-            (True, <dicionario_com_id>) em sucesso (ex: (True, {'id': 42}))
-            (False, <string_de_erro>) em falha
+        RETORNO PADRONIZADO:
+            - Sucesso: (True, user_id_int)
+            - Falha:   (False, error_message_str)
         """
-
-        sql = """
-            INSERT INTO usuarios (nome, sobrenome, turma, tipo_usuario, username, embeddings, foto_perfil)
-            VALUES (%s, %s, %s, %s, NULL, %s, %s)
-            RETURNING id 
-        """
-
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cursor:
-
-                    # Verificar se usuário já existe (usando a mesma conexão)
+                    # Verificar se usuário já existe
                     cursor.execute(
                         "SELECT COUNT(*) FROM usuarios WHERE nome = %s AND sobrenome = %s AND turma = %s",
                         (nome, sobrenome, turma)
@@ -160,61 +130,29 @@ class DatabaseManager:
                     existing_count = cursor.fetchone()[0]
 
                     if existing_count > 0:
-                        return False, f"Usuário {nome} {sobrenome} turma {turma} já existe."
+                        return False, f"Usuário {nome} {sobrenome} já está cadastrado na turma {turma}"
 
                     # Inserir usuário
-                    cursor.execute(
-                        sql,
-                        (nome, sobrenome, turma, tipo_usuario.upper(), Json(embeddings), profile_image)
-                    )
+                    cursor.execute("""
+                        INSERT INTO usuarios (nome, sobrenome, turma, tipo_usuario, username, embeddings, foto_perfil)
+                        VALUES (%s, %s, %s, %s, NULL, %s, %s)
+                        RETURNING id
+                    """, (nome, sobrenome, turma, tipo_usuario.upper(), Json(embeddings), profile_image))
 
-                    # Recuperar o ID que acabou de ser inserido
                     inserted_row = cursor.fetchone()
 
                     if inserted_row:
+                        user_id = inserted_row[0]
                         conn.commit()
-                        user_id = inserted_row[0] # Pega o ID (ex: 42)
-
-                        logger.info(f"Usuário salvo no DB, retornando dicionário de ID: {{'id': {user_id}}}")
-                        return True, {"id": user_id}
+                        logger.info(f"Usuário salvo no DB - ID: {user_id}")
+                        return True, user_id  #  RETORNO PADRONIZADO: int ID
                     else:
-                        # Isso aconteceria se algo desse errado no INSERT
                         return False, "Falha ao inserir usuário, ID não retornado."
 
         except Exception as e:
-            # --- ESTA É A CORREÇÃO ---
-            # O 'conn.rollback()' foi REMOVIDO daqui.
-            # O 'with' statement já cuida do rollback se um commit() não for chamado.
             error_msg = f"Erro ao salvar usuário: {str(e)}"
             logger.error(error_msg)
-            return False, error_msg # Retorna a string de erro real
-
-    def get_user_by_username(self, username: str) -> Optional[dict]:
-        """ Busca usuário pelo username """
-        try:
-            with self.get_connection() as conn:
-                with conn.cursor() as cursor:
-                    cursor.execute("""
-                        SELECT id, nome, sobrenome, tipo_usuario, turma, username, embeddings
-                        FROM usuarios 
-                        WHERE username = %s AND username IS NOT NULL
-                    """, (username,))
-
-                    result = cursor.fetchone()
-                    if result:
-                        return {
-                            'id': result[0],
-                            'nome': result[1],
-                            'sobrenome': result[2],
-                            'tipo_usuario': result[3],
-                            'turma': result[4],
-                            'username': result[5],
-                            'embeddings': result[6]
-                        }
-                    return None
-        except Exception as e:
-            logger.error(f"Erro ao buscar usuário por username: {e}")
-            return None
+            return False, error_msg  #  RETORNO PADRONIZADO: string de erro
 
 # Instância global
 db_manager = DatabaseManager()

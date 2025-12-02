@@ -1,12 +1,11 @@
 """
-Rotas de Reconhecimento Facial
-Contém a rota principal /api/recognize e a lógica de validação de requisição.
+Rotas de Reconhecimento Facial - VERSÃO CORRIGIDA
 """
 from flask import Blueprint, jsonify, request
-import asyncio
 import logging
 from common.auth import token_required
 from common.exceptions import ImageValidationError, FaceRecognitionServiceError
+from common.event_loop_manager import EventLoopManager
 from recognition_service import RecognitionService
 from common.locker_controller import LockerController
 
@@ -66,24 +65,22 @@ def process_face_login(request, is_legacy=False):
         endpoint_type = "LEGACY" if is_legacy else "NOVO"
         logger.info(f"=== ENDPOINT {endpoint_type} /face-login CHAMADO ===")
 
-        # Controle da trava para alunos
+        # Controle da trava para alunos usando EventLoopManager
         if result.get('authenticated'):
             user_type = result.get('tipo_usuario')
             user_id = result.get('id')
 
-            logger.info(f"=== VERIFICANDO CONDICAO PARA ABRIR TRAVA ({endpoint_type}) ===")
+            logger.info(f"=== VERIFICANDO CONDIÇÃO PARA ABRIR TRAVA ({endpoint_type}) ===")
             logger.info(f"User Type: {user_type}, User ID: {user_id}")
 
             if user_type and user_type.upper() == "ALUNO" and user_id:
-                logger.info(f"CONDICAO ATENDIDA - ALUNO DETECTADO")
+                logger.info(f"CONDIÇÃO ATENDIDA - ALUNO DETECTADO")
                 logger.info(f"INICIANDO PROCESSO DE ABERTURA DA TRAVA...")
                 try:
-                    loop = asyncio.new_event_loop()
-                    asyncio.set_event_loop(loop)
-                    sucesso = loop.run_until_complete(
+                    # Usar EventLoopManager em vez de criar um novo loop
+                    sucesso = EventLoopManager.run_async(
                         locker_controller.abrir_trava_aluno(user_id, user_type)
                     )
-                    loop.close()
 
                     if sucesso:
                         logger.info(f"SUCESSO: Trava liberada via endpoint {endpoint_type} para aluno ID: {user_id}")
@@ -93,7 +90,7 @@ def process_face_login(request, is_legacy=False):
                 except Exception as e:
                     logger.error(f"ERRO EXCEÇÃO ao controlar trava no endpoint {endpoint_type}: {e}")
             else:
-                logger.info(f"CONDICAO NÃO ATENDIDA - Não é aluno ou ID inválido")
+                logger.info(f"CONDIÇÃO NÃO ATENDIDA - Não é aluno ou ID inválido")
 
         return jsonify(result), 200
 
@@ -188,7 +185,7 @@ def reload_database():
 
 @recognition_bp.route('/api/system/info', methods=['GET'])
 def system_info():
-    """Informacoes do sistema"""
+    """Informações do sistema"""
     try:
         db_status = recognition_service.get_detailed_database_status()
         metrics = recognition_service.get_performance_metrics()
@@ -213,27 +210,27 @@ def system_info():
             "timestamp": recognition_service.get_current_timestamp()
         }), 200
     except Exception as e:
-        logger.error(f"ERRO AO OBTER INFORMACOES DO SISTEMA: {str(e)}")
+        logger.error(f"ERRO AO OBTER INFORMAÇÕES DO SISTEMA: {str(e)}")
         return jsonify({
             "service": "face_recognition_api",
             "status": "degraded",
-            "error": "Nao foi possivel obter informacoes completas do sistema"
+            "error": "Não foi possível obter informações completas do sistema"
         }), 500
 
 @recognition_bp.route('/api/system/metrics', methods=['GET'])
 @token_required
 def system_metrics():
-    """Metricas detalhadas do sistema (requer autenticacao)"""
+    """Métricas detalhadas do sistema (requer autenticação)"""
     try:
         metrics = recognition_service.get_performance_metrics()
         return jsonify(metrics), 200
     except Exception as e:
-        logger.error(f"ERRO AO OBTER METRICAS: {str(e)}")
-        return jsonify({"error": "Erro ao obter metricas do sistema"}), 500
+        logger.error(f"ERRO AO OBTER MÉTRICAS: {str(e)}")
+        return jsonify({"error": "Erro ao obter métricas do sistema"}), 500
 
 @recognition_bp.route('/api/system/detailed-metrics', methods=['GET'])
 def detailed_metrics():
-    """Metricas detalhadas do sistema de reconhecimento"""
+    """Métricas detalhadas do sistema de reconhecimento"""
     try:
         db_status = recognition_service.get_detailed_database_status()
         metrics = recognition_service.get_performance_metrics()
@@ -250,13 +247,13 @@ def detailed_metrics():
             "timestamp": recognition_service.get_current_timestamp()
         }), 200
     except Exception as e:
-        logger.error(f"ERRO AO OBTER METRICAS DETALHADAS: {str(e)}")
-        return jsonify({"error": "Erro ao obter metricas"}), 500
+        logger.error(f"ERRO AO OBTER MÉTRICAS DETALHADAS: {str(e)}")
+        return jsonify({"error": "Erro ao obter métricas"}), 500
 
 @recognition_bp.route('/api/users/list', methods=['GET'])
 @token_required
 def list_users():
-    """Lista todos os usuarios cadastrados (requer autenticacao)"""
+    """Lista todos os usuários cadastrados (requer autenticação)"""
     try:
         db_status = recognition_service.get_detailed_database_status()
         return jsonify({
@@ -266,18 +263,14 @@ def list_users():
             "alunos": db_status["alunos_count"]
         }), 200
     except Exception as e:
-        logger.error(f"ERRO AO LISTAR USUARIOS: {str(e)}")
-        return jsonify({"error": "Erro ao listar usuarios"}), 500
+        logger.error(f"ERRO AO LISTAR USUÁRIOS: {str(e)}")
+        return jsonify({"error": "Erro ao listar usuários"}), 500
 
 @recognition_bp.route('/api/locker/status', methods=['GET'])
 def locker_status():
     """Retorna status atual da trava"""
     try:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        status = loop.run_until_complete(locker_controller.verificar_estado_trava())
-        loop.close()
-
+        status = EventLoopManager.run_async(locker_controller.verificar_estado_trava())
         return jsonify(status), 200
     except Exception as e:
         logger.error(f"Erro ao verificar status da trava: {e}")
@@ -292,20 +285,15 @@ def debug_trava():
 
         logger.info(f"DEBUG TRAVA - Comando solicitado: {comando}")
 
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
         if comando.upper() == 'ABRIR_TRAVA':
-            sucesso = loop.run_until_complete(locker_controller.abrir_trava_aluno(999, "ALUNO"))
+            sucesso = EventLoopManager.run_async(locker_controller.abrir_trava_aluno(999, "ALUNO"))
             mensagem = "Abrir trava"
         elif comando.upper() == 'FECHAR_TRAVA':
-            sucesso = loop.run_until_complete(locker_controller.esp32_client.fechar_trava())
+            sucesso = EventLoopManager.run_async(locker_controller.esp32_client.fechar_trava())
             mensagem = "Fechar trava"
         else:
             sucesso = False
-            mensagem = "Comando invalido"
-
-        loop.close()
+            mensagem = "Comando inválido"
 
         return jsonify({
             "sucesso": sucesso,
