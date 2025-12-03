@@ -21,101 +21,70 @@ class ESP32WebSocketClient:
         self.conectado = False
         self.url = f"ws://{self.ip_esp32}:{self.porta}"
         self.last_connection_attempt = 0
-        self.connection_lock = asyncio.Lock()
 
         logger.info(f"Configuração WebSocket: {self.url}")
 
     async def _conectar_se_necessario(self) -> bool:
-        """Conecta se não estiver conectado, reconecta se necessário"""
-        async with self.connection_lock:
-            current_time = time.time()
+        """SEMPRE cria nova conexão - não reusa"""
+        try:
+            # Fecha conexão anterior se existir
+            if self.websocket:
+                try:
+                    await self.websocket.close()
+                except:
+                    pass
+                self.websocket = None
 
-            # Se já está conectado e o websocket está aberto, retorna True
-            if (self.conectado and self.websocket and
-                not self.websocket.closed and
-                self.websocket.open):
-                return True
+            # Sempre cria nova conexão
+            logger.info(f"Criando NOVA conexão para {self.url}")
+            self.websocket = await asyncio.wait_for(
+                websockets.connect(
+                    self.url,
+                    ping_interval=30,
+                    ping_timeout=10,
+                    close_timeout=5
+                ),
+                timeout=5.0
+            )
 
-            # Evita tentativas muito frequentes (mínimo 5 segundos entre tentativas)
-            if current_time - self.last_connection_attempt < 5:
-                logger.debug("Aguardando para reconexão...")
-                return False
+            self.conectado = True
+            logger.info(" NOVA conexão criada com ESP32")
+            return True
 
-            logger.info("Tentando conectar com ESP32...")
-            self.last_connection_attempt = current_time
-
-            try:
-                # Fecha conexão anterior se existir
-                if self.websocket:
-                    try:
-                        await self.websocket.close()
-                    except:
-                        pass
-                    self.websocket = None
-
-                # Tenta conectar com timeout
-                logger.info(f"Conectando a {self.url}...")
-                self.websocket = await asyncio.wait_for(
-                    websockets.connect(
-                        self.url,
-                        ping_interval=30,
-                        ping_timeout=10,
-                        close_timeout=5
-                    ),
-                    timeout=5.0
-                )
-
-                self.conectado = True
-                logger.info("✅ Conectado a ESP32 via WebSocket")
-                return True
-
-            except asyncio.TimeoutError:
-                logger.error(f"Timeout ao conectar com ESP32 em {self.url}")
-                self.conectado = False
-                return False
-            except ConnectionRefusedError:
-                logger.error(f"Conexão recusada pela ESP32 em {self.url}")
-                self.conectado = False
-                return False
-            except OSError as e:
-                logger.error(f"Erro de rede ao conectar com ESP32: {str(e)}")
-                self.conectado = False
-                return False
-            except Exception as e:
-                logger.error(f"Erro inesperado ao conectar: {str(e)}")
-                self.conectado = False
-                return False
+        except Exception as e:
+            logger.error(f"Erro ao criar nova conexão: {str(e)}")
+            self.conectado = False
+            return False
 
     async def enviar_comando(self, comando: str) -> Tuple[bool, str]:
         """
-        Envia comandos para a ESP32 com reconexão automática
+        Envia comandos para a ESP32 - SEMPRE COM NOVA CONEXÃO
         """
         logger.info(f"Enviando comando: {comando}")
 
-        # Tenta conectar
+        # Tenta conectar (sempre cria nova)
         if not await self._conectar_se_necessario():
             return False, "Não foi possível conectar com ESP32"
 
         try:
             # Envia comando
-            logger.info(f"📤 ENVIANDO: '{comando}'")
+            logger.info(f" ENVIANDO: '{comando}'")
             await self.websocket.send(comando)
 
-            # Tenta receber resposta com timeout maior
+            # Tenta receber resposta
             try:
                 resposta = await asyncio.wait_for(
                     self.websocket.recv(),
-                    timeout=10.0  # Aumentado para 10 segundos
+                    timeout=10.0
                 )
-                logger.info(f"📥 RESPOSTA: '{resposta}'")
+                logger.info(f" RESPOSTA: '{resposta}'")
                 return True, resposta.strip()
             except asyncio.TimeoutError:
                 logger.warning(f"Timeout ao aguardar resposta para '{comando}'")
-                # Mesmo sem resposta, considera sucesso se o comando foi enviado
                 return True, "Sem resposta (comando enviado)"
 
         except websockets.exceptions.ConnectionClosed:
-            logger.warning("Conexão fechada durante envio, tentando reconectar...")
+            logger.warning("Conexão fechada durante envio")
             self.conectado = False
             return False, "Conexão fechada"
         except Exception as e:
@@ -123,6 +92,7 @@ class ESP32WebSocketClient:
             self.conectado = False
             return False, str(e)
 
+    # O resto dos métodos permanece IGUAL:
     async def abrir_trava(self) -> bool:
         """Envia comando para abrir a trava no modo FACIAL"""
         logger.info("Abrindo trava (modo FACIAL)")

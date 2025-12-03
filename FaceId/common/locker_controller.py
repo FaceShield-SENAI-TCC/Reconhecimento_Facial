@@ -3,7 +3,7 @@ Controlador da trava do armário - VERSÃO SIMPLIFICADA
 """
 import asyncio
 import logging
-import threading
+import threading  # ADICIONE ESTA LINHA
 from typing import Optional
 from common.websocket_client import ESP32WebSocketClient
 from common.config import WEBSOCKET_CONFIG
@@ -19,7 +19,7 @@ class LockerController:
             porta=WEBSOCKET_CONFIG.ESP32_PORT
         )
         self.trava_aberta = False
-        self._lock = threading.RLock()
+        self._lock = threading.RLock()  # MUDADO: threading.RLock em vez de asyncio.Lock
 
         logger.info(f"LockerController inicializado para {WEBSOCKET_CONFIG.ESP32_IP}:{WEBSOCKET_CONFIG.ESP32_PORT}")
 
@@ -30,9 +30,9 @@ class LockerController:
             sucesso = await self.esp32_client.abrir_trava()
             if sucesso:
                 self.trava_aberta = True
-                logger.info("✅ Trava aberta no modo FACIAL")
+                logger.info(" Trava aberta no modo FACIAL")
             else:
-                logger.error("❌ Falha ao abrir trava modo FACIAL")
+                logger.error(" Falha ao abrir trava modo FACIAL")
             return sucesso
         except Exception as e:
             logger.error(f"Erro ao abrir trava facial: {str(e)}")
@@ -45,9 +45,9 @@ class LockerController:
             sucesso, resposta = await self.esp32_client.abrir_trava_iot()
             if sucesso:
                 self.trava_aberta = True
-                logger.info(f"✅ Trava aberta no modo IOT - {resposta}")
+                logger.info(f" Trava aberta no modo IOT - {resposta}")
             else:
-                logger.error(f"❌ Falha ao abrir trava modo IOT - {resposta}")
+                logger.error(f" Falha ao abrir trava modo IOT - {resposta}")
             return sucesso
         except Exception as e:
             logger.error(f"Erro ao abrir trava IOT: {str(e)}")
@@ -60,9 +60,9 @@ class LockerController:
             sucesso = await self.esp32_client.fechar_trava()
             if sucesso:
                 self.trava_aberta = False
-                logger.info("✅ Trava fechada com sucesso")
+                logger.info(" Trava fechada com sucesso")
             else:
-                logger.error("❌ Falha ao fechar trava")
+                logger.error(" Falha ao fechar trava")
             return sucesso
         except Exception as e:
             logger.error(f"Erro ao fechar trava: {str(e)}")

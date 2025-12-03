@@ -13,8 +13,18 @@ logger = logging.getLogger(__name__)
 recognition_bp = Blueprint('recognition', __name__)
 
 # Inicialização dos serviços
+# Inicialização dos serviços
 recognition_service = RecognitionService()
-locker_controller = LockerController()
+locker_controller = None  # Não inicializa aqui, será lazy
+
+def get_locker_controller():
+    """Getter lazy para LockerController"""
+    global locker_controller
+    if locker_controller is None:
+        from common.locker_controller import LockerController
+        locker_controller = LockerController()
+        logger.info("LockerController inicializado lazy")
+    return locker_controller
 
 @recognition_bp.route('/health', methods=['GET'])
 def health_check():
@@ -79,7 +89,7 @@ def process_face_login(request, is_legacy=False):
                 try:
                     # Usar EventLoopManager em vez de criar um novo loop
                     sucesso = EventLoopManager.run_async(
-                        locker_controller.abrir_trava_aluno(user_id, user_type)
+                        get_locker_controller().abrir_trava_aluno(user_id, user_type)
                     )
 
                     if sucesso:
@@ -270,7 +280,7 @@ def list_users():
 def locker_status():
     """Retorna status atual da trava"""
     try:
-        status = EventLoopManager.run_async(locker_controller.verificar_estado_trava())
+        status = EventLoopManager.run_async(get_locker_controller().verificar_estado_trava())
         return jsonify(status), 200
     except Exception as e:
         logger.error(f"Erro ao verificar status da trava: {e}")
@@ -286,10 +296,10 @@ def debug_trava():
         logger.info(f"DEBUG TRAVA - Comando solicitado: {comando}")
 
         if comando.upper() == 'ABRIR_TRAVA':
-            sucesso = EventLoopManager.run_async(locker_controller.abrir_trava_aluno(999, "ALUNO"))
+            sucesso = EventLoopManager.run_async(get_locker_controller().abrir_trava_aluno(999, "ALUNO"))
             mensagem = "Abrir trava"
         elif comando.upper() == 'FECHAR_TRAVA':
-            sucesso = EventLoopManager.run_async(locker_controller.esp32_client.fechar_trava())
+            sucesso = EventLoopManager.run_async(get_locker_controller().esp32_client.fechar_trava())
             mensagem = "Fechar trava"
         else:
             sucesso = False
@@ -298,8 +308,8 @@ def debug_trava():
         return jsonify({
             "sucesso": sucesso,
             "mensagem": f"{mensagem} - {'Sucesso' if sucesso else 'Falha'}",
-            "conectado": locker_controller.esp32_client.conectado,
-            "trava_aberta": locker_controller.trava_aberta
+            "conectado": get_locker_controller().esp32_client.conectado,
+            "trava_aberta": get_locker_controller().trava_aberta
         }), 200 if sucesso else 500
 
     except Exception as e:

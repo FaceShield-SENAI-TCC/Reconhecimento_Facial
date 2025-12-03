@@ -69,24 +69,52 @@ class FluidFaceCapture:
     def generate_embeddings(self):
         """Gera embeddings das faces capturadas usando modelo configurado"""
         try:
+            # VERIFICAÇÃO CRÍTICA: garantir que temos rostos válidos
+            if not self.captured_faces or len(self.captured_faces) == 0:
+                return False, "Nenhuma face capturada válida"
+
             embeddings = []
             successful = 0
 
             for i, face_img in enumerate(self.captured_faces):
                 try:
+                    # Validar qualidade da imagem do rosto
                     is_valid, validation_msg = self.quality_validator.validate_face_image(face_img)
                     if not is_valid:
                         logger.debug(f"Face {i + 1} inválida: {validation_msg}")
                         continue
 
-                    temp_path = f"temp_face_{int(time.time())}_{i}.jpg"
-                    cv2.imwrite(temp_path, face_img)
+                    # Verificar se a imagem do rosto não está vazia
+                    if face_img.size == 0 or face_img.shape[0] == 0 or face_img.shape[1] == 0:
+                        logger.debug(f"Face {i + 1} vazia ou inválida")
+                        continue
 
+                    # Garantir que estamos usando apenas o rosto recortado
+                    temp_path = f"temp_face_{int(time.time())}_{i}.jpg"
+
+                    # Redimensionar rosto para tamanho mínimo adequado
+                    # Mínimo recomendado: 160x160 pixels para modelos faciais
+                    min_size = 160
+                    h, w = face_img.shape[:2]
+
+                    # Se o rosto for muito pequeno, redimensionar mantendo proporção
+                    if h < min_size or w < min_size:
+                        scale = min_size / min(h, w)
+                        new_h = int(h * scale)
+                        new_w = int(w * scale)
+                        face_img_resized = cv2.resize(face_img, (new_w, new_h), interpolation=cv2.INTER_AREA)
+                    else:
+                        face_img_resized = face_img
+
+                    # Salvar APENAS o rosto recortado e redimensionado
+                    cv2.imwrite(temp_path, face_img_resized)
+
+                    # Processar APENAS o rosto (sem nova detecção)
                     embedding_obj = DeepFace.represent(
                         img_path=temp_path,
                         model_name=self.model_name,
-                        enforce_detection=False,
-                        detector_backend="skip"
+                        enforce_detection=False,  # IMPORTANTE: False porque já temos apenas o rosto
+                        detector_backend="skip"   # IMPORTANTE: "skip" para não tentar detectar novamente
                     )
 
                     embedding = np.array(embedding_obj[0]["embedding"])
@@ -97,8 +125,9 @@ class FluidFaceCapture:
 
                     embeddings.append(embedding)
                     successful += 1
-                    logger.debug(f"Embedding {i + 1} gerado com sucesso")
+                    logger.debug(f"Embedding {i + 1} gerado com sucesso (tamanho: {face_img_resized.shape})")
 
+                    # Limpar arquivo temporário
                     if os.path.exists(temp_path):
                         os.remove(temp_path)
 
@@ -107,13 +136,15 @@ class FluidFaceCapture:
                     continue
 
             if successful >= APP_CONFIG.MIN_PHOTOS_REQUIRED:
+                # Selecionar melhor imagem para foto de perfil
                 best_face_idx = self._select_best_profile_image()
                 profile_image = self.captured_faces[best_face_idx]
 
+                # Converter imagem de perfil para bytes
                 _, buffer = cv2.imencode('.jpg', profile_image)
                 image_bytes = buffer.tobytes()
 
-                # ✅ CHAMADA CORRIGIDA: save_user agora retorna (bool, user_id_int)
+                # Salvar usuário no banco de dados
                 success, result = db_manager.save_user(
                     nome=self.nome,
                     sobrenome=self.sobrenome,
@@ -124,12 +155,12 @@ class FluidFaceCapture:
                 )
 
                 if success:
-                    user_id = result  # ✅ Agora é o ID inteiro diretamente
+                    user_id = result
                     logger.info(f"Usuário salvo: ID {user_id}")
-                    return True, user_id  # ✅ RETORNO CORRETO: (True, user_id)
+                    return True, user_id
                 else:
                     logger.error(f"Falha ao salvar usuário: {result}")
-                    return False, result  # ✅ RETORNO CORRETO: (False, mensagem_erro)
+                    return False, result
 
             else:
                 return False, f"Embeddings insuficientes: {successful}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}"
@@ -255,7 +286,18 @@ class FluidFaceCapture:
                     self.consecutive_no_face_count = 0
 
                     x, y, w, h = faces[0]
+
+                    # Verificar tamanho mínimo do rosto
+                    if h < 100 or w < 100:  # Mínimo 100x100 pixels
+                        logger.debug(f"Rosto muito pequeno: {w}x{h} pixels")
+                        continue
+
                     cropped_face = frame[y:y + h, x:x + w]
+
+                    # VERIFICAÇÃO CRÍTICA: garantir que o recorte não está vazio
+                    if cropped_face.size == 0 or cropped_face.shape[0] == 0 or cropped_face.shape[1] == 0:
+                        logger.warning(f"Recorte de rosto vazio ou inválido: {cropped_face.shape}")
+                        continue
 
                     # Verificar se deve capturar
                     current_time = time.time()
@@ -266,7 +308,7 @@ class FluidFaceCapture:
                             self.captured_count += 1
                             self.last_face_time = current_time
 
-                            logger.debug(f"Face {self.captured_count} capturada")
+                            logger.debug(f"Face {self.captured_count} capturada (tamanho: {cropped_face.shape})")
                             self.update_progress(f"Capturado: {self.captured_count}/{APP_CONFIG.MIN_PHOTOS_REQUIRED}")
 
                 else:

@@ -1,6 +1,4 @@
-"""
-Servidor Principal de Reconhecimento Facial Refatorado - VERSÃO CORRIGIDA
-"""
+"""Servidor Principal de Reconhecimento Facial Refatorado - VERSÃO CORRIGIDA"""
 import eventlet
 eventlet.monkey_patch()
 
@@ -11,9 +9,12 @@ import sys
 from flask import Flask, jsonify
 from flask_cors import CORS
 
-# Módulos compartilhados
-from common.config import APP_CONFIG
+# Inicialize o EventLoopManager ANTES de qualquer import que possa usá-lo
 from common.event_loop_manager import EventLoopManager
+EventLoopManager.initialize()
+
+# Agora importe os outros módulos
+from common.config import APP_CONFIG
 from recognition_routes import recognition_bp, recognition_service
 
 # Configuração de logging
@@ -111,12 +112,14 @@ def initialize_application():
     logger.info(f"   Alunos: {db_status['alunos_count']}")
     logger.info(f"   Total de embeddings: {db_status['total_embeddings']}")
 
-    logger.info("CONFIGURAÇÃO DO MODELO:")
-    logger.info(f"   Distância máxima: {0.60}")
-    logger.info(f"   Confiança mínima: {0.80}")
-    logger.info(f"   Margem mínima: {0.001}")
+    logger.info("CONFIGURAÇÃO DE SEGURANÇA (ATIVADA):")
+    logger.info(f"   Distância máxima: {db_status['security_settings']['distance_threshold']}")
+    logger.info(f"   Confiança mínima: {db_status['security_settings']['min_confidence']}")
+    logger.info(f"   Margem mínima: {db_status['security_settings']['margin_requirement']}")
+    logger.info(f"   Tamanho mínimo do rosto: {db_status['security_settings']['min_face_size']}")
 
     logger.info("MONITORAMENTO: Monitoramento em tempo real do banco: ATIVO")
+    logger.info("ANTI-SPOOFING: Validações anti-foto ativadas")
     return True
 
 if __name__ == "__main__":

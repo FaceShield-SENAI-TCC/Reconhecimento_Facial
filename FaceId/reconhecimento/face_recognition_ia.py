@@ -7,14 +7,15 @@ import time
 import threading
 import numpy as np
 from typing import Tuple, Optional, Dict, Any
-from collections import Counter, deque
 import psycopg2
 import psycopg2.extensions
+import cv2
 
 from deepface import DeepFace
 from common.config import DATABASE_CONFIG, MODEL_CONFIG
 from common.database import DatabaseManager
 from common.exceptions import DatabaseError, DatabaseConnectionError
+from common.image_utils import FaceQualityValidator
 
 logger = logging.getLogger(__name__)
 
@@ -109,6 +110,7 @@ class FaceRecognizer:
         self.metrics_lock = threading.RLock()
         self.db_manager = DatabaseManager()
         self.database_monitor = DatabaseMonitor(self.load_facial_database)
+        self.quality_validator = FaceQualityValidator()
 
     def load_facial_database(self) -> bool:
         """Carrega embeddings faciais do PostgreSQL incluindo ID"""
@@ -146,7 +148,7 @@ class FaceRecognizer:
                             'nome': nome,
                             'sobrenome': sobrenome,
                             'turma': turma,
-                            'tipo_usuario': tipo_usuario_normalized,  # Garantido em maiúsculas
+                            'tipo_usuario': tipo_usuario_normalized,
                             'username': username,
                             'is_professor': tipo_usuario_normalized == "PROFESSOR"
                         }
@@ -195,9 +197,53 @@ class FaceRecognizer:
             logger.error(f"Falha ao carregar banco de dados: {str(e)}")
             return False
 
+    def _validate_face_image_security(self, face_image: np.ndarray) -> Tuple[bool, str]:
+        """Validações de segurança para imagem de rosto (prevenção contra fotos)"""
+        try:
+            if face_image is None or face_image.size == 0:
+                return False, "Imagem de rosto vazia"
+
+            # Verificar tamanho mínimo
+            h, w = face_image.shape[:2]
+            min_h, min_w = MODEL_CONFIG.MIN_FACE_SIZE
+            if h < min_h or w < min_w:
+                return False, f"Rosto muito pequeno ({w}x{h}) - mínimo: {min_w}x{min_h}"
+
+            # Verificar qualidade com validador
+            is_valid, validation_msg = self.quality_validator.validate_face_image(face_image)
+            if not is_valid:
+                return False, f"Qualidade insuficiente: {validation_msg}"
+
+            # Verificar nitidez (evitar imagens borradas ou de baixa qualidade)
+            gray = cv2.cvtColor(face_image, cv2.COLOR_BGR2GRAY) if len(face_image.shape) == 3 else face_image
+            laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
+
+            if laplacian_var < 50:  # Limite de nitidez
+                return False, f"Nitidez insuficiente: {laplacian_var:.2f} (mínimo: 50)"
+
+            # Verificar contraste
+            min_pixel = np.min(gray)
+            max_pixel = np.max(gray)
+            contrast = max_pixel - min_pixel
+
+            if contrast < 60:  # Limite de contraste
+                return False, f"Contraste insuficiente: {contrast:.2f} (mínimo: 60)"
+
+            return True, "Rosto válido para processamento"
+
+        except Exception as e:
+            logger.error(f"Erro na validação de segurança: {str(e)}")
+            return False, f"Erro na validação: {str(e)}"
+
     def _extract_face_embedding(self, face_image: np.ndarray) -> Optional[np.ndarray]:
         """Extrai embedding facial da imagem usando DeepFace"""
         try:
+            # Primeiro validar a imagem
+            is_valid, validation_msg = self._validate_face_image_security(face_image)
+            if not is_valid:
+                logger.warning(f"Imagem inválida para extração: {validation_msg}")
+                return None
+
             result = DeepFace.represent(
                 img_path=face_image,
                 model_name=MODEL_CONFIG.MODEL_NAME,
@@ -222,12 +268,13 @@ class FaceRecognizer:
 
     def recognize_face(self, face_image: np.ndarray) -> Tuple[Optional[str], Optional[float], Optional[Dict]]:
         """
-        Reconhecimento facial usando embeddings
+        Reconhecimento facial usando embeddings com critérios de segurança
         """
         try:
+            # Extrair embedding com validações de segurança
             captured_embedding = self._extract_face_embedding(face_image)
             if captured_embedding is None:
-                logger.warning("Não foi possível extrair embedding")
+                logger.warning("Não foi possível extrair embedding válido")
                 return None, None, None
 
             best_match = None
@@ -248,18 +295,31 @@ class FaceRecognizer:
                     elif distance < second_best_distance:
                         second_best_distance = distance
 
-            # Parâmetros ajustados
-            if best_match and min_distance <= 0.65:
+            # Critérios restritivos ajustados
+            if best_match and min_distance <= MODEL_CONFIG.DISTANCE_THRESHOLD:
+                # Verificar margem mínima
                 margin = second_best_distance - min_distance if second_best_distance != float('inf') else 0
-                confidence = 1 - min_distance
-                logger.info(f"RECONHECIDO: {best_match} - Tipo: {best_user_data['tipo_usuario']}, Dist: {min_distance:.4f}, Conf: {confidence:.4f}")
-                return best_match, min_distance, best_user_data
+
+                if margin >= MODEL_CONFIG.MARGIN_REQUIREMENT:
+                    confidence = 1 - min_distance
+
+                    # Verificar confiança mínima
+                    if confidence >= MODEL_CONFIG.MIN_CONFIDENCE:
+                        logger.info(f"RECONHECIDO: {best_match} - Tipo: {best_user_data['tipo_usuario']}, "
+                                  f"Dist: {min_distance:.4f}, Conf: {confidence:.4f}, Margem: {margin:.4f}")
+                        return best_match, min_distance, best_user_data
+                    else:
+                        logger.warning(f"REJEITADO: Confiança insuficiente {confidence:.4f} < {MODEL_CONFIG.MIN_CONFIDENCE}")
+                else:
+                    logger.warning(f"REJEITADO: Margem insuficiente {margin:.4f} < {MODEL_CONFIG.MARGIN_REQUIREMENT}")
             else:
                 if best_match:
-                    logger.warning(f"REJEITADO: {best_match} - Dist: {min_distance:.4f} > 0.65, Tipo: {best_user_data['tipo_usuario']}")
+                    logger.warning(f"REJEITADO: {best_match} - Dist: {min_distance:.4f} > {MODEL_CONFIG.DISTANCE_THRESHOLD}, "
+                                 f"Tipo: {best_user_data['tipo_usuario']}")
                 else:
                     logger.info("Nenhum match encontrado")
-                return None, None, None
+
+            return None, None, None
 
         except Exception as e:
             logger.error(f"Falha no reconhecimento facial: {str(e)}")
@@ -280,8 +340,12 @@ class FaceRecognizer:
                 facial_area = face_data["facial_area"]
                 w, h = facial_area['w'], facial_area['h']
 
-                if w >= 40 and h >= 40:
+                # Critério de tamanho mais restritivo
+                min_w, min_h = MODEL_CONFIG.MIN_FACE_SIZE
+                if w >= min_w and h >= min_h:
                     return face_data
+                else:
+                    logger.warning(f"Rosto muito pequeno: {w}x{h} - mínimo: {min_w}x{min_h}")
 
             logger.warning("Nenhum rosto detectado ou rosto muito pequeno")
             return None
@@ -310,7 +374,13 @@ class FaceRecognizer:
             "alunos_count": alunos_count,
             "last_update": self.last_update,
             "monitoring_active": self.database_monitor.running,
-            "database_type": "PostgreSQL"
+            "database_type": "PostgreSQL",
+            "security_settings": {
+                "min_confidence": MODEL_CONFIG.MIN_CONFIDENCE,
+                "distance_threshold": MODEL_CONFIG.DISTANCE_THRESHOLD,
+                "min_face_size": MODEL_CONFIG.MIN_FACE_SIZE,
+                "margin_requirement": MODEL_CONFIG.MARGIN_REQUIREMENT
+            }
         }
 
     def get_detailed_database_status(self) -> Dict[str, Any]:
@@ -377,7 +447,11 @@ class FaceRecognizer:
         logger.info("Inicializando FaceRecognizer...")
         logger.info(f"Usando modelo: {MODEL_CONFIG.MODEL_NAME}")
         logger.info(f"Dimensão do embedding: {MODEL_CONFIG.EMBEDDING_DIMENSION}")
-        logger.info(f"Limite de distância: 0.65")
+        logger.info(f"Configurações de segurança:")
+        logger.info(f"  Limite de distância: {MODEL_CONFIG.DISTANCE_THRESHOLD}")
+        logger.info(f"  Confiança mínima: {MODEL_CONFIG.MIN_CONFIDENCE}")
+        logger.info(f"  Tamanho mínimo do rosto: {MODEL_CONFIG.MIN_FACE_SIZE}")
+        logger.info(f"  Margem mínima: {MODEL_CONFIG.MARGIN_REQUIREMENT}")
 
         # Configurar triggers no banco de dados
         trigger_success = self._setup_database_triggers()

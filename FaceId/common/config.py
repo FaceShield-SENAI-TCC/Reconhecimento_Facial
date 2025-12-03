@@ -28,16 +28,15 @@ class DatabaseConfig:
             "port": cls.DB_PORT
         }
 
-@dataclass
 class ModelConfig:
     """Configuracoes do modelo de reconhecimento facial - CRITERIOS RESTRITIVOS"""
     MODEL_NAME: str = "VGG-Face"
     EMBEDDING_DIMENSION: int = 2622
-    DISTANCE_THRESHOLD: float = 0.15  #  ALTERADO: 0.15 = 85% de confiança mínima
-    MIN_FACE_SIZE: Tuple[int, int] = (100, 100)  #  AUMENTADO: Rosto maior
+    DISTANCE_THRESHOLD: float = 0.15  # ALTERADO: 0.15 = 85% de confiança mínima
+    MIN_FACE_SIZE: Tuple[int, int] = (160, 160)  # AUMENTADO: Rosto maior para evitar falsos positivos
     DETECTOR_BACKEND: str = "opencv"
-    MIN_CONFIDENCE: float = 0.85  #  ALTERADO: 85% mínimo
-    MARGIN_REQUIREMENT: float = 0.01  #  AUMENTADO: Margem mais restritiva
+    MIN_CONFIDENCE: float = 0.85  # ALTERADO: 85% mínimo
+    MARGIN_REQUIREMENT: float = 0.02  # AUMENTADO: Margem mais restritiva
 
 @dataclass
 class SecurityConfig:
@@ -60,7 +59,7 @@ class AppConfig:
 class WebSocketConfig:
     """Configuracoes WebSocket para ESP32"""
 
-    ESP32_IP: str = os.getenv("ESP32_IP", "10.110.22.11")
+    ESP32_IP: str = os.getenv("ESP32_IP", "192.168.0.57")
     ESP32_PORT: int = int(os.getenv("ESP32_PORT", "8765"))
     TIMEOUT_ABERTURA: int = 180
     TIMEOUT_FECHAMENTO: int = 10
